@@ -14,10 +14,12 @@
 #include <vector>
 
 #include "core.h"
+#include "state.h"
 
 namespace rh {
 
 static std::string g_out;
+static std::vector<int> g_reportIds;  // item pouch ids seen by the report
 static void outf(const char* fmt, ...) __attribute__((format(printf, 1, 2)));
 static void outf(const char* fmt, ...) {
     char b[2048];
@@ -96,70 +98,280 @@ typedef void*(__fastcall* FindDti_t)(uint32_t id);
 typedef void*(__fastcall* GetResource_t)(void* mgr, void* dti, const char* path, int flags);
 static FindDti_t g_findDti = nullptr;
 static GetResource_t g_getResource = nullptr;
-static uintptr_t g_sResource = 0, g_sUserData = 0;
+static uintptr_t g_sResource = 0;
+static uintptr_t g_getResourceSpl = 0, g_selectSlot = 0;
 
 static uintptr_t rip_target(uintptr_t insn, int dispOffset, int len) {
     int32_t d = *(int32_t*)(insn + dispOffset);
     return insn + len + d;
 }
 
+// Start of the function containing a: MSVC aligns functions to 16 bytes and pads with int3 (or ends on ret).
+static uintptr_t func_start(uintptr_t a) {
+    for (uintptr_t p = a & ~(uintptr_t)15; p > a - 0x800 && p > g_textBeg; p -= 16) {
+        uint8_t prev = *(uint8_t*)(p - 1);
+        if (prev == 0xCC || prev == 0xC3) return p;
+    }
+    return 0;
+}
+
+// The static most often loaded into rcx (mov rcx,[rip+x]) shortly before a call or jump to fn.
+static uintptr_t static_before_calls(uintptr_t fn, int* calls, int* agree) {
+    std::map<uintptr_t, int> votes;
+    *calls = 0;
+    *agree = 0;
+    const uint8_t* b = (const uint8_t*)g_textBeg;
+    size_t n = g_textEnd - g_textBeg;
+    for (size_t i = 64; i + 5 < n; i++) {
+        if (b[i] != 0xE8 && b[i] != 0xE9) continue;
+        uintptr_t p = g_textBeg + i;
+        if (rip_target(p, 1, 5) != fn) continue;
+        (*calls)++;
+        for (uintptr_t q = p - 7; q > p - 64; q--) {
+            const uint8_t* c = (const uint8_t*)q;
+            if (c[0] == 0x48 && c[1] == 0x8B && c[2] == 0x0D) {
+                votes[rip_target(q, 3, 7)]++;
+                break;
+            }
+        }
+    }
+    uintptr_t best = 0;
+    for (auto& v : votes)
+        if (v.second > *agree) { *agree = v.second; best = v.first; }
+    return best;
+}
+
+// ---------------------------------------------------------------- singletons, found read-only
+// Every MtObject's vtable slot 4 is GetDTI, compiled as `lea rax,[rip+dti]; ret`. Decoding those bytes (never calling
+// them) names the class of any object; the .data pointers to objects whose class starts with 's' are the singletons.
+
+static uintptr_t g_dataBeg = 0, g_dataEnd = 0;
+static std::map<std::string, uintptr_t> g_singletons;
+
+static bool in_image(const void* p);
+
+static bool readable_cached(uintptr_t a, size_t len, std::map<uintptr_t, std::pair<uintptr_t, bool>>& regions) {
+    auto it = regions.upper_bound(a);
+    if (it != regions.begin()) {
+        --it;
+        if (a >= it->first && a + len <= it->second.first) return it->second.second;
+    }
+    MEMORY_BASIC_INFORMATION mbi;
+    if (!VirtualQuery((void*)a, &mbi, sizeof(mbi))) return false;
+    uintptr_t b = (uintptr_t)mbi.BaseAddress, e = b + mbi.RegionSize;
+    DWORD pr = mbi.Protect;
+    bool ok = mbi.State == MEM_COMMIT && !(pr & (PAGE_GUARD | PAGE_NOACCESS)) &&
+              (pr & (PAGE_READONLY | PAGE_READWRITE | PAGE_WRITECOPY | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE |
+                     PAGE_EXECUTE_WRITECOPY));
+    regions[b] = {e, ok};
+    return a + len <= e ? ok : (ok && mem_readable((void*)a, len));
+}
+
+const char* dti_name_of(const void* obj) {
+    if (!obj || !mem_readable(obj, 8)) return nullptr;
+    uintptr_t vt = *(const uintptr_t*)obj;
+    if (!in_image((void*)vt) || !mem_readable((void*)vt, 5 * 8)) return nullptr;
+    uintptr_t f = ((const uintptr_t*)vt)[4];
+    if (f < g_textBeg || f + 8 > g_textEnd) return nullptr;
+    const uint8_t* c = (const uint8_t*)f;
+    if (!(c[0] == 0x48 && c[1] == 0x8D && c[2] == 0x05 && c[7] == 0xC3)) return nullptr;
+    uint8_t* dti = (uint8_t*)(f + 7 + *(const int32_t*)(f + 3));
+    if (!mem_readable(dti + 8, 8)) return nullptr;
+    const char* n = *(const char**)(dti + 8);
+    if (!n || !in_image(n) || !mem_readable(n, 2)) return nullptr;
+    return n;
+}
+
+static void scan_singletons() {
+    auto* dos = (IMAGE_DOS_HEADER*)g_base;
+    auto* nt = (IMAGE_NT_HEADERS64*)(g_base + dos->e_lfanew);
+    auto* sec = IMAGE_FIRST_SECTION(nt);
+    for (int i = 0; i < nt->FileHeader.NumberOfSections; i++)
+        if (memcmp(sec[i].Name, ".data", 6) == 0) {
+            g_dataBeg = g_base + sec[i].VirtualAddress;
+            g_dataEnd = g_dataBeg + sec[i].Misc.VirtualSize;
+        }
+    if (!g_dataBeg) return;
+    std::map<uintptr_t, std::pair<uintptr_t, bool>> regions;
+    int objects = 0;
+    for (uintptr_t a = g_dataBeg; a + 8 <= g_dataEnd; a += 8) {
+        if (!readable_cached(a, 8, regions)) { a = (a | 0xFFF); a -= 7; continue; }
+        uintptr_t v = *(const uintptr_t*)a;
+        if (v < 0x10000 || (v & 7) || v > 0x7FFFFFFFFFFFull || in_image((void*)v)) continue;
+        if (!readable_cached(v, 8, regions)) continue;
+        uintptr_t vt = *(const uintptr_t*)v;
+        if (!in_image((void*)vt)) continue;
+        const char* n = dti_name_of((void*)v);
+        if (!n) continue;
+        objects++;
+        if (n[0] == 's' && !g_singletons.count(n)) g_singletons[n] = a;
+    }
+    log("api: %d objects referenced from .data, %zu singletons", objects, g_singletons.size());
+}
+
+uintptr_t singleton_static(const char* name) {
+    auto it = g_singletons.find(name);
+    return it == g_singletons.end() ? 0 : it->second;
+}
+
+// Each lookup stands on its own; returns true when all of them resolved.
 bool game_api_init() {
     static bool done = false, ok = false;
     if (done) return ok;
     done = true;
+    module_range();
     auto one = [](const char* pat, int off) -> uintptr_t {
         auto h = scan_text(pat, 2);
         return h.size() == 1 ? h[0] + off : 0;
     };
+    scan_singletons();
     g_findDti = (FindDti_t)one("39 48 34 74 0B 48 8B 40 28", -19);
-    uintptr_t gr = one("48 83 EC 30 80 B9 7B 80 20 00 00", -26);
-    g_getResource = (GetResource_t)gr;
-    uintptr_t sel = one("89 91 A0 00 00 00 48 8B 0D ?? ?? ?? ?? E9", 0);
-    if (sel) g_sUserData = rip_target(sel + 6, 3, 7);
-    // sMhResource: the static most often loaded into rcx right before a call to GetResource.
-    if (gr) {
+    uintptr_t hit = one("48 83 EC 30 80 B9 7B 80 20 00 00", 0);
+    if (hit) {
+        g_getResourceSpl = hit - 26;
+        uintptr_t fs = func_start(hit);
+        // Prefer whichever start actually has callers.
+        int c1 = 0, a1 = 0, c2 = 0, a2 = 0;
+        uintptr_t s1 = static_before_calls(g_getResourceSpl, &c1, &a1);
+        uintptr_t s2 = fs && fs != g_getResourceSpl ? static_before_calls(fs, &c2, &a2) : 0;
+        log("api: GetResource spl %p (%d calls, static %p x%d) aligned %p (%d calls, static %p x%d)",
+            (void*)g_getResourceSpl, c1, (void*)s1, a1, (void*)fs, c2, (void*)s2, a2);
+        // A static counts only when several callers agree on it.
+        if (a2 > a1) { g_getResource = (GetResource_t)fs; g_sResource = a2 >= 3 ? s2 : 0; }
+        else { g_getResource = (GetResource_t)g_getResourceSpl; g_sResource = a1 >= 3 ? s1 : 0; }
+    }
+    if (uintptr_t st = singleton_static("sMhResource")) {
+        log("api: sMhResource static %p (by class name)", (void*)st);
+        g_sResource = st;
+    }
+    if (!g_sResource) {
+        // The constructor is called right after the allocation, and its result is stored to the static.
+        uintptr_t chit = one("48 8D 9F 1A 9F 21 00 48 89 AF D0 9C 21 00 8B F5 48 89 AF 10 9D 21 00", 0);
+        uintptr_t starts[2] = {chit ? chit - 54 : 0, chit ? func_start(chit) : 0};
         std::map<uintptr_t, int> votes;
+        int calls = 0;
         const uint8_t* b = (const uint8_t*)g_textBeg;
-        for (uintptr_t p = g_textBeg; p + 5 < g_textEnd; p++) {
-            if (b[p - g_textBeg] != 0xE8) continue;
-            if (rip_target(p, 1, 5) != gr) continue;
-            for (uintptr_t q = p - 7; q > p - 40; q--)
-                if (*(uint8_t*)q == 0x48 && *(uint8_t*)(q + 1) == 0x8B && *(uint8_t*)(q + 2) == 0x0D) {
+        size_t n = g_textEnd - g_textBeg;
+        for (size_t i = 64; chit && i + 64 < n; i++) {
+            if (b[i] != 0xE8) continue;
+            uintptr_t p = g_textBeg + i, t = rip_target(p, 1, 5);
+            if (t != starts[0] && t != starts[1]) continue;
+            calls++;
+            for (uintptr_t q = p + 5; q < p + 48; q++) {
+                const uint8_t* c = (const uint8_t*)q;
+                if (c[0] == 0x48 && c[1] == 0x89 && (c[2] == 0x05 || c[2] == 0x1D || c[2] == 0x35 || c[2] == 0x3D)) {
                     votes[rip_target(q, 3, 7)]++;
                     break;
                 }
+            }
         }
         int best = 0;
+        uintptr_t st = 0;
         for (auto& v : votes)
-            if (v.second > best) { best = v.second; g_sResource = v.first; }
-        log("api: sMhResource static %p (%d callers agree)", (void*)g_sResource, best);
+            if (v.second > best) { best = v.second; st = v.first; }
+        uint8_t* o = st ? rd_ptr(st) : nullptr;
+        bool plausible = o && mem_readable(o + 0x20807B, 1);
+        log("api: ResourceManager ctor %p/%p calls %d static %p x%d plausible %d", (void*)starts[0], (void*)starts[1],
+            calls, (void*)st, best, plausible ? 1 : 0);
+        if (plausible) g_sResource = st;
     }
-    ok = g_findDti && g_getResource && g_sResource && g_sUserData;
-    log("api: FindDti %p GetResource %p sUserData static %p -> %s", (void*)g_findDti, (void*)g_getResource,
-        (void*)g_sUserData, ok ? "ok" : "MISSING");
+    g_selectSlot = one("89 91 A0 00 00 00 48 8B 0D ?? ?? ?? ?? E9", 0);
+    ok = g_findDti && g_getResource && g_sResource;
+    log("api: FindDti %p GetResource %p sMhResource %p SelectSlot %p -> %s", (void*)g_findDti,
+        (void*)g_getResource, (void*)g_sResource, (void*)g_selectSlot, ok ? "ok" : "partial");
     return ok;
 }
 
-void* find_dti(const char* name) { return g_findDti ? g_findDti(mt_crc(name) & 0x7FFFFFFF) : nullptr; }
+static bool looks_like_func(uintptr_t f) {
+    if (!f || (f & 15) || f <= g_textBeg || f >= g_textEnd) return false;
+    uint8_t prev = *(uint8_t*)(f - 1);
+    return prev == 0xCC || prev == 0xC3;
+}
+
+static bool in_image(const void* p) {
+    auto* dos = (IMAGE_DOS_HEADER*)g_base;
+    auto* nt = (IMAGE_NT_HEADERS64*)(g_base + dos->e_lfanew);
+    uintptr_t a = (uintptr_t)p;
+    return a >= g_base && a < g_base + nt->OptionalHeader.SizeOfImage;
+}
+
+void* find_dti(const char* name) {
+    game_api_init();
+    if (!looks_like_func((uintptr_t)g_findDti)) return nullptr;
+    uint8_t* d = (uint8_t*)g_findDti(mt_crc(name) & 0x7FFFFFFF);
+    if (!d || !mem_readable(d + 8, 8)) return nullptr;
+    const char* n = *(const char**)(d + 8);
+    return n && mem_readable(n, strlen(name) + 1) && !strcmp(n, name) ? d : nullptr;
+}
 
 // Game thread only.
 void* get_resource(const char* dtiName, const char* path) {
-    if (!game_api_init()) return nullptr;
+    game_api_init();
+    if (!looks_like_func((uintptr_t)g_getResource) || !g_sResource) return nullptr;
     void* dti = find_dti(dtiName);
-    void* mgr = rd_ptr(g_sResource);
-    if (!dti || !mgr) return nullptr;
+    uint8_t* mgr = rd_ptr(g_sResource);
+    if (!dti || !mgr || !mem_readable(mgr, 8) || !in_image(*(void**)mgr)) return nullptr;
     return g_getResource(mgr, dti, path, 1);
 }
 
-// Current save slot's cUserData (layout per SharpPluginLoader: +0xA0 slot, +0xA8 first slot, 0x26CC00 per slot).
-uint8_t* user_data() {
-    if (!game_api_init()) return nullptr;
-    uint8_t* s = rd_ptr(g_sUserData);
+// ---------------------------------------------------------------- save data (cUserData)
+// sUserData: +0xA0 current slot, +0xA8 first slot, 0x26CC00 per slot (SharpPluginLoader); in a slot, +0x50 hunter
+// name and +0x94 zenny (HunterPie). The static is found three ways and each answer is checked against the save.
+
+static bool plausible_save(uint8_t* u) {
+    if (!u || !mem_readable(u + 0x50, 0x48) || !mem_readable(u + 0x38080, 0x500)) return false;
+    const unsigned char* name = (const unsigned char*)(u + 0x50);
+    size_t len = strnlen((const char*)name, 0x40);
+    if (len == 0 || len >= 0x40) return false;
+    for (size_t i = 0; i < len; i++)
+        if (name[i] < 0x20) return false;
+    int zenny = *(int*)(u + 0x94);
+    return zenny >= 0 && zenny <= 9999999;
+}
+
+static uint8_t* slot_via(uintptr_t st) {
+    if (!st) return nullptr;
+    uint8_t* s = rd_ptr(st);
     if (!s || !mem_readable(s + 0xA0, 0x10)) return nullptr;
     int slot = *(int*)(s + 0xA0);
     uint8_t* first = *(uint8_t**)(s + 0xA8);
     if (slot < 0 || slot > 2 || !first) return nullptr;
-    return first + (size_t)slot * 0x26CC00;
+    uint8_t* u = first + (size_t)slot * 0x26CC00;
+    return plausible_save(u) ? u : nullptr;
+}
+
+struct UdSource { const char* how; uintptr_t st; };
+static std::vector<UdSource> g_udSources;
+static int g_udChosen = -1;
+
+static void ud_sources() {
+    if (!g_udSources.empty()) return;
+    game_api_init();
+    uintptr_t rebase = g_base - 0x140000000ull;
+    if (uintptr_t st = singleton_static("sUserData")) g_udSources.push_back({"class name sUserData", st});
+    if (g_selectSlot) {
+        int calls = 0, agree = 0;
+        uintptr_t st = static_before_calls(g_selectSlot, &calls, &agree);
+        log("api: SelectSlot callers %d, static %p x%d", calls, (void*)st, agree);
+        if (st) g_udSources.push_back({"SelectSlot callers", st});
+        g_udSources.push_back({"SelectSlot tail", rip_target(g_selectSlot + 6, 3, 7)});
+    }
+    g_udSources.push_back({"HunterPie LEVEL_OFFSET", 0x145013950ull + rebase});
+}
+
+uint8_t* user_data() {
+    ud_sources();
+    if (g_udChosen >= 0) {
+        if (uint8_t* u = slot_via(g_udSources[g_udChosen].st)) return u;
+        return nullptr;  // between saves (title screen): keep the source
+    }
+    for (size_t i = 0; i < g_udSources.size(); i++)
+        if (uint8_t* u = slot_via(g_udSources[i].st)) {
+            g_udChosen = (int)i;
+            log("api: sUserData %p via %s", (void*)g_udSources[i].st, g_udSources[i].how);
+            return u;
+        }
+    return nullptr;
 }
 
 // GMD message by id (rGUIMessage: +0xD8 count, +0xF8 char** messages).
@@ -210,8 +422,29 @@ static void report() {
     outf("api %s", game_api_init() ? "ok" : "missing");
     module_range();
     outf("module base %p text %p-%p", (void*)g_base, (void*)g_textBeg, (void*)g_textEnd);
+    outf("-- singletons (%zu)", g_singletons.size());
+    for (auto& kv : g_singletons) outf("singleton %s static %p obj %p", kv.first.c_str(), (void*)kv.second, (void*)rd_ptr(kv.second));
+    {
+        uint8_t* pl = player_ptr();
+        const char* pn = dti_name_of(pl);
+        outf("player %p class %s", (void*)pl, pn ? pn : "?");
+    }
     uint8_t* u = user_data();
-    outf("userdata %p", (void*)u);
+    outf("userdata %p (source %s)", (void*)u, g_udChosen >= 0 ? g_udSources[g_udChosen].how : "none");
+    for (const UdSource& src : g_udSources) {
+        uint8_t* o = rd_ptr(src.st);
+        outf("-- source %s: static %p -> %p", src.how, (void*)src.st, (void*)o);
+        if (o && mem_readable(o + 0xA0, 0x10)) {
+            uint8_t* first = *(uint8_t**)(o + 0xA8);
+            outf("   +A0 %d  +A8 %p", *(int*)(o + 0xA0), (void*)first);
+            for (int k = 0; k < 3 && first; k++) {
+                uint8_t* sl = first + (size_t)k * 0x26CC00;
+                outf("   slot %d %p plausible %d name '%.32s' zenny %d", k, (void*)sl, plausible_save(sl) ? 1 : 0,
+                     mem_readable(sl + 0x50, 0x20) ? (const char*)(sl + 0x50) : "?",
+                     mem_readable(sl + 0x94, 4) ? *(int*)(sl + 0x94) : -1);
+            }
+        }
+    }
     std::vector<int> pouchIds;
     if (u) {
         outf("zenny %d", *(int*)(u + 0x94));
@@ -225,7 +458,27 @@ static void report() {
                 int id = *(int*)(e + 8), c = *(int*)(e + 12);
                 outf("%s[%d] id %d x%d vt %p", pouches[k], i, id, c, *(void**)e);
                 if (id) pouchIds.push_back(id);
+                if (id && k == 0) g_reportIds.push_back(id);
             }
+        void* vt = *(void**)(u + 0x38080);
+        bool slotReadable = mem_readable(u, 0x26CC00);
+        outf("-- item containers in the save slot (entries with the pouch's vtable %p)", vt);
+        size_t runStart = 0, runLen = 0;
+        int runNonzero = 0;
+        for (size_t off = 0; slotReadable && off + 16 <= 0x26CC00; off += 8) {
+            uint8_t* e = u + off;
+            bool hit = *(void**)e == vt;
+            if (hit && runLen && off == runStart + runLen * 16) {
+                runLen++;
+                if (*(int*)(e + 12)) runNonzero++;
+                off += 8;
+                continue;
+            }
+            if (runLen >= 4) outf("container +0x%zX entries %zu (with items %d)", runStart, runLen, runNonzero);
+            runLen = 0;
+            if (hit) { runStart = off; runLen = 1; runNonzero = *(int*)(e + 12) ? 1 : 0; off += 8; }
+        }
+        if (runLen >= 4) outf("container +0x%zX entries %zu (with items %d)", runStart, runLen, runNonzero);
         outf("-- userdata around the pouch");
         hexdump((uintptr_t)(u + 0x38040), 0x60);
     }
@@ -234,7 +487,25 @@ static void report() {
     void* root = find_dti("MtObject");
     outf("-- DTIs (root %p)", root);
     if (root) walk_dti((uint8_t*)root, filters, 0, &n);
-    void* gmd = get_resource("rGUIMessage", "common\\text\\steam\\item_eng");
+    void* gmd = nullptr;
+    const char* gmdPaths[] = {"common\\text\\steam\\item_eng", "common\\text\\item_eng", "common\\text\\steam\\item_eng.gmd"};
+    for (const char* gp : gmdPaths) {
+        gmd = get_resource("rGUIMessage", gp);
+        outf("gmd %s -> %p", gp, gmd);
+        if (gmd) break;
+    }
+    if (gmd) {
+        int cnt = mem_readable((uint8_t*)gmd + 0xD8, 4) ? *(int*)((uint8_t*)gmd + 0xD8) : 0;
+        char path[MAX_PATH];
+        snprintf(path, sizeof(path), "%s\\dev_items.txt", mod_dir());
+        if (FILE* f = fopen(path, "wb")) {
+            for (int i = 0; i < cnt && i < 40000; i++) {
+                const char* m = gmd_message(gmd, i);
+                fprintf(f, "%d\t%s\n", i, m && mem_readable(m, 1) ? m : "<null>");
+            }
+            fclose(f);
+        }
+    }
     int count = gmd && mem_readable((uint8_t*)gmd + 0xD8, 4) ? *(int*)((uint8_t*)gmd + 0xD8) : -1;
     outf("-- item names gmd %p count %d", gmd, count);
     for (int id : pouchIds) {
@@ -263,20 +534,85 @@ static void report() {
     outf("== end ==");
 }
 
-static bool g_reported = false;
 
-// Game thread, from mod_game_tick.
-void devconsole_tick(double now) {
-    (void)now;
-    if (g_reported) return;
-    char flag[MAX_PATH];
-    snprintf(flag, sizeof(flag), "%s\\dev_diag", mod_dir());
-    if (GetFileAttributesA(flag) == INVALID_FILE_ATTRIBUTES) return;
-    uint8_t* u = user_data();
-    if (!u) return;  // not in a save yet
-    g_reported = true;
+// ---------------------------------------------------------------- item bar watch (read-only)
+// For two minutes after the report, the player object and the save slot are sampled twice a second. A field that
+// changes several times and only ever holds item ids from the pouch is a candidate for the item bar's current item.
+
+struct Watch {
+    uint8_t* base = nullptr;
+    size_t size = 0;
+    const char* name = "";
+    std::vector<uint32_t> last;
+    std::vector<uint8_t> changes, onlyIds;
+};
+static Watch g_watch[2];
+static std::vector<int> g_watchIds;
+static double g_watchUntil = 0, g_watchNext = 0;
+
+static bool is_pouch_id(uint32_t v) {
+    return std::find(g_watchIds.begin(), g_watchIds.end(), (int)v) != g_watchIds.end();
+}
+
+static void watch_start(uint8_t* player, uint8_t* u, const std::vector<int>& ids, double now) {
+    g_watchIds = ids;
+    g_watch[0] = Watch{player, 0x20000, "player"};
+    g_watch[1] = Watch{u, 0x26CC00, "save slot"};
+    for (Watch& w : g_watch) {
+        if (!w.base || !mem_readable(w.base, w.size)) { w.base = nullptr; continue; }
+        size_t n = w.size / 4;
+        w.last.assign((uint32_t*)w.base, (uint32_t*)w.base + n);
+        w.changes.assign(n, 0);
+        w.onlyIds.assign(n, 0);
+        for (size_t i = 0; i < n; i++) w.onlyIds[i] = is_pouch_id(w.last[i]);
+    }
+    g_watchUntil = now + 120.0;
+    g_watchNext = now + 0.5;
+    Shared& sh = S();
+    AcquireSRWLockExclusive(&sh.lock);
+    toast(sh.live, "Remnant Hunt diagnostic: scroll through your item bar a few times");
+    sh.live.toastUntil = now + 20.0;
+    ReleaseSRWLockExclusive(&sh.lock);
+}
+
+static void watch_sample() {
+    for (Watch& w : g_watch) {
+        if (!w.base || !mem_readable(w.base, w.size)) continue;
+        const uint32_t* cur = (const uint32_t*)w.base;
+        for (size_t i = 0, n = w.last.size(); i < n; i++) {
+            uint32_t v = cur[i];
+            if (v == w.last[i]) continue;
+            w.last[i] = v;
+            if (w.changes[i] < 255) w.changes[i]++;
+            if (!is_pouch_id(v)) w.onlyIds[i] = 0;
+        }
+    }
+}
+
+static void watch_report() {
     g_out.clear();
-    report();
+    outf("== item bar watch ==");
+    for (Watch& w : g_watch) {
+        if (!w.base) continue;
+        int shown = 0;
+        for (size_t i = 0; i < w.last.size() && shown < 40; i++)
+            if (w.onlyIds[i] && w.changes[i] >= 3) {
+                outf("%s +0x%zX changed %d times, now %u", w.name, i * 4, w.changes[i], w.last[i]);
+                shown++;
+            }
+        // Small counters that changed a few times (an index into the bar rather than an item id).
+        int idx = 0;
+        for (size_t i = 0; i < w.last.size() && idx < 40; i++)
+            if (w.changes[i] >= 3 && w.changes[i] <= 60 && w.last[i] < 32) {
+                outf("%s +0x%zX small value changed %d times, now %u", w.name, i * 4, w.changes[i], w.last[i]);
+                idx++;
+            }
+        outf("%s: %d id fields", w.name, shown);
+    }
+    outf("== end watch ==");
+}
+
+static void append_out() {
     char path[MAX_PATH];
     snprintf(path, sizeof(path), "%s\\dev_diag.txt", mod_dir());
     FILE* f = fopen(path, "ab");
@@ -284,7 +620,87 @@ void devconsole_tick(double now) {
         fwrite(g_out.data(), 1, g_out.size(), f);
         fclose(f);
     }
+}
+
+static bool g_reported = false;
+
+// Where the hunter stands still in town (to place NPC menus), and which actions and animations the hunter performs
+// (to choose MHW animations for Remnant items).
+static void track_session(double now, bool inBase, int zone, const Vec3& pos) {
+    static double stillSince = 0;
+    static Vec3 still{};
+    static bool noted = false;
+    static int spots = 0, actionLines = 0;
+    static int lastSet = -1, lastId = -1;
+    static uint32_t lastAnim = 0xFFFFFFFF;
+    char line[160];
+    if (inBase) {
+        float dx = pos.x - still.x, dy = pos.y - still.y, dz = pos.z - still.z;
+        if (stillSince == 0 || dx * dx + dy * dy + dz * dz > 40.0f * 40.0f) {
+            stillSince = now;
+            still = pos;
+            noted = false;
+        } else if (!noted && now - stillSince > 4.0) {
+            noted = true;
+            spots++;
+            snprintf(line, sizeof(line), "spot %d zone %d pos %.0f %.0f %.0f", spots, zone, pos.x, pos.y, pos.z);
+            g_out = std::string(line) + "\n";
+            append_out();
+            Shared& sh = S();
+            AcquireSRWLockExclusive(&sh.lock);
+            toast(sh.live, "Remnant Hunt diagnostic: spot %d noted", spots);
+            ReleaseSRWLockExclusive(&sh.lock);
+        }
+    } else {
+        stillSince = 0;
+    }
+    uint8_t* pl = player_ptr();
+    if (!pl || actionLines > 3000 || !mem_readable(pl + 0x61C8 + 0xAC, 8) || !mem_readable(pl + 0x55B8, 4)) return;
+    int set = *(int*)(pl + 0x61C8 + 0xAC), id = *(int*)(pl + 0x61C8 + 0xB0);
+    uint32_t anim = *(uint32_t*)(pl + 0x55B8);
+    if (set == lastSet && id == lastId && anim == lastAnim) return;
+    lastSet = set;
+    lastId = id;
+    lastAnim = anim;
+    snprintf(line, sizeof(line), "t %.1f zone %d action %d:%d anim %u.%u", now, zone, set, id, anim >> 12, anim & 0xFFF);
+    g_out = std::string(line) + "\n";
+    append_out();
+    actionLines++;
+}
+
+// Game thread, from mod_game_tick.
+
+void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3& pos) {
+    static double inGameSince = 0;
+    if (g_reported && inGame) track_session(now, inBase, zone, pos);
+    if (g_watchUntil > 0) {
+        if (now >= g_watchUntil) {
+            g_watchUntil = 0;
+            watch_report();
+            append_out();
+            log("diagnostic item bar watch written");
+            for (Watch& w : g_watch) w = Watch{};
+        } else if (now >= g_watchNext) {
+            g_watchNext = now + 0.5;
+            watch_sample();
+        }
+        return;
+    }
+    if (g_reported) return;
+    if (!inGame) { inGameSince = 0; return; }
+    if (inGameSince == 0) inGameSince = now;
+    char flag[MAX_PATH];
+    snprintf(flag, sizeof(flag), "%s\\dev_diag", mod_dir());
+    if (GetFileAttributesA(flag) == INVALID_FILE_ATTRIBUTES) return;
+    // In a save: report once the save data is found, or after a minute in game either way.
+    if (!user_data() && now - inGameSince < 60.0) return;
+    g_reported = true;
+    g_out.clear();
+    report();
+    append_out();
     log("diagnostic report written (%zu bytes)", g_out.size());
+    uint8_t* u = user_data();
+    if (u && !g_reportIds.empty()) watch_start(player_ptr(), u, g_reportIds, now);
 }
 
 }  // namespace rh

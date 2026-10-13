@@ -497,9 +497,9 @@ static void hud(const SaveData& s, const Live& l) {
             }
         }
     }
-    // Gun panel, bottom right.
+    // Gun panel, bottom centre, clear of MHW's item bar and slinger (bottom right) until the guns live in the bar.
     ImVec2 size(360 * sc, 132 * sc);
-    ImVec2 p(vp->Pos.x + vp->Size.x - size.x - 40 * sc, vp->Pos.y + vp->Size.y - size.y - 210 * sc);
+    ImVec2 p(vp->Pos.x + (vp->Size.x - size.x) / 2, vp->Pos.y + vp->Size.y - size.y - 36 * sc);
     fg->AddRectFilled(p, ImVec2(p.x + size.x, p.y + size.y), col::mhwFrame);
     fg->AddRect(p, ImVec2(p.x + size.x, p.y + size.y), col::mhwGold, 0, 0, 1.5f);
     int gun = equipped_gun(s, l);

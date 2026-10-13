@@ -107,6 +107,7 @@ constexpr size_t kViewport0 = 0x50, kVp0Camera = 0x58, kVpView = 0xA0, kVpProj =
 constexpr size_t kCamFov = 0x144, kCamPos = 0x150, kCamTarget = 0x170;
 
 static uint8_t* g_player = nullptr;  // refreshed each game tick
+uint8_t* player_ptr() { return g_player; }
 
 static uint8_t* find_player() {
     if (!hook_ok(HOOKS_FIND_MASTER_PLAYER)) return nullptr;

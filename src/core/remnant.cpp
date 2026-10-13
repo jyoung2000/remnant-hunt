@@ -424,8 +424,11 @@ void mod_game_tick() {
         l.dirty = false;
         g_lastSave = t;
     }
+    bool inGameNow = g.inGame, inBaseNow = g.inBase;
+    int zoneNow = g.zone;
+    Vec3 posNow = g.pos;
     ReleaseSRWLockExclusive(&sh.lock);
-    devconsole_tick(t);
+    devconsole_tick(t, inGameNow, inBaseNow, zoneNow, posNow);
 }
 
 // ---------------------------------------------------------------- save file
