@@ -1,0 +1,76 @@
+{
+ "sheet": "menus",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "role": "enum:smithy|melder|provisions",
+  "zone": "num",
+  "x": "num",
+  "y": "num",
+  "z": "num",
+  "radius": "num",
+  "host": "ref:npcs"
+ },
+ "rows": [
+  {
+   "id": "smithy_astera",
+   "role": "smithy",
+   "zone": 301,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "radius": 350,
+   "host": "mccabe"
+  },
+  {
+   "id": "melder_astera",
+   "role": "melder",
+   "zone": 301,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "radius": 350,
+   "host": "wallace"
+  },
+  {
+   "id": "provisions_astera",
+   "role": "provisions",
+   "zone": 301,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "radius": 350,
+   "host": "brabus"
+  },
+  {
+   "id": "smithy_seliana",
+   "role": "smithy",
+   "zone": 305,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "radius": 350,
+   "host": "mccabe"
+  },
+  {
+   "id": "melder_seliana",
+   "role": "melder",
+   "zone": 305,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "radius": 350,
+   "host": "wallace"
+  },
+  {
+   "id": "provisions_seliana",
+   "role": "provisions",
+   "zone": 305,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "radius": 350,
+   "host": "brabus"
+  }
+ ]
+}

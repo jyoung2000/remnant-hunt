@@ -1,0 +1,3444 @@
+{
+ "sheet": "armor",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "piece": "enum:head|body|gloves|legs",
+  "name": "r2text",
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
+ },
+ "rows": [
+  {
+   "id": "body_alchemist",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Body_Alchemist.uasset",
+     "key": "A39C566341C3ED3CB1ED669DDF5F1AFA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Body_Alchemist.uasset",
+     "key": "034F8E9D42630F8021F29AB267795F6C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Alchemist_Icon"
+   },
+   "effects": "dr+9.8%;stamina-10.4%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "body_archon",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Body_Archon.uasset",
+     "key": "2CB2B4794341828B12E8CE9077A37B4B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Body_Archon.uasset",
+     "key": "C1FAAD9A4243116D714C92B489FEA0D6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Arcanist_Icon"
+   },
+   "effects": "dr+10.2%;stamina-10.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_army",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Body_Army.uasset",
+     "key": "DF4D15444BC81066400A8F94E62638A0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Body_Army.uasset",
+     "key": "9F654380410F2987D52A3C9226652295"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Torso2_Icon"
+   },
+   "effects": "dr+6.3%;stamina-6.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "body_bandit",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Body_Bandit.uasset",
+     "key": "291FAB934371BAB1AC2A24A51474C808"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Body_Bandit.uasset",
+     "key": "2F2A3CE040103B70C17D55BA68DA54E6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Bandit_LONG_Icon"
+   },
+   "effects": "dr+5.4%;stamina-5.4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_challenger",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Body_Challenger.uasset",
+     "key": "AEEC67674C7968CF9195B98951762782"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Body_Challenger.uasset",
+     "key": "44BACC634B46E877EBF8C2B7A94B23B6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Defender_Icon"
+   },
+   "effects": "dr+14%;stamina-16.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_crimsonguard",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Body_CrimsonGuard.uasset",
+     "key": "82BCEA3944D1BB71E0AEBABE4B206C98"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Body_CrimsonGuard.uasset",
+     "key": "401643E14CC8E35CB59953A8A5F2D5D9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Torso_Icon"
+   },
+   "effects": "dr+12.2%;stamina-13.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "body_cultist",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Body_Cultist.uasset",
+     "key": "C580569F4E924CF282171C9C062FFD2A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Body_Cultist.uasset",
+     "key": "C3ED6F9B4B4258EE480C1897DECCCD19"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Cultist_Icon"
+   },
+   "effects": "dr+8.9%;stamina-9.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_elder",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Body_Elder.uasset",
+     "key": "7260C6204FC69DC621F6179CC36DE3A0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Body_Elder.uasset",
+     "key": "2ECCAD054A467EB663AD62B91282F71A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Elder_Icon"
+   },
+   "effects": "dr+5.9%;stamina-6%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_engineer",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Body_Engineer.uasset",
+     "key": "4A836EE048220CB87898EABC9E1CD46A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Body_Engineer.uasset",
+     "key": "C0F16FB1472B03D5D2055E9F1841066B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_NerudEngineer_Icon"
+   },
+   "effects": "dr+13.3%;stamina-15%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "body_explorer",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Body_Explorer.uasset",
+     "key": "E154318741A8B2E92E222B8A544D82EA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Body_Explorer.uasset",
+     "key": "F5D0ED6E498C3D702585F797D2BF3528"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Explorer_Icon"
+   },
+   "effects": "dr+5.8%;stamina-5.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_faeroyalguard",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Body_FaeRoyalGuard.uasset",
+     "key": "B422681047447BD0849030AE7F746EA7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Body_FaeRoyalGuard.uasset",
+     "key": "0084C16340A6B9023B39D1932853C67C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_FaeHeavy_Icon"
+   },
+   "effects": "dr+12%;stamina-13.2%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "body_gunslinger",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Body_Gunslinger.uasset",
+     "key": "07E28948484ADCDAB95C359595C1ACD8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Body_Gunslinger.uasset",
+     "key": "75D02F284A556502D476EE9663FDF50D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Gunslinger_Icon"
+   },
+   "effects": "dr+9.4%;stamina-9.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_handler",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Body_Handler.uasset",
+     "key": "5240DDAF49CC68874F1B0F82E179B98C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Body_Handler.uasset",
+     "key": "7EFA125F4B927B4FA12ED583C5CC3B2C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Handler_Icon"
+   },
+   "effects": "dr+8%;stamina-8.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_hunter",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Body_Hunter.uasset",
+     "key": "4660AD06454B721BD83F1E9B93A93140"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Body_Hunter.uasset",
+     "key": "B8D16B154BF827F28398F9BDE411415F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Sharpshooter_Icon"
+   },
+   "effects": "dr+8.7%;stamina-9%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_invader",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Body_Invader.uasset",
+     "key": "9ACAF50440F9A176DC1FF1B2A49A0D02"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Body_Invader.uasset",
+     "key": "EF00634C4069725DA2F548BAA6674A2A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_RootInvader_Icon"
+   },
+   "effects": "dr+6.2%;stamina-6.2%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "body_invoker",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Body_Invoker.uasset",
+     "key": "CF26DDA14C0EEFCD5D6C72B6EC22E9DF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Body_Invoker.uasset",
+     "key": "9F3D69C940CA9008421DBBBD6D6968E9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Torso_Invoker_Icon"
+   },
+   "effects": "dr+12.8%;stamina-14.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "body_leto1",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Body_Leto1.uasset",
+     "key": "35361B7745ECB6F28549F6B42866B273"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Body_Leto1.uasset",
+     "key": "468FD75447775D7994BA8FA2882B2231"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Leto_A_Icon"
+   },
+   "effects": "dr+18.1%;stamina-23.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_leto2",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Body_Leto2.uasset",
+     "key": "C0B746C14343C4C31AA6F7A617871A23"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Body_Leto2.uasset",
+     "key": "A13F20FB482F294BDB27DE9CE23326B3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Leto_B_Icon"
+   },
+   "effects": "dr+17.8%;stamina-22.6%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "body_medic",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Body_Medic.uasset",
+     "key": "B4BF4A134CA16078D01C339F99FA6D00"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Body_Medic.uasset",
+     "key": "BB9C2E3A4D12FFFC9D0D7988F74D69EC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Medic_Icon"
+   },
+   "effects": "dr+8.6%;stamina-8.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_nerudwarrior",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Body_NerudWarrior.uasset",
+     "key": "133B964748CAD90051CD25817C319885"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Body_NerudWarrior.uasset",
+     "key": "872959F24BF3EDE74A21E591A69E5679"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Torso_Icon"
+   },
+   "effects": "dr+16.1%;stamina-19.9%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "body_radiant",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Radiant/Armor_Body_Radiant.uasset",
+     "key": "4ADD74FF4799F4D2EE3A3F9BBF376537"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Radiant/Armor_Body_Radiant.uasset",
+     "key": "7A3624F24B792F1795BA40874216CD88"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Radiant_Icon"
+   },
+   "effects": "dr+13.8%;stamina-15.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_redwidow",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Body_RedWidow.uasset",
+     "key": "D8FA100C467DCCA806C14E8D3BC1C0DC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Body_RedWidow.uasset",
+     "key": "117234364B61A6D037B097A55A135779"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_RedWidowRegalia_Icon"
+   },
+   "effects": "dr+10.6%;stamina-11.2%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "body_ritualist",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Body_Ritualist.uasset",
+     "key": "C46C602F427B9727A251A89DEE2EECB0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Body_Ritualist.uasset",
+     "key": "E86437A04C976C2319CCDB95C7F55398"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Torso_Ritualist_Icon"
+   },
+   "effects": "dr+9%;stamina-9.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "body_spaceworker",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Body_SpaceWorker.uasset",
+     "key": "FAE8058347730F30DE7A708B1A5395D9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Body_SpaceWorker.uasset",
+     "key": "0D6CC9D64D09FD3CB59E54BC795BEFFD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_NerudLight_Icon"
+   },
+   "effects": "dr+5.6%;stamina-5.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "body_summoner",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Body_Summoner.uasset",
+     "key": "7BABEEFD4EB2E3479C28338012A93BFF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Body_Summoner.uasset",
+     "key": "AFD788BF484E92020ED20A888856F4F9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_RootSummoner_Icon"
+   },
+   "effects": "dr+12.4%;stamina-13.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_survivor",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Survivor/Armor_Body_Survivor.uasset",
+     "key": "98CA3C34491FCC8FDBB3B2819383F3C7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Survivor/Armor_Body_Survivor.uasset",
+     "key": "504726E749ED208A44E15DA83341D635"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Drifter_Icon"
+   },
+   "effects": "dr+7.8%;stamina-8%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "body_void",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Body_Void.uasset",
+     "key": "1B5A1C144FB96E964D0214BA4D9FE619"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Body_Void.uasset",
+     "key": "B0D6ECDE4F34CCE607B33F8433FF508E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Void_Icon"
+   },
+   "effects": "dr+12.7%;stamina-14.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "body_warden",
+   "piece": "body",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Body_Warden.uasset",
+     "key": "ED07CD994CC668CD897C8BAF5AEF5D5F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Body_Warden.uasset",
+     "key": "8931D35E4049E86FDB52C88EEEE3C361"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Torso"
+   },
+   "effects": "dr+5.9%;stamina-6%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "gloves_alchemist",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Gloves_Alchemist.uasset",
+     "key": "DC0082E4435A31F8962A148CBD49935F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Gloves_Alchemist.uasset",
+     "key": "CEB0DD654CA588BE63AE9095602E0563"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Alchemist_Icon"
+   },
+   "effects": "dr+2.5%;stamina-2.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "gloves_archon",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Gloves_Archon.uasset",
+     "key": "B0CEB71345B4D786E947338484917361"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Gloves_Archon.uasset",
+     "key": "2F891EAB46AA1C0FA7CEC29ACC7C8B92"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Arcanist_Icon"
+   },
+   "effects": "dr+2.6%;stamina-2.7%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_army",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Gloves_Army.uasset",
+     "key": "D7C3C547490BBDB2BED1CD82EA6D7643"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Gloves_Army.uasset",
+     "key": "AA3B3170405A0A0D9D66E19DA276CF76"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Gloves3_Icon"
+   },
+   "effects": "dr+1.6%;stamina-1.6%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "gloves_bandit",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Gloves_Bandit.uasset",
+     "key": "0AA2A13344DE18F1E6EC0390440D7A3A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Gloves_Bandit.uasset",
+     "key": "2AB3EACB45A2179FFEF127B0763A966E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Bandit_Icon"
+   },
+   "effects": "dr+1.4%;stamina-1.4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_challenger",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Gloves_Challenger.uasset",
+     "key": "18DAAB184E29B5DA5FE15E810A66F5F6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Gloves_Challenger.uasset",
+     "key": "DDFBB3E247A9AE12FA4376B54F03DCC4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Defender_Icon"
+   },
+   "effects": "dr+3.5%;stamina-4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_crimsonguard",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Gloves_CrimsonGuard.uasset",
+     "key": "4F14E724425208C34C61859F50064D01"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Gloves_CrimsonGuard.uasset",
+     "key": "0D2A7F3544490C9120F1D09341E15FC0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Gloves_Icon"
+   },
+   "effects": "dr+3%;stamina-3.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "gloves_cultist",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Gloves_Cultist.uasset",
+     "key": "FAAA04E44A76164B603A0CA163B4B1E3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Gloves_Cultist.uasset",
+     "key": "D39B6D5D44152FC05243E7A339450578"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Cultist_Icon"
+   },
+   "effects": "dr+2.2%;stamina-2.3%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_elder",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Gloves_Elder.uasset",
+     "key": "D480205A4CBC4F51A9E0249E45D94007"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Gloves_Elder.uasset",
+     "key": "8633DDA0415C622CC5633F9EA6CEA4F1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Elder_Icon"
+   },
+   "effects": "dr+1.5%;stamina-1.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_engineer",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Gloves_Engineer.uasset",
+     "key": "178101634A25CA1B60F4B2B4AA255623"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Gloves_Engineer.uasset",
+     "key": "5C3EF79E48C8EC60E1E117B36DC64166"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_NerudEngineer_Icon"
+   },
+   "effects": "dr+3.3%;stamina-3.8%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "gloves_explorer",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Gloves_Explorer.uasset",
+     "key": "71F9D624438D422F3D0369A99A14AC3E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Gloves_Explorer.uasset",
+     "key": "D571F85D4BDEF70566ADAFBB1D378488"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Explorer_Icon"
+   },
+   "effects": "dr+1.4%;stamina-1.4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_faeroyalguard",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Gloves_FaeRoyalGuard.uasset",
+     "key": "FECAB0024D01BF316315DD90C99F2DA1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Gloves_FaeRoyalGuard.uasset",
+     "key": "3B2D89D6435117BA22168C881A4E47F0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_FaeHeavy_Icon"
+   },
+   "effects": "dr+3%;stamina-3.3%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "gloves_gunslinger",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Gloves_Gunslinger.uasset",
+     "key": "CC93F84C437EAC77318A92B85FFDCD24"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Gloves_Gunslinger.uasset",
+     "key": "F84DB1C14BEA6D70BDA9CF883A2B6206"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Gunslinger_Icon"
+   },
+   "effects": "dr+2.3%;stamina-2.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_handler",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Gloves_Handler.uasset",
+     "key": "ADD418C14B92FDC788EA9682818067CD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Gloves_Handler.uasset",
+     "key": "C77AA3554468F8203C5BEB8A6D22A185"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Handler_Icon"
+   },
+   "effects": "dr+2%;stamina-2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_hunter",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Gloves_Hunter.uasset",
+     "key": "CD7651254BD57040DC514C93DA0F9EA7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Gloves_Hunter.uasset",
+     "key": "E79C77DC41DAED20F25E3E9DACE9311D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Sharpshooter_Icon"
+   },
+   "effects": "dr+2.2%;stamina-2.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_invader",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Gloves_Invader.uasset",
+     "key": "79870F4145EA47C7E0E20B91FD2DE1A5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Gloves_Invader.uasset",
+     "key": "1FBD20114B67E47E1782F48E50C47662"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_RootInvader_Icon"
+   },
+   "effects": "dr+1.5%;stamina-1.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "gloves_invoker",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Gloves_Invoker.uasset",
+     "key": "85B97E9F4B67EBC94FF26C83FCEA009D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Gloves_Invoker.uasset",
+     "key": "7166B7BA4F607C1F52BE08BF8FE00CCE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Gloves_Invoker_Icon"
+   },
+   "effects": "dr+3.2%;stamina-3.6%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "gloves_leto1",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Gloves_Leto1.uasset",
+     "key": "E1DC03D544E8A9334DA641A2652C586F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Gloves_Leto1.uasset",
+     "key": "7F9D107D49459804501421A70DB1602E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Leto_A_Icon"
+   },
+   "effects": "dr+4.5%;stamina-6%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_leto2",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Gloves_Leto2.uasset",
+     "key": "3E6DCFE6492E07F6AA70CAA751320B06"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Gloves_Leto2.uasset",
+     "key": "9D4F64824F0A92CD904510ABA33BAD7A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Leto_B_Icon"
+   },
+   "effects": "dr+4.4%;stamina-5.5%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "gloves_medic",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Gloves_Medic.uasset",
+     "key": "911258A945DAB793F2A6BE9262A7D4B4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Gloves_Medic.uasset",
+     "key": "F513A1014B32C9B12BE9299A2D5C48CC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Medic_Icon"
+   },
+   "effects": "dr+2.1%;stamina-2.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_nerudwarrior",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Gloves_NerudWarrior.uasset",
+     "key": "9D8AAD91461660D8F45041B38EC3B137"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Gloves_NerudWarrior.uasset",
+     "key": "393FC8FD485C01802E5D5198025BE1BD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Gloves_Icon"
+   },
+   "effects": "dr+3.5%;stamina-4.3%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "gloves_radiant",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Radiant/Armor_Gloves_Radiant.uasset",
+     "key": "A3F496DB4DCDFAF455951F95BEDF6FC8"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Radiant_Icon"
+   },
+   "effects": "dr+3.4%;stamina-4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_redwidow",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Gloves_RedWidow.uasset",
+     "key": "38D90D6D415D11322A468BA53185F221"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Gloves_RedWidow.uasset",
+     "key": "AC249FBC49AB8C828CCC11B14E22EF26"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_RedWidowRegalia_Icon"
+   },
+   "effects": "dr+2.6%;stamina-2.8%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "gloves_ritualist",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Gloves_Ritualist.uasset",
+     "key": "C97D3DD14336286A3EF34A8484EC305F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Gloves_Ritualist.uasset",
+     "key": "7E4419F744D6993E4053E1997891FB10"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Gloves_Ritualist_Icon"
+   },
+   "effects": "dr+2.3%;stamina-2.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "gloves_spaceworker",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Gloves_SpaceWorker.uasset",
+     "key": "3AC9C8274651CF57DEE2568DE8A1AD94"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Gloves_SpaceWorker.uasset",
+     "key": "A75A5E6F4A3AD6E543F97DA8AD3D6A59"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_NerudLight_Icon"
+   },
+   "effects": "dr+1.4%;stamina-1.4%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "gloves_summoner",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Gloves_Summoner.uasset",
+     "key": "17A84E0049D740DBE571CC9369899560"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Gloves_Summoner.uasset",
+     "key": "855C1ED24C844A11740C52960D870B09"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_RootSummoner_Icon"
+   },
+   "effects": "dr+3.1%;stamina-3.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_survivor",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Survivor/Armor_Gloves_Survivor.uasset",
+     "key": "F3899A44447CD7D6C6E61097C9D2D8ED"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Survivor/Armor_Gloves_Survivor.uasset",
+     "key": "C94C78F9408E1B5084A50E8D88A1BE04"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Drifter_Icon"
+   },
+   "effects": "dr+2%;stamina-2%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "gloves_void",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Gloves_Void.uasset",
+     "key": "606DE3964BA74FB72DA44DBC1908EDD7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Gloves_Void.uasset",
+     "key": "4E937AA54A27DDFB02B76EBC33225729"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Void_Icon"
+   },
+   "effects": "dr+3.2%;stamina-3.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "gloves_warden",
+   "piece": "gloves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Gloves_Warden.uasset",
+     "key": "095EE01C4041C0C9944D559CD66A0654"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Gloves_Warden.uasset",
+     "key": "F2ED6270480FBAD3E1FE879D982E6118"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Gloves"
+   },
+   "effects": "dr+1.5%;stamina-1.5%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "head_alchemist",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Head_Alchemist.uasset",
+     "key": "A038389E4EB963C34FBBA4BD52895029"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Head_Alchemist.uasset",
+     "key": "32C405FF459D9D917081328EA72CE2D6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Alchemist_Icon"
+   },
+   "effects": "dr+2.5%;stamina-2.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_archon",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Head_Archon.uasset",
+     "key": "848E7C0A48961FFE64B0259BF9B6A104"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Head_Archon.uasset",
+     "key": "E753F49C4353492094A0F08FF651D30C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Arcanist_Icon"
+   },
+   "effects": "dr+2.6%;stamina-2.7%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_army",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Head_Army.uasset",
+     "key": "0FD2B6F44E16C428D0A1D28FE7F60AB3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Head_Army.uasset",
+     "key": "E55103DC40A9466316D12AB8D8252AF1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Head2_Icon"
+   },
+   "effects": "dr+2.6%;stamina-2.6%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "head_bandit",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Head_Bandit.uasset",
+     "key": "714C6A9F45E967243BF1DD8384F574DE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Head_Bandit.uasset",
+     "key": "5D8EB0B642A27B54782F049C8D362C03"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Bandit_Icon"
+   },
+   "effects": "dr+1.4%;stamina-1.4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_bloodlesscrown",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/BloodlessCrown/Armor_Head_BloodlessCrown.uasset",
+     "key": "C096632447F467F5F9D8048E91D2FAFC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/BloodlessCrown/Armor_Head_BloodlessCrown.uasset",
+     "key": "E8F8C6364EF93CAF7CE190B896A0788E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_BloodlessCrown2_Icon"
+   },
+   "effects": "dr+1.3%;stamina-1.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "head_challenger",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Head_Challenger.uasset",
+     "key": "BF50ECBB46BD7E7A1798CF95CF8F6B83"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Head_Challenger.uasset",
+     "key": "583B968842E1F00250A9EF96E3CA2E93"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Defender_Icon"
+   },
+   "effects": "dr+3.5%;stamina-4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_crimsonguard",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Head_CrimsonGuard.uasset",
+     "key": "C5F976754B0C79F91E2BB1B828663B92"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Head_CrimsonGuard.uasset",
+     "key": "C572779646F64A977DA682B2EE594A5E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Head_Icon"
+   },
+   "effects": "dr+3.1%;stamina-3.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "head_cultist",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Head_Cultist.uasset",
+     "key": "44A5CF194F2DA60313ACE289A5E3E06C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Head_Cultist.uasset",
+     "key": "9353CEC04D141BCEAE8B76B75B755F53"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Cultist_Icon"
+   },
+   "effects": "dr+2.2%;stamina-2.3%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_elder",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Head_Elder.uasset",
+     "key": "68CAE3F04F0CD2E41FBB89B549974A7D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Head_Elder.uasset",
+     "key": "413DCD2741DFC2AF52F8659F05468635"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Elder_Icon"
+   },
+   "effects": "dr+1.5%;stamina-1.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_engineer",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Head_Engineer.uasset",
+     "key": "28F288E647DAACE4A51E1286A63EB011"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Head_Engineer.uasset",
+     "key": "8B19243841A3026459B467B36DBCEDEE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_NerudEngineer_Icon"
+   },
+   "effects": "dr+3.3%;stamina-3.8%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_explorer",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Head_Explorer.uasset",
+     "key": "BBA5CC7E466B995D245C4B836860EC28"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Head_Explorer.uasset",
+     "key": "5C9FE50247AD2CDA200B45B7C41A566D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Explorer_Icon"
+   },
+   "effects": "dr+1.4%;stamina-1.4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_faeroyalguard",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Head_FaeRoyalGuard.uasset",
+     "key": "31D9368449610EB5B7C6E7833D010DA3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Head_FaeRoyalGuard.uasset",
+     "key": "3C5070AD4DCA85D6E7B6CCA33488F283"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_FaeHeavy_Icon"
+   },
+   "effects": "dr+3.1%;stamina-3.3%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_fieldcap",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Misc/Armor_Head_FieldCap.uasset",
+     "key": "9353E6464CA6927D6551E4A7229EA93A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Misc/Armor_Head_FieldCap.uasset",
+     "key": "445594094F10170B01358CB5B597C99C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_MedicHat_Sunglasses_Icon"
+   },
+   "effects": "dr+2.1%;stamina-2.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_gunslinger",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Head_Gunslinger.uasset",
+     "key": "2B4C3A4545A571A4B660F98C86EC02D7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Head_Gunslinger.uasset",
+     "key": "2FDD43A34F1A68BA04E1F7A51AB27D12"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Gunslinger_Icon"
+   },
+   "effects": "dr+2.3%;stamina-2.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_handler",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Head_Handler.uasset",
+     "key": "8938339E47CC5D55612A51BCFC5365C7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Head_Handler.uasset",
+     "key": "8BFB22BA40CD3B28A778709680785E9F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Handler_Icon"
+   },
+   "effects": "dr+2%;stamina-2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_hunter",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Head_Hunter.uasset",
+     "key": "87434286491F7783A9901DA33010AB26"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Head_Hunter.uasset",
+     "key": "B84863704FBAAC30D24862982A27861B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Sharpshooter_Icon"
+   },
+   "effects": "dr+2.2%;stamina-2.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_invader",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Head_Invader.uasset",
+     "key": "E410FB954D4A56077984B29B05ADD99E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Head_Invader.uasset",
+     "key": "8930F4FD45C9357C12CCB1A35546E736"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_RootInvader_Icon"
+   },
+   "effects": "dr+1.5%;stamina-1.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_invoker",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Head_Invoker.uasset",
+     "key": "FAE9B48B4F9BDC2159E10FB24F7F4CBC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Head_Invoker.uasset",
+     "key": "1F83D6A946D86F9CEFB375876E144E29"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Head_Invoker_Icon"
+   },
+   "effects": "dr+3.2%;stamina-3.6%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "head_leto1",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Head_Leto1.uasset",
+     "key": "49776A224636577E2187C3A92DE78F52"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Head_Leto1.uasset",
+     "key": "076706314F64080958EB3084964C9A69"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Leto_A_Icon"
+   },
+   "effects": "dr+4.5%;stamina-6%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_leto2",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Head_Leto2.uasset",
+     "key": "6D9BD5A940DAC36881F02785997F3D67"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Head_Leto2.uasset",
+     "key": "F29F97144B4E6CFACC7E689D4BE90E9A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Leto_B_Icon"
+   },
+   "effects": "dr+4.4%;stamina-5.5%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "head_lodestonecrown",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/Armor_Head_LodestoneCrown.uasset",
+     "key": "237A581F49159AD961E961A7A49B8A1F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/Armor_Head_LodestoneCrown.uasset",
+     "key": "6652B0BB45D6192D49B6918FBF63A097"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_LodestoneCrown_Icon"
+   },
+   "effects": "dr+1.3%;stamina-1.3%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_medic",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Head_Medic.uasset",
+     "key": "561958794510D4F2F875FB9FC748EB82"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Head_Medic.uasset",
+     "key": "7A08DD0A427B8DADFD12F2ACB9BF4852"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Medic_Icon"
+   },
+   "effects": "dr+2.1%;stamina-2.2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_mudtoothshat",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MudtoothsHat/Armor_Head_MudtoothsHat.uasset",
+     "key": "9E1E02FB4516F0BB53786DABDA7DF9DA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MudtoothsHat/Armor_Head_MudtoothsHat.uasset",
+     "key": "777358DD44897B93755FB49CAF9A606C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_MudtoothsHat2_Icon"
+   },
+   "effects": "dr+2.1%;stamina-2.2%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "head_nerudwarrior",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Head_NerudWarrior.uasset",
+     "key": "4DD2F052496CD5CFF6274AB711D86060"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Head_NerudWarrior.uasset",
+     "key": "EAD0F44047B14ACBF3C8479EE1477FE2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Head_Icon"
+   },
+   "effects": "dr+4%;stamina-4.9%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "head_pilotshelm",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/Nerud_Pilot/Armor_Head_PilotsHelm.uasset",
+     "key": "6F453A9B472CBA0EE1F44F982D0BFD61"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/Nerud_Pilot/Armor_Head_PilotsHelm.uasset",
+     "key": "30B9E8B344D7646054355E94468DC97A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Nerud_Navigator_Icon"
+   },
+   "effects": "dr+3.2%;stamina-3.8%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "head_radiant",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Radiant/Armor_Head_Radiant.uasset",
+     "key": "D76BB37947701F592458008F42D6539C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Radiant/Armor_Head_Radiant.uasset",
+     "key": "42B6C4FE40C7239771E2D5860B01DEF4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Radiant_Icon"
+   },
+   "effects": "dr+3.4%;stamina-4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_redprince",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Misc/Armor_Head_RedPrince.uasset",
+     "key": "2322F80E4A01ACC23D5D4BAEACCD8A5F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Misc/Armor_Head_RedPrince.uasset",
+     "key": "884DA1D447D93161DA27CDACAE5A8A4A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_FaeCrown_Icon"
+   },
+   "effects": "dr+1.2%;stamina-3%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_redwidow",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Head_RedWidow.uasset",
+     "key": "F6118D6443EDBE505965E39FF944E5B6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Head_RedWidow.uasset",
+     "key": "52A3BEE441B301F081CE7B8422091FA9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_RedWidowRegalia_Icon"
+   },
+   "effects": "dr+2.6%;stamina-2.8%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_ritualist",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Head_Ritualist.uasset",
+     "key": "1EF874A2442E842998C1ECA7B464FB47"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Head_Ritualist.uasset",
+     "key": "5C85D0EE44A2C1AA9419BF86BC370E30"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_Ritualist_Icon"
+   },
+   "effects": "dr+2.3%;stamina-2.4%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "head_spaceworker",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Head_SpaceWorker.uasset",
+     "key": "F7B196934E08A0290FBFEB9D2FAA2EE0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Head_SpaceWorker.uasset",
+     "key": "3C8A7C9244EFE5D44BB860ADAC5A3BA8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_NerudLight_Icon"
+   },
+   "effects": "dr+1.4%;stamina-1.4%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_summoner",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Head_Summoner.uasset",
+     "key": "97165AAC464557B3B2DE2182A718E091"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Head_Summoner.uasset",
+     "key": "5B6F1D5247BFBCAB9E4139A5D5999A83"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_RootSummoner_Icon"
+   },
+   "effects": "dr+3.1%;stamina-3.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_tophat",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/TopHat/Armor_Head_TopHat.uasset",
+     "key": "97EEC92C450A7E622E56D7B8421AE34A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/TopHat/Armor_Head_TopHat.uasset",
+     "key": "34628C954D4DC91C1A88C4AB51F1162F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_TopHat2_Icon"
+   },
+   "effects": "dr+2.6%;stamina-2.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_truecrimsoncrown",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/TrueCrimsonCrown/Armor_Head_TrueCrimsonCrown.uasset",
+     "key": "7E6B87C44D1461A13E30A4BE5947EABD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/TrueCrimsonCrown/Armor_Head_TrueCrimsonCrown.uasset",
+     "key": "D3DE84A54EFEB3D11FDF2DBC9082A364"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_TrueCrimsonCrown2_Icon"
+   },
+   "effects": "dr+3.3%;stamina-5%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "head_void",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Head_Void.uasset",
+     "key": "6BBADC7E4C2760DED549A5B3B4DB94E5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Head_Void.uasset",
+     "key": "A50673404523D7566880DCADB89A98F6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Void_Icon"
+   },
+   "effects": "dr+3.2%;stamina-3.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "head_warden",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Head_Warden.uasset",
+     "key": "B0CAFF334688E1F95E8A49AD43DAAB94"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Head_Warden.uasset",
+     "key": "8453C6364BB66186DAB74795FA7D7236"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Head"
+   },
+   "effects": "dr+2.5%;stamina-2.5%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "head_weldinggoggles",
+   "piece": "head",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/WeldingGoggles/Armor_Head_WeldingGoggles.uasset",
+     "key": "5328223F44ADC5B83D4123B95011CA27"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/WeldingGoggles/Armor_Head_WeldingGoggles.uasset",
+     "key": "2049158544786E4011557F84E5051419"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_Welding_Goggles"
+   },
+   "effects": "dr+1.8%;stamina-2%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_alchemist",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Legs_Alchemist.uasset",
+     "key": "9DC0C5FD41563AFBD5805E9B8FF5E18B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Alchemist/Armor_Legs_Alchemist.uasset",
+     "key": "1F15B7DD4C03EDC8F6D3BA959ADF5C16"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Alchemist_Icon"
+   },
+   "effects": "dr+4.9%;stamina-5.2%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "legs_archon",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Legs_Archon.uasset",
+     "key": "54946BC24EECFC138FA0A588ECB55300"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Arcanist/Armor_Legs_Archon.uasset",
+     "key": "122DA5584E44F986673BE1BBA168F75F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Arcanist_Icon"
+   },
+   "effects": "dr+5.1%;stamina-5.4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_army",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Legs_Army.uasset",
+     "key": "2699F34744B91BB7AC4F6F97DF10F24C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Armor_Legs_Army.uasset",
+     "key": "9B9DE2264A1941CA568652851EB4BE95"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Legs2_Icon"
+   },
+   "effects": "dr+3.2%;stamina-3.2%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "legs_bandit",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Legs_Bandit.uasset",
+     "key": "3ECE262D4EE65B418DD77DA493F2C789"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Bandit/Armor_Legs_Bandit.uasset",
+     "key": "52C57BB24EFCDA67913A4CB1C1CC525B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Bandit_Icon"
+   },
+   "effects": "dr+2.7%;stamina-2.7%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_challenger",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Legs_Challenger.uasset",
+     "key": "6B7BF3AA442E26AD4AB5A0A700AC2D4E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Challenger/Armor_Legs_Challenger.uasset",
+     "key": "6BDD9376431C568BEB224E9A55BEE447"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Defender_Icon"
+   },
+   "effects": "dr+7%;stamina-8.1%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_crimsonguard",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Legs_CrimsonGuard.uasset",
+     "key": "A396DAAB4FB2A5FAED2F6189816079AC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Armor_Legs_CrimsonGuard.uasset",
+     "key": "6AC5ACFA4C04829F591F4BAFCBA2ED8F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Legs_Icon"
+   },
+   "effects": "dr+6.1%;stamina-6.7%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "legs_cultist",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Legs_Cultist.uasset",
+     "key": "2C5F651D4BCB113270C4608CDECC66C6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Cultist/Armor_Legs_Cultist.uasset",
+     "key": "7E67FD37495C1A55F43D7DAB24129331"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Cultist_Icon"
+   },
+   "effects": "dr+4.4%;stamina-4.6%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_elder",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Legs_Elder.uasset",
+     "key": "E2ADD1144C1FD13CA570DEB2F2B57C64"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Elder/Armor_Legs_Elder.uasset",
+     "key": "712DC1ED47AE89AD783C3394040DB9C3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Elder_Icon"
+   },
+   "effects": "dr+3%;stamina-3%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_engineer",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Legs_Engineer.uasset",
+     "key": "2B2AED06405CEBE8163F6B83849BDE38"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Engineer/Armor_Legs_Engineer.uasset",
+     "key": "36E7CCFA4A2C036832BD5AA3EB33624D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_NerudEngineer_Icon"
+   },
+   "effects": "dr+6.6%;stamina-7.5%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "legs_explorer",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Legs_Explorer.uasset",
+     "key": "A4FA9BC0475FDAC39071A0A7B0157758"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Explorer/Armor_Legs_Explorer.uasset",
+     "key": "0D5D499F4B11432E95B03C8A0AF6580C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Explorer_Icon"
+   },
+   "effects": "dr+2.9%;stamina-2.9%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_faeroyalguard",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Legs_FaeRoyalGuard.uasset",
+     "key": "8C1B274C4B7BD8CCACF0F29362538552"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Armor/FaeRoyal/Armor_Legs_FaeRoyalGuard.uasset",
+     "key": "E64EE7224DFEEEA7469C51A8C037D670"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_FaeHeavy_Icon"
+   },
+   "effects": "dr+6%;stamina-6.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "legs_gunslinger",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Legs_Gunslinger.uasset",
+     "key": "0DC93DB8462F1EECA9E545A7E8B24FE4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Gunslinger/Armor_Legs_Gunslinger.uasset",
+     "key": "0E8458894C8BF50138B24EA2B4DBB3DF"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Gunslinger_Icon"
+   },
+   "effects": "dr+4.7%;stamina-4.9%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_handler",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Legs_Handler.uasset",
+     "key": "9CF635C74FC50221037D3FACF6329666"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Handler/Armor_Legs_Handler.uasset",
+     "key": "FC02AA2943A4A826B7425D9DFD09E826"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Handler_Icon"
+   },
+   "effects": "dr+4%;stamina-4.1%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_hunter",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Legs_Hunter.uasset",
+     "key": "F2625B3E452E7DFDA61E9F987D96C00E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Hunter/Armor_Legs_Hunter.uasset",
+     "key": "5F92C3E5414E7D72AB64088B7FDFB135"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Sharpshooter_Icon"
+   },
+   "effects": "dr+4.4%;stamina-4.5%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_invader",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Legs_Invader.uasset",
+     "key": "4EA04EF1497BBDFB47C5F99D24E49155"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Invader/Armor_Legs_Invader.uasset",
+     "key": "673798654CDCEB88EF3CCCA51D852CA2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_RootInvader_Icon"
+   },
+   "effects": "dr+3.1%;stamina-3.1%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "legs_invoker",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Legs_Invoker.uasset",
+     "key": "553067834D4DE4C50A7F269FE52544FB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Armor_Legs_Invoker.uasset",
+     "key": "1A478F6B44B4B96A47FD82ACC8A10074"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Legs_Invoker_Icon"
+   },
+   "effects": "dr+6.4%;stamina-7.2%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "legs_leto1",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Legs_Leto1.uasset",
+     "key": "9AA787A24C77FF587D12BC9E529BD8AA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto1/Armor_Legs_Leto1.uasset",
+     "key": "E0C6797241D7CB05EBEAD29B04ED2145"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Leto_A_Icon"
+   },
+   "effects": "dr+9%;stamina-11.8%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_leto2",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Legs_Leto2.uasset",
+     "key": "83337A124714DD070F0B7CAE81E83E6B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Leto2/Armor_Legs_Leto2.uasset",
+     "key": "3984F96049D52E516A17998213353A51"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Leto_B_Icon"
+   },
+   "effects": "dr+8.9%;stamina-11.3%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "legs_medic",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Legs_Medic.uasset",
+     "key": "38BAD61E471B5BF097F3A58BEE8AAF39"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype_Starting/Medic/Armor_Legs_Medic.uasset",
+     "key": "01A8004F4F018125084619BC653C199E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Medic_Icon"
+   },
+   "effects": "dr+4.3%;stamina-4.4%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_nerudwarrior",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Legs_NerudWarrior.uasset",
+     "key": "E73DF2FA47A91FFD74EF928572784FF6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Armor_Legs_NerudWarrior.uasset",
+     "key": "2F046BA54C24C3064EA2719DE427F9B8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Legs_Icon"
+   },
+   "effects": "dr+8.8%;stamina-10.8%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "legs_radiant",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Radiant/Armor_Legs_Radiant.uasset",
+     "key": "AC50DE79477451978660FEADF967B329"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Radiant/Armor_Legs_Radiant.uasset",
+     "key": "0EE378E549CC8E7D745DBCABBF4DAD50"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Radiant_Icon"
+   },
+   "effects": "dr+6.9%;stamina-7.9%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_redwidow",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Legs_RedWidow.uasset",
+     "key": "8B0089A04C6C42B9C37F1A9741CE7CA8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Armor/RedWidow/Armor_Legs_RedWidow.uasset",
+     "key": "D92A378B4A74692BF4D6299CFAFFB847"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_RedWidowRegalia_Icon"
+   },
+   "effects": "dr+5.2%;stamina-5.6%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "legs_ritualist",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Legs_Ritualist.uasset",
+     "key": "56C9128147BBEF2F51FB09A7CC0D5E3D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Armor_Legs_Ritualist.uasset",
+     "key": "7ACE92A84D9583977AD2E9AC3A499940"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Legs_Ritualist_Icon"
+   },
+   "effects": "dr+4.5%;stamina-4.7%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 12500,
+   "recipe": [
+    "ore_high2*3",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "legs_spaceworker",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Legs_SpaceWorker.uasset",
+     "key": "3B955FAF40D41B5041169CA4A979BFF5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Armor/SpaceWorker/Armor_Legs_SpaceWorker.uasset",
+     "key": "064117AA43D4458826957C8328798201"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_NerudLight_Icon"
+   },
+   "effects": "dr+2.8%;stamina-2.8%",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 6000,
+   "recipe": [
+    "ore_high*2",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "legs_summoner",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Legs_Summoner.uasset",
+     "key": "32A49841477B16A15D519FB74CE0D9DA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Archetype/Summoner/Armor_Legs_Summoner.uasset",
+     "key": "40993EE244B5F8CBF9719ABC5BAC560F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_RootSummoner_Icon"
+   },
+   "effects": "dr+6.2%;stamina-6.9%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_survivor",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Survivor/Armor_Legs_Survivor.uasset",
+     "key": "DCC0F1FA42849D7B388E73AD9BB8C72F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Survivor/Armor_Legs_Survivor.uasset",
+     "key": "5BA57C25493E14C5E7941D84D77E86C1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Drifter_Icon"
+   },
+   "effects": "dr+3.9%;stamina-4%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2000,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "legs_void",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Legs_Void.uasset",
+     "key": "37E46DDB4B01997EECFFF9861597702F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Remnant1/Void/Armor_Legs_Void.uasset",
+     "key": "D166DF6A44D41780DD1B3198A3D8A911"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Void_Icon"
+   },
+   "effects": "dr+6.4%;stamina-7.1%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 750,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "legs_warden",
+   "piece": "legs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Legs_Warden.uasset",
+     "key": "3770808C42E5325F858E4691F89B6840"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Armor_Legs_Warden.uasset",
+     "key": "32714C8E4930447A2AD202831489964D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Legs"
+   },
+   "effects": "dr+3%;stamina-3%",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  }
+ ]
+}

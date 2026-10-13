@@ -10,26 +10,33 @@ items. Remnant screens look like Remnant; the rest of the game stays Monster Hun
   your own copy while you play. Nothing from either game is included in this download.
 - Windows 10 or 11. DirectX 11 and DirectX 12 mode both work.
 
-## What's in it (v0.1, solo)
-- **Worldstone intro**, then **choose your archetype**: Hunter, Medic, Challenger or Gunslinger, with Remnant II's
-  own names, emblems, prime perks and skills.
-- **Ward 13 terminal** (press **P** in Astera, Seliana or your room):
-  - **Brabus** sells long guns and hand guns for scrap: Western Classic, Tech 22, Blackmaw AR-47, Coach Gun,
-    Huntmaster M1 and Widowmaker.
-  - **McCabe** upgrades your guns (+1 to +5).
-  - You can change archetype here.
-  - Both NPCs greet you with their own lines from Remnant II.
+## What's in it (v0.2, solo)
+- **Worldstone intro**, then **choose your archetype** from Remnant II's starting four (Challenger, Handler, Hunter,
+  Medic), with their own names, emblems, skills and perks read from your install.
+- **The whole Remnant II arsenal**: all 14 archetypes with their skills, perks and traits, 112 weapons (long guns,
+  hand guns and melee weapons), 36 mods, 66 mutators, 225 rings, 103 amulets, 27 relics, 44 relic fragments,
+  53 consumables and 120 armor pieces.
+- **Remnant menus at MHW's own NPCs** in Astera and Seliana. Stand next to one and press **P**:
+  - **Smithy (McCabe):** guns, melee weapons, mods, mutators, armor and gun upgrades (+1 to +10).
+  - **Elder Melder (Wallace):** archetype engrams, rings, amulets, relics and relic fragments.
+  - **Provisions Manager (Brabus):** consumables for zenny.
+  Crafting costs **MHW materials and zenny** from your item box, scaled by rank: starter gear takes low rank ores and
+  bones, the best gear takes master rank materials and elder dragon parts.
+- **Ward 13 terminal** (press **P** elsewhere in town): your Remnant loadout. Two archetypes (the second adds its
+  perks and a second skill on **H**), long gun, hand gun and melee weapon with their mods and mutators, relic, three
+  fragments, amulet, four rings, four armor pieces, and consumables to use.
 - **Remnant combat on a hunt** (solo):
   - **B** switches to your Remnant guns. Aim with the right mouse button, fire with the left, **R** reloads and
-    **X** swaps guns.
-  - Shots hit the monster's body, with weak spots on the head and tail. Damage numbers show in MHW's own style.
-  - Each long gun has its **mod** (Hot Shot, Concussive Shot, Corrosive Rounds, Healing Shot). It charges as you deal
-    damage, with guns or MHW weapons. Press **V** to use it.
-  - **G** uses your archetype skill: Hunter's Mark, Wellspring, Juggernaut or Bulletstorm.
-  - **T** uses the **Dragon Heart**. Its charges refill when you return to town.
-- **Scrap**, Remnant's currency, comes from damaging and slaying large monsters.
-- MHW's weapons, armor, items, Palico and quests all still work. Your archetype's perks and skill also boost your MHW
-  weapon hits.
+    **X** swaps guns. Shots hit the monster's body, with weak spots on the head and tail.
+  - **V** fires your gun's mod once it is charged by the damage you deal (guns or MHW weapons).
+  - **G** and **H** use your archetype skills. **T** uses your relic; its charges refill when you return to town.
+  - Your rings, amulet, fragments, perks, traits, mutators and armor change your numbers: damage, critical hits,
+    weak spots, fire rate, reload, healing, lifesteal, damage reduction and more. Your melee weapon and melee bonuses
+    strengthen your MHW weapon's hits.
+- Each item's effects are written in the menus in the mod's own words. Remnant II mechanics MHW has no equivalent
+  for (movement speed, evade distance, summons walking around) are turned into the nearest thing MHW can do:
+  stamina, damage reduction, or damage over time on your target.
+- MHW's weapons, armor, items, Palico and quests all still work.
 
 The keys avoid MHW's default PC bindings; every key can be changed in `remnant_hunt/remnant_hunt.ini`. Progress is saved in `%LOCALAPPDATA%\RemnantHunt\save.json`.
 

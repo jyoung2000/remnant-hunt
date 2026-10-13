@@ -1,85 +1,119 @@
 {
  "sheet": "archetypes",
- "phase": "v0.1",
+ "phase": "v0.2",
  "columns": {
   "id": "id",
   "name": "r2text",
-  "prime": "r2text",
-  "desc": "r2text",
-  "emblem": "r2tex",
-  "skill": "ref:skills",
-  "long_gun": "ref:weapons",
-  "hand_gun": "ref:weapons",
-  "ranged_mult": "num",
-  "hp_bonus": "num",
-  "damage_taken_mult": "num",
-  "reload_mult": "num",
-  "relic_heal_mult": "num"
+  "prime": "r2text|none",
+  "desc": "r2text|none",
+  "emblem": "r2tex|none",
+  "skills": "list:ref:skills",
+  "perks": "list:ref:perks",
+  "trait": "ref:traits|none",
+  "starter_long": "ref:weapons",
+  "starter_hand": "ref:weapons",
+  "starter_melee": "ref:weapons",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
  },
  "rows": [
   {
-   "id": "hunter",
+   "id": "alchemist",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
-     "key": "ADD75F0146AFDCD9E43BD8B39361742D"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Archetype_Alchemist_UI.uasset",
+     "key": "6099FB264A5A3BC70BAA3B955F62347E"
     }
    },
    "prime": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
-     "key": "2379165D4AD1B0E0ACE4DE81D830CDD0"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Archetype_Alchemist_UI.uasset",
+     "key": "594510BA43F07DAF89D280A0B182A1C4"
     }
    },
    "desc": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
-     "key": "F7A487964BB813B9112EFAB965777DEA"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Archetype_Alchemist_UI.uasset",
+     "key": "2BAA1B3C438F8788348B96AB91F18625"
     }
    },
    "emblem": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Sharpshooter"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_PhilosopherStone_Alchemist_Icon"
    },
-   "skill": "hunters_mark",
-   "long_gun": "huntmaster_m1",
-   "hand_gun": "service_pistol",
-   "ranged_mult": 1.1,
-   "hp_bonus": 0,
-   "damage_taken_mult": 1.0,
-   "reload_mult": 1.0,
-   "relic_heal_mult": 1.0
+   "skills": [
+    "alchemistvial_stonemist",
+    "alchemistvial_frenzydust",
+    "alchemistvial_elixiroflife"
+   ],
+   "perks": [
+    "spirited",
+    "liquidcourage",
+    "panacea",
+    "goldtolead",
+    "experimentalist"
+   ],
+   "trait": "potency",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 3,
+   "menu": "archetype",
+   "zenny": 18000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
   },
   {
-   "id": "medic",
+   "id": "archon",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
-     "key": "5FBCAEEC41C6A32E9428279C813C1C79"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Archetype_Archon_UI.uasset",
+     "key": "424BFDD8472CD432AAC178BE4D03010C"
     }
    },
    "prime": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
-     "key": "C49D0A3A4F93738D478CE4947F35FD5C"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Archetype_Archon_UI.uasset",
+     "key": "9AA3C6D246E4269C36A63C8B7B8D954F"
     }
    },
    "desc": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
-     "key": "8B47471E42FD9F8C07714D90205F348D"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Archetype_Archon_UI.uasset",
+     "key": "BBC46FE647115DEE5D897DA43D6CB307"
     }
    },
    "emblem": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Medic"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_Archon_PoweredUp_Icon"
    },
-   "skill": "wellspring",
-   "long_gun": "blackmaw_ar47",
-   "hand_gun": "service_pistol",
-   "ranged_mult": 1.0,
-   "hp_bonus": 15,
-   "damage_taken_mult": 1.0,
-   "reload_mult": 1.0,
-   "relic_heal_mult": 1.25
+   "skills": [
+    "realityrune",
+    "chaosgate",
+    "havocform"
+   ],
+   "perks": [
+    "tempest",
+    "amplify",
+    "powercreep",
+    "spiritwithin",
+    "powerleak"
+   ],
+   "trait": "flashcaster",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 3,
+   "menu": "archetype",
+   "zenny": 18000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
   },
   {
    "id": "challenger",
@@ -102,16 +136,125 @@
     }
    },
    "emblem": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Defender"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_Challenger_PolishedEnswell_Icon"
    },
-   "skill": "juggernaut",
-   "long_gun": "coach_gun",
-   "hand_gun": "western_classic",
-   "ranged_mult": 1.0,
-   "hp_bonus": 25,
-   "damage_taken_mult": 0.9,
-   "reload_mult": 1.0,
-   "relic_heal_mult": 1.0
+   "skills": [
+    "warstomp",
+    "juggernaut",
+    "rampage"
+   ],
+   "perks": [
+    "diehard",
+    "closequarters",
+    "intimidatingpresence",
+    "powerlifter",
+    "faceofdanger"
+   ],
+   "trait": "strongback",
+   "starter_long": "coach_gun",
+   "starter_hand": "western_classic",
+   "starter_melee": "sword",
+   "tier": 1,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "engineer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Archetype_Engineer_UI.uasset",
+     "key": "052556924E275D3D959DE18EFD55FF93"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Archetype_Engineer_UI.uasset",
+     "key": "FE14AD2E48B0F87369A5E2B41D100504"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Archetype_Engineer_UI.uasset",
+     "key": "E57FCB0F441DD50E2745E2A3CD334C1A"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_DrzyrCaliper_Engineer_PoweredUp_Icon"
+   },
+   "skills": [
+    "deployable_gatling",
+    "deployable_flamethrower",
+    "deployable_impactcannon"
+   ],
+   "perks": [
+    "hightech",
+    "metalworker",
+    "magneticfield",
+    "heavymobility",
+    "surplus"
+   ],
+   "trait": "fortify",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 3,
+   "menu": "archetype",
+   "zenny": 18000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "explorer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Archetype_Explorer_UI.uasset",
+     "key": "B617D2BE4D6482AC6FB3D1930F9AB73D"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Archetype_Explorer_UI.uasset",
+     "key": "89AE148E4AB258014F324D8403F7E9D3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Archetype_Explorer_UI.uasset",
+     "key": "5BD58D9144AA110CDFA4F08E4FE3CD1A"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_GoldCompass_Explorer_Icon"
+   },
+   "skills": [
+    "plainswalker",
+    "golddigger",
+    "fortunehunter"
+   ],
+   "perks": [
+    "lucky",
+    "metaldetector",
+    "prospector",
+    "selfdiscovery"
+   ],
+   "trait": "swiftness",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 3,
+   "menu": "archetype",
+   "zenny": 18000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
   },
   {
    "id": "gunslinger",
@@ -134,16 +277,409 @@
     }
    },
    "emblem": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Gunslinger"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_IronCylinder_Gunslinger_Icon"
    },
-   "skill": "bulletstorm",
-   "long_gun": "blackmaw_ar47",
-   "hand_gun": "western_classic",
-   "ranged_mult": 1.05,
-   "hp_bonus": 0,
-   "damage_taken_mult": 1.0,
-   "reload_mult": 0.75,
-   "relic_heal_mult": 1.0
+   "skills": [
+    "aimable_quickdraw",
+    "sidewinder",
+    "bulletstorm"
+   ],
+   "perks": [
+    "loaded",
+    "swiftshot",
+    "posseup",
+    "quickhands",
+    "sleightofhand"
+   ],
+   "trait": "ammoreserves",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "western_classic",
+   "starter_melee": "hatchet",
+   "tier": 3,
+   "menu": "archetype",
+   "zenny": 18000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "handler",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Archetype_Handler_UI.uasset",
+     "key": "5E1ED2CA48AD9C681191C4B3DD3530D0"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Archetype_Handler_UI.uasset",
+     "key": "7DA0075C442DA7FEE86D62BF208C46FA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Archetype_Handler_UI.uasset",
+     "key": "2B78CA614E873BDFC58843B39E949730"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_SilentWhistle_Handler_Icon"
+   },
+   "skills": [
+    "guarddog",
+    "supportdog_command",
+    "attackdog"
+   ],
+   "perks": [
+    "bonded",
+    "packhunter",
+    "heartofthepack",
+    "teamwork",
+    "bestfriend"
+   ],
+   "trait": "kinship",
+   "starter_long": "leveraction",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 1,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "hunter",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
+     "key": "ADD75F0146AFDCD9E43BD8B39361742D"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
+     "key": "2379165D4AD1B0E0ACE4DE81D830CDD0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
+     "key": "F7A487964BB813B9112EFAB965777DEA"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_SniperWarMedal_Hunter_Icon"
+   },
+   "skills": [
+    "hunters_mark",
+    "huntersfocus",
+    "huntersshroud"
+   ],
+   "perks": [
+    "deadtorightsv3",
+    "deadeye",
+    "returntosender",
+    "urgency",
+    "intuition"
+   ],
+   "trait": "longshot",
+   "starter_long": "huntmaster_m1",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 1,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "invader",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Archetype_Invader_UI.uasset",
+     "key": "0B085DA6476E10C11A8F2FB732F0244F"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Archetype_Invader_UI.uasset",
+     "key": "521E229D41ED77A04A34E5BAC91AACA7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Archetype_Invader_UI.uasset",
+     "key": "00167F804F70E7E06DAF15B718C3B87E"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_SerratedRootBlade_Invader_Icon"
+   },
+   "skills": [
+    "voidcloak",
+    "wormhole",
+    "reboot"
+   ],
+   "perks": [
+    "shadownew",
+    "shark",
+    "loophole",
+    "bypass",
+    "override"
+   ],
+   "trait": "untouchable",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 3,
+   "menu": "archetype",
+   "zenny": 18000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "invoker",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Archetype_Invoker_UI.uasset",
+     "key": "8648D4DF45B7BEEFBFB0CABA776E7D26"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Archetype_Invoker_UI.uasset",
+     "key": "2842886D4A7F5A6C0DCE6C9E89C687FD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Archetype_Invoker_UI.uasset",
+     "key": "F85A3867466F9FAF8B39658C632B9760"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engram/T_UI_Engram_Invoker_Flute_Awakened2_Icon"
+   },
+   "skills": [
+    "wayofwater",
+    "wayofforest",
+    "wayofsand"
+   ],
+   "perks": [
+    "primeperk_visionary",
+    "entranced",
+    "communion",
+    "mindandbody",
+    "soothsayer"
+   ],
+   "trait": "none",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 5,
+   "menu": "archetype",
+   "zenny": 75000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "medic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
+     "key": "5FBCAEEC41C6A32E9428279C813C1C79"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
+     "key": "C49D0A3A4F93738D478CE4947F35FD5C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
+     "key": "8B47471E42FD9F8C07714D90205F348D"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_Engram_CaduceusIdol_Medic_Icon"
+   },
+   "skills": [
+    "wellspring",
+    "healingsurge",
+    "redemption"
+   ],
+   "perks": [
+    "regenerator",
+    "invigorated",
+    "benevolence",
+    "backbone",
+    "benefactor"
+   ],
+   "trait": "triage",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 1,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "ritualist",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Archetype_Ritualist_UI.uasset",
+     "key": "70E83E0E411B6CC4592D319A472ABC08"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Archetype_Ritualist_UI.uasset",
+     "key": "77ABA7914F17A44271C332AF36E6C793"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Archetype_Ritualist_UI.uasset",
+     "key": "6C53B1354260435EEC9B338AACF24F3B"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engram/T_UI_Engram_Ritualist_RaggedPoppet_Open_Icon_2"
+   },
+   "skills": [
+    "eruption",
+    "miasma",
+    "deathwish"
+   ],
+   "perks": [
+    "primeperk_vile",
+    "wrath",
+    "terrify",
+    "darkblood",
+    "purge"
+   ],
+   "trait": "affliction",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 5,
+   "menu": "archetype",
+   "zenny": 75000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "summoner",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Archetype_Summoner_UI.uasset",
+     "key": "24A8E9E449100D57669B8B9B2E3C154B"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Archetype_Summoner_UI.uasset",
+     "key": "F31D97D64CB9C801CD802E9FC479F55B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Archetype_Summoner_UI.uasset",
+     "key": "AF82C2C34337F3552603718C40F9A112"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engrams/T_UI_UsableMaterial_TomeOfTheBringer_Icon"
+   },
+   "skills": [
+    "summonhollowminion",
+    "summonflyerminion",
+    "summonbruteminion"
+   ],
+   "perks": [
+    "ruthless",
+    "dominator",
+    "residue",
+    "outrage",
+    "incite"
+   ],
+   "trait": "regrowth",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 3,
+   "menu": "archetype",
+   "zenny": 18000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "warden",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Archetype_Warden_UI.uasset",
+     "key": "28D846B24D2F60883116998827CA7D04"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Archetype_Warden_UI.uasset",
+     "key": "3DA47F204D7F607D5D806D99793A195F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Archetype_Warden_UI.uasset",
+     "key": "1787D0104E4D91551C763595DFFB40FD"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Engram/T_UI_Engram_CommandModule_Icon"
+   },
+   "skills": [
+    "summonshielddrone",
+    "summonhealdrone",
+    "summoncombatdrone"
+   ],
+   "perks": [
+    "dynamic"
+   ],
+   "trait": "barrier",
+   "starter_long": "blackmaw_ar47",
+   "starter_hand": "service_pistol",
+   "starter_melee": "hatchet",
+   "tier": 5,
+   "menu": "archetype",
+   "zenny": 75000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
   }
  ]
 }

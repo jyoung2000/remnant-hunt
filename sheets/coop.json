@@ -1,6 +1,6 @@
 {
  "sheet": "coop",
- "phase": "v0.2",
+ "phase": "v0.3",
  "columns": {
   "id": "id",
   "what": "str",

@@ -1,0 +1,1386 @@
+{
+ "sheet": "consumables",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
+ },
+ "rows": [
+  {
+   "id": "all_seeing_eye",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Consumables/All-SeeingEye/Consumable_AllSeeingEye.uasset",
+     "key": "4D7B03CB45342E6BA52B579163776E06"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Consumables/All-SeeingEye/Consumable_AllSeeingEye.uasset",
+     "key": "28C8407A465BC1EE4C5B99A09FD99F0D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_SpecialConsumable_AllSeeingEye_Icon"
+   },
+   "effects": "use:buff max_hp+10 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "ammo_box",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/AmmoBox/Consumable_AmmoBox.uasset",
+     "key": "ED4BC4A4472B5D0A70D034AC362A4B78"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/AmmoBox/Consumable_AmmoBox.uasset",
+     "key": "AA4C71F14274686C71015F83F22B4EFE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_AmmoCrate_Icon"
+   },
+   "effects": "use:ammo 50%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "antidote",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/Antidote/Consumable_Antidote.uasset",
+     "key": "183DC49E4BAA38307FB83C8E58178A0D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/Antidote/Consumable_Antidote.uasset",
+     "key": "239A36C7476FDB75ACD3D78551EBFAA5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_AntidoteSyringe_Icon"
+   },
+   "effects": "use:buff dr+5% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "bandage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/Bandage/Consumable_Bandage.uasset",
+     "key": "9A7EF6324ABA0C11AEEE8AB7E55B98F6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/Bandage/Consumable_Bandage.uasset",
+     "key": "4A3FD4784AEB94EB76833BA0E6519C15"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_Bandage_Icon"
+   },
+   "effects": "use:buff regen+1 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "binding_orb",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/BindingOrb/Consumable_BindingOrb.uasset",
+     "key": "2BAF0E9445ED24A001C54D8741637313"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/BindingOrb/Consumable_BindingOrb.uasset",
+     "key": "2337AD42470B9098B7C103816704B016"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_BindingOrb_Icon"
+   },
+   "effects": "use:buff dmg_status+10% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "black_tar",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/BlackTar/Consumable_BlackTar.uasset",
+     "key": "99D2C2614D49D9FAFD4071834040FE09"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/BlackTar/Consumable_BlackTar.uasset",
+     "key": "CBB8540B4EE96B0C36BA92888E9E4975"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_BlackTar_B_Icon"
+   },
+   "effects": "use:dot 25 10s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "blood_root",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/Bloodwort/Consumable_BloodRoot.uasset",
+     "key": "0F4AA16E4494BF0F7E6479B067B882B9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/Bloodwort/Consumable_BloodRoot.uasset",
+     "key": "A8F16C9349E8495535C5ADB0886B00A4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_BloodRoot_Icon"
+   },
+   "effects": "use:heal 45% 30s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "brightstone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/Brightstone/Consumable_Brightstone.uasset",
+     "key": "A7DD7B2E443305D6ECB7B2954E516C2B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/Brightstone/Consumable_Brightstone.uasset",
+     "key": "8C827E064A2E9CE9422A6CA24C341359"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_Brightstone_Icon"
+   },
+   "effects": "use:buff dmg+10% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "confidence_booster",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/ConfidenceBooster/Consumable_ConfidenceBooster.uasset",
+     "key": "453443A14E2F4F9641FAD4A1219EAB3F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/ConfidenceBooster/Consumable_ConfidenceBooster.uasset",
+     "key": "212B3CF84E6E3DADD57117AE28DB2430"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ConfidenceBooster_Icon"
+   },
+   "effects": "use:buff dr+10% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "drans_dream",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Quests/Quest_Injectable_BurningCity_DLC/Items/Consumable_Item_DLC_DransDream/Consumable_DransDream.uasset",
+     "key": "66B817AA4646323E317C93A11DCACF4D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Quests/Quest_Injectable_BurningCity_DLC/Items/Consumable_Item_DLC_DransDream/Consumable_DransDream.uasset",
+     "key": "E1CE323140C522706C688F905148A350"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_DranDream_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 1250,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "dried_fruit",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Consumables/Dried_Fruit/Consumable_DriedFruit.uasset",
+     "key": "DD6ECF20488E89F04D4AC188A626E860"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Consumables/Dried_Fruit/Consumable_DriedFruit.uasset",
+     "key": "8166A9DE4DC5918D293DD98253983913"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_DriedFruit_Icon"
+   },
+   "effects": "use:buff heal+10% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "ethereal_orb",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/EtherealOrb/Consumable_EtherealOrb.uasset",
+     "key": "8825D7A5403716DE2BDFDDB0C297973B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/EtherealOrb/Consumable_EtherealOrb.uasset",
+     "key": "73B8741844AC52D442434D865BAD8793"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_ConsumableEthereal_Orb_Icon"
+   },
+   "effects": "use:buff dr+5% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "faerie_needle",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Consumables/FaerieNeedle/Consumable_FaerieNeedle.uasset",
+     "key": "6A55AFB24858B13E0C1359A1386C9BEF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Consumables/FaerieNeedle/Consumable_FaerieNeedle.uasset",
+     "key": "E9B7C6BA44D9DE88F313859FC1C1D44F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_FaerieNeedle_Icon"
+   },
+   "effects": "use:buff mod_gen+10% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "gul_serum",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/GulSerum/Consumable_GulSerum.uasset",
+     "key": "9C3A0ED248C9FF9C6B04BAB9A894B733"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/GulSerum/Consumable_GulSerum.uasset",
+     "key": "46D44D7846BEFB9A89C746B7F5FE290E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_GulSerum_Icon"
+   },
+   "effects": "use:buff stamina-50% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "hunters_dream",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Quests/Quest_OverworldPOI_TheHunter/Items/Consumable_HuntersDream.uasset",
+     "key": "121ABE114ACFB708D71627BC6AEACFBB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Quests/Quest_OverworldPOI_TheHunter/Items/Consumable_HuntersDream.uasset",
+     "key": "F25EE5AF4CBF3F10FAB508A75072E7E6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_HuntressDream_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "koara_pellet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/KoaraPellet/Consumable_KoaraPellet.uasset",
+     "key": "3B4CA26647387C8135C6529E731E4BED"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/KoaraPellet/Consumable_KoaraPellet.uasset",
+     "key": "7F52E58D4704E06BDAA6E68300F2AC1C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_KoaraPellet_Icon"
+   },
+   "effects": "use:buff heal+10% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "light_extract",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Consumables/LightExtract/Consumable_LightExtract.uasset",
+     "key": "10D113284C9F895E4E82A0886CF47723"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Consumables/LightExtract/Consumable_LightExtract.uasset",
+     "key": "7AD0FE8448A8248B47A4BCB8A1BF032B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_LightExtract_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "liquid_escape",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/LiquidEscape/Consumable_LiquidEscape.uasset",
+     "key": "C6B078D248D6CB77065315AA8A5C2737"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/LiquidEscape/Consumable_LiquidEscape.uasset",
+     "key": "856840AA4909C1A47FB298AF01364C14"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_LiquidEscape_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "mud_rub",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/MudRub/Consumable_MudRub.uasset",
+     "key": "CCF11F8948A641DB9970849DEF303AD6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/MudRub/Consumable_MudRub.uasset",
+     "key": "128E740F4BCDFF9ACEEE03B6929F834B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MudRub_Icon"
+   },
+   "effects": "use:buff dr+5% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "mystery_jerky",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Consumables/Mystery_Jerky/Consumable_MysteryJerky.uasset",
+     "key": "970395134DAAF7AD1645AF87D97CFDBD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Consumables/Mystery_Jerky/Consumable_MysteryJerky.uasset",
+     "key": "D39BBA62494D0033DB0BB6BF462C5E39"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MysteryJerkey_Icon"
+   },
+   "effects": "use:buff regen+1 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 1250,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "nimues_dream",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Quests/Quest_Injectable_GoldenHall_Nimue/Items/Consumable_NimuesDream.uasset",
+     "key": "B3E0D0E54288B49A428FA5800680E021"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_NimuesDream_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 600,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "oilskin_balm",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/OilskinTonic/Consumable_OilskinBalm.uasset",
+     "key": "D8C1CC654CEDFF6ECE2B5693D03D65C9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/OilskinTonic/Consumable_OilskinBalm.uasset",
+     "key": "0C64DF3942AACC84CA33FA9E7FF052CE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_OilskinBalm_Icon"
+   },
+   "effects": "use:buff dr+5% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "orb_of_undoing",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/OrbOfUndoing/Consumable_OrbOfUndoing.uasset",
+     "key": "2A70287B41955C36C7823E8630C1E829"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/OrbOfUndoing/Consumable_OrbOfUndoing.uasset",
+     "key": "9C03B0D343010D42370726B21F0888EA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Materials/General/T_UI_UsableMaterial_OrbOfUndoing_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "pipe_bomb",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/PipeBomb/Consumable_PipeBomb.uasset",
+     "key": "9B2130604F8018652E7C789AB95B5F34"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/PipeBomb/Consumable_PipeBomb.uasset",
+     "key": "9789206642C8C4D7A2BBD2BC68224128"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_PipeBomb_Icon"
+   },
+   "effects": "use:dot 8.33333 30s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "poisoned_spice_capsule",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/PoisonedSpiceCapsule/Consumable_PoisonedSpiceCapsule.uasset",
+     "key": "9F855FB34DE9BEEE7B44DAA61E99A58F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Aimables/PoisonedSpiceCapsule/Consumable_PoisonedSpiceCapsule.uasset",
+     "key": "ABA56DAE4EE0D9AA698B59AE3A52FF97"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_PoisonedSpiceCapsule_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 600,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "processed_koara",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/ProcessedKoara/Consumable_ProcessedKoara.uasset",
+     "key": "D41EB28A406DEE0983F63EBCBD10BE46"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/ProcessedKoara/Consumable_ProcessedKoara.uasset",
+     "key": "7C9DF42549D15C0EDE310CA41DE594D0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ProcessedKoaraPellet_Icon"
+   },
+   "effects": "use:buff stamina-75% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "purified_salve",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/PurifiedSalve/Consumable_PurifiedSalve.uasset",
+     "key": "B3DCE6064B3CFE56E6C16E829D9FAA59"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/PurifiedSalve/Consumable_PurifiedSalve.uasset",
+     "key": "CA00599644ECECD4CA1BC681E4EADD25"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_PurifiedSalve_Icon"
+   },
+   "effects": "use:buff dr+5% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "rocket_fuel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/RocketFuel/Consumable_RocketFuel.uasset",
+     "key": "F3C16D4A4E9369D2D78E428B00782F38"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/RocketFuel/Consumable_RocketFuel.uasset",
+     "key": "A3D64D30491A3572F069BC94D60C26FD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_RocketFuel_Icon"
+   },
+   "effects": "use:buff fire_rate+10% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 100,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "spice",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/LiquidSpice/Consumable_Spice.uasset",
+     "key": "B1EF051C437352BF6504D58AE82A1CD5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/LiquidSpice/Consumable_Spice.uasset",
+     "key": "6DEED13D4E4B2B3BB881F6B54BE4B645"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_TalRathaSpice_Icon"
+   },
+   "effects": "use:buff dmg+10% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "sweet_leaf",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Consumables/SweetLeaf/Consumable_SweetLeaf.uasset",
+     "key": "2590D3B24310D52CA8F806AF3C5284B6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Consumables/SweetLeaf/Consumable_SweetLeaf.uasset",
+     "key": "2437FAEB44EC78A8557D1584D9F742B1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_SweetLeaf_Icon"
+   },
+   "effects": "use:buff dr+5% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "thaen_fruit_celestial",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/ThaenFruit/04_ThaenFruit_Celestial/Consumable_ThaenFruit_Celestial.uasset",
+     "key": "AA4711CD483B96240D28AAA0B2E283E7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/ThaenFruit/04_ThaenFruit_Celestial/Consumable_ThaenFruit_Celestial.uasset",
+     "key": "E257EBA94E827579F32078B764671A22"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ThaenFruit_Celestial_Icon"
+   },
+   "effects": "use:buff max_hp+50% 30s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "thaen_fruit_elder",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/ThaenFruit/03_ThaenFruit_Elder/Consumable_ThaenFruit_Elder.uasset",
+     "key": "5B63876F45A648280D7C54B6042A15BF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/ThaenFruit/03_ThaenFruit_Elder/Consumable_ThaenFruit_Elder.uasset",
+     "key": "43050416401E69B0759A9596B9D64BE4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ThaenFruit_Elder_Icon"
+   },
+   "effects": "use:buff max_hp+40% 30s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "thaen_fruit_mature",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/ThaenFruit/02_ThaenFruit_Mature/Consumable_ThaenFruit_Mature.uasset",
+     "key": "693B1D1D4F5F69F70861658A0806BD46"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Misc/ThaenFruit/02_ThaenFruit_Mature/Consumable_ThaenFruit_Mature.uasset",
+     "key": "8923020B412F9879E53F4893CCAA7B0F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ThaenFruit_Mature_Icon"
+   },
+   "effects": "use:buff max_hp+30% 30s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "timeworn_unguent",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/TimewormUnguent/Consumable_TimewornUnguent.uasset",
+     "key": "82B3C2884E8D34BC8DC90EA20F1D2FE6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Potions/TimewormUnguent/Consumable_TimewornUnguent.uasset",
+     "key": "885A92ED4C729007082730866FE0FF3F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_TimewornUnguent_Icon"
+   },
+   "effects": "use:buff dr+5% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 200,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "bark_extract",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/BarkExtract/Consumable_BarkExtract.uasset",
+     "key": "3262014B45E7D408073C1E8EA8D6EE34"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/BarkExtract/Consumable_BarkExtract.uasset",
+     "key": "126C8D5E40852296F21FD0999B90F81A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_BarkExtract_Icon"
+   },
+   "effects": "use:buff dr+30 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "bottled_shaedberry",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/BottledShaedberry/Consumable_BottledShaedberry.uasset",
+     "key": "325254B04CF2BC1C8D6D11A0C3A5407F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/BottledShaedberry/Consumable_BottledShaedberry.uasset",
+     "key": "523035E6448AF913962E4CB58E67C711"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_BottledShaedberry_Icon"
+   },
+   "effects": "use:buff mod_gen+10% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "chilled_steam",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/ChilledSteam/Consumable_ChilledSteam.uasset",
+     "key": "259B8444462D7139B71D5897C44362A3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/ChilledSteam/Consumable_ChilledSteam.uasset",
+     "key": "EAD4A67A407BD3D17B4C59AC3E3FDD50"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ChilledSteam_Icon"
+   },
+   "effects": "use:buff stamina+10% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "dark_cider",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/DarkCider/Consumable_DarkCider.uasset",
+     "key": "A94C6FD04F879AD5A554A486401BAB25"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/DarkCider/Consumable_DarkCider.uasset",
+     "key": "B6E65F0E465707995BB583845D14775F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_DarkCider_Icon"
+   },
+   "effects": "use:buff max_hp+6.66% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "dark_fluid",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/DarkFluid/Consumable_DarkFluid.uasset",
+     "key": "9B1254CC451447BC1CF6D19ADAC312E5"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_DarkFluid_Icon"
+   },
+   "effects": "use:buff dmg+10% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "egg_drink",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Consumables/EggDrink/Consumable_EggDrink.uasset",
+     "key": "B87D85CB4D5DB167C718F8823DAB10FB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Consumables/EggDrink/Consumable_EggDrink.uasset",
+     "key": "AB8BC6E14E02BF840F7F2297443E1ED4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_Egg_Drink_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 2500,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "meat_shake",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Consumables/Meat_Shake/Consumable_MeatShake.uasset",
+     "key": "E56FF9A74C6F9813CD1197B380EA67A8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Consumables/Meat_Shake/Consumable_MeatShake.uasset",
+     "key": "8E9FBF3A4E2378FB8F74C6B1C452B202"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_Meat_Shake_Icon"
+   },
+   "effects": "use:buff dr+6.5% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 2500,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "mud_tooths_elixir",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/MudToothsElixir/Consumable_MudToothsElixir.uasset",
+     "key": "82884E4C44C9B1DA0CEF5B8EE1815EC3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/MudToothsElixir/Consumable_MudToothsElixir.uasset",
+     "key": "3AD1A64D4D42C1BE227462A2AA97327D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MudtoothsElixir_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "mudtooths_snake_oil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Consumables/MudtoothSnakeOil/Consumable_MudtoothsSnakeOil.uasset",
+     "key": "B34ED63B430157EDF6E7348AB06F24A1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Consumables/MudtoothSnakeOil/Consumable_MudtoothsSnakeOil.uasset",
+     "key": "A7F09B72445C8ADDE1C505B08E989EC0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MudtoothSnakeOil"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 5000,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "mud_tooths_stew",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/MudToothsStew/Consumable_MudToothsStew.uasset",
+     "key": "EB2384D3471500F91E9452A14A91AA7D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/MudToothsStew/Consumable_MudToothsStew.uasset",
+     "key": "040EBE06452B355DE2AE88867A692B5C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MudtoothsStew_Icon"
+   },
+   "effects": "use:buff stamina+20 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "mud_tooths_tonic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/MudToothsTonic/Consumable_MudToothsTonic.uasset",
+     "key": "08A07298468B07491B7E8E988EE09631"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/MudToothsTonic/Consumable_MudToothsTonic.uasset",
+     "key": "862D1AB04B6CAC9424A4388B196ACA51"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MudtoothsTonic_Icon"
+   },
+   "effects": "use:buff max_hp+20 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "numbing_agent",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Consumables/NumbingAgent/Consumable_NumbingAgent.uasset",
+     "key": "F42F19CC4A5009F626B96FBBC1689C1B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Consumables/NumbingAgent/Consumable_NumbingAgent.uasset",
+     "key": "31806E454C14DC06632B36BBCBF2ED49"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_NumbingAgent_Icon"
+   },
+   "effects": "use:buff max_hp+1 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 5000,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "root_water",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/RootWater/Consumable_RootWater.uasset",
+     "key": "72EB8F6645E5217586B26C89B53E0D8D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/RootWater/Consumable_RootWater.uasset",
+     "key": "6107B1E349D601B451854DA4465069B3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_RootWater_Icon"
+   },
+   "effects": "use:heal 1%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "sacred_lakewater",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/SacredLakewater/Consumable_SacredLakewater.uasset",
+     "key": "8F9017194DCB6C544D38C2906890C2DA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/SacredLakewater/Consumable_SacredLakewater.uasset",
+     "key": "9DF52D40495C453C8D4F82AA7A7D9C57"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_SacredLakewater_Icon"
+   },
+   "effects": "use:buff max_hp+20% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "sanguine_vapor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/SanguineVapor/Consumable_SanguineVapor.uasset",
+     "key": "61588E924742FBB5FA30C3B7C5F47C25"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/SanguineVapor/Consumable_SanguineVapor.uasset",
+     "key": "9338076F42F3C0991A99B28EC0ACB6C4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_SanguineVapor_Icon_1"
+   },
+   "effects": "use:buff lifesteal+3% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "strong_drink",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/StrongDrink/Consumable_StrongDrink.uasset",
+     "key": "66A5119241E07E6EEDD43AA1B83AE5CE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/StrongDrink/Consumable_StrongDrink.uasset",
+     "key": "CEA8FBC74447C3219E1932BFDDEA6BBC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_SM_Consumable_StrongDrink_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "tranquility_font",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/TranquilityFont/Consumable_TranquilityFont.uasset",
+     "key": "FE0C15754B99CBC11FD45F874075E803"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/TranquilityFont/Consumable_TranquilityFont.uasset",
+     "key": "6C8E900C43C1F70E0582748BBBFC9CC3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_TranquilityFont_Icon_1"
+   },
+   "effects": "use:buff accuracy+25% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "verdant_tea",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/VerdantTea/Consumable_VerdantTea.uasset",
+     "key": "3E4EAC374CCAF9A7D84B9EB215D27582"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/VerdantTea/Consumable_VerdantTea.uasset",
+     "key": "B014E516401620CDF8CD798BFC7E212A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_VerdantTea_Icon"
+   },
+   "effects": "use:buff stamina+20 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "xenoplasm",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/Xenoplasm/Consumable_Xenoplasm.uasset",
+     "key": "93657E184C8C1492C24551A735A82486"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Consumables/Concoctions/Xenoplasm/Consumable_Xenoplasm.uasset",
+     "key": "A39D52D942C0436227AF3FAD32710CEC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_Xenoplasm_Icon"
+   },
+   "effects": "use:buff cdr+10% 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "provisions",
+   "zenny": 150,
+   "recipe": [
+    "none"
+   ]
+  }
+ ]
+}

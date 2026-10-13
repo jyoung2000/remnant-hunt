@@ -21,3 +21,9 @@ the player's own installed copies at run time.
 - Monster Hunter: World 15.23.00 addresses and structures: justbustin/minecraft-crossover-bridge (MIT) and
   HunterPie (Apache-2.0).
 - Modding method: rehan-remade/universal-modder.
+- Monster Hunter: World function patterns and object layouts (resource manager, action controller, singletons'
+  GetDTI): SharpPluginLoader by Fexty12573 (MIT).
+- Remnant II item numbers (gun stats, effect values, skill cooldowns): the Remnant 2 Toolkit item data by Josh Payette
+  and contributors (GPL-3.0, github.com/joshpayette/remnant2-toolkit). They are re-expressed in this mod's own effect
+  language and wording (tools/author_arsenal.py); no text from it is shipped. Names, descriptions and icons always come
+  from the player's own Remnant II install.

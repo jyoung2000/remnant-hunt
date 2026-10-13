@@ -1,8 +1,10 @@
 // Remnant x MHW mashup core: Remnant II's rules running on top of Monster Hunter: World. GPL-3.0-or-later (see LICENSE).
 //
 // Every number comes from the design sheets (gen/sheets.gen.h). The game-thread tick reads MHW's state, fires
-// Remnant guns as hitscan shots against the monsters' boxes, and turns HP changes into archetype, skill, mod and
-// relic effects. MHW's own weapons, armor and items keep working; their hits feed the same Remnant effects.
+// Remnant guns as hitscan shots against the monsters' boxes, and turns HP changes into the effects of the hunter's
+// Remnant loadout (archetypes, perks, traits, guns, mods, mutators, relic, fragments, amulet, rings, armor). MHW's own
+// weapons, armor and items keep working; their hits feed the same Remnant effects.
+#include <algorithm>
 #include <cmath>
 #include <cstdarg>
 #include <cstdio>
@@ -33,12 +35,33 @@ void toast(Live& l, const char* fmt, ...) {
 static volatile LONG g_cmds = 0;
 void post(Cmd c) { InterlockedOr(&g_cmds, 1 << c); }
 
+void request(const Request& r) {
+    Shared& sh = S();
+    AcquireSRWLockExclusive(&sh.lock);
+    sh.live.requests.push_back(r);
+    ReleaseSRWLockExclusive(&sh.lock);
+}
+
 const Archetypes* archetype() {
     int a = S().save.archetype;
     return (a >= 0 && a < kArchetypesCount) ? &kArchetypes[a] : nullptr;
 }
 
-int equipped_gun(const SaveData& s, const Live& l) { return l.usingLong ? s.equippedLong : s.equippedHand; }
+int equipped_gun(const SaveData& s, const Live& l) { return l.usingLong ? s.longGun : s.handGun; }
+
+int gun_mod(const SaveData& s, int gun) {
+    if (gun < 0) return -1;
+    if (kWeapons[gun].mod >= 0) return kWeapons[gun].mod;
+    int slot = kWeapons[gun].slot == WEAPONS_SLOT_LONG ? 0 : 1;
+    return s.gunMod[slot];
+}
+
+std::vector<int> skills_of(int a) { return a >= 0 ? rows_of(kArchetypes[a].skills, skills_index) : std::vector<int>{}; }
+std::vector<int> perks_of(int a) { return a >= 0 ? rows_of(kArchetypes[a].perks, perks_index) : std::vector<int>{}; }
+
+float upgrade_mult(int level) { return level > 0 && level <= kUpgradesCount ? kUpgrades[level - 1].damage_mult : 1.0f; }
+
+bool can_equip_here(const Live& l) { return l.snap.inGame && l.snap.inBase; }
 
 static uint32_t g_rng = 0x9E3779B9u;
 static float frand() {
@@ -48,35 +71,128 @@ static float frand() {
     return (g_rng & 0xFFFFFF) / 16777216.0f;
 }
 
-static void fill_ammo(SaveData& s, Live& l) {
+// ---------------------------------------------------------------- loadout -> effect sources
+
+static void rebuild_sources(const SaveData& s, Live& l) {
+    EffectState& fx = l.fx;
+    fx.clear_sources();
+    for (int slot = 0; slot < 2; slot++) {
+        int a = slot == 0 ? s.archetype : s.archetype2;
+        if (a < 0) continue;
+        std::vector<int> pk = perks_of(a);
+        for (size_t i = 0; i < pk.size(); i++)
+            if (slot == 0 || kPerks[pk[i]].kind != PERKS_KIND_PRIME) fx.add_source(kPerks[pk[i]].effects);
+        int tr = kArchetypes[a].trait;
+        if (tr >= 0 && slot == 0) fx.add_source(kTraits[tr].effects);
+    }
+    if (s.longGun >= 0) fx.add_source(kWeapons[s.longGun].effects, 1.0f, 1);
+    if (s.handGun >= 0) fx.add_source(kWeapons[s.handGun].effects, 1.0f, 2);
+    if (s.melee >= 0) fx.add_source(kWeapons[s.melee].effects);
+    for (int i = 0; i < 3; i++)
+        if (s.mutator[i] >= 0) fx.add_source(kMutators[s.mutator[i]].effects, 1.0f, i < 2 ? i + 1 : 0);
+    for (int f : s.fragment)
+        if (f >= 0) fx.add_source(kFragments[f].effects);
+    if (s.amulet >= 0) fx.add_source(kAmulets[s.amulet].effects);
+    for (int r : s.ring)
+        if (r >= 0) fx.add_source(kRings[r].effects);
+    for (int a : s.armor)
+        if (a >= 0) fx.add_source(kArmor[a].effects);
+}
+
+static float stat(const Live& l, Stat st, double t) { return l.fx.total(st, t); }
+
+static int mag_size(const Live& l, int gun, double t) {
+    return std::max(1, (int)lroundf(kWeapons[gun].mag * (1.0f + stat(l, ST_MAG, t))));
+}
+static int reserve_size(const Live& l, int gun, double t) {
+    return (int)lroundf(kWeapons[gun].reserve * (1.0f + stat(l, ST_AMMO, t)));
+}
+
+static void fill_ammo(const SaveData& s, Live& l, double t) {
     for (int i = 0; i < kWeaponsCount; i++)
-        if (s.owned[i]) {
-            l.mag[i] = (int)kWeapons[i].mag;
-            l.reserve[i] = (int)kWeapons[i].reserve;
+        if (s.has(CAT_WEAPON, i) && kWeapons[i].slot != WEAPONS_SLOT_MELEE) {
+            l.mag[i] = mag_size(l, i, t);
+            l.reserve[i] = reserve_size(l, i, t);
         }
 }
 
-void choose_archetype(int row) {
+static void rest(SaveData& s, Live& l, double t) {
+    s.relicCharges = (int)(tune(TUNING_RELIC_BASE_CHARGES) + stat(l, ST_RELIC_CHARGES, t));
+    fill_ammo(s, l, t);
+    l.bonusHealth = l.bonusMax;
+}
+
+void choose_archetype(int row, int slot) {
     Shared& sh = S();
     AcquireSRWLockExclusive(&sh.lock);
     SaveData& s = sh.save;
-    bool first = s.archetype < 0;
-    s.archetype = row;
     const Archetypes& a = kArchetypes[row];
-    s.owned[a.long_gun] = s.owned[a.hand_gun] = true;
-    s.equippedLong = a.long_gun;
-    s.equippedHand = a.hand_gun;
+    bool free = a.zenny <= 0;
+    if (!s.has(CAT_ARCHETYPE, row) && !free) {
+        ReleaseSRWLockExclusive(&sh.lock);
+        return;
+    }
+    s.owned[CAT_ARCHETYPE][row] = 1;
+    bool first = s.archetype < 0;
+    if (slot == 0) {
+        if (s.archetype2 == row) s.archetype2 = s.archetype;
+        s.archetype = row;
+    } else if (row != s.archetype) {
+        s.archetype2 = row;
+    }
     if (first) {
-        s.scrap = (int)tune(TUNING_STARTING_SCRAP);
-        s.relicCharges = (int)kRelics[RELICS_DRAGON_HEART].charges;
+        for (int w : {a.starter_long, a.starter_hand, a.starter_melee})
+            if (w >= 0) s.owned[CAT_WEAPON][w] = 1;
+        s.longGun = a.starter_long;
+        s.handGun = a.starter_hand;
+        s.melee = a.starter_melee;
+        int dh = relics_index("dragon_heart");
+        if (dh >= 0) { s.owned[CAT_RELIC][dh] = 1; s.relic = dh; }
+        s.relicCharges = (int)tune(TUNING_RELIC_BASE_CHARGES);
     }
     s.introDone = true;
-    fill_ammo(s, sh.live);
-    sh.live.bonusHealth = a.hp_bonus;
-    sh.live.skillReady = 0;
+    sh.live.loadoutChanged = true;
+    sh.live.skillReady[0] = sh.live.skillReady[1] = 0;
+    sh.live.dirty = true;
+    double t = now_s();
+    rebuild_sources(s, sh.live);
+    fill_ammo(s, sh.live, t);
+    ReleaseSRWLockExclusive(&sh.lock);
+    log("archetype %s: %s", slot == 0 ? "primary" : "secondary", a.id);
+}
+
+void equip(Cat c, int row, int slot) {
+    Shared& sh = S();
+    AcquireSRWLockExclusive(&sh.lock);
+    SaveData& s = sh.save;
+    if (row >= 0 && !s.has(c, row)) {
+        ReleaseSRWLockExclusive(&sh.lock);
+        return;
+    }
+    auto put = [&](int* arr, int n) {
+        for (int i = 0; i < n; i++)
+            if (arr[i] == row && row >= 0) arr[i] = -1;  // the same item never sits in two slots
+        arr[std::max(0, std::min(n - 1, slot))] = row;
+    };
+    switch (c) {
+        case CAT_WEAPON:
+            if (row < 0) break;
+            if (kWeapons[row].slot == WEAPONS_SLOT_LONG) s.longGun = row;
+            else if (kWeapons[row].slot == WEAPONS_SLOT_HAND) s.handGun = row;
+            else s.melee = row;
+            break;
+        case CAT_MOD: s.gunMod[slot == 1 ? 1 : 0] = row; break;
+        case CAT_MUTATOR: put(s.mutator, 3); break;
+        case CAT_RELIC: s.relic = row; break;
+        case CAT_FRAGMENT: put(s.fragment, 3); break;
+        case CAT_AMULET: s.amulet = row; break;
+        case CAT_RING: put(s.ring, 4); break;
+        case CAT_ARMOR: if (row >= 0) s.armor[kArmor[row].piece] = row; else s.armor[slot & 3] = -1; break;
+        default: break;
+    }
+    sh.live.loadoutChanged = true;
     sh.live.dirty = true;
     ReleaseSRWLockExclusive(&sh.lock);
-    log("archetype: %s", a.id);
 }
 
 // ---------------------------------------------------------------- vector math
@@ -115,16 +231,31 @@ static bool ray_obb(const Monster& m, Vec3 o, Vec3 d, float* tHit, float lp[3]) 
     return true;
 }
 
-// ---------------------------------------------------------------- shooting
+// ---------------------------------------------------------------- damage
 
-static float damage_mult_vs_monsters(const Live& l, double t) {
-    float m = 1.0f;
-    const Archetypes* a = archetype();
-    if (a && t < l.skillUntil && kSkills[a->skill].effect == SKILLS_EFFECT_MONSTER_DAMAGE_MULT) m *= kSkills[a->skill].magnitude;
-    int g = S().save.equippedLong;
-    if (g >= 0 && kWeapons[g].mod >= 0 && t < l.modUntil && kMods[kWeapons[g].mod].effect == MODS_EFFECT_CORRODE)
-        m *= kMods[kWeapons[g].mod].magnitude;
-    return m;
+static const Monster* find_monster(const Live& l, uint8_t* em) {
+    for (const Monster& m : l.snap.monsters)
+        if (m.em == em) return &m;
+    return nullptr;
+}
+
+// The hunter's target: the monster last hit, else the nearest large monster.
+static const Monster* current_target(const Live& l) {
+    if (const Monster* m = find_monster(l, l.target)) return m;
+    const Monster* best = nullptr;
+    float bd = 1e12f;
+    for (const Monster& m : l.snap.monsters) {
+        Vec3 d = sub(m.center, l.snap.pos);
+        float dd = dot(d, d) * (m.large ? 1.0f : 4.0f);
+        if (dd < bd) { bd = dd; best = &m; }
+    }
+    return best;
+}
+
+// Remnant numbers grow with the monster so the guns matter from low rank to master rank.
+static float rank_mult(const Monster& m) {
+    float k = m.maxHp / std::max(1.0f, tune(TUNING_RANK_SCALE_HP));
+    return std::max(1.0f, std::min(tune(TUNING_RANK_SCALE_MAX), k));
 }
 
 static void deal(Live& l, const Monster& m, float dmg, Vec3 at, bool crit) {
@@ -138,9 +269,79 @@ static void deal(Live& l, const Monster& m, float dmg, Vec3 at, bool crit) {
     l.totalDamage += dmg;
 }
 
+static void heal_player(Live& l, float amount, double t) {
+    if (amount <= 0 || !l.snap.playerHealth) return;
+    add_hp(l.snap.playerHealth, amount * (1.0f + stat(l, ST_HEAL, t)));
+}
+
+static void lifesteal(Live& l, float damage, double t) {
+    float ls = stat(l, ST_LIFESTEAL, t);
+    if (ls > 0) heal_player(l, damage * ls * 0.1f, t);  // Remnant lifesteal against MHW-sized health pools
+}
+
+static void proc(Live& l, float procDamage, double t) {
+    if (procDamage <= 0) return;
+    if (const Monster* m = current_target(l))
+        deal(l, *m, procDamage * tune(TUNING_DAMAGE_SCALE) * rank_mult(*m) * (1.0f + stat(l, ST_DMG, t) + stat(l, ST_DMG_EXPLOSIVE, t)),
+             m->center, false);
+}
+
+static void trigger(Live& l, Trig tr, double t) {
+    float pd = 0;
+    l.fx.fire(tr, t, &pd);
+    proc(l, pd, t);
+}
+
+// Runs an item's "use:" effects. durScale stretches durations (skill and mod duration bonuses); dmgBonus adds the
+// damage stats that apply (skill, mod or relic); defaultDur is used when the effect gives none.
+static void apply_use(Live& l, const char* dsl, double t, float durScale, float dmgBonus, float defaultDur, float healMult) {
+    const Monster* tgt = current_target(l);
+    float rk = tgt ? rank_mult(*tgt) : 1.0f;
+    float scale = tune(TUNING_DAMAGE_SCALE) * rk * (1.0f + stat(l, ST_DMG, t) + dmgBonus);
+    for (const Effect& e : effects_of(dsl)) {
+        float dur = (e.dur > 0 ? e.dur : defaultDur) * durScale;
+        switch (e.act) {
+            case ACT_HEAL:
+                if (e.dur <= 0.05f) heal_player(l, l.maxHp * e.value * healMult, t);
+                else l.actives.push_back({ACT_HEAL, l.maxHp * e.value * healMult / dur, t + dur, nullptr, 0});
+                break;
+            case ACT_SHIELD:
+                l.bonusHealth += l.maxHp * e.value;
+                l.shieldUntil = std::max(l.shieldUntil, t + dur);
+                break;
+            case ACT_BURST:
+                if (tgt) deal(l, *tgt, e.value * scale, tgt->center, true);
+                break;
+            case ACT_DOT:
+                l.actives.push_back({ACT_DOT, e.value * scale, t + dur, tgt ? tgt->em : nullptr, 0});
+                break;
+            case ACT_SUMMON:
+                l.actives.push_back({ACT_SUMMON, std::max(e.value, tune(TUNING_COMPANION_DPS)) * scale, t + dur, nullptr, 0});
+                break;
+            case ACT_BUFF:
+                l.fx.buff(e.stat, e.value, t + dur, &e, 1);
+                break;
+            case ACT_AMMO: {
+                SaveData& s = S().save;
+                for (int g : {s.longGun, s.handGun})
+                    if (g >= 0) l.reserve[g] = std::min(reserve_size(l, g, t), l.reserve[g] + (int)(reserve_size(l, g, t) * e.value));
+                break;
+            }
+            case ACT_GRENADE:
+                if (tgt)
+                    for (const Monster& m : l.snap.monsters) {
+                        Vec3 d = sub(m.center, tgt->center);
+                        if (dot(d, d) < 600.0f * 600.0f)
+                            deal(l, m, e.value * scale * (1.0f + stat(l, ST_DMG_EXPLOSIVE, t)), m.center, false);
+                    }
+                break;
+            default: break;
+        }
+    }
+}
+
 static int fire(SaveData& s, Live& l, int gun, double t) {
     const Weapons& w = kWeapons[gun];
-    const Archetypes* a = archetype();
     const GameView& v = l.snap.view;
     Vec3 fwd = norm(sub(v.camTarget, v.camPos));
     Vec3 up = {0, 1, 0};
@@ -150,10 +351,13 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
     float tMin = std::max(0.0f, dot(sub(l.snap.pos, v.camPos), fwd));
     Vec3 origin = add(v.camPos, mul(fwd, tMin));
     float range = w.range_m * 100.0f;  // MHW units are centimetres
-    float spread = w.spread_deg * (l.aiming ? tune(TUNING_ADS_SPREAD_MULT) : 1.0f) * 3.14159265f / 180.0f;
-    int lvl = s.upgrade[gun];
-    float upMult = lvl > 0 ? kUpgrades[lvl - 1].damage_mult : 1.0f;
-    float base = w.damage * tune(TUNING_DAMAGE_SCALE) * upMult * (a ? a->ranged_mult : 1.0f) * damage_mult_vs_monsters(l, t);
+    float spread = w.spread_deg * (l.aiming ? tune(TUNING_ADS_SPREAD_MULT) : 1.0f) *
+                   std::max(0.2f, 1.0f - stat(l, ST_ACCURACY, t)) * 3.14159265f / 180.0f;
+    float base = w.damage * tune(TUNING_DAMAGE_SCALE) * upgrade_mult(s.level[gun]) *
+                 (1.0f + stat(l, ST_DMG, t) + stat(l, ST_DMG_RANGED, t));
+    float critChance = w.crit / 100.0f + stat(l, ST_CRIT, t);
+    float critMult = tune(TUNING_CRIT_MULT) + stat(l, ST_CRIT_DMG, t);
+    float weakMult = w.weakspot_mult + stat(l, ST_WEAKSPOT, t);
     struct Acc { const Monster* m; float dmg; Vec3 at; bool crit, weak; };
     Acc acc[16];
     int nacc = 0;
@@ -177,8 +381,8 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
         int longAxis = best->half.x > best->half.z ? 0 : 2;
         float h[3] = {best->half.x, best->half.y, best->half.z};
         bool weak = fabsf(bestLp[longAxis]) > tune(TUNING_WEAKSPOT_BAND) * h[longAxis] && at.y > best->center.y;
-        bool crit = frand() < tune(TUNING_CRIT_CHANCE);
-        float dmg = base * (weak ? w.weakspot_mult : 1.0f) * (crit ? tune(TUNING_CRIT_MULT) : 1.0f);
+        bool crit = frand() < critChance;
+        float dmg = base * rank_mult(*best) * (weak ? weakMult : 1.0f) * (crit ? critMult : 1.0f);
         if (bestT > range) dmg *= std::max(0.5f, 1.0f - 0.5f * (bestT - range) / range);  // falloff
         int k = 0;
         while (k < nacc && acc[k].m != best) k++;
@@ -190,143 +394,268 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
         }
     }
     l.shots++;
+    int mod = gun_mod(s, gun);
     for (int k = 0; k < nacc; k++) {
         deal(l, *acc[k].m, acc[k].dmg, acc[k].at, acc[k].crit || acc[k].weak);
+        lifesteal(l, acc[k].dmg, t);
         l.hits++;
         l.hitMarkerUntil = t + 0.18;
         l.hitMarkerWeak = acc[k].weak;
         l.tracers[l.nextTracer++ % 16] = {acc[k].at, t + 0.09, true};
-        int mod = s.equippedLong >= 0 ? kWeapons[s.equippedLong].mod : -1;
-        if (mod >= 0 && t >= l.modUntil) l.modCharge = std::min(kMods[mod].charge_damage, l.modCharge + acc[k].dmg);
-        if (acc[k].m->large) s.scrap += (int)(acc[k].dmg * tune(TUNING_SCRAP_PER_1000_DAMAGE) / 1000.0f + frand());
+        if (mod >= 0 && t >= l.modUntil)
+            l.modCharge = std::min(kMods[mod].charge_damage, l.modCharge + acc[k].dmg * (1.0f + stat(l, ST_MOD_GEN, t)));
         if (tune(TUNING_AGGRO_SHELLS) > 0 && t - l.lastSlinger > tune(TUNING_SLINGER_INTERVAL_S)) {
             Vec3 back = norm(sub(v.camPos, acc[k].at));
             fire_slinger(add(acc[k].at, mul(back, 150.0f)), acc[k].m->center);
             l.lastSlinger = t;
         }
-        if (k == 0) l.burnTarget = acc[k].m->em;
+        if (k == 0) l.target = acc[k].m->em;
+        trigger(l, TR_ON_HIT, t);
+        if (acc[k].crit) trigger(l, TR_ON_CRIT, t);
+        if (acc[k].weak) trigger(l, TR_ON_WEAKSPOT, t);
     }
     return nacc;
 }
 
+// ---------------------------------------------------------------- requests from the menus (crafting)
+
+static const char* material_name(int m) {
+    int id = (int)kMaterials[m].mhw_item_id;
+    const char* n = id > 0 ? mhw_item_name(id) : nullptr;
+    return n ? n : kMaterials[m].note;
+}
+
+static void handle(SaveData& s, Live& l, const Request& r, double t) {
+    ItemView it = item(r.cat, r.row);
+    const char* recipe = it.recipe;
+    int zen = it.zenny;
+    if (r.kind == Request::UPGRADE) {
+        int lvl = s.level[r.row];
+        if (lvl >= kUpgradesCount) { snprintf(l.said, sizeof(l.said), "Already at the highest level."); return; }
+        recipe = kUpgrades[lvl].recipe;
+        zen = (int)kUpgrades[lvl].zenny;
+    } else if (r.kind == Request::CRAFT && r.cat != CAT_CONSUMABLE && s.has(r.cat, r.row)) {
+        snprintf(l.said, sizeof(l.said), "You already have this.");
+        return;
+    }
+    std::vector<Need> need = r.kind == Request::BUY_CONSUMABLE ? std::vector<Need>{} : recipe_of(recipe);
+    if (!mhw_inventory_ready() && !need.empty()) {
+        snprintf(l.said, sizeof(l.said), "Your item box can't be read yet, so nothing was taken or made.");
+        return;
+    }
+    for (const Need& n : need) {
+        int id = (int)kMaterials[n.material].mhw_item_id;
+        if (id <= 0) { snprintf(l.said, sizeof(l.said), "This recipe's MHW materials are not set up yet."); return; }
+        if (mhw_item_count(id) < n.count) {
+            snprintf(l.said, sizeof(l.said), "You need %d x %s.", n.count, material_name(n.material));
+            return;
+        }
+    }
+    if (mhw_zenny() < zen) { snprintf(l.said, sizeof(l.said), "You need %d zenny.", zen); return; }
+    for (const Need& n : need)
+        if (!mhw_take_items((int)kMaterials[n.material].mhw_item_id, n.count)) {
+            snprintf(l.said, sizeof(l.said), "Could not take %s from your item box.", material_name(n.material));
+            log("craft: taking item %d x%d failed", (int)kMaterials[n.material].mhw_item_id, n.count);
+            return;
+        }
+    if (zen > 0 && !mhw_spend_zenny(zen)) { snprintf(l.said, sizeof(l.said), "Could not take the zenny."); return; }
+    switch (r.kind) {
+        case Request::UPGRADE: s.level[r.row]++; break;
+        case Request::BUY_CONSUMABLE: s.stock[r.row]++; break;
+        default:
+            if (r.cat == CAT_CONSUMABLE) s.stock[r.row]++;
+            else s.owned[r.cat][r.row] = 1;
+            if (r.cat == CAT_WEAPON) { l.mag[r.row] = mag_size(l, r.row, t); l.reserve[r.row] = reserve_size(l, r.row, t); }
+            break;
+    }
+    snprintf(l.said, sizeof(l.said), "done");
+    l.dirty = true;
+    log("craft: %s %s row %d (%d zenny)", r.kind == Request::UPGRADE ? "upgrade" : "made", cat_label(r.cat), r.row, zen);
+}
+
+void use_consumable(int row) {
+    Shared& sh = S();
+    AcquireSRWLockExclusive(&sh.lock);
+    SaveData& s = sh.save;
+    Live& l = sh.live;
+    double t = now_s();
+    if (row >= 0 && s.stock[row] > 0) {
+        s.stock[row]--;
+        apply_use(l, kConsumables[row].effects, t, 1.0f, 0.0f, 10.0f, 1.0f);
+        bool concoction = false;
+        for (const Effect& e : effects_of(kConsumables[row].effects))
+            concoction |= e.act == ACT_BUFF;
+        if (concoction) {
+            // Concoctions (lasting buffs) keep going for up to half an hour, like Remnant II's.
+            s.concoction = row;
+            for (const Effect& e : effects_of(kConsumables[row].effects))
+                if (e.act == ACT_BUFF) l.fx.buff(e.stat, e.value, t + tune(TUNING_CONCOCTION_S), &e, 1);
+        }
+        l.dirty = true;
+    }
+    ReleaseSRWLockExclusive(&sh.lock);
+}
+
 // ---------------------------------------------------------------- the tick
 
-static double g_lastTick = 0, g_lastSave = 0;
-
-static const Monster* find_monster(const Live& l, uint8_t* em) {
-    for (const Monster& m : l.snap.monsters)
-        if (m.em == em) return &m;
-    return nullptr;
-}
+static double g_lastTick = 0, g_lastSave = 0, g_lastMeleeHit = 0;
 
 void mod_game_tick() {
     Shared& sh = S();
     double t = now_s();
     float dt = g_lastTick > 0 ? (float)std::min(0.25, t - g_lastTick) : 0.016f;
     g_lastTick = t;
+    inventory_tick();
     AcquireSRWLockExclusive(&sh.lock);
     SaveData& s = sh.save;
     Live& l = sh.live;
     snapshot(&l.snap);
     const GameSnapshot& g = l.snap;
     const Archetypes* a = archetype();
+    if (l.loadoutChanged) {
+        rebuild_sources(s, l);
+        l.loadoutChanged = false;
+    }
+    l.fx.expire(t);
+    l.fx.inHand = l.gunMode ? (l.usingLong ? 1 : 2) : 0;  // a gun's own effects count while it is in hand
 
     // Zone changes: back at base, or setting out on a hunt, is Remnant's rest at a worldstone.
     if (g.zone != l.lastZone && g.zone >= 0) {
         if (l.lastZone >= 0 && (g.inBase || zone_is_base(l.lastZone))) {
-            s.relicCharges = (int)kRelics[RELICS_DRAGON_HEART].charges;
-            fill_ammo(s, l);
-            if (a) l.bonusHealth = a->hp_bonus;
+            rest(s, l, t);
             toast(l, "Rested: relic charges and ammo restored");
         }
         log("zone %d -> %d (%s)", l.lastZone, g.zone, g.inBase ? "base" : "field");
         l.lastZone = g.zone;
         l.track.clear();
         l.lastPlayerHp = -1;
+        l.actives.clear();
     }
     l.combatAllowed = g.inGame && a && (!g.inBase || g.zone == 504) && g.solo;
     if (!l.combatAllowed) l.gunMode = false;
+
+    // The NPC menu the hunter stands at.
+    l.nearMenu = -1;
+    if (g.inGame && g.inBase)
+        for (int i = 0; i < kMenusCount; i++) {
+            const Menus& m = kMenus[i];
+            if ((int)m.zone != g.zone || (m.x == 0 && m.y == 0 && m.z == 0)) continue;
+            float dx = g.pos.x - m.x, dy = g.pos.y - m.y, dz = g.pos.z - m.z;
+            if (dx * dx + dy * dy + dz * dz < m.radius * m.radius) l.nearMenu = i;
+        }
+
+    for (const Request& r : l.requests) handle(s, l, r, t);
+    if (!l.requests.empty()) {
+        l.requests.clear();
+        l.loadoutChanged = true;
+    }
 
     LONG cmds = InterlockedExchange(&g_cmds, 0);
     auto has = [&](Cmd c) { return (cmds & (1 << c)) != 0; };
 
     if (g.inGame && a) {
-        // ---- player health: damage taken, refunds, heals
+        // ---- player health: damage taken, damage reduction, shields, regeneration
+        float hpNow = 0;
+        if (g.playerHealth && mem_readable(g.playerHealth + 0x60, 8)) {
+            l.maxHp = *(float*)(g.playerHealth + 0x60);
+            hpNow = *(float*)(g.playerHealth + 0x64);
+        }
+        l.fx.hpFrac = l.maxHp > 0 ? hpNow / l.maxHp : 1.0f;
+        float mh = stat(l, ST_MAX_HP, t);
+        l.bonusMax = std::max(0.0f, mh);
+        if (t > l.shieldUntil && l.bonusHealth > l.bonusMax) l.bonusHealth = l.bonusMax;
         if (g.playerHealth && l.lastPlayerHp >= 0) {
-            float drop = l.lastPlayerHp - g.hp;
+            float drop = l.lastPlayerHp - hpNow;
             if (drop > 0.5f && drop < 1000.0f) {
-                float refund = 0;
-                if (t < l.skillUntil && kSkills[a->skill].effect == SKILLS_EFFECT_DAMAGE_REDUCTION)
-                    refund += drop * (1.0f - kSkills[a->skill].magnitude);
-                refund += drop * (1.0f - a->damage_taken_mult);
+                float dr = std::min(tune(TUNING_DR_CAP), std::max(0.0f, stat(l, ST_DR, t)));
+                float refund = drop * dr;
                 float absorbed = std::min(l.bonusHealth, drop - refund);
                 if (absorbed > 0) { refund += absorbed; l.bonusHealth -= absorbed; }
                 if (refund > 0) add_hp(g.playerHealth, refund);
                 l.lastHurt = t;
+                trigger(l, TR_ON_HURT, t);
             }
         }
-        float heal = 0;
-        if (t < l.relicUntil) heal += l.relicPerSec * dt;
-        if (t < l.hotUntil) heal += l.hotPerSec * dt;
-        if (heal > 0 && g.playerHealth) add_hp(g.playerHealth, heal);
-        if (t - l.lastHurt > tune(TUNING_BONUS_HEALTH_REGEN_DELAY_S))
-            l.bonusHealth = std::min(a->hp_bonus, l.bonusHealth + tune(TUNING_BONUS_HEALTH_REGEN_PER_S) * dt);
-        float hpNow = 0, maxNow = 0;
-        if (g.playerHealth && mem_readable(g.playerHealth + 0x60, 8)) {
-            maxNow = *(float*)(g.playerHealth + 0x60);
-            hpNow = *(float*)(g.playerHealth + 0x64);
+        float regen = stat(l, ST_REGEN, t);
+        if (regen > 0 && g.playerHealth) {
+            l.regenAcc += regen * dt;
+            if (l.regenAcc >= 1.0) { add_hp(g.playerHealth, (float)l.regenAcc); l.regenAcc = 0; }
         }
+        if (t - l.lastHurt > tune(TUNING_BONUS_HEALTH_REGEN_DELAY_S) && l.bonusHealth < l.bonusMax)
+            l.bonusHealth = std::min(l.bonusMax, l.bonusHealth + tune(TUNING_BONUS_HEALTH_REGEN_PER_S) * dt);
+
+        // ---- things running for a while
+        for (Active& ac : l.actives) {
+            if (t >= ac.until) continue;
+            if (ac.act == ACT_HEAL) {
+                if (g.playerHealth) add_hp(g.playerHealth, ac.perSec * dt * (1.0f + stat(l, ST_HEAL, t)));
+                continue;
+            }
+            const Monster* m = ac.target ? find_monster(l, ac.target) : current_target(l);
+            if (!m) continue;
+            ac.acc += ac.perSec * dt;
+            if (ac.acc >= 5.0f) {
+                deal(l, *m, ac.acc, m->center, false);
+                ac.acc = 0;
+            }
+        }
+        l.actives.erase(std::remove_if(l.actives.begin(), l.actives.end(), [&](const Active& x) { return t >= x.until; }),
+                        l.actives.end());
         l.lastPlayerHp = g.playerHealth ? hpNow : -1;
 
         // ---- relic
-        if (has(CMD_RELIC)) {
-            if (s.relicCharges > 0 && t >= l.relicUntil && g.playerHealth) {
-                const Relics& r = kRelics[RELICS_DRAGON_HEART];
+        if (has(CMD_RELIC) && s.relic >= 0) {
+            if (s.relicCharges > 0 && t >= l.relicBusyUntil && g.playerHealth) {
                 s.relicCharges--;
-                float total = maxNow * r.heal_pct_max_hp / 100.0f * a->relic_heal_mult;
-                l.relicPerSec = total / r.heal_over_s;
-                l.relicUntil = t + r.heal_over_s;
+                float speed = 1.0f + stat(l, ST_RELIC_SPEED, t);
+                apply_use(l, kRelics[s.relic].effects, t, 1.0f / std::max(0.2f, speed), 0.0f, 5.0f,
+                          1.0f + stat(l, ST_RELIC_HEAL, t));
+                l.relicBusyUntil = t + 0.8 / speed;
+                trigger(l, TR_ON_RELIC, t);
                 l.dirty = true;
             } else if (s.relicCharges <= 0) {
                 toast(l, "No relic charges left");
             }
         }
 
-        // ---- archetype skill
-        if (has(CMD_SKILL)) {
-            const Skills& sk = kSkills[a->skill];
-            if (t >= l.skillReady) {
-                l.skillUntil = t + sk.duration_s;
-                l.skillReady = t + sk.cooldown_s;
-                if (sk.effect == SKILLS_EFFECT_HEAL_OVER_TIME) {
-                    l.hotPerSec = sk.magnitude;
-                    l.hotUntil = l.skillUntil;
-                } else if (sk.effect == SKILLS_EFFECT_INFINITE_AMMO) {
-                    for (int gi : {s.equippedLong, s.equippedHand})
-                        if (gi >= 0) l.mag[gi] = (int)kWeapons[gi].mag;
-                    l.reloadDone = 0;
-                }
-                log("skill %s on", sk.id);
-            }
+        // ---- archetype skills (primary on the skill key, secondary on the second skill key)
+        for (int slot = 0; slot < 2; slot++) {
+            if (!has(slot == 0 ? CMD_SKILL : CMD_SKILL2)) continue;
+            int ar = slot == 0 ? s.archetype : s.archetype2;
+            std::vector<int> sk = skills_of(ar);
+            if (sk.empty()) continue;
+            const Skills& k = kSkills[sk[std::min((int)sk.size() - 1, std::max(0, s.skill[slot]))]];
+            if (t < l.skillReady[slot]) continue;
+            float durScale = 1.0f + stat(l, ST_SKILL_DUR, t);
+            float cdr = std::min(1.0f - tune(TUNING_SKILL_COOLDOWN_FLOOR), std::max(0.0f, stat(l, ST_CDR, t)));
+            l.skillUntil[slot] = t + k.duration_s * durScale;
+            l.skillReady[slot] = t + k.cooldown_s * (1.0f - cdr);
+            apply_use(l, k.effects, t, durScale, stat(l, ST_DMG_SKILL, t), k.duration_s, 1.0f);
+            trigger(l, TR_ON_SKILL, t);
+            log("skill %s", k.id);
         }
-        bool infinite = t < l.skillUntil && kSkills[a->skill].effect == SKILLS_EFFECT_INFINITE_AMMO;
 
         // ---- MHW weapon hits and monster deaths -> Remnant effects
+        float meleeBonus = stat(l, ST_DMG, t) + stat(l, ST_DMG_MELEE, t);
+        int curGun = equipped_gun(s, l);
+        int curMod = gun_mod(s, curGun);
         for (const Monster& m : g.monsters) {
             auto it = l.track.find(m.em);
             if (it != l.track.end()) {
                 float ext = it->second.hp - m.hp;
                 if (ext > 0.5f && ext < 100000.0f) {
-                    float mult = damage_mult_vs_monsters(l, t);
-                    if (t < l.skillUntil && kSkills[a->skill].effect == SKILLS_EFFECT_DAMAGE_REDUCTION)
-                        mult *= kSkills[a->skill].magnitude2;  // Juggernaut also hits harder in melee
-                    float bonus = ext * (mult - 1.0f);
+                    float bonus = ext * meleeBonus;
                     if (bonus > 0.5f) add_hp(m.health, -bonus);
-                    int mod = s.equippedLong >= 0 ? kWeapons[s.equippedLong].mod : -1;
-                    if (mod >= 0 && t >= l.modUntil) l.modCharge = std::min(kMods[mod].charge_damage, l.modCharge + ext);
-                    if (m.large) s.scrap += (int)(ext * tune(TUNING_SCRAP_PER_1000_DAMAGE) / 1000.0f + frand());
+                    lifesteal(l, ext + bonus, t);
+                    if (curMod >= 0 && t >= l.modUntil)
+                        l.modCharge = std::min(kMods[curMod].charge_damage, l.modCharge + ext * (1.0f + stat(l, ST_MOD_GEN, t)));
                     it->second.hp = m.hp - std::max(0.0f, bonus);
                     it->second.fought = true;
+                    l.target = m.em;
+                    if (t - g_lastMeleeHit > 0.25) {
+                        trigger(l, TR_ON_HIT, t);
+                        g_lastMeleeHit = t;
+                    }
                     continue;
                 }
                 it->second.hp = m.hp;
@@ -340,13 +669,9 @@ void mod_game_tick() {
         }
         for (auto it = l.track.begin(); it != l.track.end();) {
             if (!find_monster(l, it->first)) {
-                // A large monster we fought left the list low on health: slain or captured.
+                // A monster we fought left the list low on health: slain or captured.
                 const Live::Track& tr = it->second;
-                if (tr.large && tr.fought && tr.max > 0 && tr.hp < 0.25f * tr.max) {
-                    s.scrap += (int)tune(TUNING_SCRAP_PER_LARGE_KILL);
-                    toast(l, "+%d scrap", (int)tune(TUNING_SCRAP_PER_LARGE_KILL));
-                    l.dirty = true;
-                }
+                if (tr.fought && tr.max > 0 && tr.hp < 0.25f * tr.max) trigger(l, TR_ON_KILL, t);
                 it = l.track.erase(it);
             } else {
                 ++it;
@@ -354,25 +679,16 @@ void mod_game_tick() {
         }
 
         // ---- weapon mod
-        int mod = s.equippedLong >= 0 ? kWeapons[s.equippedLong].mod : -1;
-        if (has(CMD_MOD) && mod >= 0 && l.combatAllowed) {
-            const Mods& md = kMods[mod];
+        if (has(CMD_MOD) && curMod >= 0 && l.combatAllowed) {
+            const Mods& md = kMods[curMod];
             if (l.modCharge >= md.charge_damage && t >= l.modUntil) {
                 l.modCharge = 0;
-                l.modUntil = t + std::max(0.1f, md.duration_s);
-                if (md.effect == MODS_EFFECT_HEAL_BURST && g.playerHealth) add_hp(g.playerHealth, md.magnitude);
-                if (md.effect == MODS_EFFECT_BLAST) {
-                    const Monster* tgt = find_monster(l, l.burnTarget);
-                    if (tgt) deal(l, *tgt, md.magnitude * tune(TUNING_DAMAGE_SCALE), tgt->center, true);
-                }
-                log("mod %s on", md.id);
+                float durScale = 1.0f + stat(l, ST_MOD_DUR, t);
+                l.modUntil = t + 10.0 * durScale;
+                apply_use(l, md.effects, t, durScale, stat(l, ST_DMG_MOD, t) + stat(l, ST_DMG_ELEM, t), 10.0f, 1.0f);
+                trigger(l, TR_ON_MOD, t);
+                log("mod %s", md.id);
             }
-        }
-        if (mod >= 0 && t < l.modUntil && kMods[mod].effect == MODS_EFFECT_BURN) {
-            const Monster* tgt = find_monster(l, l.burnTarget);
-            static float burnAcc = 0;
-            burnAcc += kMods[mod].magnitude * tune(TUNING_DAMAGE_SCALE) * dt;
-            if (tgt && burnAcc >= 4.0f) { deal(l, *tgt, burnAcc, tgt->center, false); burnAcc = 0; }
         }
 
         // ---- guns
@@ -380,16 +696,18 @@ void mod_game_tick() {
         int gun = equipped_gun(s, l);
         if (gun >= 0) {
             const Weapons& w = kWeapons[gun];
-            float reloadTime = w.reload_s * a->reload_mult;
+            float reloadTime = w.reload_s / std::max(0.2f, 1.0f + stat(l, ST_RELOAD, t));
+            int magMax = mag_size(l, gun, t);
             if (l.reloadDone > 0 && t >= l.reloadDone) {
-                int need = (int)w.mag - l.mag[gun];
+                int need = magMax - l.mag[gun];
                 int take = std::min(need, l.reserve[gun]);
                 l.mag[gun] += take;
                 l.reserve[gun] -= take;
                 l.reloadDone = 0;
+                trigger(l, TR_ON_RELOAD, t);
             }
             bool wantReload = has(CMD_RELOAD) || (l.mag[gun] == 0 && l.reserve[gun] > 0);
-            if (l.gunMode && wantReload && l.reloadDone == 0 && l.mag[gun] < (int)w.mag && l.reserve[gun] > 0)
+            if (l.gunMode && wantReload && l.reloadDone == 0 && l.mag[gun] < magMax && l.reserve[gun] > 0)
                 l.reloadDone = t + reloadTime;
             bool wasAiming = l.aiming;
             l.aiming = l.gunMode && key_down(VK_RBUTTON);
@@ -401,16 +719,15 @@ void mod_game_tick() {
             } else if (l.baseFov > 5.0f) {
                 set_camera_fov(l.baseFov * tune(TUNING_ADS_FOV_MULT));
             }
-            if (l.gunMode && g.view.valid && key_down(VK_LBUTTON) && l.reloadDone == 0 && t >= l.nextShot &&
-                (l.mag[gun] > 0 || infinite)) {
+            if (l.gunMode && g.view.valid && key_down(VK_LBUTTON) && l.reloadDone == 0 && t >= l.nextShot && l.mag[gun] > 0) {
                 int nacc_last = fire(s, l, gun, t);
-                if (!infinite) l.mag[gun]--;
-                float rpm = w.rpm * (infinite ? kSkills[a->skill].magnitude : 1.0f);
+                l.mag[gun]--;
+                float rpm = w.rpm * (1.0f + stat(l, ST_FIRE_RATE, t));
                 l.nextShot = t + 60.0 / std::max(1.0f, rpm);
                 l.muzzleUntil = t + 0.05;
                 if (nacc_last == 0 && g.view.valid) {
                     Vec3 fwd = norm(sub(g.view.camTarget, g.view.camPos));
-                    l.tracers[l.nextTracer++ % 16] = {add(g.view.camPos, mul(fwd, kWeapons[gun].range_m * 100.0f)), t + 0.07, false};
+                    l.tracers[l.nextTracer++ % 16] = {add(g.view.camPos, mul(fwd, w.range_m * 100.0f)), t + 0.07, false};
                 }
                 if (test_mode() && l.hits > 0 && !l.shotLogged) {
                     melty_log("check shot-landed ok %.0f-damage", l.totalDamage);
@@ -441,21 +758,49 @@ static std::string save_path() {
     return d + "\\save.json";
 }
 
+static const char* kCatKeys[CAT_COUNT] = {"weapons", "mods", "mutators", "armor", "archetypes",
+                                          "rings", "amulets", "relics", "fragments", "consumables"};
+
+static std::string q(const char* s) { return std::string("\"") + (s ? s : "") + "\""; }
+static std::string id_or_empty(Cat c, int row) { return q(row >= 0 ? item(c, row).id : ""); }
+
 void save_write(const SaveData& s) {
-    std::string j = "{\n  \"version\": 1,\n";
+    std::string j = "{\n  \"version\": 2,\n";
     j += std::string("  \"introDone\": ") + (s.introDone ? "true" : "false") + ",\n";
-    j += std::string("  \"archetype\": \"") + (s.archetype >= 0 ? kArchetypes[s.archetype].id : "") + "\",\n";
-    j += "  \"scrap\": " + std::to_string(s.scrap) + ",\n";
-    j += "  \"relic\": " + std::to_string(s.relicCharges) + ",\n";
-    j += std::string("  \"long\": \"") + (s.equippedLong >= 0 ? kWeapons[s.equippedLong].id : "") + "\",\n";
-    j += std::string("  \"hand\": \"") + (s.equippedHand >= 0 ? kWeapons[s.equippedHand].id : "") + "\",\n";
-    j += "  \"guns\": {";
+    j += "  \"archetype\": " + id_or_empty(CAT_ARCHETYPE, s.archetype) + ",\n";
+    j += "  \"archetype2\": " + id_or_empty(CAT_ARCHETYPE, s.archetype2) + ",\n";
+    j += "  \"skill\": " + std::to_string(s.skill[0]) + ",\n  \"skill2\": " + std::to_string(s.skill[1]) + ",\n";
+    j += "  \"relicCharges\": " + std::to_string(s.relicCharges) + ",\n";
+    j += "  \"long\": " + id_or_empty(CAT_WEAPON, s.longGun) + ",\n";
+    j += "  \"hand\": " + id_or_empty(CAT_WEAPON, s.handGun) + ",\n";
+    j += "  \"melee\": " + id_or_empty(CAT_WEAPON, s.melee) + ",\n";
+    j += "  \"modLong\": " + id_or_empty(CAT_MOD, s.gunMod[0]) + ",\n  \"modHand\": " + id_or_empty(CAT_MOD, s.gunMod[1]) + ",\n";
+    j += "  \"relic\": " + id_or_empty(CAT_RELIC, s.relic) + ",\n  \"amulet\": " + id_or_empty(CAT_AMULET, s.amulet) + ",\n";
+    auto arr = [&](const char* key, Cat c, const int* v, int n) {
+        j += std::string("  \"") + key + "\": [";
+        for (int i = 0; i < n; i++) j += (i ? ", " : "") + id_or_empty(c, v[i]);
+        j += "],\n";
+    };
+    arr("mutators", CAT_MUTATOR, s.mutator, 3);
+    arr("fragmentSlots", CAT_FRAGMENT, s.fragment, 3);
+    arr("ringSlots", CAT_RING, s.ring, 4);
+    arr("armorSlots", CAT_ARMOR, s.armor, 4);
+    for (int c = 0; c < CAT_COUNT; c++) {
+        if (c == CAT_CONSUMABLE) continue;
+        j += std::string("  \"owned_") + kCatKeys[c] + "\": [";
+        bool first = true;
+        for (int i = 0; i < (int)s.owned[c].size(); i++)
+            if (s.owned[c][i]) { j += (first ? "" : ", ") + q(item((Cat)c, i).id); first = false; }
+        j += "],\n";
+    }
+    j += "  \"levels\": {";
     bool first = true;
     for (int i = 0; i < kWeaponsCount; i++)
-        if (s.owned[i]) {
-            j += std::string(first ? "" : ", ") + "\"" + kWeapons[i].id + "\": " + std::to_string(s.upgrade[i]);
-            first = false;
-        }
+        if (s.level[i]) { j += (first ? "" : ", ") + q(kWeapons[i].id) + ": " + std::to_string(s.level[i]); first = false; }
+    j += "},\n  \"stock\": {";
+    first = true;
+    for (int i = 0; i < kConsumablesCount; i++)
+        if (s.stock[i]) { j += (first ? "" : ", ") + q(kConsumables[i].id) + ": " + std::to_string(s.stock[i]); first = false; }
     j += "}\n}\n";
     std::string p = save_path(), tmp = p + ".tmp";
     FILE* f = fopen(tmp.c_str(), "wb");
@@ -465,20 +810,57 @@ void save_write(const SaveData& s) {
     MoveFileExA(tmp.c_str(), p.c_str(), MOVEFILE_REPLACE_EXISTING);
 }
 
-static std::string json_str(const std::string& j, const char* key) {
+// Tiny readers for the file we write ourselves.
+static size_t value_at(const std::string& j, const char* key) {
     std::string k = std::string("\"") + key + "\"";
     size_t p = j.find(k);
-    if (p == std::string::npos) return "";
+    if (p == std::string::npos) return p;
     p = j.find(':', p + k.size());
-    if (p == std::string::npos) return "";
+    if (p == std::string::npos) return p;
     p++;
     while (p < j.size() && (j[p] == ' ' || j[p] == '\n')) p++;
+    return p;
+}
+static std::string json_str(const std::string& j, const char* key) {
+    size_t p = value_at(j, key);
+    if (p == std::string::npos || p >= j.size()) return "";
     if (j[p] == '"') {
         size_t e = j.find('"', p + 1);
         return j.substr(p + 1, e - p - 1);
     }
     size_t e = j.find_first_of(",}\n", p);
     return j.substr(p, e - p);
+}
+static std::vector<std::string> json_strings(const std::string& j, const char* key) {
+    std::vector<std::string> out;
+    size_t p = value_at(j, key);
+    if (p == std::string::npos || j[p] != '[') return out;
+    size_t e = j.find(']', p);
+    for (size_t a = j.find('"', p); a != std::string::npos && a < e;) {
+        size_t b = j.find('"', a + 1);
+        out.push_back(j.substr(a + 1, b - a - 1));
+        a = j.find('"', b + 1);
+    }
+    return out;
+}
+static std::vector<std::pair<std::string, int>> json_counts(const std::string& j, const char* key) {
+    std::vector<std::pair<std::string, int>> out;
+    size_t p = value_at(j, key);
+    if (p == std::string::npos || j[p] != '{') return out;
+    size_t e = j.find('}', p);
+    for (size_t a = j.find('"', p); a != std::string::npos && a < e;) {
+        size_t b = j.find('"', a + 1);
+        size_t c = j.find(':', b);
+        out.push_back({j.substr(a + 1, b - a - 1), atoi(j.c_str() + c + 1)});
+        a = j.find('"', c);
+    }
+    return out;
+}
+static int row_by_id(Cat c, const std::string& id) {
+    if (id.empty()) return -1;
+    for (int i = 0; i < cat_count(c); i++)
+        if (id == item(c, i).id) return i;
+    return -1;
 }
 
 void save_load() {
@@ -491,30 +873,66 @@ void save_load() {
         size_t n;
         while ((n = fread(buf, 1, sizeof(buf), f)) > 0) j.append(buf, n);
         fclose(f);
+        int version = atoi(json_str(j, "version").c_str());
         s.introDone = json_str(j, "introDone") == "true";
-        std::string a = json_str(j, "archetype");
-        for (int i = 0; i < kArchetypesCount; i++)
-            if (a == kArchetypes[i].id) s.archetype = i;
-        s.scrap = atoi(json_str(j, "scrap").c_str());
-        s.relicCharges = atoi(json_str(j, "relic").c_str());
-        size_t g = j.find("\"guns\"");
-        for (int i = 0; i < kWeaponsCount; i++) {
-            std::string id = std::string("\"") + kWeapons[i].id + "\"";
-            size_t at = j.find(id, g == std::string::npos ? 0 : g);
-            if (g != std::string::npos && at != std::string::npos) {
-                s.owned[i] = true;
-                s.upgrade[i] = std::min((int)kUpgradesCount, atoi(j.c_str() + j.find(':', at) + 1));
+        s.archetype = row_by_id(CAT_ARCHETYPE, json_str(j, "archetype"));
+        s.archetype2 = row_by_id(CAT_ARCHETYPE, json_str(j, "archetype2"));
+        s.skill[0] = atoi(json_str(j, "skill").c_str());
+        s.skill[1] = atoi(json_str(j, "skill2").c_str());
+        s.longGun = row_by_id(CAT_WEAPON, json_str(j, "long"));
+        s.handGun = row_by_id(CAT_WEAPON, json_str(j, "hand"));
+        s.melee = row_by_id(CAT_WEAPON, json_str(j, "melee"));
+        if (version >= 2) {
+            s.relicCharges = atoi(json_str(j, "relicCharges").c_str());
+            s.gunMod[0] = row_by_id(CAT_MOD, json_str(j, "modLong"));
+            s.gunMod[1] = row_by_id(CAT_MOD, json_str(j, "modHand"));
+            s.relic = row_by_id(CAT_RELIC, json_str(j, "relic"));
+            s.amulet = row_by_id(CAT_AMULET, json_str(j, "amulet"));
+            auto slots = [&](const char* key, Cat c, int* v, int n) {
+                std::vector<std::string> ids = json_strings(j, key);
+                for (int i = 0; i < n && i < (int)ids.size(); i++) v[i] = row_by_id(c, ids[i]);
+            };
+            slots("mutators", CAT_MUTATOR, s.mutator, 3);
+            slots("fragmentSlots", CAT_FRAGMENT, s.fragment, 3);
+            slots("ringSlots", CAT_RING, s.ring, 4);
+            slots("armorSlots", CAT_ARMOR, s.armor, 4);
+            for (int c = 0; c < CAT_COUNT; c++) {
+                if (c == CAT_CONSUMABLE) continue;
+                for (const std::string& id : json_strings(j, (std::string("owned_") + kCatKeys[c]).c_str())) {
+                    int r = row_by_id((Cat)c, id);
+                    if (r >= 0) s.owned[c][r] = 1;
+                }
             }
-            if (json_str(j, "long") == kWeapons[i].id) s.equippedLong = i;
-            if (json_str(j, "hand") == kWeapons[i].id) s.equippedHand = i;
+            for (auto& kv : json_counts(j, "levels")) {
+                int r = row_by_id(CAT_WEAPON, kv.first);
+                if (r >= 0) s.level[r] = std::min((int)kUpgradesCount, kv.second);
+            }
+            for (auto& kv : json_counts(j, "stock")) {
+                int r = row_by_id(CAT_CONSUMABLE, kv.first);
+                if (r >= 0) s.stock[r] = kv.second;
+            }
+        } else {
+            // v0.1 save: guns with McCabe levels (v0.1 had 5; v0.2 keeps them), Dragon Heart charges.
+            s.relicCharges = atoi(json_str(j, "relic").c_str());
+            for (auto& kv : json_counts(j, "guns")) {
+                int r = row_by_id(CAT_WEAPON, kv.first);
+                if (r >= 0) { s.owned[CAT_WEAPON][r] = 1; s.level[r] = kv.second; }
+            }
+            if (s.archetype >= 0) {
+                s.owned[CAT_ARCHETYPE][s.archetype] = 1;
+                int ml = kArchetypes[s.archetype].starter_melee;
+                if (ml >= 0) { s.owned[CAT_WEAPON][ml] = 1; s.melee = ml; }
+            }
+            int dh = relics_index("dragon_heart");
+            if (dh >= 0) { s.owned[CAT_RELIC][dh] = 1; s.relic = dh; }
         }
-        log("save: loaded %s (archetype %s, scrap %d)", p.c_str(), a.c_str(), s.scrap);
+        log("save: loaded %s (v%d, archetype %s)", p.c_str(), version, s.archetype >= 0 ? kArchetypes[s.archetype].id : "-");
     }
     Shared& sh = S();
     AcquireSRWLockExclusive(&sh.lock);
     sh.save = s;
-    fill_ammo(sh.save, sh.live);
-    if (const Archetypes* a = s.archetype >= 0 ? &kArchetypes[s.archetype] : nullptr) sh.live.bonusHealth = a->hp_bonus;
+    rebuild_sources(sh.save, sh.live);
+    fill_ammo(sh.save, sh.live, now_s());
     ReleaseSRWLockExclusive(&sh.lock);
 }
 

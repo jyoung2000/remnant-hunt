@@ -1,50 +1,127 @@
 {
  "sheet": "skills",
- "phase": "v0.1",
+ "phase": "v0.2",
  "columns": {
   "id": "id",
   "name": "r2text",
-  "icon": "r2tex",
-  "effect": "enum:monster_damage_mult|heal_over_time|damage_reduction|infinite_ammo",
-  "magnitude": "num",
-  "magnitude2": "num",
-  "duration_s": "num",
-  "cooldown_s": "num"
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
+  "cooldown_s": "num",
+  "duration_s": "num"
  },
  "rows": [
   {
-   "id": "hunters_mark",
+   "id": "alchemistvial_stonemist",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Skills/HuntersMark/Skill_HuntersMark.uasset",
-     "key": "A21B723A42C8CBF9CE78999B3E4E0BE0"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Skills/StoneMist/Skill_AlchemistVial_StoneMist.uasset",
+     "key": "6D08B945464B364359921188ED0D99FA"
     }
    },
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Hunter/T_UI_Icon_Skill_Hunter_HuntersMark"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Alchemist/T_UI_Icon_Skill_Alchemist_StoneMist"
    },
-   "effect": "monster_damage_mult",
-   "magnitude": 1.15,
-   "magnitude2": 0.0,
-   "duration_s": 25,
-   "cooldown_s": 60
+   "effects": "use:buff dr+25% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 75.0,
+   "duration_s": 10.0
   },
   {
-   "id": "wellspring",
+   "id": "alchemistvial_frenzydust",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Skills/Wellspring/Skill_Wellspring.uasset",
-     "key": "E4D7DBAF4B3D14DA8EB4DBA0D991FEDA"
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Skills/FrenzyDust/Skill_AlchemistVial_FrenzyDust.uasset",
+     "key": "54B348E14513EE6063CC5485EC0F0812"
     }
    },
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Medic/T_UI_Icon_Skill_Medic_Wellspring"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Alchemist/T_UI_Icon_Skill_Alchemist_FrenzyDust"
    },
-   "effect": "heal_over_time",
-   "magnitude": 3.0,
-   "magnitude2": 0.0,
-   "duration_s": 15,
-   "cooldown_s": 70
+   "effects": "use:buff fire_rate+20% 15s;use:buff reload+20% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 75.0,
+   "duration_s": 10.0
+  },
+  {
+   "id": "alchemistvial_elixiroflife",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Skills/ElixirOfLife/Skill_AlchemistVial_ElixirOfLife.uasset",
+     "key": "74F54673487514EE59B0A694F2A0DA10"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Alchemist/T_UI_Icon_Skill_Alchemist_ElixirOfLife"
+   },
+   "effects": "use:heal 100% 20s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 10.0
+  },
+  {
+   "id": "realityrune",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Skills/StasisField/Skill_RealityRune.uasset",
+     "key": "209CFE02408749A324DB9C9930DD2F31"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Archon/T_UI_Icon_Skill_Archon_RealityRune"
+   },
+   "effects": "use:buff dmg_status+10% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 75.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "chaosgate",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Skills/ChaosRune/Skill_ChaosGate.uasset",
+     "key": "4BF3896C43A3CE7CC5564EA9F81B558B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Archon/T_UI_Icon_Skill_Archon_ChaosGate"
+   },
+   "effects": "use:buff dmg+10% 20s;use:buff mod_gen+25% 20s",
+   "fidelity": "exact",
+   "cooldown_s": 85.0,
+   "duration_s": 20.0
+  },
+  {
+   "id": "havocform",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Skills/HavocForm/Skill_HavocForm.uasset",
+     "key": "7BFF1DB9453D0EE54C4D11ABA84D2704"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Archon/T_UI_Icon_Skill_Archon_HavocForm"
+   },
+   "effects": "use:burst 150;use:buff dr+50% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 30.0
+  },
+  {
+   "id": "warstomp",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Skills/WarStomp/Skill_WarStomp.uasset",
+     "key": "0578E7A541F8F79DB392048DE27B1DFA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Challenger/T_UI_Icon_Skill_Challenger_Warstomp"
+   },
+   "effects": "use:burst 150",
+   "fidelity": "approx",
+   "cooldown_s": 50.0,
+   "duration_s": 15.0
   },
   {
    "id": "juggernaut",
@@ -57,11 +134,154 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Challenger/T_UI_Icon_Skill_Challenger_Juggernaut"
    },
-   "effect": "damage_reduction",
-   "magnitude": 0.6,
-   "magnitude2": 1.25,
-   "duration_s": 20,
-   "cooldown_s": 90
+   "effects": "use:buff dmg_melee+50% 25s;use:buff dr+25% 25s",
+   "fidelity": "exact",
+   "cooldown_s": 60.0,
+   "duration_s": 25.0
+  },
+  {
+   "id": "rampage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Skills/Rage/Skill_Rampage.uasset",
+     "key": "15FA90AD4B9D9013CBF17B80C59AB31B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Challenger/T_UI_Icon_Skill_Challenger_Rampage"
+   },
+   "effects": "use:buff fire_rate+10% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 10.0
+  },
+  {
+   "id": "deployable_gatling",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Skills/Skill_Gatling/Skill_Deployable_Gatling.uasset",
+     "key": "0A0607F840B9540E0F3C7F874CDBE881"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Engineer/T_UI_Icon_Skill_Engineer_Gatling"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "cooldown_s": 60.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "deployable_flamethrower",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Skills/Skill_FlameThrower/Skill_Deployable_FlameThrower.uasset",
+     "key": "6EC625A641BCC067CD6B4180282777E4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Engineer/T_UI_Icon_Skill_Engineer_FlameThrower"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "cooldown_s": 60.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "deployable_impactcannon",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Skills/Skill_ImpactCannon/Skill_Deployable_ImpactCannon.uasset",
+     "key": "065B8FD94F55C050E4537E90E088AF72"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Engineer/T_UI_Icon_Skill_Engineer_ImpactCannon"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "cooldown_s": 60.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "plainswalker",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Skills/WorldTraveler/Skill_Plainswalker.uasset",
+     "key": "FB5E3607441C19FFE817E8930DA8B738"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Explorer/T_UI_Icon_Skill_Explorer_Plainswalker"
+   },
+   "effects": "use:buff stamina+20% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 60.0,
+   "duration_s": 30.0
+  },
+  {
+   "id": "golddigger",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Skills/GoldDigger/Skill_GoldDigger.uasset",
+     "key": "9A59271446878B824A69C59E826D337F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Explorer/T_UI_Icon_Skill_Explorer_GoldDigger"
+   },
+   "effects": "use:buff dmg+10% 15s;use:buff dr+15% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 45.0,
+   "duration_s": 45.0
+  },
+  {
+   "id": "fortunehunter",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Skills/FortuneHunter/Skill_FortuneHunter.uasset",
+     "key": "9AB246D148DF8F74454C9DA2DCD666E0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Explorer/T_UI_Icon_Skill_Explorer_FortuneHunter"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 90.0,
+   "duration_s": 60.0
+  },
+  {
+   "id": "aimable_quickdraw",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Skills/QuickDraw/Skill_Aimable_QuickDraw.uasset",
+     "key": "9B40FD2F459F052E85A847B4B6340F4F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Gunslinger/T_UI_Icon_Skill_Gunslinger_QuickDraw"
+   },
+   "effects": "use:burst 52",
+   "fidelity": "approx",
+   "cooldown_s": 40.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "sidewinder",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Skills/Sidewinder/Skill_Sidewinder.uasset",
+     "key": "1E24DA804F9BED20CB44859581B563F7"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Gunslinger/T_UI_Icon_Skill_Gunslinger_03"
+   },
+   "effects": "use:buff stamina+50% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 50.0,
+   "duration_s": 60.0
   },
   {
    "id": "bulletstorm",
@@ -74,11 +294,394 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Gunslinger/T_UI_Icon_Skill_Gunslinger_Bulletstorm"
    },
-   "effect": "infinite_ammo",
-   "magnitude": 1.25,
-   "magnitude2": 0.0,
-   "duration_s": 20,
-   "cooldown_s": 90
+   "effects": "use:buff fire_rate+20% 20s;use:buff reload+50% 20s;use:ammo 100%",
+   "fidelity": "exact",
+   "cooldown_s": 60.0,
+   "duration_s": 20.0
+  },
+  {
+   "id": "guarddog",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Skills/Skill_GuardDog/Skill_GuardDog.uasset",
+     "key": "9267BADC4964B1CFBE21BDAC8D53148A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Handler/T_UI_Icon_Skill_Handler_Guard"
+   },
+   "effects": "use:summon 40 20s;use:buff dmg-20% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 20.0
+  },
+  {
+   "id": "supportdog_command",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Skills/Skill_SupportDog/Skill_SupportDog_Command.uasset",
+     "key": "2669DBC94F72252AF1EEEDA29CD58446"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Handler/T_UI_Icon_Skill_Handler_Support"
+   },
+   "effects": "use:summon 40 25s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 25.0
+  },
+  {
+   "id": "attackdog",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Skills/Skill_AttackDog/Skill_AttackDog.uasset",
+     "key": "C8927A964CC46EC54822A89385463FCE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Handler/T_UI_Icon_Skill_Handler_Attack"
+   },
+   "effects": "use:summon 40 20s;use:buff dmg+20% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 20.0
+  },
+  {
+   "id": "hunters_mark",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Skills/HuntersMark/Skill_HuntersMark.uasset",
+     "key": "A21B723A42C8CBF9CE78999B3E4E0BE0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Hunter/T_UI_Icon_Skill_Hunter_HuntersMark"
+   },
+   "effects": "use:buff dmg+15% 25s;use:buff crit+10% 25s",
+   "fidelity": "exact",
+   "cooldown_s": 70.0,
+   "duration_s": 25.0
+  },
+  {
+   "id": "huntersfocus",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Skills/HuntersFocus/Skill_HuntersFocus.uasset",
+     "key": "8E4BBD7D4C0971C167BA18AFA39B09D6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Hunter/T_UI_Icon_Skill_Hunter_Focus"
+   },
+   "effects": "use:buff accuracy+50% 15s;use:buff crit+10% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 50.0,
+   "duration_s": 25.0
+  },
+  {
+   "id": "huntersshroud",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Skills/HuntersShroud/Skill_HuntersShroud.uasset",
+     "key": "7682848046911D9E8C681A90ED54015E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Hunter/T_UI_Icon_Skill_Hunter_HuntersShroud"
+   },
+   "effects": "use:buff dmg_melee+50% 15s;use:buff crit+10% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "voidcloak",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Skills/VoidCloak/Skill_VoidCloak.uasset",
+     "key": "DD3F42EF4EC15E584E3B33BE88C391FE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Invader/T_UI_Icon_Skill_Invader_VoidCloak"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 75.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "wormhole",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Skills/WormHole/Skill_WormHole.uasset",
+     "key": "E4FDC389472AC3FC7B502AB7AB1B8D54"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Invader/T_UI_Icon_Skill_Invader_WormHole"
+   },
+   "effects": "use:buff dmg+300% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 35.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "reboot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Skills/Reboot/Skill_Reboot.uasset",
+     "key": "433049374904EE5DA00F15A0C018B15B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Invader/T_UI_Icon_Skill_Invader_Reboot"
+   },
+   "effects": "use:buff stamina+15% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 55.0,
+   "duration_s": 3.0
+  },
+  {
+   "id": "wayofwater",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Skills/WayOfWater/Skill_WayOfWater.uasset",
+     "key": "7C7038D84FDF9E83A8B4868B85CF79A4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Skills/Invoker/T_UI_Icon_Skill_Invoker_02"
+   },
+   "effects": "use:buff stamina-10% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 120.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "wayofforest",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Skills/WayOfForest/Skill_WayOfForest.uasset",
+     "key": "49E361CD4992F13A152C3EBF0A9CF81C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Skills/Invoker/T_UI_Icon_Skill_Invoker_03"
+   },
+   "effects": "use:heal 2%;use:buff dmg_elem+15% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 120.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "wayofsand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Skills/WayOfSand/Skill_WayOfSand.uasset",
+     "key": "DFA8F6904D96D37921A5FC9BACD882F1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Skills/Invoker/T_UI_Icon_Skill_Invoker_01"
+   },
+   "effects": "use:buff crit+5% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 120.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "wellspring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Skills/Wellspring/Skill_Wellspring.uasset",
+     "key": "E4D7DBAF4B3D14DA8EB4DBA0D991FEDA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Medic/T_UI_Icon_Skill_Medic_Wellspring"
+   },
+   "effects": "use:heal 150% 15s",
+   "fidelity": "exact",
+   "cooldown_s": 60.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "healingsurge",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Skills/HealingSurge/Skill_HealingSurge.uasset",
+     "key": "F81C3B75425456AED59D0B9341FBEB1B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Medic/T_UI_Icon_Skill_Medic_HealingShield"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 100.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "redemption",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Skills/Redemption/Skill_Redemption.uasset",
+     "key": "CCE94F30442951DC0CBCF7BC3E24557B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Medic/T_UI_Icon_Skill_Medic_Redemption"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 120.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "eruption",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Skills/Eruption/Skill_Eruption.uasset",
+     "key": "A8A02F20454F5285E056218512D15C54"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Skills/Ritualist/T_UI_Icon_Skill_Ritualist_01_Eruption"
+   },
+   "effects": "use:buff dmg_status+10% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 40.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "miasma",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Skills/Miasma/Skill_Miasma.uasset",
+     "key": "12D9DA8D4D5560BE9D8409A6BA84A55F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Skills/Ritualist/T_UI_Icon_Skill_Ritualist_02_Miasma"
+   },
+   "effects": "use:buff dmg_status+10% 15s",
+   "fidelity": "fallback",
+   "cooldown_s": 45.0,
+   "duration_s": 10.0
+  },
+  {
+   "id": "deathwish",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Skills/Deathwish/Skill_Deathwish.uasset",
+     "key": "C73ECA3644955B28DA3DDA93D98C7256"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Skills/Ritualist/T_UI_Icon_Skill_Ritualist_03_DeathWish"
+   },
+   "effects": "use:buff dmg+50% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 90.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "summonhollowminion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Skills/MinionHollow/Skill_SummonHollowMinion.uasset",
+     "key": "1F5D12A14A95D12BCB10DD9DEBBB57C2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Summoner/T_UI_Icon_Skill_Summoner_Hollow"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "cooldown_s": 30.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "summonflyerminion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Skills/MinionFlyer/Skill_SummonFlyerMinion.uasset",
+     "key": "E315EF0444ED1B7F47F8AFBF74AFEE68"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Summoner/T_UI_Icon_Skill_Summoner_Flyer"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "cooldown_s": 45.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "summonbruteminion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Skills/MinionBrute/Skill_SummonBruteMinion.uasset",
+     "key": "892F233F4B25C156CE0E7BBE87FE3036"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Summoner/T_UI_Icon_Skill_Summoner_Brute"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "cooldown_s": 120.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "summonshielddrone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Skills/ShieldDrone/Skill_SummonShieldDrone.uasset",
+     "key": "3448FF374E9F877CD05DFEA968AA8536"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Skills/Warden/T_UI_Icon_Skill_Warden_ShieldDrone"
+   },
+   "effects": "use:shield 8% 10s;use:summon 40 5s;use:buff dr+10% 15s;use:buff shield+8% 15s",
+   "fidelity": "approx",
+   "cooldown_s": 60.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "summonhealdrone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Skills/HealDrone/Skill_SummonHealDrone.uasset",
+     "key": "90036F454C697A9D597FB2B5D34B3FE2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Skills/Warden/T_UI_Icon_Skill_Warden_HealDrone"
+   },
+   "effects": "use:heal 10%;use:summon 40 5s",
+   "fidelity": "approx",
+   "cooldown_s": 60.0,
+   "duration_s": 15.0
+  },
+  {
+   "id": "summoncombatdrone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Skills/CombatDrone/Skill_SummonCombatDrone.uasset",
+     "key": "F4E7338F4D6095D912F3C9806E676BFF"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Skills/Warden/T_UI_Icon_Skill_Warden_CombatDrone"
+   },
+   "effects": "use:summon 40 5s",
+   "fidelity": "approx",
+   "cooldown_s": 60.0,
+   "duration_s": 15.0
   }
  ]
 }

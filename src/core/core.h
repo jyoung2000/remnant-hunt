@@ -106,7 +106,9 @@ void ui_init_fonts();   // render thread, before the first frame
 void ui_draw();         // render thread
 
 // ---------------------------------------------------------------- MHW engine API found by pattern (devdiag.cpp)
-bool game_api_init();
+bool game_api_init();   // blocking; reads only
+void game_api_start();  // runs game_api_init on a worker thread once
+bool game_api_ready();
 void* find_dti(const char* name);
 void* get_resource(const char* dtiName, const char* path);  // game thread
 const char* dti_name_of(const void* obj);                     // class name of an MtObject (read-only)
@@ -119,7 +121,7 @@ void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3&
 
 // Settings (remnant_hunt.ini in the mod folder).
 // Defaults avoid MHW's own default PC bindings (B, G, V, T, P are free or unused in solo play).
-struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', relic = 'T', terminal = 'P'; };
+struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', skill2 = 'H', relic = 'T', terminal = 'P'; };
 const Keys& keys();
 bool test_mode();  // MELTY_TEST=1 or test=1 in the ini
 

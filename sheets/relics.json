@@ -1,16 +1,17 @@
 {
  "sheet": "relics",
- "phase": "v0.1",
+ "phase": "v0.2",
  "columns": {
   "id": "id",
   "name": "r2text",
-  "desc": "r2text",
-  "icon": "r2tex",
-  "charges": "num",
-  "heal_pct_max_hp": "num",
-  "heal_over_s": "num",
-  "use_time_s": "num",
-  "refill_on": "enum:base_or_camp"
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
  },
  "rows": [
   {
@@ -18,7 +19,7 @@
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/Items/Common/Consumable_DragonHeart.uasset",
-     "key": "89C817C04A6542E83E4BE79624C1F5FD"
+     "key": "91B7596A41C30A98236B5093CD837C6D"
     }
    },
    "desc": {
@@ -30,11 +31,740 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_DragonHeart_Icon"
    },
-   "charges": 3,
-   "heal_pct_max_hp": 60,
-   "heal_over_s": 1.5,
-   "use_time_s": 0.8,
-   "refill_on": "base_or_camp"
+   "effects": "use:heal 70% 0.5s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "bloodless_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Relics/BloodlessHeart/Relic_Consumable_BloodlessHeart.uasset",
+     "key": "F1D9B77D483934AF3EE3CFB4D4051A62"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Relics/BloodlessHeart/Relic_Consumable_BloodlessHeart.uasset",
+     "key": "7EF2F77248FECE03AACB09AEDC6B5F8E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Relics/T_UI_Relic_BloodlessHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*5",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "blooming_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/BloomingHeart/Relic_Consumable_BloomingHeart.uasset",
+     "key": "90487A8F449654373AA535AFCD77952C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/BloomingHeart/Relic_Consumable_BloomingHeart.uasset",
+     "key": "AD3435384E618E9E1039EEA629F0D330"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_BloomingHeart_Icon"
+   },
+   "effects": "use:heal 35% 5s",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*3",
+    "bone_low2*2",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "broken_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Relics/BrokenHeart/Relic_Consumable_BrokenHeart.uasset",
+     "key": "862CFA8B48C569517D92FD844B61534D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Relics/BrokenHeart/Relic_Consumable_BrokenHeart.uasset",
+     "key": "69600E0947CAAC32E480C7A52660073A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Relics/T_UI_Relic_BrokenHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*5",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "constrained_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ConstrainedHeart/Relic_Consumable_ConstrainedHeart.uasset",
+     "key": "0CBAE044400561B31103DA94BA10BB9B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ConstrainedHeart/Relic_Consumable_ConstrainedHeart.uasset",
+     "key": "059C6D4143AD211B47D927A2F0BBE86D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_ConstrainedHeart_Icon"
+   },
+   "effects": "use:heal 20%",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "crystal_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/CrystalHeart/Relic_Consumable_CrystalHeart.uasset",
+     "key": "DD141CF5412A695FD94BF5A3EB075867"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/CrystalHeart/Relic_Consumable_CrystalHeart.uasset",
+     "key": "D69636534FD24D464DB5EC8001B091FB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_CrystalHeart_Icon"
+   },
+   "effects": "use:buff stamina-50% 15s;use:buff dr+25% 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "decayed_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/DecayedHeart/Relic_Consumable_DecayedHeart.uasset",
+     "key": "AB2F499A42910903153AC09B5656280B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/DecayedHeart/Relic_Consumable_DecayedHeart.uasset",
+     "key": "48375FD148A4AA0DBEF52180FC5978B8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_DecayedHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "diverting_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/DivertingHeart/Relic_Consumable_DivertingHeart.uasset",
+     "key": "D97640DD479F9E7CA914DFBA6721F67F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/DivertingHeart/Relic_Consumable_DivertingHeart.uasset",
+     "key": "727334C344499D2963EED6A6E214A644"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_DivertingHeart_Icon"
+   },
+   "effects": "use:buff cdr+1 15s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "enlarged_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/EnlargedHeart/Relic_Consumable_EnlargedHeart.uasset",
+     "key": "F3422D0F446FE6066988AF8AAE5A11E3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/EnlargedHeart/Relic_Consumable_EnlargedHeart.uasset",
+     "key": "DAD7F22041C3F31ED90D74B668FBDEB9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_EnlargedHeart_Icon"
+   },
+   "effects": "use:heal 100% 0.5s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "gossamer_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Relics/GossamerHeart/Relic_Consumable_GossamerHeart.uasset",
+     "key": "77A82E814FC98ED68014C3841FCCF9FC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Relics/GossamerHeart/Relic_Consumable_GossamerHeart.uasset",
+     "key": "B5CF7BBD43F52BDF992F2DB04BB1BEC9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Relics/T_UI_Relic_GossamerHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*5",
+    "bone_master*3",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "latent_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Relics/LatentHeart/Relic_Consumable_LatentHeart.uasset",
+     "key": "915F0324421B859644AD218717EEAAF8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Relics/LatentHeart/Relic_Consumable_LatentHeart.uasset",
+     "key": "096BF9A64A7EFA5243B69DBF965BCC60"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Relics/T_UI_Relic_LatentHeart_Icon"
+   },
+   "effects": "use:buff dr+95% 5s",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*5",
+    "bone_master*3",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "lifeless_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/LifelessHeart/Relic_Consumable_LifelessHeart.uasset",
+     "key": "ABB8A7B04C4CFE2B9FD709A27C931D81"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/LifelessHeart/Relic_Consumable_LifelessHeart.uasset",
+     "key": "2FDFA26C4A2799B923AFFC92FF9DCBF1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_LifelessHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*3",
+    "bone_low2*2",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "paper_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Relics/PaperHeart/Relic_Consumable_PaperHeart.uasset",
+     "key": "1E4BE28147A64759029AFA9BC9A80BA6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Relics/PaperHeart/Relic_Consumable_PaperHeart.uasset",
+     "key": "FAE4DB9549122FA435172ABC10EC88B6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Relics/T_UI_Relic_PaperHeart_Icon"
+   },
+   "effects": "use:heal 100%",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*5",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "profane_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Relics/ProfaneHeart/Relic_Consumable_ProfaneHeart.uasset",
+     "key": "E5CB635740684BBD941DF3A99E1D0ED7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Relics/ProfaneHeart/Relic_Consumable_ProfaneHeart.uasset",
+     "key": "0D182CC9498D10C76AC444B94E8A34D6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Relics/T_UI_Relic_ProfaneHeart_Icon"
+   },
+   "effects": "use:buff lifesteal+50% 15s",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*5",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "pulsing_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/PulsingHeart/Relic_Consumable_PulsingHeart.uasset",
+     "key": "C7A586A14D85914CE8C84D857433C423"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/PulsingHeart/Relic_Consumable_PulsingHeart.uasset",
+     "key": "7210DDAE41EA9B63294E5EA720CE6C0B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_PulsingHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "quilted_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/QuiltedHeart/Relic_Consumable_QuiltedHeart.uasset",
+     "key": "B123B03C4F8B54522CB8A4A634ED1DB2"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/QuiltedHeart/Relic_Consumable_QuiltedHeart.uasset",
+     "key": "B8C7EB2A4163BA22D2A96288F9E0BA63"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_QuiltedHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*3",
+    "bone_low2*2",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "reprocessed_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ReprocessedHeart/Relic_Consumable_ReprocessedHeart.uasset",
+     "key": "78AB04B041E16A72FEEEBF81026107A5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ReprocessedHeart/Relic_Consumable_ReprocessedHeart.uasset",
+     "key": "DB7A78204C401B6F0A6A3E93D28102EC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_ReprocessedHeart_Icon"
+   },
+   "effects": "use:buff regen+1 15s",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "resonating_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ResonatingHeart/Relic_Consumable_ResonatingHeart.uasset",
+     "key": "E532C0244B899A020AC8D0A9D2A9AC6B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ResonatingHeart/Relic_Consumable_ResonatingHeart.uasset",
+     "key": "71055CF843DA4D9DD0E348A6879EB6EB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_ResonatingHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "ripened_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/RipenedHeart/Relic_Consumable_RipenedHeart.uasset",
+     "key": "79DB71EB4CD5107A3718BFBA025DD118"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/RipenedHeart/Relic_Consumable_RipenedHeart.uasset",
+     "key": "848D20D84348AF60F13EB3BE90C0D28F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_RipenedHeart_Icon"
+   },
+   "effects": "use:heal 35% 0.5s",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*3",
+    "bone_low2*2",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "runed_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/RunedHeart/Relic_Consumable_RunedHeart.uasset",
+     "key": "39A35D334AFB4EA496F42C87AD9A9628"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/RunedHeart/Relic_Consumable_RunedHeart.uasset",
+     "key": "50FCBA8B4D03677585B460903C4B1251"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_RunedHeart_Icon"
+   },
+   "effects": "use:buff max_hp+5 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "salvaged_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/SalvagedHeart/Relic_Consumable_SalvagedHeart.uasset",
+     "key": "1FADD0F649C96269FA99FA93E8321F0E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/SalvagedHeart/Relic_Consumable_SalvagedHeart.uasset",
+     "key": "C31D75DD4DBC4E6FB6F8A194FD294947"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_SalvagedHeart_Icon"
+   },
+   "effects": "use:heal 30% 0.25s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "shielded_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ShieldedHeart/Relic_Consumable_ShieldedHeart.uasset",
+     "key": "C100A13442CEBFA9218F77ABFF4CAD73"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/ShieldedHeart/Relic_Consumable_ShieldedHeart.uasset",
+     "key": "67729FD24857D0D701C7A7BB77B422AF"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_ShieldedHeart_Icon"
+   },
+   "effects": "use:shield 100% 20s;use:buff shield+100% 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "siphon_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/SiphonHeart/Relic_Consumable_SiphonHeart.uasset",
+     "key": "CFBE19214BBDDCD8263D1E8153B26005"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/SiphonHeart/Relic_Consumable_SiphonHeart.uasset",
+     "key": "41749E0C416E250E23F5CA824CD25021"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_SiphonHeart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "tormented_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/TormentedHeart/Relic_Consumable_TormentedHeart.uasset",
+     "key": "AD201F0848CEB0E3D42049A770F8DDD5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/TormentedHeart/Relic_Consumable_TormentedHeart.uasset",
+     "key": "142A6FD246C06DD84A2F1FA0506886AB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_TormentedHeart_Icon"
+   },
+   "effects": "use:burst 150",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "tranquil_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/TranquilHeart/Relic_Consumable_TranquilHeart.uasset",
+     "key": "AA4F06D244078D083BD7ED9571B785C3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/TranquilHeart/Relic_Consumable_TranquilHeart.uasset",
+     "key": "5BF73BEE4E1D6911488D92AD690CE65D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_Tranquil_Heart_Icon"
+   },
+   "effects": "use:buff dmg+15% 15s",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "unsullied_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/UnsulliedHeart/Relic_Consumable_UnsulliedHeart.uasset",
+     "key": "0901DD6C4EF8CF108912158E2F1DF2EE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/UnsulliedHeart/Relic_Consumable_UnsulliedHeart.uasset",
+     "key": "61D870684B3A0D896E74F8AF8655E8F9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relics_UnsulliedHeart_Icon"
+   },
+   "effects": "use:heal 100% 0.5s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "void_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/VoidHeart/Relic_Consumable_VoidHeart.uasset",
+     "key": "D88CA7B84A02C94E9775E0BE0D315140"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Armor/Base/RelicTesting/VoidHeart/Relic_Consumable_VoidHeart.uasset",
+     "key": "F60B723549663319E100F788ADAB7F28"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_VoidHeart_Icon"
+   },
+   "effects": "use:heal 100% 0.75s;use:buff dr+50% 4s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3",
+    "part_high*2"
+   ]
   }
  ]
 }

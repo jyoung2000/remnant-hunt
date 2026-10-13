@@ -1,0 +1,1030 @@
+{
+ "sheet": "fragments",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
+ },
+ "rows": [
+  {
+   "id": "ammo_reserves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Discipline/RelicFragment_AmmoReserves.uasset",
+     "key": "0F170FBE4237FBD2B63D4498CAF73CF7"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_13_Active"
+   },
+   "effects": "ammo+25%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "armor_effectiveness",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_ArmorEffectiveness.uasset",
+     "key": "058B2CDB4069B5177E8E78884B929605"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_02_Active"
+   },
+   "effects": "dr+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "armor_flat",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_ArmorFlat.uasset",
+     "key": "77975F9F4DF9843B6264F3B383C5E859"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_09_Active"
+   },
+   "effects": "dr+15",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "cast_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Discipline/RelicFragment_CastSpeed.uasset",
+     "key": "F9E773214F9ED5F65C707CB6DEF9086F"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_10_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "consumable_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Discipline/RelicFragment_ConsumableSpeed.uasset",
+     "key": "CC4BE3CF4444E28F3443C7A8023F3ED3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_06_Active"
+   },
+   "effects": "relic_speed+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "critical_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_CriticalDamage.uasset",
+     "key": "4683F92C4FC16C88A11C6D9BB7430B12"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_13_Active"
+   },
+   "effects": "crit_dmg+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "damage_reduction",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_DamageReduction.uasset",
+     "key": "71627B82419C13270F6509983B41D167"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_10_Active"
+   },
+   "effects": "dr+5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "evade_distance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_EvadeDistance.uasset",
+     "key": "07319F8642573E539B90CFACE2C92291"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_12_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "evade_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_EvadeSpeed.uasset",
+     "key": "58D6F89245A11AEB8A58ED83A25255C0"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_13_Active"
+   },
+   "effects": "on_evade:stamina+10% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "explosive_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_ExplosiveDamage.uasset",
+     "key": "3BE2AB1E4334B5EC0D5E4E83077AC0B2"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_12_Active"
+   },
+   "effects": "dmg_explosive+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "grey_health_rate",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_GreyHealthRate.uasset",
+     "key": "210AEF8F4ED5B3FE5885FF86F896D3FB"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_07_Active"
+   },
+   "effects": "max_hp+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "healing_effectiveness",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_HealingEffectiveness.uasset",
+     "key": "8E245F824BFF29D07F8F629C176B203D"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_08_Active"
+   },
+   "effects": "heal+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "health",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_Health.uasset",
+     "key": "E7B271F74B18C4CF231DC2A814BD93F7"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_16_Active"
+   },
+   "effects": "max_hp+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "health_flat",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_HealthFlat.uasset",
+     "key": "B0F840AD4966C4376671F59D3036E0B1"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_06_Active"
+   },
+   "effects": "max_hp+10",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "health_regen",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_HealthRegen.uasset",
+     "key": "AF99EE244D9E5DE1BDB898BCDE13031C"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_15_Active"
+   },
+   "effects": "max_hp+1",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "heat_gen_reduction",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_HeatGenReduction.uasset",
+     "key": "B8C7DB7444D1EE605AF42FB37553F372"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_02_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ideal_range",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_IdealRange.uasset",
+     "key": "B5FE35CD46A5B21FDA36C9804A5DF040"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_15_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "melee_attack_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/Power/RelicFragment_MeleeAttackSpeed.uasset",
+     "key": "A4BC1F61469693FD7E14F7916FE43CBE"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_05_Active"
+   },
+   "effects": "fire_rate+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "melee_crit_chance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/Power/CritChance/RelicFragment_MeleeCritChance.uasset",
+     "key": "94EA32884558EBB57087E7838C56E450"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_11_Active"
+   },
+   "effects": "crit+7.5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "melee_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/Power/RelicFragment_MeleeDamage.uasset",
+     "key": "B6C83A2C4C182B0F2DF5E0977F0455F2"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_03_Active"
+   },
+   "effects": "dmg_melee+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "mod_crit_chance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_ModCritChance.uasset",
+     "key": "BFABB66C467D322E4F1A5A8DA4A8EC4D"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_10_Active"
+   },
+   "effects": "crit+7.5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "mod_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Power/RelicFragment_ModDamage.uasset",
+     "key": "3EBE94F94CCE879DA2A745A9F78B0FBC"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_08_Active"
+   },
+   "effects": "dmg_mod+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "mod_duration",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_ModDuration.uasset",
+     "key": "5DFECB3D48E9E10BA8CD54984796B640"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_16_Active"
+   },
+   "effects": "mod_dur+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "mod_generation",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_ModGeneration.uasset",
+     "key": "AE31E1444636295D77764C8784330549"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_12_Active"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "movement_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_MovementSpeed.uasset",
+     "key": "CDF1179B46C1A2783320ECAA8EF663BE"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_14_Active"
+   },
+   "effects": "stamina+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "projectile_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_ProjectileSpeed.uasset",
+     "key": "2E97220C4202F6494764FF8BFF9B4C42"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_11_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ranged_charge_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_RangedChargeSpeed.uasset",
+     "key": "3676E6D44A86E2F2DF86F1BB5B32CAB2"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_09_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ranged_crit_chance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Power/CritChance/RelicFragment_RangedCritChance.uasset",
+     "key": "BD8E1B6A4570D7294712A28900969003"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_15_Active"
+   },
+   "effects": "crit+7.5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ranged_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Power/RelicFragment_RangedDamage.uasset",
+     "key": "E8A1509A4EDEEDEDD6351682247734E3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_02_Active"
+   },
+   "effects": "dmg_ranged+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ranged_fire_rate",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Power/RelicFragment_RangedFireRate.uasset",
+     "key": "3353CC10432B6149C2A604A031D567DD"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_06_Active"
+   },
+   "effects": "fire_rate+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "reload_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_ReloadSpeed.uasset",
+     "key": "456185704B516DA2DF5B929126753D4C"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_09_Active"
+   },
+   "effects": "reload+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "revive_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_ReviveSpeed.uasset",
+     "key": "6553E04A4532ECB3CCA5CFA8839BA6C3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_14_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "shield_duration",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_ShieldDuration.uasset",
+     "key": "13F4DEA2473185DBA81D2B85588200AA"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_04_Active"
+   },
+   "effects": "shield+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "shield_effectiveness",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_ShieldEffectiveness.uasset",
+     "key": "0CA23E7745C41272386C4397454EC721"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_03_Active"
+   },
+   "effects": "shield+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "skill_cooldown",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_SkillCooldown.uasset",
+     "key": "F6FE44F342F8E60AA014609A5071E144"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_08_Active"
+   },
+   "effects": "cdr+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "skill_crit_chance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_SkillCritChance.uasset",
+     "key": "D816A2254FB45DECD09EB6A16E7664B0"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_14_Active"
+   },
+   "effects": "crit+7.5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "skill_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Power/RelicFragment_SkillDamage.uasset",
+     "key": "BDF7F8C64CD7F9E29F0702B88B4E39A0"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_16_Active"
+   },
+   "effects": "dmg_skill+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "skill_duration",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_SkillDuration.uasset",
+     "key": "F45D4C3049A6FF6182E57EBD22628742"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_05_Active"
+   },
+   "effects": "skill_dur+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "stamina",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Intellect/RelicFragment_Stamina.uasset",
+     "key": "247865F3407A6745DA1E369C2D36DD67"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_11_Active"
+   },
+   "effects": "stamina+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "stamina_flat",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_StaminaFlat.uasset",
+     "key": "148440DC4CACFA3E26ACA6B04AA9D0BF"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_05_Active"
+   },
+   "effects": "stamina+15",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "status_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_StatusDamage.uasset",
+     "key": "05993F4F404AEF41148D4583694087CD"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_04_Active"
+   },
+   "effects": "dmg_status+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "weakspot_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/_Core/Shared/RelicFragment_WeakspotDamage.uasset",
+     "key": "21BF12054612A97804BE30A632643E8B"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Red_07_Active"
+   },
+   "effects": "weakspot+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "weapon_spread",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Discipline/RelicFragment_WeaponSpread.uasset",
+     "key": "92DE87B2489FB8FDA7CDBEA94C842F08"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_03_Active"
+   },
+   "effects": "accuracy+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "weapon_swap_speed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/Discipline/RelicFragment_WeaponSwapSpeed.uasset",
+     "key": "41DD91D8433A75F208D909B7B765B9A9"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_07_Active"
+   },
+   "effects": "dmg+2%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 1600,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*1",
+    "crystal_low*1"
+   ]
+  }
+ ]
+}

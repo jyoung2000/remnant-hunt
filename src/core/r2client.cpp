@@ -156,6 +156,9 @@ static std::string strip_markup(const std::string& s) {
     return out;
 }
 
+static std::mutex g_queueLock;
+static HANDLE g_wake = nullptr;
+
 static void fetch_text(const std::string& asset, const std::string& key) {
     std::string head;
     std::vector<uint8_t> body;
@@ -205,10 +208,23 @@ static void fetch_image(const std::string& asset, int maxSide) {
     g_img[asset + "|" + std::to_string(maxSide)] = std::move(img);
 }
 
+static std::vector<std::pair<std::string, std::string>> g_textQueue;  // (asset, key) asked for, not yet read
+
 const std::string& r2_text(const R2Text& t) {
-    std::lock_guard<std::mutex> l(g_cacheLock);
-    auto it = g_text.find(std::string(t.asset) + "\t" + t.key);
-    return it == g_text.end() ? kEmpty : it->second;
+    if (!t.asset || !t.key) return kEmpty;
+    std::string id = std::string(t.asset) + "\t" + t.key;
+    {
+        std::lock_guard<std::mutex> l(g_cacheLock);
+        auto it = g_text.find(id);
+        if (it != g_text.end()) return it->second;
+    }
+    // Not read yet: queue it for the worker (the screens show it a moment later).
+    std::lock_guard<std::mutex> q(g_queueLock);
+    for (auto& e : g_textQueue)
+        if (e.first == t.asset && e.second == t.key) return kEmpty;
+    g_textQueue.push_back({t.asset, t.key});
+    if (g_wake) SetEvent(g_wake);
+    return kEmpty;
 }
 
 const std::string& r2_name(const R2Name& n) {
@@ -218,8 +234,6 @@ const std::string& r2_name(const R2Name& n) {
 }
 
 static std::vector<std::pair<std::string, int>> g_imgQueue;
-static std::mutex g_queueLock;
-static HANDLE g_wake = nullptr;
 
 const R2Image* r2_image(const char* asset, int maxSide) {
     if (!asset) return nullptr;
@@ -237,20 +251,20 @@ const R2Image* r2_image(const char* asset, int maxSide) {
     return nullptr;
 }
 
-// Every Remnant II cell in the sheets, prefetched at start.
+// The cells the first screens need, read at start; the rest of the catalog (about two thousand cells) is read the
+// first time a screen shows it.
 static void prefetch_all() {
-    for (const Archetypes& a : kArchetypes) {
-        fetch_text(a.name.asset, a.name.key); fetch_text(a.prime.asset, a.prime.key); fetch_text(a.desc.asset, a.desc.key);
-    }
-    for (const Skills& s : kSkills) fetch_text(s.name.asset, s.name.key);
-    for (const Weapons& w : kWeapons) { fetch_text(w.name.asset, w.name.key); fetch_text(w.desc.asset, w.desc.key); }
-    for (const Mods& m : kMods) { fetch_text(m.name.asset, m.name.key); fetch_text(m.desc.asset, m.desc.key); }
-    for (const Relics& r : kRelics) { fetch_text(r.name.asset, r.name.key); fetch_text(r.desc.asset, r.desc.key); }
+    auto text = [](const R2Text& t) { if (t.asset && t.key) fetch_text(t.asset, t.key); };
+    for (const Archetypes& a : kArchetypes) { text(a.name); text(a.prime); text(a.desc); }
+    for (const Skills& s : kSkills) text(s.name);
+    for (const Weapons& w : kWeapons) text(w.name);
+    for (const Mods& m : kMods) text(m.name);
+    for (const Relics& r : kRelics) text(r.name);
     for (const Npcs& n : kNpcs) {
         fetch_name(n.name.asset, n.name.pattern);
         for (const R2Text* t : {&n.greet_1, &n.greet_2, &n.greet_3, &n.open_option, &n.leave_option, &n.shop_line,
                                 &n.done_line})
-            fetch_text(t->asset, t->key);
+            text(*t);
     }
 }
 
@@ -306,6 +320,17 @@ static DWORD WINAPI worker(LPVOID) {
     for (;;) {
         WaitForSingleObject(g_wake, 500);
         if (!g_proc) break;
+        for (;;) {
+            std::pair<std::string, std::string> tj;
+            {
+                std::lock_guard<std::mutex> q(g_queueLock);
+                if (g_textQueue.empty()) break;
+                tj = g_textQueue.front();
+            }
+            fetch_text(tj.first, tj.second);
+            std::lock_guard<std::mutex> q(g_queueLock);
+            g_textQueue.erase(g_textQueue.begin());
+        }
         for (;;) {
             std::pair<std::string, int> job;
             {

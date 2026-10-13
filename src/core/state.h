@@ -1,8 +1,12 @@
 // Remnant x MHW mashup core: the Remnant side's state. GPL-3.0-or-later (see LICENSE).
 #pragma once
 #include <map>
+#include <string>
+#include <vector>
 
+#include "catalog.h"
 #include "core.h"
+#include "effects.h"
 
 namespace rh {
 
@@ -13,12 +17,44 @@ inline float tune(int row) { return kTuning[row].value; }
 // Saved between sessions (save.json in %LOCALAPPDATA%\RemnantHunt).
 struct SaveData {
     bool introDone = false;
-    int archetype = -1;
-    int scrap = 0;
-    bool owned[kWeaponsCount] = {};
-    int upgrade[kWeaponsCount] = {};  // McCabe's level per gun, 0..kUpgradesCount
-    int equippedLong = -1, equippedHand = -1;
+    int archetype = -1, archetype2 = -1;  // primary and secondary archetype (archetypes rows)
+    int skill[2] = {0, 0};                // chosen skill of each, index into its skill list
+    std::vector<uint8_t> owned[CAT_COUNT];
+    std::vector<int> stock;               // consumables carried
+    std::vector<int> level;               // weapon upgrade level per weapons row
+    // Loadout (rows, -1 = empty)
+    int longGun = -1, handGun = -1, melee = -1;
+    int gunMod[2] = {-1, -1};             // chosen mod for a gun without its own (long, hand)
+    int mutator[3] = {-1, -1, -1};        // long, hand, melee
+    int relic = -1, amulet = -1;
+    int fragment[3] = {-1, -1, -1};
+    int ring[4] = {-1, -1, -1, -1};
+    int armor[4] = {-1, -1, -1, -1};      // head, body, gloves, legs
+    int concoction = -1;                  // active concoction (consumables row), until the next rest
     int relicCharges = 0;
+
+    SaveData() {
+        for (int c = 0; c < CAT_COUNT; c++) owned[c].assign(cat_count((Cat)c), 0);
+        stock.assign(kConsumablesCount, 0);
+        level.assign(kWeaponsCount, 0);
+    }
+    bool has(Cat c, int row) const { return row >= 0 && row < (int)owned[c].size() && owned[c][row]; }
+};
+
+// Something running for a while: heals, damage over time, companions, shields.
+struct Active {
+    Act act = ACT_NONE;
+    float perSec = 0;
+    double until = 0;
+    uint8_t* target = nullptr;  // uEnemy* for damage, nullptr = current target
+    float acc = 0;
+};
+
+// Crafting and other changes the screens ask the game thread to make (they write MHW's memory).
+struct Request {
+    enum Kind { CRAFT, UPGRADE, BUY_CONSUMABLE } kind;
+    Cat cat;
+    int row;
 };
 
 // Live, this session.
@@ -28,27 +64,29 @@ struct Live {
     bool gunMode = false;
     bool usingLong = true;
     bool aiming = false;
-    int mag[kWeaponsCount] = {};
-    int reserve[kWeaponsCount] = {};
-    double reloadDone = 0;  // 0 = not reloading
+    std::vector<int> mag, reserve;  // per weapons row
+    double reloadDone = 0;          // 0 = not reloading
     double nextShot = 0;
     double lastSlinger = 0;
     float modCharge = 0;
     double modUntil = 0;
-    int modTargetSlot = -1;
-    uint8_t* burnTarget = nullptr;
-    double skillReady = 0, skillUntil = 0;
-    double relicUntil = 0;
-    float relicPerSec = 0;
-    float hotPerSec = 0;
-    double hotUntil = 0;
-    float bonusHealth = 0;
+    uint8_t* target = nullptr;      // last monster the hunter hit
+    double skillReady[2] = {0, 0}, skillUntil[2] = {0, 0};
+    double relicBusyUntil = 0;
+    std::vector<Active> actives;
+    EffectState fx;
+    float bonusHealth = 0, bonusMax = 0;
+    double shieldUntil = 0;
     double lastHurt = 0;
+    double regenAcc = 0;
     struct Track { float hp = 0, max = 0; bool large = false, fought = false; };
-    std::map<uint8_t*, Track> track;      // per monster: last HP we know of, to see damage from MHW weapons
+    std::map<uint8_t*, Track> track;  // per monster: last HP we know of, to see damage from MHW weapons
     float baseFov = 0;
-    float lastPlayerHp = -1;
+    float lastPlayerHp = -1, maxHp = 0;
     int lastZone = -1;
+    int nearMenu = -1;                // menus row the hunter stands at, -1 = none
+    std::vector<Request> requests;
+    char said[200] = {0};             // result of the last request, for the menu
     // Feedback for the HUD.
     double hitMarkerUntil = 0;
     struct Tracer { Vec3 to; double until; bool hit; };
@@ -62,6 +100,12 @@ struct Live {
     int shots = 0, hits = 0;
     double totalDamage = 0;
     bool dirty = false;
+    bool loadoutChanged = true;
+
+    Live() {
+        mag.assign(kWeaponsCount, 0);
+        reserve.assign(kWeaponsCount, 0);
+    }
 };
 
 struct Shared {
@@ -75,16 +119,33 @@ double now_s();
 void toast(Live& l, const char* fmt, ...);
 
 // Commands from the screens (render thread) to the game thread.
-enum Cmd : int { CMD_NONE, CMD_RELOAD, CMD_SWAP, CMD_SKILL, CMD_RELIC, CMD_MOD };
+enum Cmd : int { CMD_NONE, CMD_RELOAD, CMD_SWAP, CMD_SKILL, CMD_SKILL2, CMD_RELIC, CMD_MOD };
 void post(Cmd c);
+void request(const Request& r);  // takes the lock
 
 // Save/load.
 void save_load();
 void save_write(const SaveData& s);
 
-// Archetype helpers.
+// Archetype and loadout helpers.
 const Archetypes* archetype();
-int equipped_gun(const SaveData& s, const Live& l);  // weapons row in hand, or -1
-void choose_archetype(int row);                     // render thread (takes the lock)
+int equipped_gun(const SaveData& s, const Live& l);   // weapons row in hand, or -1
+int gun_mod(const SaveData& s, int gun);               // mods row the gun fires, or -1
+std::vector<int> skills_of(int archetypeRow);          // skills rows
+std::vector<int> perks_of(int archetypeRow);           // perks rows (prime first)
+void choose_archetype(int row, int slot);              // render thread (takes the lock); slot 0 primary, 1 secondary
+void equip(Cat c, int row, int slot);                  // render thread (takes the lock)
+void use_consumable(int row);                          // render thread (takes the lock)
+float upgrade_mult(int level);
+bool can_equip_here(const Live& l);                    // in town
+
+// MHW's own inventory (inventory.cpp). Reads work on any thread; changes only on the game thread.
+int mhw_zenny();
+bool mhw_spend_zenny(int amount);
+int mhw_item_count(int itemId);
+bool mhw_take_items(int itemId, int count);
+const char* mhw_item_name(int itemId);  // MHW's own name for the item, or nullptr
+bool mhw_inventory_ready();
+void inventory_tick();                  // game thread: finds the containers, reads names
 
 }  // namespace rh

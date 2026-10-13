@@ -1,12 +1,12 @@
 {
  "sheet": "weapons",
- "phase": "v0.1",
+ "phase": "v0.2",
  "columns": {
   "id": "id",
-  "slot": "enum:long|hand",
+  "slot": "enum:long|hand|melee",
   "name": "r2text",
-  "desc": "r2text",
-  "icon": "r2tex",
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
   "damage": "num",
   "rpm": "num",
   "mag": "num",
@@ -16,103 +16,210 @@
   "range_m": "num",
   "spread_deg": "num",
   "pellets": "num",
+  "crit": "num",
   "mod": "ref:mods|none",
-  "price_scrap": "num",
-  "sold_by": "ref:npcs"
+  "effects": "effects|none",
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
  },
  "rows": [
   {
-   "id": "service_pistol",
-   "slot": "hand",
+   "id": "abyssalhook",
+   "slot": "melee",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Weapon_ServicePistol.uasset",
-     "key": "C8CDF03E4EF6E5E783675D98109BF6D3"
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/AbyssalHook/Weapon_AbyssalHook.uasset",
+     "key": "C77AF32645D813833C875894DDA0D209"
     }
    },
    "desc": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Weapon_ServicePistol.uasset",
-     "key": "1C3020324E30768D2F267E85B0484E5E"
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/AbyssalHook/Weapon_AbyssalHook.uasset",
+     "key": "4295A08343A6B34C51D747A750EFED7E"
     }
    },
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_ServicePistol_Icon_NEW"
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_AbyssalHook__Icon"
    },
-   "damage": 24,
-   "rpm": 400,
-   "mag": 10,
-   "reserve": 150,
-   "reload_s": 1.5,
-   "weakspot_mult": 2.0,
-   "range_m": 45,
-   "spread_deg": 1.0,
+   "damage": 101.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.85,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
    "pellets": 1,
+   "crit": 6.0,
    "mod": "none",
-   "price_scrap": 0,
-   "sold_by": "brabus"
+   "effects": "dmg_melee+20%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
   },
   {
-   "id": "western_classic",
-   "slot": "hand",
+   "id": "alphaomega",
+   "slot": "long",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Weapon_Revolver.uasset",
-     "key": "CA3932C44038BB748E80B599B2D8D6CB"
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Weapon_AlphaOmega.uasset",
+     "key": "0C3F8A904379E82FCE6C0B9C29776BD8"
     }
    },
-   "desc": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Weapon_Revolver.uasset",
-     "key": "4A35C91C420B280D7A9D30B051F16C74"
-    }
-   },
+   "desc": "none",
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weaponl_WesternClassic_Icon"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_AlphaOmega_Icon"
    },
-   "damage": 50,
-   "rpm": 240,
-   "mag": 6,
-   "reserve": 90,
-   "reload_s": 2.2,
+   "damage": 14.0,
+   "rpm": 413.4,
+   "mag": 55,
+   "reserve": 275,
+   "reload_s": 2.4,
    "weakspot_mult": 2.0,
-   "range_m": 50,
-   "spread_deg": 0.8,
+   "range_m": 70.0,
+   "spread_deg": 0.33,
    "pellets": 1,
+   "crit": 10.0,
    "mod": "none",
-   "price_scrap": 250,
-   "sold_by": "brabus"
+   "effects": "on_hit:dmg+10% 1.5s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
   },
   {
-   "id": "tech_22",
+   "id": "anguish",
    "slot": "hand",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Weapon_MachinePistol.uasset",
-     "key": "57510857473DEEE718F362BFE8399102"
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Weapon_Anguish.uasset",
+     "key": "26A7049041E77DE5396737B7B6FF7C80"
     }
    },
    "desc": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Weapon_MachinePistol.uasset",
-     "key": "75F646994EF49F6C1F396495CC16ED24"
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Weapon_Anguish.uasset",
+     "key": "8683AD37435A62C66F3114AF6DE81EDB"
     }
    },
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_MachinePistol_Icon"
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Anguish_Icon_4"
    },
-   "damage": 12,
-   "rpm": 900,
-   "mag": 30,
-   "reserve": 240,
-   "reload_s": 1.8,
-   "weakspot_mult": 1.6,
-   "range_m": 35,
-   "spread_deg": 2.5,
+   "damage": 92.0,
+   "rpm": 111.0,
+   "mag": 5,
+   "reserve": 35,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 35.0,
+   "spread_deg": 0.33,
    "pellets": 1,
+   "crit": 5.0,
    "mod": "none",
-   "price_scrap": 300,
-   "sold_by": "brabus"
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "aphelion",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Weapon_Aphelion.uasset",
+     "key": "8FE00F834E02E118F54AB7A1EC886600"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Weapon_Aphelion.uasset",
+     "key": "965E230B41B4C92247120AB082138BBA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Aphelion_Icon"
+   },
+   "damage": 70.0,
+   "rpm": 111.0,
+   "mag": 8,
+   "reserve": 56,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 65.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "assassinsdagger",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/AssassinsDagger/Weapon_AssassinsDagger.uasset",
+     "key": "E344B0DC4D636C3EC776BF857F6FD1A7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/AssassinsDagger/Weapon_AssassinsDagger.uasset",
+     "key": "3AEC30A44079B4EFB94D9098ED91E0F0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_AssassinsDagger_Icon"
+   },
+   "damage": 35.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": -3.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
   },
   {
    "id": "blackmaw_ar47",
@@ -132,18 +239,416 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_AssaultRifle_Icon"
    },
-   "damage": 22,
-   "rpm": 600,
-   "mag": 30,
-   "reserve": 240,
+   "damage": 17.0,
+   "rpm": 438.0,
+   "mag": 40,
+   "reserve": 200,
    "reload_s": 2.4,
-   "weakspot_mult": 1.8,
-   "range_m": 60,
-   "spread_deg": 1.5,
+   "weakspot_mult": 2.0,
+   "range_m": 60.0,
+   "spread_deg": 0.33,
    "pellets": 1,
-   "mod": "hot_shot",
-   "price_scrap": 400,
-   "sold_by": "brabus"
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "atomsmasher",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Weapon_AtomSmasher.uasset",
+     "key": "26F166FA4AFD23526CCF9F8C063B6061"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Weapon_AtomSmasher.uasset",
+     "key": "6B7AF675415E2BF4CBEB1D915EB1B7DC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_AtomSmasher_Icon2"
+   },
+   "damage": 72.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "atomsplitter",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/AtomSplitter/Weapon_AtomSplitter.uasset",
+     "key": "73BD40B44698300CCD55EBA33E4E21A1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/AtomSplitter/Weapon_AtomSplitter.uasset",
+     "key": "CC1C2F944FC0154723160AB9A40FEC0E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_AtomSplitter_Icon"
+   },
+   "damage": 100.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 6.0,
+   "mod": "none",
+   "effects": "dmg_melee+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "autoshotgun",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Weapon_AutoShotgun.uasset",
+     "key": "B70C637A4DCED9C9E1999281FB47EF5F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Weapon_AutoShotgun.uasset",
+     "key": "8FF42DCA4B20BFF572093697BF7424A5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Bulldog_Icon"
+   },
+   "damage": 7.5,
+   "rpm": 210.0,
+   "mag": 12,
+   "reserve": 60,
+   "reload_s": 3.0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 6.0,
+   "pellets": 8,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "basicshovel",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/BasicShovel/Weapon_BasicShovel.uasset",
+     "key": "CEFA186241686B5830ECEDA68CBBC0A3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/BasicShovel/Weapon_BasicShovel.uasset",
+     "key": "2E7ABA544F3CEA769157598BB728EA01"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_StandardIssueShovel2_Icon"
+   },
+   "damage": 55.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 15.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "blackgreatsword",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/BlackGreatsword/Weapon_BlackGreatsword.uasset",
+     "key": "F42A810F478E6A6FA6F0BEAFD2329A60"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/BlackGreatsword/Weapon_BlackGreatsword.uasset",
+     "key": "B99A4A72450130FBD883D5805BE13747"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_BlackGreatsword_Icon"
+   },
+   "damage": 120.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 15.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "bladeofgul",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Weapon_BladeOfGul.uasset",
+     "key": "5E7852714781B9BE31F1669C4CF8E3FF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Weapon_BladeOfGul.uasset",
+     "key": "0190FC9D4480C7C87B86DF94B153DE91"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_BladeOfGul_Icon"
+   },
+   "damage": 57.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 4.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "boltdriver",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Weapon_BoltDriver.uasset",
+     "key": "2AF803474094043823ECCFA0508D6591"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_BoltDriver_Icon"
+   },
+   "damage": 26.0,
+   "rpm": 457.8,
+   "mag": 24,
+   "reserve": 96,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.05,
+   "range_m": 52.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "bonechopper",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/BoneChopper/Weapon_BoneChopper.uasset",
+     "key": "93DA4FAB4E2B3BA9948A768F3B16FA4B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/BoneChopper/Weapon_BoneChopper.uasset",
+     "key": "777F10394202C995D64434B56F171EAD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_BoneChopper_Icon"
+   },
+   "damage": 58.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.05,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 7.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "bow",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/Weapon_Bow.uasset",
+     "key": "9B85EAE74B54BA39126882BB43614C1F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/Weapon_Bow.uasset",
+     "key": "181438B84462DF1B96B6829934969947"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_FaeHuntingBow_Icon"
+   },
+   "damage": 80.0,
+   "rpm": 318.0,
+   "mag": 1,
+   "reserve": 40,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.15,
+   "range_m": 65.0,
+   "spread_deg": 0.1,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "claws",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Weapon_Claws.uasset",
+     "key": "9100E4E04BD954169AC384BD878ECB1B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Weapon_Claws.uasset",
+     "key": "0E8029A44B6DA13CCE39BF9D6A66E19E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_RustedClaws_Icon"
+   },
+   "damage": 51.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 14.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
   },
   {
    "id": "coach_gun",
@@ -163,18 +668,1273 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_CoachGun_Icon"
    },
-   "damage": 16,
-   "rpm": 120,
+   "damage": 115.0,
+   "rpm": 138.0,
    "mag": 2,
+   "reserve": 28,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 35.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "corruptedaphelion",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedAphelion/Weapon_CorruptedAphelion.uasset",
+     "key": "D78CC1A845805595EF540CA2E2773E7D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedAphelion/Weapon_CorruptedAphelion.uasset",
+     "key": "9D3CA9624FB69FFFD4ABB98E4148BA83"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Aphelion_Icon"
+   },
+   "damage": 33.0,
+   "rpm": 87.0,
+   "mag": 8,
    "reserve": 40,
-   "reload_s": 2.0,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptedcubegun",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedCubeGun/Weapon_CorruptedCubeGun.uasset",
+     "key": "893BC4D84CC48C5A35B47A811FAB3181"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedCubeGun/Weapon_CorruptedCubeGun.uasset",
+     "key": "0032FAF24BCAEDB62B9C3B9E60E09414"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_CubeGun_Icon"
+   },
+   "damage": 66.0,
+   "rpm": 132.0,
+   "mag": 99,
+   "reserve": 105,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 35.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corrupteddeceit",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedDeceit/Weapon_CorruptedDeceit.uasset",
+     "key": "34795576446ED77D3F7DCB8D35B64A2B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedDeceit/Weapon_CorruptedDeceit.uasset",
+     "key": "C8F0C6A2436EA8F6E32C0DBFC9D058D4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Deceit_Icon"
+   },
+   "damage": 66.0,
+   "rpm": 180.0,
+   "mag": 12,
+   "reserve": 48,
+   "reload_s": 2.4,
+   "weakspot_mult": 1.9,
+   "range_m": 75.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptedmerciless",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedMerciless/Weapon_CorruptedMerciless.uasset",
+     "key": "2CD794794127FE017C5A51A91978CD16"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedMerciless/Weapon_CorruptedMerciless.uasset",
+     "key": "5B8CEB0E41D0E32788563BB562891E34"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Merciless_Icon"
+   },
+   "damage": 90.0,
+   "rpm": 102.0,
+   "mag": 3,
+   "reserve": 36,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.05,
+   "range_m": 70.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptedmeridian",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CorruptedMeridian/Weapon_CorruptedMeridian.uasset",
+     "key": "E92E60C54546544BE539FA8CF02A5F20"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CorruptedMeridian/Weapon_CorruptedMeridian.uasset",
+     "key": "E8C53A394624FC53AFEFDE8BAB39AA82"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Meridian_Icon"
+   },
+   "damage": 90.0,
+   "rpm": 114.0,
+   "mag": 6,
+   "reserve": 36,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 30.0,
+   "spread_deg": 0.13,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptednebula",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedNebula/Weapon_CorruptedNebula.uasset",
+     "key": "3E049E2B4EDAE247F82EAD951BE6D214"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedNebula/Weapon_CorruptedNebula.uasset",
+     "key": "0B4EEAFC44BEAAC2004B3B8600AD8947"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Nebula_Icon"
+   },
+   "damage": 24.0,
+   "rpm": 312.0,
+   "mag": 15,
+   "reserve": 105,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.05,
+   "range_m": 56.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptedrunepistol",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CorruptedRunePistol/Weapon_CorruptedRunePistol.uasset",
+     "key": "F1A200BC4EA54D9C29DA23BD995942FA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CorruptedRunePistol/Weapon_CorruptedRunePistol.uasset",
+     "key": "B25AE901425C33C755DB1F997B01D906"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_RunePistol_Icon"
+   },
+   "damage": 17.0,
+   "rpm": 378.0,
+   "mag": 25,
+   "reserve": 150,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 53.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptedsavior",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/Corrupted_Savior/Weapon_CorruptedSavior.uasset",
+     "key": "259578B7408628B71E3B15AEB86940EA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/Corrupted_Savior/Weapon_CorruptedSavior.uasset",
+     "key": "6AC0F27E4CC78C900D2499966FC7C79B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Savior_Icon"
+   },
+   "damage": 17.0,
+   "rpm": 189.0,
+   "mag": 50,
+   "reserve": 200,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 60.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptedsorrow",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedSorrow/Weapon_CorruptedSorrow.uasset",
+     "key": "0F81E07742AC7E044E36659E228F2532"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedSorrow/Weapon_CorruptedSorrow.uasset",
+     "key": "A7BD9914426CE2BB2E841EB453860E4C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Sorrow_Icon"
+   },
+   "damage": 42.0,
+   "rpm": 156.0,
+   "mag": 10,
+   "reserve": 60,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.05,
+   "range_m": 52.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 8.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "corruptedtwistedarbalest",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedTwistedArbalest/Weapon_CorruptedTwistedArbalest.uasset",
+     "key": "FFDA498D45569CBB61FF6788DFE7F608"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Valentines/Items/Weapons/CorruptedTwistedArbalest/Weapon_CorruptedTwistedArbalest.uasset",
+     "key": "362080164A43B6958387D69BE2E15ABD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Corrupted/T_UI_Weapon_Corrupted_Arbalest_Icon"
+   },
+   "damage": 69.0,
+   "rpm": 78.0,
+   "mag": 8,
+   "reserve": 40,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 70.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "crescentmoon",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Weapon_CrescentMoon.uasset",
+     "key": "2DA74C234A86A632B88F7991A69CA898"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Weapon_CrescentMoon.uasset",
+     "key": "583BADDC4EF957E5E0035D9BBCBE80AA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_CrescentMoon_Icon"
+   },
+   "damage": 87.0,
+   "rpm": 246.0,
+   "mag": 1,
+   "reserve": 38,
+   "reload_s": 0.7,
+   "weakspot_mult": 1.7,
+   "range_m": 65.0,
+   "spread_deg": 0.1,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "crossbow",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Weapon_Crossbow.uasset",
+     "key": "09D8CF7B4789209027550894FD93B6F3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Weapon_Crossbow.uasset",
+     "key": "E4022AC641604D716C2916AEF87F7C3E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Crossbow_Icon"
+   },
+   "damage": 125.0,
+   "rpm": 150.0,
+   "mag": 1,
+   "reserve": 30,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.2,
+   "range_m": 75.0,
+   "spread_deg": 0.1,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "crystalstaff",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/CrystalStaff/Weapon_CrystalStaff.uasset",
+     "key": "744551C9493E9CC1C0E01581402ACD03"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/CrystalStaff/Weapon_CrystalStaff.uasset",
+     "key": "8CB15CDD403A99D1274949B6D8C1BBFB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_CrystalStaff_Icon"
+   },
+   "damage": 42.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+20%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "cubegun",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Weapon_CubeGun.uasset",
+     "key": "953F50D44B84E525BCE41ABF352736E6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Weapon_CubeGun.uasset",
+     "key": "8802FE454E50934573B20CA2D00F5910"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_CubeGun_Icon"
+   },
+   "damage": 15.0,
+   "rpm": 450.0,
+   "mag": 5,
+   "reserve": 105,
+   "reload_s": 1.4,
+   "weakspot_mult": 1.85,
+   "range_m": 50.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "darkmattergauntlets",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Weapon_DarkMatterGauntlets.uasset",
+     "key": "6DBD1F79454FADE52800A1AA1D82F6F3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Weapon_DarkMatterGauntlets.uasset",
+     "key": "8B587B43406862D50D3D2A8D3661573D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_DarkMatterGauntlets_Icon"
+   },
+   "damage": 50.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+25%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "decayedclaws",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/DecayedClaws/Weapon_DecayedClaws.uasset",
+     "key": "D47D4E1A4B462F5E8E15DA8DEC51D520"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/DecayedClaws/Weapon_DecayedClaws.uasset",
+     "key": "15B4CBB8497571BA556905B9BD722613"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_DecayedClaws_Icon_2"
+   },
+   "damage": 49.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 16.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "deceit",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Weapon_Deceit.uasset",
+     "key": "2B2980F24A5ACD42F71D7F96B238F256"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Weapon_Deceit.uasset",
+     "key": "EA5B10454B422A62E24699AC231F046D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Deceit_Icon"
+   },
+   "damage": 120.0,
+   "rpm": 120.0,
+   "mag": 6,
+   "reserve": 30,
+   "reload_s": 2.4,
+   "weakspot_mult": 1.9,
+   "range_m": 75.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 15.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "dreamcatcher",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher/Weapon_Dreamcatcher.uasset",
+     "key": "EB8637AF4F6BA42E661351B2D04FF1E3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher/Weapon_Dreamcatcher.uasset",
+     "key": "A30D014E4620E984A5F5F59CE98C654F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_DreamcatcherStaff_Close_Icon"
+   },
+   "damage": 58.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "edgeoftheforest",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/EdgeOfTheForest/Weapon_EdgeOfTheForest.uasset",
+     "key": "1AFDF22D4077A4D80A037B86DE67C163"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/EdgeOfTheForest/Weapon_EdgeOfTheForest.uasset",
+     "key": "CE9997544E46BE6F9322FA96251FF87F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_EdgeOfTheForest_Icon"
+   },
+   "damage": 59.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.05,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 11.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "enigma",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Weapon_Enigma.uasset",
+     "key": "42DA7FD44766E6F7955E95B27ABB94F4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Weapon_Enigma.uasset",
+     "key": "0D09806642CCD69A2995DAAC9DA69D62"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Enigma_Icon"
+   },
+   "damage": 22.0,
+   "rpm": 240.0,
+   "mag": 25,
+   "reserve": 125,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 12.0,
+   "spread_deg": 2.67,
+   "pellets": 1,
+   "crit": -10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "feraljudgment",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Weapon_FeralJudgment.uasset",
+     "key": "568F40314C903A35C9C60C9821D4C771"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Weapon_FeralJudgment.uasset",
+     "key": "79CEF45F4B4C1E3BAAA73A944CCB4E69"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_FeralJudgement_MASK_Icon"
+   },
+   "damage": 53.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 13.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "flail",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Weapon_Flail.uasset",
+     "key": "F37A104F430BD9772345278C6070AD0C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Weapon_Flail.uasset",
+     "key": "9D7AB1A94627F340E38F8FB2C78ABF1B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_SteelFlail_Icon"
+   },
+   "damage": 69.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 4.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "genesis",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Weapon_Genesis.uasset",
+     "key": "D8832230428D243C1F3B99932741F8CC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Weapon_Genesis.uasset",
+     "key": "DF74B6BE41F40E03819A3F8E95B6BF66"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Genesis_Icon"
+   },
+   "damage": 50.0,
+   "rpm": 300.0,
+   "mag": 1,
+   "reserve": 20,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.15,
+   "range_m": 65.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "godsplitter",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Weapon_Godsplitter.uasset",
+     "key": "6C8E624B4B4D4D2BECC89B9A2B7E7A40"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Weapon_Godsplitter.uasset",
+     "key": "ECA415A740323E3FB1EC00BF3E76D345"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_GodSplitter_Icon"
+   },
+   "damage": 38.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
    "weakspot_mult": 1.5,
-   "range_m": 20,
-   "spread_deg": 6.0,
-   "pellets": 8,
-   "mod": "concussive_shot",
-   "price_scrap": 400,
-   "sold_by": "brabus"
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 2.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "greatsword",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/IronGreatsword/Weapon_Greatsword.uasset",
+     "key": "ED6A2FEE4D490C208F63C89975CD0546"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/IronGreatsword/Weapon_Greatsword.uasset",
+     "key": "28CB9AFD4CB00A377D537D93F76C624D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_IronGreatsword_Icon"
+   },
+   "damage": 105.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "hammer",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/Hammer/Weapon_Hammer.uasset",
+     "key": "774E249E4081B1D1DCEE6B889DF2F183"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/Hammer/Weapon_Hammer.uasset",
+     "key": "121E1A1745397D8B796252B71228884E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Hammer_Icon"
+   },
+   "damage": 83.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 8.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "harvesterscythe",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Weapon_HarvesterScythe.uasset",
+     "key": "36195E934F6ABD8CAD1268A68D16999B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Weapon_HarvesterScythe.uasset",
+     "key": "909815B844DDDE85550C5985547B7365"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_ScytheHarvester_Icon"
+   },
+   "damage": 65.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 12.0,
+   "mod": "none",
+   "effects": "dmg_melee+25%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "hatchet",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/Hatchet/Weapon_Hatchet.uasset",
+     "key": "7061C1254D20EB4C279DFF897915DB6C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/Hatchet/Weapon_Hatchet.uasset",
+     "key": "FEB3A1C64E626FD349E4A698FE454E62"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Hatchet_Icon"
+   },
+   "damage": 57.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.05,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 6.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "hellfire",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Weapon_Hellfire.uasset",
+     "key": "61E3E45843210AE1BF5D87A81DCD7EEA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Weapon_Hellfire.uasset",
+     "key": "43FE9F704C4F9071B3287E8E7B4CCB93"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Hellfire_Icon"
+   },
+   "damage": 13.0,
+   "rpm": 360.0,
+   "mag": 60,
+   "reserve": 180,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 8.0,
+   "spread_deg": 5.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "herossword",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/HerosSword/Weapon_HerosSword.uasset",
+     "key": "DE491392430C388931FA01B95EC80D6D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/HerosSword/Weapon_HerosSword.uasset",
+     "key": "DE357089408F8AABCDE6A18B67F08563"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Items/UI_Icons_Items_Weapons/UI_Icons_Items_Weapons_Melee/T_Icon_Weapon_BladeOfAdventure"
+   },
+   "damage": 51.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.9,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "huntingpistol",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Weapon_HuntingPistol.uasset",
+     "key": "D65C32F44034C920523BF389FC778086"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Weapon_HuntingPistol.uasset",
+     "key": "927952EB40C9441C370776A3A008421B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_HuntingPistol_Icon"
+   },
+   "damage": 115.0,
+   "rpm": 180.0,
+   "mag": 1,
+   "reserve": 24,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.15,
+   "range_m": 75.0,
+   "spread_deg": 1.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
   },
   {
    "id": "huntmaster_m1",
@@ -194,18 +1954,1769 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_HuntMaster_Icon"
    },
-   "damage": 85,
-   "rpm": 75,
-   "mag": 6,
-   "reserve": 60,
-   "reload_s": 2.6,
-   "weakspot_mult": 2.25,
-   "range_m": 120,
-   "spread_deg": 0.3,
+   "damage": 105.0,
+   "rpm": 63.0,
+   "mag": 7,
+   "reserve": 35,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.1,
+   "range_m": 75.0,
+   "spread_deg": 0.33,
    "pellets": 1,
-   "mod": "corrosive_rounds",
-   "price_scrap": 450,
-   "sold_by": "brabus"
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "huntressspear",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/HuntressSpear/Weapon_HuntressSpear.uasset",
+     "key": "E6A48E4147E000D272DEA586C3D1778B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/HuntressSpear/Weapon_HuntressSpear.uasset",
+     "key": "3EA1A6C04D6D1508E0E975ACBD69CA53"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_HuntressSpear_Close_Icon"
+   },
+   "damage": 63.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "katana",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/Katana/Weapon_Katana.uasset",
+     "key": "F34690D5432B8F1C0C0C97AF15B56877"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/Katana/Weapon_Katana.uasset",
+     "key": "CEB1B9464F86097F0BE4DDBB8C8BC366"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_SteelKatana_Icon"
+   },
+   "damage": 56.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.05,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 13.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "knuckledusters",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/KnuckleDusters/Weapon_KnuckleDusters.uasset",
+     "key": "626383FD4AE9746078D76085EA71250F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/KnuckleDusters/Weapon_KnuckleDusters.uasset",
+     "key": "539A714B4F6502AAA710A18F8EA22998"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_KnuckleDusters_Icon"
+   },
+   "damage": 43.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "krellaxe",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/KrellAxe/Weapon_KrellAxe.uasset",
+     "key": "F0DCE8C840E5085711656E89A3C6CBB8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/KrellAxe/Weapon_KrellAxe.uasset",
+     "key": "98AB6C8846BEC54803A4BFA1582FF8C6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_KrellAxe_Icon"
+   },
+   "damage": 54.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.85,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 3.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "labyrinthstaff",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Weapon_LabyrinthStaff.uasset",
+     "key": "17900432450368A5163275BB8F6B39FF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Weapon_LabyrinthStaff.uasset",
+     "key": "34D7F89D4C5254892E808695690649F4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_LabyrinthStaff_Close_Icon"
+   },
+   "damage": 64.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 8.0,
+   "mod": "none",
+   "effects": "mod_gen+10%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "leveraction",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Weapon_LeverAction.uasset",
+     "key": "B517B6CB485483533354B3A6E12FFE05"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Weapon_LeverAction.uasset",
+     "key": "B55CFEEE47CD2F188600BCA5AFB29776"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_LeverAction_Icon"
+   },
+   "damage": 55.0,
+   "rpm": 135.0,
+   "mag": 10,
+   "reserve": 60,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.1,
+   "range_m": 70.0,
+   "spread_deg": 1.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "leveraction_rusty",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Weapon_LeverAction_Rusty.uasset",
+     "key": "31FD8883493E9BB41D85FEBE36211AAA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Weapon_LeverAction_Rusty.uasset",
+     "key": "87307612478989404D2430BBCFF1CF72"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_LeverAction__Rusted_Icon"
+   },
+   "damage": 55.0,
+   "rpm": 108.0,
+   "mag": 10,
+   "reserve": 60,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 80.0,
+   "spread_deg": 1.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "lmg",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Weapon_LMG.uasset",
+     "key": "E78D003E450C55A1E0A0DB83FA5D0441"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Weapon_LMG.uasset",
+     "key": "D69F15E544C3832CC396648453AE6897"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_BoneSaw_Icon"
+   },
+   "damage": 12.0,
+   "rpm": 579.0,
+   "mag": 150,
+   "reserve": 300,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 55.0,
+   "spread_deg": 1.67,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "tech_22",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Weapon_MachinePistol.uasset",
+     "key": "57510857473DEEE718F362BFE8399102"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Weapon_MachinePistol.uasset",
+     "key": "75F646994EF49F6C1F396495CC16ED24"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_MachinePistol_Icon"
+   },
+   "damage": 9.0,
+   "rpm": 900.0,
+   "mag": 32,
+   "reserve": 352,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 45.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "magnum",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Weapon_Magnum.uasset",
+     "key": "A37191A94D057AE8D2B075BD0777DE14"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Weapon_Magnum.uasset",
+     "key": "601239C44BBDE3B41ECE81AE7F28AB68"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Magnum_Icon"
+   },
+   "damage": 55.0,
+   "rpm": 144.0,
+   "mag": 6,
+   "reserve": 48,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.05,
+   "range_m": 60.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "merciless",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Weapon_Merciless.uasset",
+     "key": "15400D9349ECB9DE143648919A5D8893"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Weapon_Merciless.uasset",
+     "key": "4FA0BF964B0F0AA848A6A7AF52A4B687"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Merciless_Icon"
+   },
+   "damage": 13.0,
+   "rpm": 516.0,
+   "mag": 50,
+   "reserve": 250,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 45.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "meridian",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Meridian/Weapon_Meridian.uasset",
+     "key": "74990729463F2EBA7EBF67851DD10540"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Meridian/Weapon_Meridian.uasset",
+     "key": "6AFE3CDF47775B2ED08089B551B89BAA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Meridian_Icon"
+   },
+   "damage": 82.0,
+   "rpm": 114.0,
+   "mag": 5,
+   "reserve": 40,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 30.0,
+   "spread_deg": 0.1,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "mirage",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/Flail_Mirage/Weapon_Mirage.uasset",
+     "key": "D8EC67B049F1086C2F951EB56ED89D48"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/Flail_Mirage/Weapon_Mirage.uasset",
+     "key": "9B756EB549C35B17E5E8EB85CE77AE76"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Mirage_Icon2"
+   },
+   "damage": 48.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 3.0,
+   "mod": "none",
+   "effects": "dmg_melee+20%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "monarch",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Monarch/Blueprints/Weapon_Monarch.uasset",
+     "key": "B06A7FB042C3BBD4A04FC5928F910EB2"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Monarch/Blueprints/Weapon_Monarch.uasset",
+     "key": "47FB9A8B425E35D0354D7B8016FA01B2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Monarch_Icon"
+   },
+   "damage": 12.0,
+   "rpm": 630.0,
+   "mag": 60,
+   "reserve": 300,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.05,
+   "range_m": 45.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "monolith",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/Monolith/Weapon_Monolith.uasset",
+     "key": "7DEB36444A80F11CE395BD91262DD94D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/Monolith/Weapon_Monolith.uasset",
+     "key": "F856A39A4466144DC92D6880675923CC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Monolith2_Icon"
+   },
+   "damage": 11.0,
+   "rpm": 720.0,
+   "mag": 80,
+   "reserve": 320,
+   "reload_s": 2.4,
+   "weakspot_mult": 1.85,
+   "range_m": 30.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "monorail",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Weapon_Monorail.uasset",
+     "key": "A3A941DA4AD58DC5A86E5287ABCDA7FE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Weapon_Monorail.uasset",
+     "key": "EDC8AB8343BD3C65993403A4545F7045"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Monorail_Icon"
+   },
+   "damage": 125.0,
+   "rpm": 3600.0,
+   "mag": 3,
+   "reserve": 27,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.1,
+   "range_m": 85.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "nebula",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Weapon_Nebula.uasset",
+     "key": "88F655794AF1F2E142C488927EA8447B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Weapon_Nebula.uasset",
+     "key": "9EC6AF824827BD22A2B2ECA881690A7A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Nebula_Icon"
+   },
+   "damage": 12.0,
+   "rpm": 480.0,
+   "mag": 55,
+   "reserve": 220,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 8.0,
+   "spread_deg": 5.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "nightfall",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Weapon_Nightfall.uasset",
+     "key": "E60131BB4DD7587126AD35A21E25C617"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Weapon_Nightfall.uasset",
+     "key": "484C2BEA41A6EC2911B13AB9863818CC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Nightfall_Icon"
+   },
+   "damage": 28.0,
+   "rpm": 297.0,
+   "mag": 13,
+   "reserve": 117,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.05,
+   "range_m": 50.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "nightshade",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Nightshade/Weapon_Nightshade.uasset",
+     "key": "37C7D29D4384F83631B676903B6A69D1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Nightshade/Weapon_Nightshade.uasset",
+     "key": "CAD487EA42E0DC06AD0F2A8B2FDBF2C6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_NightShade_Icon"
+   },
+   "damage": 47.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 18.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "ornateblade",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Weapon_OrnateBlade.uasset",
+     "key": "E7FC1DA542EE7ADD6F7705AB5E9E3B69"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Weapon_OrnateBlade.uasset",
+     "key": "D9A1774A4552F6B7E25EEC98198B2E16"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_FaeBlade_Icon"
+   },
+   "damage": 52.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.05,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 11.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "ornateflail",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Weapon_OrnateFlail.uasset",
+     "key": "FE72B6C448202A2C65E77E8F3C3A9E62"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Weapon_OrnateFlail.uasset",
+     "key": "13165448465A28D102BCBB909F4285A1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_OrnateFlail_Icon"
+   },
+   "damage": 63.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 11.0,
+   "mod": "none",
+   "effects": "dmg_melee+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "plasmacutter",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Weapon_PlasmaCutter.uasset",
+     "key": "D2B9E14443951727C50C75A2E12991C2"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Weapon_PlasmaCutter.uasset",
+     "key": "0F137A9947F468514BEB238E9DDE309B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_PlasmaCutter_Icon"
+   },
+   "damage": 7.0,
+   "rpm": 780.0,
+   "mag": 100,
+   "reserve": 300,
+   "reload_s": 2.4,
+   "weakspot_mult": 1.8,
+   "range_m": 30.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "polygun",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/Polygun/Weapon_Polygun.uasset",
+     "key": "F4102C8B4F3752328482AF8068189433"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Polygun_Icon_3"
+   },
+   "damage": 69.0,
+   "rpm": 129.0,
+   "mag": 99,
+   "reserve": 999,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 30.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "pulserifle",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Weapon_PulseRifle.uasset",
+     "key": "01FA67C645C404FD760BD7BCDB113FBB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Weapon_PulseRifle.uasset",
+     "key": "F81E4D0343B88C776AF1F3874738F47D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_BurstRifle_Icon"
+   },
+   "damage": 16.0,
+   "rpm": 468.0,
+   "mag": 30,
+   "reserve": 210,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.05,
+   "range_m": 65.0,
+   "spread_deg": 1.67,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "rebellionspear",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Weapon_RebellionSpear.uasset",
+     "key": "898E589A45D0388C5E2792861A797524"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Weapon_RebellionSpear.uasset",
+     "key": "9ECCE3C84FCF6A6E0165578715FF3011"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_RebellionSpear_Close_Icon"
+   },
+   "damage": 60.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 13.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "reddoestaff",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Weapon_RedDoeStaff.uasset",
+     "key": "B43B9ECD497DB14A474C15A9578B671A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Weapon_RedDoeStaff.uasset",
+     "key": "1E4383D6437E17CDC2F3FFACD2EB95F3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_RedDoeStaff_Close_Icon"
+   },
+   "damage": 62.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 3.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "redeemer",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/Redeemer/Weapon_Redeemer.uasset",
+     "key": "0C9F25254D81C48BDC6915859FBFE2D4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/Redeemer/Weapon_Redeemer.uasset",
+     "key": "F58E4E9146B73D6117FC20AC9E424E97"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Redeemer"
+   },
+   "damage": 69.0,
+   "rpm": 150.0,
+   "mag": 6,
+   "reserve": 36,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 60.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "repairtool",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Weapon_RepairTool.uasset",
+     "key": "614FE806427F145E21E21EB4BA7FFD5B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Weapon_RepairTool.uasset",
+     "key": "1D56C7424E8B5D0693083AB12070C58B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_RepairTool_Icon"
+   },
+   "damage": 10.0,
+   "rpm": 660.0,
+   "mag": 150,
+   "reserve": 300,
+   "reload_s": 1.4,
+   "weakspot_mult": 1.8,
+   "range_m": 30.0,
+   "spread_deg": 0.1,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "repeater",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Weapon_Repeater.uasset",
+     "key": "91EC99EF4B40AC081E6AA8A2CFFEB721"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Weapon_Repeater.uasset",
+     "key": "C44F6511491B5D174B22AFB49ECF8AF0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Repeater_Icon"
+   },
+   "damage": 16.0,
+   "rpm": 486.0,
+   "mag": 20,
+   "reserve": 160,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.05,
+   "range_m": 52.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "repeater_rusty",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Weapon_Repeater_Rusty.uasset",
+     "key": "72D05C32481F46D9D3EEBE8F7072A14F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Weapon_Repeater_Rusty.uasset",
+     "key": "286522444CD3E26047CA4588829C4BE3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Repeater__Rusted_Icon"
+   },
+   "damage": 15.0,
+   "rpm": 432.0,
+   "mag": 15,
+   "reserve": 180,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 55.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "repulsor",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Weapon_Repulsor.uasset",
+     "key": "818B341D4A2E603FE9AB31B82816589D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Weapon_Repulsor.uasset",
+     "key": "010108F746DBDBB7596985A23033DEC3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Repulsor_Icon"
+   },
+   "damage": 100.0,
+   "rpm": 96.0,
+   "mag": 5,
+   "reserve": 35,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 35.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "western_classic",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Weapon_Revolver.uasset",
+     "key": "CA3932C44038BB748E80B599B2D8D6CB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Weapon_Revolver.uasset",
+     "key": "4A35C91C420B280D7A9D30B051F16C74"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weaponl_WesternClassic_Icon"
+   },
+   "damage": 36.0,
+   "rpm": 345.0,
+   "mag": 6,
+   "reserve": 72,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.1,
+   "range_m": 48.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "ritualistscythe",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Scythe/Scythe_Ritualist/Weapon_RitualistScythe.uasset",
+     "key": "AA81BD3141F543C6403501A344F38DEF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Scythe/Scythe_Ritualist/Weapon_RitualistScythe.uasset",
+     "key": "1E8AE25F4C4AD3775B3E3CAC60DE0508"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Scythe_Ritualist_Icon_3"
+   },
+   "damage": 51.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "dmg_melee+20%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "royalbroadsword",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/RoyalBroadsword/Weapon_RoyalBroadsword.uasset",
+     "key": "E2DC97264DBCB1247E17829726D80DFE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/RoyalBroadsword/Weapon_RoyalBroadsword.uasset",
+     "key": "F40AB4414E430941759C51A421301DF1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_RoyalBroadsword_Icon"
+   },
+   "damage": 102.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 7.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "runepistol",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Weapon_RunePistol.uasset",
+     "key": "2A2F0DBB4DE4633B6DAE6F8F3AADDE83"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Weapon_RunePistol.uasset",
+     "key": "D266F6BB46A33685EAA3BB8A78607D5B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_RunePistol_Icon"
+   },
+   "damage": 16.0,
+   "rpm": 396.0,
+   "mag": 45,
+   "reserve": 180,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.05,
+   "range_m": 53.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "rupturecannon",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/RuptureCannon/Weapon_RuptureCannon.uasset",
+     "key": "963D52DE4DB159DA593673A04067BF6A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/RuptureCannon/Weapon_RuptureCannon.uasset",
+     "key": "8040000C4C6205DE36C9A0BE6CA039DC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_RuptureCannon_Icon"
+   },
+   "damage": 42.0,
+   "rpm": 165.0,
+   "mag": 12,
+   "reserve": 60,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 35.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "sagittarius",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Weapon_Sagittarius.uasset",
+     "key": "829CB1AB4ECEEAB0B1E2CA9D8F13A3E7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Weapon_Sagittarius.uasset",
+     "key": "3C98EC174539C69881B0D0A8637352E5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Sagittarius_Icon"
+   },
+   "damage": 98.0,
+   "rpm": 270.0,
+   "mag": 1,
+   "reserve": 32,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.15,
+   "range_m": 65.0,
+   "spread_deg": 0.1,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "savior",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Weapon_Savior.uasset",
+     "key": "1AFA69A14D612A3D5C16859CCA409BA1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Weapon_Savior.uasset",
+     "key": "4BDF00224E515EEC5262AA82E930ABD8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Savior_Icon"
+   },
+   "damage": 50.0,
+   "rpm": 126.0,
+   "mag": 6,
+   "reserve": 36,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.15,
+   "range_m": 75.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "scythe",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Scythe/Scythe/Weapon_Scythe.uasset",
+     "key": "DF90A9C1459A3CABC46FEF9D7613530C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Scythe/Scythe/Weapon_Scythe.uasset",
+     "key": "0F64AEB94A3840D7A0611CBDD602407F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Scythe_Scrap_Icon_2"
+   },
+   "damage": 55.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "service_pistol",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Weapon_ServicePistol.uasset",
+     "key": "C8CDF03E4EF6E5E783675D98109BF6D3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Weapon_ServicePistol.uasset",
+     "key": "1C3020324E30768D2F267E85B0484E5E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_ServicePistol_Icon_NEW"
+   },
+   "damage": 24.0,
+   "rpm": 390.0,
+   "mag": 12,
+   "reserve": 120,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.05,
+   "range_m": 50.0,
+   "spread_deg": 1.0,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "shortbarrel",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Weapon_ShortBarrel.uasset",
+     "key": "BF26A48A4228ED746A72EE98E24A39C7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Weapon_ShortBarrel.uasset",
+     "key": "0955B0B24EEBD5343EBCB7BE7C7F1F74"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_ShortBarrel_Icon"
+   },
+   "damage": 13.12,
+   "rpm": 135.0,
+   "mag": 2,
+   "reserve": 24,
+   "reload_s": 3.0,
+   "weakspot_mult": 2.0,
+   "range_m": 20.0,
+   "spread_deg": 6.0,
+   "pellets": 8,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "shotgun",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Weapon_Shotgun.uasset",
+     "key": "643E159443D67AB85AE36EB7FCBF3AF5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Weapon_Shotgun.uasset",
+     "key": "F092F114416FEDD4D97A1D8D883550FE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Shotgun_Icon"
+   },
+   "damage": 16.25,
+   "rpm": 72.0,
+   "mag": 10,
+   "reserve": 30,
+   "reload_s": 3.0,
+   "weakspot_mult": 2.0,
+   "range_m": 35.0,
+   "spread_deg": 6.0,
+   "pellets": 8,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "smg",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Weapon_SMG.uasset",
+     "key": "CC95DB7E4C7851824413BB8E6744B569"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Weapon_SMG.uasset",
+     "key": "D71FB814410F5BD33F8B289E95248199"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_SMG_Icon"
+   },
+   "damage": 9.0,
+   "rpm": 852.0,
+   "mag": 42,
+   "reserve": 294,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.0,
+   "range_m": 50.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "smolder",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Weapon_Smolder.uasset",
+     "key": "4B1A324A42EB02B7E15E16B3AD31B741"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Weapon_Smolder.uasset",
+     "key": "9E89005748EA75D4243497B2DC2263F2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Smolder_Icon"
+   },
+   "damage": 46.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 4.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
   },
   {
    "id": "widowmaker",
@@ -225,18 +3736,739 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_SniperRifle_Icon"
    },
-   "damage": 140,
-   "rpm": 50,
-   "mag": 4,
-   "reserve": 40,
+   "damage": 150.0,
+   "rpm": 144.0,
+   "mag": 1,
+   "reserve": 27,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.2,
+   "range_m": 85.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "sorrow",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Weapon_Sorrow.uasset",
+     "key": "738C4F8E461AFC2220F7839A505375D1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Weapon_Sorrow.uasset",
+     "key": "8BB2AE2641A3A3BCFE7F4CBE6E484DE1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Sorrow_Icon"
+   },
+   "damage": 45.0,
+   "rpm": 156.0,
+   "mag": 5,
+   "reserve": 45,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.15,
+   "range_m": 52.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "sparkfire",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Buster/Weapon_Sparkfire.uasset",
+     "key": "B3599ADB45A7E76AA0819D8C77F31C1D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Buster/Weapon_Sparkfire.uasset",
+     "key": "9127ED7A44BA18A1C2F91A8D4CE341A8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_DranShotgun_Buster_Icon_2"
+   },
+   "damage": 12.5,
+   "rpm": 78.0,
+   "mag": 7,
+   "reserve": 35,
    "reload_s": 3.0,
-   "weakspot_mult": 2.5,
-   "range_m": 150,
+   "weakspot_mult": 2.0,
+   "range_m": 30.0,
+   "spread_deg": 6.0,
+   "pellets": 8,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "spear",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/Spear/Weapon_Spear.uasset",
+     "key": "9E22B67044597F3923A8D789A50BA581"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/Spear/Weapon_Spear.uasset",
+     "key": "AEB08E1B410FE3A4409ABA9C770FC67F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_SteelSpear_Close_Icon"
+   },
+   "damage": 61.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 9.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "spectralblade",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Weapon_SpectralBlade.uasset",
+     "key": "C2EA69F644CC0526EC3DD99D31DD2525"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Weapon_SpectralBlade.uasset",
+     "key": "0E2DB0A84B63F02781EF03966FF952BC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_SpectralBlade_Icon"
+   },
+   "damage": 53.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.05,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 8.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "sporebloom",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Weapon_Sporebloom.uasset",
+     "key": "6138405E49001E75A02259A9EF44CE80"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Weapon_Sporebloom.uasset",
+     "key": "84EAE9D94410FC245901D689F3100529"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Sporebloom_Icon"
+   },
+   "damage": 31.25,
+   "rpm": 117.0,
+   "mag": 1,
+   "reserve": 21,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.0,
+   "range_m": 25.0,
+   "spread_deg": 6.0,
+   "pellets": 8,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "staff",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Staff/Weapon_Staff.uasset",
+     "key": "D67EDC4640BD81A51CE72A8DE16EB505"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Staff/Weapon_Staff.uasset",
+     "key": "DEF348D14BB5DE6F97FA3EB1489FB02C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_ScrapStaff_Close_Icon"
+   },
+   "damage": 65.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 6.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "starkiller",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Weapon_Starkiller.uasset",
+     "key": "ABC1A5EA49E13D4F285565BF0072B422"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Weapon_Starkiller.uasset",
+     "key": "7FA798454FF4535A2FF9EC87636C40A9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_Starkiller_Icon"
+   },
+   "damage": 88.0,
+   "rpm": 87.0,
+   "mag": 8,
+   "reserve": 40,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.1,
+   "range_m": 80.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "starshot",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Weapon_StarShot.uasset",
+     "key": "E38BF782451BA8A2412500994CC67E21"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Weapon_StarShot.uasset",
+     "key": "454648B74394021E105B90AD450406DF"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_StarShot_Icon"
+   },
+   "damage": 22.0,
+   "rpm": 150.0,
+   "mag": 10,
+   "reserve": 60,
+   "reload_s": 1.4,
+   "weakspot_mult": 2.1,
+   "range_m": 54.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "stonebreaker",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Stonebreaker/Weapon_Stonebreaker.uasset",
+     "key": "EDAF5CBB40F4140DEDDA1D93C59FA07C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Stonebreaker/Weapon_Stonebreaker.uasset",
+     "key": "8F58E3ED41F438D6D74BBC8162B5ED34"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_StoneBreaker_Icon"
+   },
+   "damage": 103.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 4.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "sword",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Weapon_Sword.uasset",
+     "key": "FCF519CB41286A1FAFD68A97D3D749D0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Weapon_Sword.uasset",
+     "key": "2C5E71D043100759DCAE11A7B3AAF2BF"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_Sword_Icon"
+   },
+   "damage": 56.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.0,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 7.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "talratha_hammer",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Weapon_TalRatha_Hammer.uasset",
+     "key": "BA6B270B429032F62DBCD3B8E3C313F5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Weapon_TalRatha_Hammer.uasset",
+     "key": "3E3EEA6A48E985DA0E656792239E4C1E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_TalRatha_Hammer_Icon"
+   },
+   "damage": 74.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.95,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 3.0,
+   "mod": "none",
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "thorn",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/Thorn/Weapon_Thorn.uasset",
+     "key": "05FE58CD448D190C65EA08927F3647D5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/Thorn/Weapon_Thorn.uasset",
+     "key": "0EB75CF24BEB420CCD093DB5483B136E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Thorn_Icon2"
+   },
+   "damage": 7.0,
+   "rpm": 531.0,
+   "mag": 30,
+   "reserve": 300,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.0,
+   "range_m": 39.0,
+   "spread_deg": 0.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "tommygun",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Weapon_TommyGun.uasset",
+     "key": "42ADEA3B4B8A413FB09958BD9902AC72"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Weapon_TommyGun.uasset",
+     "key": "20C4909249DAFC52F99D69897284FDAC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_TommyGun_Icon"
+   },
+   "damage": 10.0,
+   "rpm": 705.0,
+   "mag": 80,
+   "reserve": 320,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.05,
+   "range_m": 55.0,
+   "spread_deg": 1.33,
+   "pellets": 1,
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "trinitycrossbow",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/TrinityCrossbow/Weapon_TrinityCrossbow.uasset",
+     "key": "F5D18B3144E43AB98846DCB0A785152D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Weapons/TrinityCrossbow/Weapon_TrinityCrossbow.uasset",
+     "key": "5821228A434133C733EDC2B2DC70BB8B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_TrinityCrossbow3_Icon"
+   },
+   "damage": 44.0,
+   "rpm": 46.8,
+   "mag": 18,
+   "reserve": 90,
+   "reload_s": 2.4,
+   "weakspot_mult": 2.15,
+   "range_m": 70.0,
    "spread_deg": 0.1,
    "pellets": 1,
-   "mod": "healing_shot",
-   "price_scrap": 600,
-   "sold_by": "brabus"
+   "crit": 10.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "twistedarbalest",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Weapon_TwistedArbalest.uasset",
+     "key": "B316DEC04B5A457FCED6F6A50E8F5E46"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Weapon_TwistedArbalest.uasset",
+     "key": "DF0999D44A3E390429C710B9C3EFB15A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_TwistedArbalest_Icon"
+   },
+   "damage": 80.0,
+   "rpm": 120.0,
+   "mag": 1,
+   "reserve": 22,
+   "reload_s": 0.7,
+   "weakspot_mult": 2.0,
+   "range_m": 70.0,
+   "spread_deg": 1.0,
+   "pellets": 1,
+   "crit": 5.0,
+   "mod": "none",
+   "effects": "none",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "vicegrips",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/Vice_Grips/Weapon_ViceGrips.uasset",
+     "key": "486E06A8452AADF1B2279BB9C930565A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/Vice_Grips/Weapon_ViceGrips.uasset",
+     "key": "BFFD66A142F14FCAD3B191B842597397"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_ViceGrips_Icon"
+   },
+   "damage": 55.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 2.1,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 6.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "worldsedge",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Weapon_WorldsEdge.uasset",
+     "key": "93DE94BB49D2B2EA313DBFB7A7211E7F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Weapon_WorldsEdge.uasset",
+     "key": "18641A9E4685F769AF4C359F3FD90D5A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Special/T_UI_Weapon_WorldsEdge_Icon"
+   },
+   "damage": 96.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.85,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 3.0,
+   "mod": "none",
+   "effects": "dmg_melee+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "wrathbringer",
+   "slot": "melee",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/Wrathbringer/Weapon_Wrathbringer.uasset",
+     "key": "B90A9B1D4D2498ECE9928BA9A7522BAB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/Wrathbringer/Weapon_Wrathbringer.uasset",
+     "key": "817ACF1444BD5AEA5862A59BC28AE6AB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/T_UI_Weapon_Wrathbringer_Icon"
+   },
+   "damage": 101.0,
+   "rpm": 120.0,
+   "mag": 0,
+   "reserve": 0,
+   "reload_s": 0,
+   "weakspot_mult": 1.85,
+   "range_m": 40.0,
+   "spread_deg": 0.67,
+   "pellets": 1,
+   "crit": 6.0,
+   "mod": "none",
+   "effects": "dmg_melee+20%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
   }
  ]
 }

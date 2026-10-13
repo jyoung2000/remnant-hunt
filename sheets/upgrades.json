@@ -1,47 +1,123 @@
 {
  "sheet": "upgrades",
- "phase": "v0.1",
+ "phase": "v0.2",
  "columns": {
   "id": "id",
   "level": "num",
-  "cost_scrap": "num",
   "damage_mult": "num",
+  "zenny": "num",
+  "recipe": "recipe",
   "done_by": "ref:npcs"
  },
  "rows": [
   {
    "id": "plus_1",
    "level": 1,
-   "cost_scrap": 150,
-   "damage_mult": 1.1,
+   "damage_mult": 1.128,
+   "zenny": 500,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
    "done_by": "mccabe"
   },
   {
    "id": "plus_2",
    "level": 2,
-   "cost_scrap": 300,
-   "damage_mult": 1.2,
+   "damage_mult": 1.272,
+   "zenny": 2000,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ],
    "done_by": "mccabe"
   },
   {
    "id": "plus_3",
    "level": 3,
-   "cost_scrap": 500,
-   "damage_mult": 1.32,
+   "damage_mult": 1.432,
+   "zenny": 4500,
+   "recipe": [
+    "ore_low2*3",
+    "crystal_low*2"
+   ],
    "done_by": "mccabe"
   },
   {
    "id": "plus_4",
    "level": 4,
-   "cost_scrap": 800,
-   "damage_mult": 1.45,
+   "damage_mult": 1.608,
+   "zenny": 8000,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2"
+   ],
    "done_by": "mccabe"
   },
   {
    "id": "plus_5",
    "level": 5,
-   "cost_scrap": 1200,
-   "damage_mult": 1.6,
+   "damage_mult": 1.8,
+   "zenny": 12500,
+   "recipe": [
+    "ore_high*4",
+    "bone_high*3"
+   ],
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_6",
+   "level": 6,
+   "damage_mult": 2.008,
+   "zenny": 18000,
+   "recipe": [
+    "ore_high2*3",
+    "part_high*2"
+   ],
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_7",
+   "level": 7,
+   "damage_mult": 2.232,
+   "zenny": 24500,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*1"
+   ],
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_8",
+   "level": 8,
+   "damage_mult": 2.472,
+   "zenny": 32000,
+   "recipe": [
+    "ore_master*3",
+    "bone_master*2"
+   ],
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_9",
+   "level": 9,
+   "damage_mult": 2.728,
+   "zenny": 40500,
+   "recipe": [
+    "ore_master*4",
+    "elder_master*1"
+   ],
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_10",
+   "level": 10,
+   "damage_mult": 3.0,
+   "zenny": 50000,
+   "recipe": [
+    "gem_master*1",
+    "elder_master*2"
+   ],
    "done_by": "mccabe"
   }
  ]

@@ -1,0 +1,859 @@
+{
+ "sheet": "perks",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "kind": "enum:prime|perk",
+  "name": "r2text",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback"
+ },
+ "rows": [
+  {
+   "id": "spirited",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/Perk_Spirited.uasset",
+     "key": "3EF7270C4C9C07A9D7A000AC7B1A91FB"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "liquidcourage",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/LiquidCourage/Perk_LiquidCourage.uasset",
+     "key": "0FF4C9E44A4008F5F981D38D7404B62C"
+    }
+   },
+   "icon": "none",
+   "effects": "crit+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "panacea",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/Panacea/Perk_Panacea.uasset",
+     "key": "F312BC4E447D6C19504576A0D7274C01"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+5%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "goldtolead",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/GoldToLead/Perk_GoldToLead.uasset",
+     "key": "D7BD19224E71C3F54A9F5AA395902B91"
+    }
+   },
+   "icon": "none",
+   "effects": "ammo+20%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "experimentalist",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/Experimentalist/Perk_Experimentalist.uasset",
+     "key": "A08FB24048694B36ADAC2AB66AF88F6C"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "tempest",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/Perk_Tempest.uasset",
+     "key": "CE5381BC40582E76486F94A1813958F9"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "amplify",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/Amplify/Perk_Amplify.uasset",
+     "key": "E84179A24238D09D392BBEAD0A8F165E"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_mod+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "powercreep",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/PowerCreep/Perk_PowerCreep.uasset",
+     "key": "D9D3F5344EC505372138FF88215D149C"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_gen+10%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "spiritwithin",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/Perk_SpiritWithin.uasset",
+     "key": "EAFD7BA0400952C66DDF46A31F6D26B5"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_gen+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "powerleak",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/PowerLeak/Perk_PowerLeak.uasset",
+     "key": "B828C34D4D7F4A213C59C3AEA2B780DB"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "diehard",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/DieHard/Perk_DieHard.uasset",
+     "key": "59A9ADE943F9B364138A6F96DDF34CD4"
+    }
+   },
+   "icon": "none",
+   "effects": "heal+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "closequarters",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/Perk_CloseQuarters.uasset",
+     "key": "9E05A8184AAE6FED470262A3A3923564"
+    }
+   },
+   "icon": "none",
+   "effects": "crit+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "intimidatingpresence",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/IntimidatingPresence/Perk_IntimidatingPresence.uasset",
+     "key": "CF0C1C4C48C72B28FE410186356F22BF"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+5%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "powerlifter",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/Perk_PowerLifter.uasset",
+     "key": "86AE8E454B951582573AE68688B7CAC2"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina+50%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "faceofdanger",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/FaceOfDanger/Perk_FaceOfDanger.uasset",
+     "key": "67A8D0AD473B7F0A922A549EDD8F14B8"
+    }
+   },
+   "icon": "none",
+   "effects": "on_relic:dmg+10% 10s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "hightech",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/Overclock/Perk_HighTech.uasset",
+     "key": "862A3CD64DA3D89D4EBEB2BD1E860F36"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "metalworker",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/Metalworker/Perk_Metalworker.uasset",
+     "key": "49CF2D14451C2B1C934898B0D0E2B02A"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_skill+5%;max_hp+2.5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "magneticfield",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/MagneticField/Perk_MagneticField.uasset",
+     "key": "3CB5B0794A89EE4D5117BBACAE980446"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+5%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "heavymobility",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/HeavyMobility/Perk_HeavyMobility.uasset",
+     "key": "7625B6754D88965710BA4EA01D1D04B5"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina+35%;on_evade:stamina+35% 10s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "surplus",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/Surplus/Perk_Surplus.uasset",
+     "key": "2C91753F4DE619D6A3F59DAD5DA5C91F"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "lucky",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/Lucky/Perk_Lucky.uasset",
+     "key": "2DEC5A0A4B8EF513CCE10889BCC7A7A2"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+0.5% 20s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "metaldetector",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/Perk_MetalDetector.uasset",
+     "key": "ED473518449319A6A6A2178773092369"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "prospector",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/Perk_Prospector.uasset",
+     "key": "A0AE9F794BCEFA4BB48024B798AD12F3"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "selfdiscovery",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/SelfDiscovery/Perk_SelfDiscovery.uasset",
+     "key": "6646422646CED3CBD7032B8A466D912F"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "loaded",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/Leadbringer/Perk_Loaded.uasset",
+     "key": "7CA760CB44F8A9DA8C747894BD63DE72"
+    }
+   },
+   "icon": "none",
+   "effects": "reload+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "swiftshot",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/SwiftShot/Perk_SwiftShot.uasset",
+     "key": "68D210474432AFBF3000029A2895D555"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_ranged+2.5%;fire_rate+9%;crit+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "posseup",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/PosseUp/Perk_PosseUp.uasset",
+     "key": "9D124A304119EA9A297F28BE48CFEE01"
+    }
+   },
+   "icon": "none",
+   "effects": "ammo+20%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "quickhands",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/QuickHands/Perk_QuickHands.uasset",
+     "key": "38F9BBF64BEC888576682A80A7A743D3"
+    }
+   },
+   "icon": "none",
+   "effects": "reload+10%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "sleightofhand",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/SleightOfHand/Perk_SleightOfHand.uasset",
+     "key": "7841E59B4F7C1678A6F13F82A18C474F"
+    }
+   },
+   "icon": "none",
+   "effects": "on_relic:dmg_ranged+15% 10s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "bonded",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/Resucitate/Perk_Bonded.uasset",
+     "key": "A71B2C9C4411B2B05299A29658AD93B8"
+    }
+   },
+   "icon": "none",
+   "effects": "max_hp+50%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "packhunter",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/PackHunter/Perk_PackHunter.uasset",
+     "key": "03ED00D64560CA2F8970AD8D8FFD38B4"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "heartofthepack",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/HeartOfThePack/Perk_HeartOfThePack.uasset",
+     "key": "FCEB02284E3600FC1F6538BB800F7091"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina+10%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "teamwork",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/Teamwork/Perk_Teamwork.uasset",
+     "key": "DE20795A49826F88426480A14C82F85F"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+5%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "bestfriend",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/BestFriend/Perk_BestFriend.uasset",
+     "key": "9E0D1FCA4FB6903780C1B181777ED8FF"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+5%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "deadtorightsv3",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Perk_DeadToRightsV3.uasset",
+     "key": "17D74FB349B7AFFCDE8163AB3C267149"
+    }
+   },
+   "icon": "none",
+   "effects": "weakspot+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "deadeye",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Perk_Deadeye.uasset",
+     "key": "DBCD40C3449C879D5B1973BFFDD04240"
+    }
+   },
+   "icon": "none",
+   "effects": "weakspot+1.5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "returntosender",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Perk_ReturnToSender.uasset",
+     "key": "C7DC66304121E0A86E2A529BC1485694"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "urgency",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Urgency/Perk_Urgency.uasset",
+     "key": "5C8C589E4A65986DC4F2A29C633F58E4"
+    }
+   },
+   "icon": "none",
+   "effects": "on_kill:reload+15% 10s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "intuition",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Intuition/Perk_Intuition.uasset",
+     "key": "0E2A9F9C47A7EA22F762C4859CAD0CF4"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "shadownew",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Perk_ShadowNEW.uasset",
+     "key": "8DDC6C424A7E2157439F12AB245D9B36"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+5%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "shark",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/SHARK/Perk_SHARK.uasset",
+     "key": "6564ED26408953922F218EA9A3AAAA16"
+    }
+   },
+   "icon": "none",
+   "effects": "on_evade:dmg_melee+0.7% 1s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "loophole",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Loophole/Perk_Loophole.uasset",
+     "key": "F8DFA8C74A8158631CB277B22C98A8B9"
+    }
+   },
+   "icon": "none",
+   "effects": "lifesteal+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "bypass",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Bypass/Perk_Bypass.uasset",
+     "key": "BC442C3447FB21A186B17A817CDCB3AC"
+    }
+   },
+   "icon": "none",
+   "effects": "on_evade:dmg+10% 10s",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "override",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Override/Perk_Override.uasset",
+     "key": "6E22F5294502BA709DD10597301C57B5"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "primeperk_visionary",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Visionary/PrimePerk_Visionary.uasset",
+     "key": "0200B7914CF4A11BF1C3EA894338DCB2"
+    }
+   },
+   "icon": "none",
+   "effects": "on_skill:cdr+3% 10s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "entranced",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Entranced/Perk_Entranced.uasset",
+     "key": "2BE53AC64C10FB4379177D983A33D6D8"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_skill+3%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "communion",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Communion/Perk_Communion.uasset",
+     "key": "35D088CC4CD3D8A485B10A81A31AC2BB"
+    }
+   },
+   "icon": "none",
+   "effects": "cdr+1%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "mindandbody",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/MindAndBody/Perk_MindAndBody.uasset",
+     "key": "7A93142C49613E454A2AAD93320B9DE4"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "soothsayer",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Soothsayer/Perk_Soothsayer.uasset",
+     "key": "742FB36344F1A4C5D49B97B71D3A35AD"
+    }
+   },
+   "icon": "none",
+   "effects": "skill_dur+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "regenerator",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Regenerator/Perk_Regenerator.uasset",
+     "key": "034CF1CA4368B6BF397249BD74704387"
+    }
+   },
+   "icon": "none",
+   "effects": "heal-50%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "invigorated",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Invigorated/Perk_Invigorated.uasset",
+     "key": "D41853EF4F76748EB0B5FAA32398F154"
+    }
+   },
+   "icon": "none",
+   "effects": "crit+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "benevolence",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Perk_Benevolence.uasset",
+     "key": "5D570AA74D0E4A1A294C628E16970DBA"
+    }
+   },
+   "icon": "none",
+   "effects": "relic_heal+15%;low_hp(35):relic_heal+15%;low_hp(35):max_hp+35%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "backbone",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Perk_Backbone.uasset",
+     "key": "7F14797B4519A3C809F5468DFBA818D0"
+    }
+   },
+   "icon": "none",
+   "effects": "max_hp+1",
+   "fidelity": "exact"
+  },
+  {
+   "id": "benefactor",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Perk_Benefactor.uasset",
+     "key": "8237BF5240FF634596E0318F8B9B321B"
+    }
+   },
+   "icon": "none",
+   "effects": "on_relic:relic_speed+20% 10s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "primeperk_vile",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Vile/PrimePerk_Vile.uasset",
+     "key": "F96923AA423BAC205F3C959BD231E0F7"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_status+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "wrath",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Wrath/Perk_Wrath.uasset",
+     "key": "B15572814BAD8C2BAD503BBD0107BE35"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+2.5%;crit+5%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "terrify",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Terrify/Perk_Terrify.uasset",
+     "key": "9E3BE0D849A15332899B44B8A78A3ECF"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+5%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "darkblood",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/DarkBlood/Perk_DarkBlood.uasset",
+     "key": "A113ABE64638C57E84D911958677E83E"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+25%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "purge",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Purge/Perk_Purge.uasset",
+     "key": "5D4B623241FFBF664D43C09DD108728A"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_status+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "ruthless",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Ruthless/Perk_Ruthless.uasset",
+     "key": "319D11FE484CB3DEBC8B338415A0983B"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_skill+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "dominator",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Dominator/Perk_Dominator.uasset",
+     "key": "402C8C5141A35158AE66C2846253C624"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_mod+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "residue",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Residue/Perk_Residue.uasset",
+     "key": "01B01F364FAB12F3D995929C4E10552E"
+    }
+   },
+   "icon": "none",
+   "effects": "heal+20%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "outrage",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Outrage/Perk_Outrage.uasset",
+     "key": "777D5FFD48CA61B563D16390AAE80A33"
+    }
+   },
+   "icon": "none",
+   "effects": "lifesteal+3%;stamina+15%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "incite",
+   "kind": "perk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Incite/Perk_Incite.uasset",
+     "key": "B46711CE48BC8918348841B00A5B4762"
+    }
+   },
+   "icon": "none",
+   "effects": "on_relic:dmg+15% 10s",
+   "fidelity": "exact"
+  },
+  {
+   "id": "dynamic",
+   "kind": "prime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Perks/Perk_Dynamic.uasset",
+     "key": "ABD83D1845713B223CBF27983A299E49"
+    }
+   },
+   "icon": "none",
+   "effects": "shield+20%",
+   "fidelity": "exact"
+  }
+ ]
+}

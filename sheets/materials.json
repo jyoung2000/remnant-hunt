@@ -1,0 +1,118 @@
+{
+ "sheet": "materials",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "rank": "enum:low|high|master",
+  "kind": "enum:ore|bone|crystal|part|elder|gem",
+  "mhw_item_id": "num",
+  "note": "str"
+ },
+ "rows": [
+  {
+   "id": "ore_low",
+   "rank": "low",
+   "kind": "ore",
+   "mhw_item_id": 0,
+   "note": "common low rank ore"
+  },
+  {
+   "id": "bone_low",
+   "rank": "low",
+   "kind": "bone",
+   "mhw_item_id": 0,
+   "note": "small monster bone"
+  },
+  {
+   "id": "ore_low2",
+   "rank": "low",
+   "kind": "ore",
+   "mhw_item_id": 0,
+   "note": "better low rank ore"
+  },
+  {
+   "id": "bone_low2",
+   "rank": "low",
+   "kind": "bone",
+   "mhw_item_id": 0,
+   "note": "medium monster bone"
+  },
+  {
+   "id": "crystal_low",
+   "rank": "low",
+   "kind": "crystal",
+   "mhw_item_id": 0,
+   "note": "low rank crystal"
+  },
+  {
+   "id": "ore_high",
+   "rank": "high",
+   "kind": "ore",
+   "mhw_item_id": 0,
+   "note": "high rank ore"
+  },
+  {
+   "id": "bone_high",
+   "rank": "high",
+   "kind": "bone",
+   "mhw_item_id": 0,
+   "note": "high rank bone"
+  },
+  {
+   "id": "part_high",
+   "rank": "high",
+   "kind": "part",
+   "mhw_item_id": 0,
+   "note": "high rank wyvern part"
+  },
+  {
+   "id": "ore_high2",
+   "rank": "high",
+   "kind": "ore",
+   "mhw_item_id": 0,
+   "note": "rare high rank ore"
+  },
+  {
+   "id": "elder_high",
+   "rank": "high",
+   "kind": "elder",
+   "mhw_item_id": 0,
+   "note": "elder dragon material"
+  },
+  {
+   "id": "part_high2",
+   "rank": "high",
+   "kind": "part",
+   "mhw_item_id": 0,
+   "note": "rare high rank wyvern part"
+  },
+  {
+   "id": "ore_master",
+   "rank": "master",
+   "kind": "ore",
+   "mhw_item_id": 0,
+   "note": "master rank ore"
+  },
+  {
+   "id": "bone_master",
+   "rank": "master",
+   "kind": "bone",
+   "mhw_item_id": 0,
+   "note": "master rank bone"
+  },
+  {
+   "id": "elder_master",
+   "rank": "master",
+   "kind": "elder",
+   "mhw_item_id": 0,
+   "note": "master rank elder dragon material"
+  },
+  {
+   "id": "gem_master",
+   "rank": "master",
+   "kind": "gem",
+   "mhw_item_id": 0,
+   "note": "master rank gem"
+  }
+ ]
+}

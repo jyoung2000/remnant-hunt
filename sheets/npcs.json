@@ -4,7 +4,7 @@
  "columns": {
   "id": "id",
   "name": "r2name",
-  "role": "enum:guns|upgrades",
+  "role": "enum:guns|upgrades|engrams",
   "greet_1": "r2text",
   "greet_2": "r2text",
   "greet_3": "r2text",
@@ -119,6 +119,61 @@
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
      "key": "8095C75247CB01A3CB77BCBD98BBBC7A"
+    }
+   },
+   "banner": {
+    "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
+   }
+  },
+  {
+   "id": "wallace",
+   "name": {
+    "r2name": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/Quest_Ward13.uasset",
+     "pattern": "^EventTree_(Wallace)_PlayerBase$"
+    }
+   },
+   "role": "engrams",
+   "greet_1": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Wallace_PlayerBase.uasset",
+     "key": "A0E10DD34DA7E087B94FC5A89E2B8D53"
+    }
+   },
+   "greet_2": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Wallace_PlayerBase.uasset",
+     "key": "48294D954FC72F0E71905EA69F4AF1D2"
+    }
+   },
+   "greet_3": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Wallace_PlayerBase.uasset",
+     "key": "AA0E63F5417EA147040B489DB10C6556"
+    }
+   },
+   "open_option": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Wallace_PlayerBase.uasset",
+     "key": "2710E2A14FA2B1C76D1F0682FE8133F7"
+    }
+   },
+   "leave_option": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Wallace_PlayerBase.uasset",
+     "key": "6BD250894981A7D46B50E9813DDF4694"
+    }
+   },
+   "shop_line": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Wallace_PlayerBase.uasset",
+     "key": "35CCD80945ECA24D8C94C2A52B50720C"
+    }
+   },
+   "done_line": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Wallace_PlayerBase.uasset",
+     "key": "ABD0C7D5433B83514F69F494E9E149A5"
     }
    },
    "banner": {

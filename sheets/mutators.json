@@ -1,0 +1,1599 @@
+{
+ "sheet": "mutators",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "slot": "enum:gun|melee",
+  "name": "r2text",
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
+ },
+ "rows": [
+  {
+   "id": "bandit",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Bandit/MetaGem_Bandit.uasset",
+     "key": "69462EC94B96C2FDAA922C9CBB0AEEB1"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "ammo+20%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "battery",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Battery/MetaGem_Battery.uasset",
+     "key": "F3FF16AF49234996F36450AA9B1BEE1C"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "weakspot+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "battle_mage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Melee/BattleMage/MetaGem_BattleMage.uasset",
+     "key": "2B4145C74D969B1E16681788815435EC"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_Battlemage"
+   },
+   "effects": "on_skill:mod_gen+37.5% 10s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "bottom_feeder",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/BottomFeeder/MetaGem_BottomFeeder.uasset",
+     "key": "B0510A04409B2E10D5CD35887F4A6B86"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_BottomFeeder_Icon"
+   },
+   "effects": "on_reload:dmg+20% 10s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "bottom_heavy",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/BottomHeavy/MetaGem_BottomHeavy.uasset",
+     "key": "30E245C94970FB945CE1E693FDFD04DD"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_BottomHeavy_Icon"
+   },
+   "effects": "fire_rate+7%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "bulletweaver",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Bulletweaver/MetaGem_Bulletweaver.uasset",
+     "key": "C43280284E8200E7B5AF6E82E61072ED"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "on_mod:fire_rate+15% 15s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "charged_wounds",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Ranged/ChargedWounds/MetaGem_ChargedWounds.uasset",
+     "key": "7B13FCC243F0C6357E3321B43AEB7423"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_03"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "deadly_calm",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/DeadlyCalm/MetaGem_DeadlyCalm.uasset",
+     "key": "61226C5A4CAD0F6EE04637BFEC09DFF7"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "dervish",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Dervish/MetaGem_Dervish.uasset",
+     "key": "DEC99CBD42CC95CCA5B852957063FB5B"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_04"
+   },
+   "effects": "on_skill:dmg_melee+30% 10s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "detonator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Ranged/Detonator/MetaGem_Detonator.uasset",
+     "key": "DF114DBF49EA1EEB98512EAECBF5807B"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_04"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "disengage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Disengage/MetaGem_Disengage.uasset",
+     "key": "5DAD03394F0E70AB2107159138997290"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_02"
+   },
+   "effects": "on_evade:dmg+10% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "dreadful",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Ranged/Dreadful/MetaGem_Dreadful.uasset",
+     "key": "5DE4768244F0D21BEB68929016C2876E"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_Dreadful_Icon"
+   },
+   "effects": "dmg_ranged+1.5%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "edgelord",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Edgelord/MetaGem_Edgelord.uasset",
+     "key": "5E49CB3F4DCBA962D0958E9A44E8E949"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_Edgelord_Icon"
+   },
+   "effects": "lifesteal+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "executor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Melee/Executor/MetaGem_Executor.uasset",
+     "key": "4D1007C441DCAA8027D5B59C295A8FF9"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_Executor_Icon"
+   },
+   "effects": "dmg_status+10%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "extender",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Extender/MetaGem_Extender.uasset",
+     "key": "CBBFE3CD4F1FB2C9DA3F478F6F8E6E02"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "mag+32.5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "failsafe",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Failsafe/MetaGem_Failsafe.uasset",
+     "key": "8F4BB3EF471E09EE18A79D9BE9A72663"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_mod+17.5%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "far_sighted",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Ranged/FarSighted/MetaGem_FarSighted.uasset",
+     "key": "B4B40D6A4B39AB6959786AA8EED7F588"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_FarSighted"
+   },
+   "effects": "dmg_ranged+1.9%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "feedback",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Feedback/MetaGem_Feedback.uasset",
+     "key": "ACE26DEF4508E07F1A97968DD6992498"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "fetid_wounds",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Ranged/FetidWounds/MetaGem_FetidWounds.uasset",
+     "key": "7A274C56422F028A084B91BC99B4F7AC"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_FetidWounds_Icon"
+   },
+   "effects": "crit+2%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "ghost_shell",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/GhostShell/MetaGem_GhostShell.uasset",
+     "key": "98BAFA1C4D4AD38DCE6F68B738CC2C29"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/GhostShell/MetaGem_GhostShell.uasset",
+     "key": "EE9CF0EC406C8B80706038A08F528D92"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "on_weakspot:dmg+30% 10s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "gladiator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Melee/Gladiator/MetaGem_Gladiator.uasset",
+     "key": "994B21504CCF09FF3FB8B48FB393F2DB"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_Gladiator"
+   },
+   "effects": "dmg_melee+37.5% 5s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "guts",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Melee/Guts/MetaGem_Guts.uasset",
+     "key": "07F8262E437A4115DDBFFC9B026FA4A7"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_Guts_Icon"
+   },
+   "effects": "crit+15%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "harmonizer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Harmonizer/MetaGem_Harmonizer.uasset",
+     "key": "E3C10C7D4B3973C99CFE099317261FD9"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_mod+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "hidden_power",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Ranged/HiddenPower/MetaGem_HiddenPower.uasset",
+     "key": "3CC629AF4DE487D615C23F827FF966D3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_05"
+   },
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "hyper_charger",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Melee/HyperCharger/MetaGem_HyperCharger.uasset",
+     "key": "39BECAAF449C2DB54623099BCDBAA550"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_01"
+   },
+   "effects": "stamina-65%;dmg_melee+37.5%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "ingenuity",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Ingenuity/MetaGem_Ingenuity.uasset",
+     "key": "7B83A446477F26F5563C4C8A7B8D499E"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_Ingenuity_Icon"
+   },
+   "effects": "reload+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "insulator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Ranged/Insulator/MetaGem_Insulator.uasset",
+     "key": "68C81E7D4AD8D1EBA29475BCCAE8ABB3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_06"
+   },
+   "effects": "shield+5% 10s",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "kill_switch",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/KillSwitch/MetaGem_KillSwitch.uasset",
+     "key": "64DEA7AB40861A2F8033A5954176EE1B"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_KillSwitch_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "latency",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Latency/MetaGem_Latency.uasset",
+     "key": "229E5C284369EEA75BD63D8F15ABB852"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_Latency_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "lithely",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Lithely/MetaGem_Lithely.uasset",
+     "key": "2533F16345A4F4F6E6A64E8035160524"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "reload+3%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "maelstrom",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Ranged/Maelstrom/MetaGem_Maelstrom.uasset",
+     "key": "CAB2529B46AD00C5A7122F8AB0F16665"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_Maelstrom_Icon"
+   },
+   "effects": "dmg_elem+10%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "misfortune",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Misfortune/MetaGem_Misfortune.uasset",
+     "key": "CB34928946DBA6FAAC79AB952F51D7A7"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "momentum",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Momentum/MetaGem_Momentum.uasset",
+     "key": "C3BDDA6F452D5F2F48EE8B95DBE043C2"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_06"
+   },
+   "effects": "on_crit:crit+1.5% 3s;on_crit:crit_dmg+1.5% 3s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "near_sighted",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Ranged/NearSighted/MetaGem_NearSighted.uasset",
+     "key": "FCC194F243DC16C529BD348DD130646B"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_NearSighted"
+   },
+   "effects": "dmg_ranged+15%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "opportunist",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Opportunist/MetaGem_Opportunist.uasset",
+     "key": "A5F370FC42413EF9FBADA8A334736741"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_Opportunist_Icon"
+   },
+   "effects": "on_evade:crit+75% 2s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "overdrive",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Overdrive/MetaGem_Overdrive.uasset",
+     "key": "3463661E4A9EA84331082EB8E38C82D9"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_07"
+   },
+   "effects": "on_crit:crit+3.5% 10s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "pressure_point",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Ranged/PressurePoint/MetaGem_PressurePoint.uasset",
+     "key": "76F143334931D49949A48EA3F6FC210C"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_PressurePoint"
+   },
+   "effects": "dmg_mod+10%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "prophecy",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Ranged/Prophecy/MetaGem_Prophecy.uasset",
+     "key": "16F64CFA43204ABCAF15A4B7146D94D3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_Prophecy_Icon"
+   },
+   "effects": "mod_gen+4.5% 10s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "refunder",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Refunder/MetaGem_Refunder.uasset",
+     "key": "F6C6B0CF481DE52CEA207BB5916E4781"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "ammo+20%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "reinvigorate",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Reinvigorate/MetaGem_Reinvigorate.uasset",
+     "key": "51027BC743A7216F018554801DA401CB"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "stamina+37.5%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "repercussion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Ranged/Repercussion/MetaGem_Repercussion.uasset",
+     "key": "C60E8F6F4E6D0196A4418D975A16554E"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_07"
+   },
+   "effects": "dmg_ranged+4.5%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "resentment",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Resentment/MetaGem_Resentment.uasset",
+     "key": "703CD2FD4208DBBDEA6E84A223CB537E"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_09"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "searing_wounds",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Ranged/SearingWounds/MetaGem_SearingWounds.uasset",
+     "key": "61792C144430F1A3CD494BB9C5AB5417"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_SearingWounds"
+   },
+   "effects": "dmg_ranged+5.5%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "sequenced_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/SequencedShot/MetaGem_SequencedShot.uasset",
+     "key": "08309CA94225FE2ADAA0E79427D0BE05"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_SequencedShot_Icon"
+   },
+   "effects": "crit+5%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "shield_breaker",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/ShieldBreaker/MetaGem_ShieldBreaker.uasset",
+     "key": "81C4F9B2430A5BD7648A709C6FC75E42"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "shield+4.5% 5s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "shocker",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Shocker/MetaGem_Shocker.uasset",
+     "key": "538E8E75405D6B77BAAECAA433B2732F"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_Shocker_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "slayer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Slayer/MetaGem_Slayer.uasset",
+     "key": "E0315A0B47640A9738B3E4B9D11158A4"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "sleeper",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Ranged/Sleeper/MetaGem_Sleeper.uasset",
+     "key": "B10A0AA7494C23BE8FAD0187D81FB937"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_Sleeper_Icon"
+   },
+   "effects": "crit+25% 5s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "spellweaver",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Ranged/Spellweaver/MetaGem_Spellweaver.uasset",
+     "key": "F047861342BAA4884BA4B6BAFC759336"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_Spellweaver"
+   },
+   "effects": "dmg_mod+10%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "spirit_healer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/SpiritHealer/MetaGem_SpiritHealer.uasset",
+     "key": "8D3F6EE14A413DD271312CB2E2A27D2E"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_SpiritHealer_Icon"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "steadfast",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Steadfast/MetaGem_Steadfast.uasset",
+     "key": "D28A485F4EBA26E47052B285DBB98A07"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "stormbringer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Stormbringer/MetaGem_Stormbringer.uasset",
+     "key": "1B30A68A42EE254D541E58AD2DBF54DA"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_Stormbringer_Icon"
+   },
+   "effects": "dmg_status+37.5%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "striker",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Striker/MetaGem_Striker.uasset",
+     "key": "AEE5F77E439C90D9B07C38B71D7ACFF3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_05"
+   },
+   "effects": "dmg_melee+4.5% 5s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "supercharger",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Supercharger/MetaGem_Supercharger.uasset",
+     "key": "20ACD48D4FE67964E369E49FF38B3AB3"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "crit+5%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "super_heated",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Ranged/SuperHeated/MetaGem_SuperHeated.uasset",
+     "key": "123A640D48B812E8D4271492AAE45D38"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_08"
+   },
+   "effects": "dmg_status+10%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "tainted_blade",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Gems/Melee/TaintedBlade/MetaGem_TaintedBlade.uasset",
+     "key": "E16426A943880FEA3A9FFB9656AF3908"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Mutator_TaintedBlade_Icon"
+   },
+   "effects": "dmg_melee+6.5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "thousand_cuts",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Gems/Ranged/ThousandCuts/MetaGem_ThousandCuts.uasset",
+     "key": "FEDCA1CA4BDDBD696C1853A411F77D55"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_DLC2_ThousandCuts"
+   },
+   "effects": "crit+5%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "timewave",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Timewave/MetaGem_Timewave.uasset",
+     "key": "651D8E86415DA682F0E62C8BADB68CC4"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "top_heavy",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/TopHeavy/MetaGem_TopHeavy.uasset",
+     "key": "8C1323764C403D0ABB1F5EBF67921C35"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Mutator_TopHeavy_Icon"
+   },
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "transference",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/Transferrence/MetaGem_Transference.uasset",
+     "key": "4039301E4C273BF5A875B9ADD3985D65"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "transpose",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/Transpose/MetaGem_Transpose.uasset",
+     "key": "1E73EAC1475914A1890E4CBCE6F505EC"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_ranged+10% 15s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "twisting_wounds",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Ranged/MetaGems/TwistingWounds/MetaGem_TwistingWounds.uasset",
+     "key": "877AE34C4B425560C1888EA34C635D03"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_ranged+5.5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ],
+   "slot": "gun"
+  },
+  {
+   "id": "vampire_blade",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/VampireBlade/MetaGem_VampireBlade.uasset",
+     "key": "DEFFF3754E3259FB452D509F073DA551"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "dmg_melee+20%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "vengeful_strike",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/VengefulStrike/MetaGem_VengefulStrike.uasset",
+     "key": "79D059954FCD1669A62A8F9A866AD97E"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
+   },
+   "effects": "low_hp(50):dmg_melee+37.5%;low_hp(50):max_hp+50%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "volatile_strike",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Gems/Melee/VolatileStrike/MetaGem_VolatileStrike.uasset",
+     "key": "DE94BB1342AF7A45AA0D0A857D88EC3D"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_02"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "melee"
+  },
+  {
+   "id": "weapon_lord",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Gems/Melee/MetaGems/WeaponLord/MetaGem_WeaponLord.uasset",
+     "key": "E53D24AF43CC82809CADC1B421F53A65"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_03"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ],
+   "slot": "melee"
+  }
+ ]
+}

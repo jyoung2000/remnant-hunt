@@ -1,0 +1,169 @@
+{
+ "sheet": "traits",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback"
+ },
+ "rows": [
+  {
+   "id": "potency",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Potency/Trait_Potency.uasset",
+     "key": "2A82AB9D45345E9F77E952A16876E28A"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+1%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "flashcaster",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/FlashCaster/Trait_FlashCaster.uasset",
+     "key": "51E92AB74F4B968B0142AE987FDBCF6E"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+1%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "strongback",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/StrongBack/Trait_StrongBack.uasset",
+     "key": "8AF34FBC4A101FA1875223B38F4DD3CD"
+    }
+   },
+   "icon": "none",
+   "effects": "on_evade:dmg+10% 10s",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "fortify",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Fortify/Trait_Fortify.uasset",
+     "key": "68B50B194F708739867F75B09B2CAF59"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+50%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "swiftness",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Swiftness/Trait_Swiftness.uasset",
+     "key": "4BBB38204CDD7B6B37B33AB2C74CA670"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina+15%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "ammoreserves",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/AmmoReserves/Trait_AmmoReserves.uasset",
+     "key": "0DBA4A014F91FBE167D27FAEB7B38A75"
+    }
+   },
+   "icon": "none",
+   "effects": "ammo+50%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "kinship",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Kinship/Trait_Kinship.uasset",
+     "key": "0BC52F9C4EF640C0407E4F873378D397"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_elem-80%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "longshot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Longshot/Trait_Longshot.uasset",
+     "key": "3708FACF4A4F961A9A088694AD856404"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+1%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "untouchable",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Untouchable/Trait_Untouchable.uasset",
+     "key": "EB2DF1F04CD4308E5878D9A9917CE5CC"
+    }
+   },
+   "icon": "none",
+   "effects": "on_evade:dmg+10% 10s",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "triage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Triage/Trait_Triage.uasset",
+     "key": "BFC85AB54CAC47A90382F395F497B002"
+    }
+   },
+   "icon": "none",
+   "effects": "heal+50%",
+   "fidelity": "exact"
+  },
+  {
+   "id": "affliction",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Traits/Affliction/Trait_Affliction.uasset",
+     "key": "C2E86523425F80E8D8112DB74A8E60DA"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_status+10%",
+   "fidelity": "fallback"
+  },
+  {
+   "id": "regrowth",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Regrowth/Trait_Regrowth.uasset",
+     "key": "2773F7F940ABA9FDF19203903397609C"
+    }
+   },
+   "icon": "none",
+   "effects": "max_hp+0.15",
+   "fidelity": "exact"
+  },
+  {
+   "id": "barrier",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Traits/Trait_Barrier.uasset",
+     "key": "7C7323B24976434F76C17CA7E21CBDB8"
+    }
+   },
+   "icon": "none",
+   "effects": "shield+15%",
+   "fidelity": "exact"
+  }
+ ]
+}

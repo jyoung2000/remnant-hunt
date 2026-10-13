@@ -7,12 +7,28 @@
   unverified a cell or row whose evidence is not recorded in sheets/_verified.json yet
              (Remnant II cells: tools/verify_r2.py; hooks and systems: the in-game log via tools/ingest_log.py)
 
-usage: preflight.py [sheets dir] [--phase v0.1] [--strict]
+usage: preflight.py [sheets dir] [--phase build|v0.1|v0.2|...] [--strict]   (build = every phase the build uses)
 Exit 1 when anything is unfilled, broken or invalid (the build must not start). --strict also fails on unverified.
 """
-import json, os, sys
+import json, os, re, sys
 
 R2_TYPES = ("r2text", "r2tex", "r2name")
+BUILD_PHASES = ("v0.1", "v0.2")  # sheets the build generates code from; later phases are plans
+
+# The effect language (tools/author_arsenal.py, src/core/effects.cpp).
+_STAT = (r"(?:proc|dmg|dmg_ranged|dmg_melee|dmg_mod|dmg_skill|dmg_elem|dmg_status|dmg_explosive|weakspot|crit|crit_dmg|"
+         r"fire_rate|reload|mag|ammo|accuracy|mod_gen|mod_dur|cdr|skill_dur|relic_speed|relic_heal|relic_charges|heal|"
+         r"lifesteal|dr|max_hp|regen|stamina|shield)")
+_N = r"\d+(?:\.\d+)?"
+_TRIG = r"(?:on_kill|on_crit|on_weakspot|on_hit|on_evade|on_relic|on_skill|on_mod|on_reload|on_hurt|low_hp\(\d+\)|high_hp\(\d+\))"
+EFFECT_RX = re.compile(
+    rf"^(?:(?:{_TRIG}:)?{_STAT}[+-]{_N}%?(?: {_N}s)?(?: x\d+)?(?: cd{_N}s)?"
+    rf"|use:(?:heal {_N}%(?: {_N}s)?|shield {_N}% {_N}s|burst {_N}|dot {_N} {_N}s|summon {_N} {_N}s"
+    rf"|buff {_STAT}[+-]{_N}%? {_N}s|ammo {_N}%|grenade {_N}))$")
+
+
+def effects_ok(v):
+    return all(EFFECT_RX.match(e) for e in v.split(";"))
 
 
 def load(d):
@@ -36,13 +52,14 @@ def main():
     argv = sys.argv[1:]
     args = [a for i, a in enumerate(argv) if not a.startswith("--") and (i == 0 or argv[i - 1] != "--phase")]
     d = args[0] if args else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sheets")
-    phase = sys.argv[sys.argv.index("--phase") + 1] if "--phase" in sys.argv else "v0.1"
+    phase = sys.argv[sys.argv.index("--phase") + 1] if "--phase" in sys.argv else "build"
+    phases = BUILD_PHASES if phase == "build" else (phase,)
     sheets, ver = load(d)
     ids = {n: {r["id"] for r in s["rows"]} for n, s in sheets.items()}
     unfilled, broken, invalid, unverified = [], [], [], []
     total = 0
     for name, sh in sheets.items():
-        if sh.get("phase", phase) != phase:
+        if sh.get("phase", "v0.1") not in phases:
             continue
         cols = sh["columns"]
         for r in sh["rows"]:
@@ -54,6 +71,19 @@ def main():
                 if empty(v):
                     unfilled.append(where); continue
                 kinds = typ.split("|")
+                if v == "none" and "none" in kinds:
+                    continue
+                if typ.startswith("effects"):
+                    if not isinstance(v, str) or not effects_ok(v):
+                        invalid.append(f"{where}: not in the effect language ({v!r})")
+                    continue
+                if typ == "recipe":
+                    if v != ["none"]:
+                        for x in v:
+                            mat, _, n = x.partition("*")
+                            if mat not in ids.get("materials", set()) or not n.isdigit():
+                                broken.append(f"{where}: {x!r} is not <materials id>*<count>")
+                    continue
                 if typ == "num":
                     if not isinstance(v, (int, float)):
                         invalid.append(f"{where}: not a number ({v!r})")

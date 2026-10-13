@@ -32,29 +32,35 @@
 1. device_commit_files can deliver a stale copy when the same staged path is re-committed: stage under a new name.
 2. ooz-x needs -mavx2 -DOODLE_ENABLE_AVX2 and lzna.cpp for LZNA_InitLookup.
 
-## Build state (2026-10-13 ~00:40 CT)
-- Built: build/win/{dinput8.dll, remnant_hunt.dll, r2read.exe}; dev-installed into the MHW folder
-  (dinput8.dll + remnant_hunt/). `make`, `make test R2=<Remnant2 dir>`, `make package VERSION=x`.
-- r2read (Windows SSE2 build of ooz + our IoStore reader) cross-checked on Linux against the Python tools:
-  82/82 sheet cells match (texts, names, BC7/BC1 icons).
-- Overlay: DX11 direct, DX12 via D3D11On12 (queue found by hooking ExecuteCommandLists in d3d12.dll).
-- Input: DirectInput, raw input, GetAsyncKeyState, SetCursorPos/ClipCursor filtered in Windows DLLs only.
-  The log reports which input paths MHW actually uses ~20 s after the first frame.
-- Game tick: sMhCamera object pointed at a copied vtable (slot 6 -> mod tick). No MHW code patched.
-- Keys moved off MHW defaults: B gun mode, R reload, X swap (gun mode), V mod, G skill, T relic, P terminal.
+## Build state (2026-10-13 ~11:40 CT, v0.2 in progress)
+- In game (log of 10:34): 25/25 hooks pass, DX11 overlay at 2560x1440, Remnant II text resolves, game tick runs,
+  zones 0 -> 301 -> 501 -> 504 tracked, intro and archetype choice worked (hunter).
+- Jalon's v0.2 asks: Remnant gear in MHW's item bar; Remnant animations/sounds/textures on the hunter; craft Remnant
+  items, classes and weapons from NPCs in the hub, with MHW materials scaled to MHW; menus offering all Remnant
+  classes, weapons and items. Agreed design changes: MHW's own NPCs (Smithy, Elder Melder, Provisions Manager) host
+  the Remnant menus; animations come from MHW's own moves that fit each item (bowgun moves for guns, drinking for
+  relics and consumables, hunter actions for skills).
+- Sheets v0.2 (tools/author_arsenal.py from the install catalog + Remnant 2 Toolkit numbers, GPL-3.0): 14 archetypes,
+  42 skills, 65 perks, 13 traits, 112 weapons, 36 mods, 66 mutators, 225 rings, 103 amulets, 27 relics,
+  44 fragments, 53 consumables, 120 armor, 15 material classes, 6 NPC menus, 10 upgrade levels.
+  2481 Remnant II cells verified against the install. 841 effect strings parse (tests/test_effects.cpp).
+  Effect fidelity: 397 exact, 281 approx, 228 fallback (by the item's tags). Hand fixes: sheets/_overrides.json.
+- Code v0.2: effects.cpp (effect language, totals, triggers), catalog.h, inventory.cpp (zenny, item box containers,
+  MHW item names), remnant.cpp (loadout -> effects, crafting requests, skills x2, any relic, mods, actives),
+  ui.cpp (NPC menus with crafting, loadout terminal, archetypes, HUD), r2client lazy text.
+- Diagnostic v2 (read-only, dev_diag file): singletons by class name, save data checked by name/zenny, item names
+  (dev_items.txt), item containers, NPC spots (stand still 4 s), action/animation log, item bar watch.
 
-## Not yet verified in game (needs the PC usable)
-- Every hooks.* row and systems.* row (preflight lists them as UNVERIFIED until the log shows them).
-- Aim zoom (FOV write before/after camera move), solo detection (party offset meaning), weakspot band, damage scale.
-- Computer use: screenshots came back fully masked and steam://rungameid/582010 failed to open (PC asleep/locked?).
-
-## Waiting on Jalon
-- License + remix choice (MIT recommended). r2read stays GPL-3.0 because ooz is.
-- Permission to use the Melty token (session safety check blocked sending it).
+## Waiting on the diagnostic run (Jalon)
+- NPC spots -> sheets/menus.json x/y/z (0 = unknown; the terminal offers the three vendors meanwhile).
+- MHW item ids for the material classes -> sheets/materials.json mhw_item_id; item_name_stride in tuning.
+- Item box layout check (containers with the pouch's vtable); zenny at +0x94.
+- Item bar current-item field (watch) -> bar_items; action/animation ids for item animations.
 
 ## Next steps
-1. Launch MHW (Steam), read remnant_hunt/remnant_hunt.log, fix hook failures, go to Training Area (zone 504),
-   press B, shoot the dummy, check damage numbers / HP log; screenshot the intro + HUD.
-2. Melty: game_info both games, search_mashups, inspect_package, validate_recipe (dinput8.dll -> {game},
-   remnant_hunt/ -> {game}/remnant_hunt, env REMNANTHUNT_R2={game:<remnant slug>}), one_click_check, create_mod,
-   upload, test_release, screenshot, publish on approval.
+1. Read dev_diag.txt + dev_items.txt; fill menus, materials, bar_items; verify containers; rebuild.
+2. Item bar: Remnant gear in pouch slots (names via GMD, icons over the slot, use -> Remnant action).
+3. Animations: ActionController::DoAction / Entity::DoAnimation (SPL patterns) with ids from the action log.
+4. Sounds: Wwise media from the install (event -> media ids), decoded and played through our own audio.
+5. Package v0.2, Melty (blocked by network policy: see MELTY_HANDOFF.md).
+

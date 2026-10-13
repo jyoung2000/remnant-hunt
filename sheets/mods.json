@@ -1,60 +1,125 @@
 {
  "sheet": "mods",
- "phase": "v0.1",
+ "phase": "v0.2",
  "columns": {
   "id": "id",
   "name": "r2text",
-  "desc": "r2text",
-  "icon": "r2tex",
-  "effect": "enum:burn|heal_burst|blast|corrode",
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
   "charge_damage": "num",
-  "magnitude": "num",
-  "duration_s": "num"
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
  },
  "rows": [
   {
-   "id": "hot_shot",
+   "id": "abrasive_rounds",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Mods/HotShot/Mod_Hotshot.uasset",
-     "key": "6A9A38984C6D576D1F4BD6B25A8DC3BB"
+     "asset": "Remnant2/Content/World_DLC2/Items/Mods/AbrasiveRounds/Mod_AbrasiveRounds.uasset",
+     "key": "9794B81440405D7AD05B679474A5DCD5"
     }
    },
-   "desc": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Mods/HotShot/Mod_Hotshot.uasset",
-     "key": "9412DF0F4F7789A1F2002C87FE60F1C2"
-    }
-   },
+   "desc": "none",
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Hotshot"
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Mods/T_UI_Mod_AbrasiveRounds"
    },
-   "effect": "burn",
-   "charge_damage": 600,
-   "magnitude": 8,
-   "duration_s": 15
+   "effects": "use:dot 20 10s;use:buff lifesteal+5% 20s",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ],
+   "charge_damage": 1050
   },
   {
-   "id": "healing_shot",
+   "id": "astral_burst",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Mods/HealingShot/Mod_HealingShot.uasset",
-     "key": "62DC585F48A805DF56FBC18D942DFF8F"
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_AstralBurst/Mod_AstralBurst.uasset",
+     "key": "B3A7C9E54C57876773447884F4CD0286"
     }
    },
    "desc": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Mods/HealingShot/Mod_HealingShot.uasset",
-     "key": "1CE6B7554884798986157698ED6DC0D8"
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_AstralBurst/Mod_AstralBurst.uasset",
+     "key": "5BEF5145430688FA175B6B851C0EFB4D"
     }
    },
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_HealingShot"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_AstralBurst"
    },
-   "effect": "heal_burst",
-   "charge_damage": 700,
-   "magnitude": 40,
-   "duration_s": 0
+   "effects": "use:burst 490",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "blood_draw",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_BloodDraw/Mod_BloodDraw.uasset",
+     "key": "D81D8FB94DE15CF81A64F0A505707CE9"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_BloodDraw"
+   },
+   "effects": "use:dot 18.3333 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "bore",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/Bore/Mod_Bore.uasset",
+     "key": "E68EE68D4460B0380EEE408C3E729BD4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/Bore/Mod_Bore.uasset",
+     "key": "FFD334AD42927F7932A319AF44803930"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Bore"
+   },
+   "effects": "use:buff crit+15% 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
   },
   {
    "id": "concussive_shot",
@@ -73,10 +138,16 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_ConcussiveShot"
    },
-   "effect": "blast",
-   "charge_damage": 650,
-   "magnitude": 180,
-   "duration_s": 0
+   "effects": "use:burst 210",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ],
+   "charge_damage": 600
   },
   {
    "id": "corrosive_rounds",
@@ -95,10 +166,857 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_CorrosiveRounds"
    },
-   "effect": "corrode",
-   "charge_damage": 650,
-   "magnitude": 1.1,
-   "duration_s": 20
+   "effects": "use:dot 15 10s;use:buff crit+15% 20s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "creeping_mist",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Mods/Mod_CreepingMist/Mod_CreepingMist.uasset",
+     "key": "7974BD064837C86015A862A468BF6025"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Mods/Mod_CreepingMist/Mod_CreepingMist.uasset",
+     "key": "76B8208F4DE63979875CAAA5A991CABA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Mods/T_UI_Mod_CreepingMist_Icon_2"
+   },
+   "effects": "use:burst 300",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ],
+   "charge_damage": 1050
+  },
+  {
+   "id": "defrag",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Mods/Mod_Defrag/Mod_Defrag.uasset",
+     "key": "EB420FBE4FCA99503A42C8B83F50BF24"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Mods/Mod_Defrag/Mod_Defrag.uasset",
+     "key": "1AB7E4F540C18564BFF35B83C6E8E52D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Defrag"
+   },
+   "effects": "use:burst 25;use:buff dmg+20% 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "energy_wall",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/EnergyWall/Mod_EnergyWall.uasset",
+     "key": "1C0528E940084BFAFC62668940618EB1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/EnergyWall/Mod_EnergyWall.uasset",
+     "key": "1C37775B4F6E669F720B4586E5B4AE6C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_EnergyWall"
+   },
+   "effects": "use:burst 300",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "familiar",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_Familiar/Mod_Familiar.uasset",
+     "key": "A8436D12499448509D285C8F3052EDD4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_Familiar/Mod_Familiar.uasset",
+     "key": "A35DFBDA4B82C0BFCB6B1184CCD6C82A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Familiar"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "fargazer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Fargazer/Mod_Fargazer.uasset",
+     "key": "14A2117A450470A0C35D4E858E712EB9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Fargazer/Mod_Fargazer.uasset",
+     "key": "D06DD5714DD2F85E9DCCC184A5241E77"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Fargazer"
+   },
+   "effects": "use:burst 3",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "firestorm",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_Firestorm/Mod_Firestorm.uasset",
+     "key": "50487A9A47AFFF289DBF73864F905CD2"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_FireStorm"
+   },
+   "effects": "use:burst 75",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "flying_bomb_trap",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Mods/FlyingBombTrap/Mod_FlyingBombTrap.uasset",
+     "key": "C335D19441753ADFD9D25CAB6DA5CE9B"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Mods/T_UI_Mod_FlyingBombTrap"
+   },
+   "effects": "use:dot 10 10s",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ],
+   "charge_damage": 1050
+  },
+  {
+   "id": "harvester_bots",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Mods/Harvester_Bots/Mod_HarvesterBots.uasset",
+     "key": "AADF305B4B0EE504658C9BA828D42A44"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Mods/T_UI_Mod_HarvesterBots"
+   },
+   "effects": "use:summon 40 30s",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ],
+   "charge_damage": 1200
+  },
+  {
+   "id": "healing_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HealingShot/Mod_HealingShot.uasset",
+     "key": "62DC585F48A805DF56FBC18D942DFF8F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HealingShot/Mod_HealingShot.uasset",
+     "key": "1CE6B7554884798986157698ED6DC0D8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_HealingShot"
+   },
+   "effects": "use:heal 40% 4s;use:buff heal+20% 10s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ],
+   "charge_damage": 600
+  },
+  {
+   "id": "heatwave",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Mods/Heatwave/Mod_Heatwave.uasset",
+     "key": "DA9090E84937D65DE3F76D96098748F2"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Heatwave"
+   },
+   "effects": "use:dot 50 5s",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ],
+   "charge_damage": 1050
+  },
+  {
+   "id": "helix",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/Helix/Mod_Helix.uasset",
+     "key": "F02E19B8480755BC2AEC72A1AEEDF8EF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/Helix/Mod_Helix.uasset",
+     "key": "64FDE16B4210AC477D758CAD03C43AB8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Helix"
+   },
+   "effects": "use:burst 300",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "hot_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HotShot/Mod_Hotshot.uasset",
+     "key": "6A9A38984C6D576D1F4BD6B25A8DC3BB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HotShot/Mod_Hotshot.uasset",
+     "key": "9412DF0F4F7789A1F2002C87FE60F1C2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Hotshot"
+   },
+   "effects": "use:dot 20 10s;use:buff dmg_ranged+15% 20s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ],
+   "charge_damage": 600
+  },
+  {
+   "id": "knight_guard",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Mods/Mod_KnightGuard/Mod_KnightGuard.uasset",
+     "key": "D55B09E54139B1AB1951A399390FCB52"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Mods/Mod_KnightGuard/Mod_KnightGuard.uasset",
+     "key": "51DABCDB4A8FCF42CF6FAF855B8D16C1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Mods/T_UI_Mod_KightGuard_Icon_2"
+   },
+   "effects": "use:summon 40 30s",
+   "fidelity": "approx",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ],
+   "charge_damage": 1050
+  },
+  {
+   "id": "overflow",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/Overflow/Mod_Overflow.uasset",
+     "key": "8D51A04C4D01072F1E45088A9D60B6A7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/Overflow/Mod_Overflow.uasset",
+     "key": "A1B1D53142CECD0A81CFF8B43D3FF0C1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Overflow"
+   },
+   "effects": "use:buff fire_rate+15% 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "prismatic_driver",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/PrismaticDriver/Mod_PrismaticDriver.uasset",
+     "key": "9A0296E54A10EC0A4F5F3A9A40A3477E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/PrismaticDriver/Mod_PrismaticDriver.uasset",
+     "key": "D91C2BED42F059CF7CCA92907569E589"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_PrismaticDriver"
+   },
+   "effects": "use:burst 125",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "ring_of_spears",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Mods/Mod_RingOfSpears/Mod_RingOfSpears.uasset",
+     "key": "0A758EAD45008A9E68AC3B86E99B53C7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Mods/Mod_RingOfSpears/Mod_RingOfSpears.uasset",
+     "key": "71F703844A280BA3C844809478965DA5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Mods/T_UI_Mod_RingOfSpears_Icon"
+   },
+   "effects": "use:burst 300",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "smithy",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ],
+   "charge_damage": 1050
+  },
+  {
+   "id": "rootlash",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Rootlash/Mod_Rootlash.uasset",
+     "key": "4D89510A4C750EF5EA5A759D59100B70"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Rootlash/Mod_Rootlash.uasset",
+     "key": "CBF57B7949A3D6EA21B1A8875A098F4F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Rootlash"
+   },
+   "effects": "use:summon 40 20s;use:burst 30",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "rotted_arrow",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_RottedArrow/Mod_RottedArrow.uasset",
+     "key": "2F80C6214770ADC6C631EE88284139C6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_RottedArrow/Mod_RottedArrow.uasset",
+     "key": "4D03E4A845BC36CBC8AAD4B439C00B09"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_RottedArrow"
+   },
+   "effects": "use:burst 110",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "scrap_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/ScrapShot/Mod_ScrapShot.uasset",
+     "key": "350CBF1C4CC33E2F7E146F80C6FCC3FA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/ScrapShot/Mod_ScrapShot.uasset",
+     "key": "6537B83547F1F61CDE6FF692CBD1AEAD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_ScrapShot"
+   },
+   "effects": "use:dot 20 10s",
+   "fidelity": "approx",
+   "tier": 1,
+   "menu": "smithy",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ],
+   "charge_damage": 600
+  },
+  {
+   "id": "shielding_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Mods/ShieldingShot/Mod_ShieldingShot.uasset",
+     "key": "AABE493547F12E32A3FACD812B7DA936"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Mods/T_UI_Mod_ShieldingShot"
+   },
+   "effects": "use:shield 25% 30s;use:buff shield+25% 15s",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ],
+   "charge_damage": 1200
+  },
+  {
+   "id": "skewer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Mods/Mod_Skewer/Mod_Skewer.uasset",
+     "key": "26E0BD2649621D76536CA5B652E418C8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Mods/Mod_Skewer/Mod_Skewer.uasset",
+     "key": "D27DEB7A4CD916A063BBDAADA87B3F13"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Skewer"
+   },
+   "effects": "use:burst 125",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "song_of_eafir",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_SongOfTheEafir/Mod_SongOfEafir.uasset",
+     "key": "B74576E045BE468EAECB08A7188DE29E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_SongOfTheEafir/Mod_SongOfEafir.uasset",
+     "key": "AEAC4305498B648581F65298C6F047FD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_SongOfEafir"
+   },
+   "effects": "use:burst 150;use:buff dmg-10% 15s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "soulbinder",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Soulbinder/Mod_Soulbinder.uasset",
+     "key": "442CF964477359EDD1BBD3A9641F7402"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Soulbinder/Mod_Soulbinder.uasset",
+     "key": "729373E041C0449DC7E85FB4CE9321A0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Soulbinder"
+   },
+   "effects": "use:burst 300",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "space_crabs",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/SpaceCrabs/Mod_SpaceCrabs.uasset",
+     "key": "689939FF4D052A9185D3EB9E7F2997CD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/SpaceCrabs/Mod_SpaceCrabs.uasset",
+     "key": "CBD7BC9540AC90A610F33291F2055298"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_SpaceCrabs"
+   },
+   "effects": "use:summon 40 20s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "stasis_beam",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/StasisBeam/Mod_StasisBeam.uasset",
+     "key": "C8D11F66448E808241CB06B8E7816EDF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Mods/StasisBeam/Mod_StasisBeam.uasset",
+     "key": "F694B74B45C134A7E2F871B70568FC1E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_StasisBeam"
+   },
+   "effects": "use:burst 15",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "time_lapse",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_TimeLapse/Mod_TimeLapse.uasset",
+     "key": "84DB6D4E4F354EF736FD89A1DA246587"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_TimeLapse/Mod_TimeLapse.uasset",
+     "key": "927CEC0640723035447BC889B87A7F95"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Timelapse"
+   },
+   "effects": "use:buff dmg_status+10% 15s",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "smithy",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ],
+   "charge_damage": 750
+  },
+  {
+   "id": "tremor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Tremor/Mod_Tremor.uasset",
+     "key": "C79CBF4349DCB3374E1D9AB387EC663C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Mods/Mod_Tremor/Mod_Tremor.uasset",
+     "key": "3F45EE5A4B2FC484F93F6E83802CEAD2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Tremor"
+   },
+   "effects": "use:burst 75",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "voidlight",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Mods/Voidlight/Mod_Voidlight.uasset",
+     "key": "8F6C72254D459D07041819A3B31B724A"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Mods/T_UI_Mod_Voidlight"
+   },
+   "effects": "use:burst 250",
+   "fidelity": "approx",
+   "tier": 5,
+   "menu": "smithy",
+   "zenny": 50000,
+   "recipe": [
+    "ore_master*6",
+    "bone_master*4",
+    "elder_master*3",
+    "gem_master*1"
+   ],
+   "charge_damage": 1200
+  },
+  {
+   "id": "voltaic_rondure",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_VoltaicRondure/Mod_VoltaicRondure.uasset",
+     "key": "7AB81BC44D6B127DB1FC5D89096A55F9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_VoltaicRondure/Mod_VoltaicRondure.uasset",
+     "key": "EBCFA5084B2254B6D00FD499BB0C8778"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_VoltaicRondure"
+   },
+   "effects": "use:buff dmg_status+10% 15s",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
+  },
+  {
+   "id": "witchfire",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_Witchfire/Mod_Witchfire.uasset",
+     "key": "1282D72F4F957A25F1334CB18F615F16"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Mods/Mod_Witchfire/Mod_Witchfire.uasset",
+     "key": "A81F5E4440E0BC147C9F21BA7CB88D55"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Witchfire"
+   },
+   "effects": "use:dot 20 10s",
+   "fidelity": "approx",
+   "tier": 3,
+   "menu": "smithy",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ],
+   "charge_damage": 900
   }
  ]
 }

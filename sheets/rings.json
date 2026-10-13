@@ -1,0 +1,6294 @@
+{
+ "sheet": "rings",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "desc": "r2text|none",
+  "icon": "r2tex|none",
+  "effects": "effects",
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
+ },
+ "rows": [
+  {
+   "id": "acid_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/PoisonStone/Ring_AcidStone.uasset",
+     "key": "236B1D3644CBA05EE0239F9E26A29BA5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/PoisonStone/Ring_AcidStone.uasset",
+     "key": "6AECFF95435A972B314208B89CD835B8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_PoisonStone_Icon"
+   },
+   "effects": "dmg_elem+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "akari_war_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/AkariWarBand/Ring_AkariWarBand.uasset",
+     "key": "C269DD95439D93DD964E6C94CBE86901"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/AkariWarBand/Ring_AkariWarBand.uasset",
+     "key": "6AEEA9D34707B3A9E2F5C1A54B9407A1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_AkariWarBand_Icon"
+   },
+   "effects": "on_evade:crit+10% 15s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "alchemy_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/AlchemyStone/Ring_AlchemyStone.uasset",
+     "key": "E7C37292446A68DC832F0DB2B0273FA8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/AlchemyStone/Ring_AlchemyStone.uasset",
+     "key": "81E09519406C12E70AD400B07251ADFB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_AlchemyStone_Icon"
+   },
+   "effects": "lifesteal+6%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "alumni_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/AlumniRing/Ring_AlumniRing.uasset",
+     "key": "E44D4B324F32493A5BAB308E827F5540"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/AlumniRing/Ring_AlumniRing.uasset",
+     "key": "89F5B6A8403A9DA6FE7D4BB40FC06748"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_AluminiRing_Icon"
+   },
+   "effects": "dmg_elem+10%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "amber_moonstone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/AmberMoonstone/Ring_AmberMoonstone.uasset",
+     "key": "58A883544A04CC0DFCB58A8F3CD52C8C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/AmberMoonstone/Ring_AmberMoonstone.uasset",
+     "key": "D0E0B58A42AF708E4703A083D3340FCC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_AmberMoonstone_Icon"
+   },
+   "effects": "dr+25%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "anastasijas_inspiration",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/AnastasijasInspiration/Ring_AnastasijasInspiration.uasset",
+     "key": "6ABDF257441CBB8D7C3B72BEBA02F705"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/AnastasijasInspiration/Ring_AnastasijasInspiration.uasset",
+     "key": "596472F344D0715682955ABD43DE8F4B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_AnastajiasInspiration_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "archers_crest",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/ArchersCrest/Ring_ArchersCrest.uasset",
+     "key": "CC3FBFD04D618E1B336A8EAF102859F6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/ArchersCrest/Ring_ArchersCrest.uasset",
+     "key": "0FB20C7E4CF19AEBAF8356B3AF8376A0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_ArchersCrest_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "assassins_seal",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/AssassinsSeal/Ring_AssassinsSeal.uasset",
+     "key": "AB46ADA94C6BD584E37BA8B7DF1E1C87"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/AssassinsSeal/Ring_AssassinsSeal.uasset",
+     "key": "F71B36814B1DA104288A76B01B291F26"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_AssassinsSeal_Icon"
+   },
+   "effects": "dmg+10%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "ataerii_booster",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/AtaeriiBooster/Ring_ATaeriiBooster.uasset",
+     "key": "6B96B6604C5675E77A032A92CBC01DBD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/AtaeriiBooster/Ring_ATaeriiBooster.uasset",
+     "key": "2D6CAA1847AB8762AB070B9A70A13FBB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_ATaeriiBooster_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "atonement_fold",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/AtonementFold/Ring_AtonementFold.uasset",
+     "key": "94A675E04FFEF1CC82E930924AAFB682"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/AtonementFold/Ring_AtonementFold.uasset",
+     "key": "3ED55F634AB86E1C898EE68EF18D698B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_AtonementFold_Icon"
+   },
+   "effects": "crit+5%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "band_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BandBand/Ring_BandBand.uasset",
+     "key": "81DA985D451AEDA40A9E69BA6F05C99C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BandBand/Ring_BandBand.uasset",
+     "key": "DBE25D214B7E38B6F41BD0BE5DB0A6A6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BandBand_Icon"
+   },
+   "effects": "max_hp+100%;stamina+100%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "band_of_accord",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BandOfAccord/Ring_BandOfAccord.uasset",
+     "key": "D25FE3A04CE847B638E18B8F5892F2AF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BandOfAccord/Ring_BandOfAccord.uasset",
+     "key": "0FAC935346BF26CB89AAA8A7A7AE68FA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_BandOfAccord_Icon"
+   },
+   "effects": "ammo+20%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "band_of_the_fanatic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BandOfTheFanatic/Ring_BandOfTheFanatic.uasset",
+     "key": "D46C76874B6C5E0CEDD77A846C7F218E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BandOfTheFanatic/Ring_BandOfTheFanatic.uasset",
+     "key": "6676348A417F0DB8723A58BAADA3B6AC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BandOfTheFanatic_Icon"
+   },
+   "effects": "dmg_status+30%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "berserkers_crest",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BerserkersCrest/Ring_BerserkersCrest.uasset",
+     "key": "94963E6C4AE4FEBE6E46FC8E919D1407"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BerserkersCrest/Ring_BerserkersCrest.uasset",
+     "key": "2E0DBE4349B1D56025F3BF99A8EC5FE2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BerserkerCrest_Icon"
+   },
+   "effects": "fire_rate+10%;stamina+30%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "bisected_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/BisectedRing/Ring_BisectedRing.uasset",
+     "key": "57416E8F4221FDE94E89CFAE4BE74B95"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/BisectedRing/Ring_BisectedRing.uasset",
+     "key": "C533FBBF43D4292296177BB54D844F24"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Labyrinth/T_UI_Ring_BisectedRing_Icon"
+   },
+   "effects": "dr-15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "bitter_memento",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BitterMemento/Ring_BitterMemento.uasset",
+     "key": "C6F65DC94DA06716BE5DCEB9ED5422BE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BitterMemento/Ring_BitterMemento.uasset",
+     "key": "E74B38994CDF1F61F07BB49F28BDB51B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BitterMemento_Icon"
+   },
+   "effects": "regen+1",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "black_cat_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BlackCatBand/Ring_BlackCatBand.uasset",
+     "key": "411DD3C34DDAE88D8B5359A4023983E4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BlackCatBand/Ring_BlackCatBand.uasset",
+     "key": "8A31FB4741F3056E5AB92FB4D7339884"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_BlackCatBand_Icon"
+   },
+   "effects": "stamina+5%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "blackout_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BlackoutRing/Ring_BlackoutRing.uasset",
+     "key": "22A984DA4E5785B18B1FB5ACB19EC347"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BlackoutRing/Ring_BlackoutRing.uasset",
+     "key": "AE00193E48C38C8AF85243BA8558ED8D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_BlackoutRing_Icon"
+   },
+   "effects": "reload+3%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "black_pawn_stamp",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BlackPawnStamp/Ring_BlackPawnStamp.uasset",
+     "key": "4AE5AA4947D3483E19E81780E70371D7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BlackPawnStamp/Ring_BlackPawnStamp.uasset",
+     "key": "45CEA89E47B790E21AE902ABA21BCBA4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_BlackPawnStamp_Icon"
+   },
+   "effects": "cdr+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "black_spinel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BlackSpinel/Ring_BlackSpinel.uasset",
+     "key": "C696DD9148645210191D14A55ECB8EB7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BlackSpinel/Ring_BlackSpinel.uasset",
+     "key": "787DEEAA4A38D17C1FA720B3257472C4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BlackSpinel_Icon"
+   },
+   "effects": "dmg_status+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "blasting_cap_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BlastingCapRing/Ring_BlastingCapRing.uasset",
+     "key": "3D68BA41417FE3E979751DA2145A34D9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BlastingCapRing/Ring_BlastingCapRing.uasset",
+     "key": "59A5DBBF42D501C72E44379523B7B3B8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_BlastingCap_Icon"
+   },
+   "effects": "dmg_explosive+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "blessed_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BlessedRing/Ring_BlessedRing.uasset",
+     "key": "CAF70A9F4B1C726E13160197F308A025"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BlessedRing/Ring_BlessedRing.uasset",
+     "key": "2C2663834843A48050896AB966BD4E24"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_BlessedRing_Icon"
+   },
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "blood_jewel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BloodJewel/Ring_BloodJewel.uasset",
+     "key": "F28096FC43CAF13E75B09486B7A431C4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BloodJewel/Ring_BloodJewel.uasset",
+     "key": "71DF9C714B4D44660EB085A3518A9497"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BloodJewel_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "bloodless_kings_vow",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BloodlessKingsVow/Ring_BloodlessKingsVow.uasset",
+     "key": "1FA6678B4660C2F210B6B9B14F36BD7D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BloodlessKingsVow/Ring_BloodlessKingsVow.uasset",
+     "key": "CC28D41C4FB6A673DF25C8810518104A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BloodlessKingsVow_Icon"
+   },
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "blood_tinged_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BloodTingedRing/Ring_BloodTingedRing.uasset",
+     "key": "10383E0443DE9A9780798B957483B2ED"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BloodTingedRing/Ring_BloodTingedRing.uasset",
+     "key": "17A3999A458E1B15A58C3CB43D7FF2FE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BloodTingedRing_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "booster_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BoosterRing/Ring_BoosterRing.uasset",
+     "key": "F385E52B479597D2739FC9B9247E72A1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BoosterRing/Ring_BoosterRing.uasset",
+     "key": "B2CC06DF4CC2183066410A827967BD03"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_BoosterRing_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "braided_thorns",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BraidedThorns/Ring_BraidedThorns.uasset",
+     "key": "D733AAE943E9F5F694F20799A7866548"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BraidedThorns/Ring_BraidedThorns.uasset",
+     "key": "935C72014B56BDF4E2C5E8BED16DF450"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_BraidedThorns_Icon"
+   },
+   "effects": "crit+10%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "brawlers_pride",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BrawlersPride/Ring_BrawlersPride.uasset",
+     "key": "C0C5AEC94D83F34BF8A115A7A70A1C4B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BrawlersPride/Ring_BrawlersPride.uasset",
+     "key": "C93EE92F466853BBCB8CAAB6514A4229"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BrawlersPride_Icon"
+   },
+   "effects": "fire_rate+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "breach_accelerator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BreachAccelerator/Ring_BreachAccelerator.uasset",
+     "key": "82C4D4B948902F55D29EBFBEFFF6EC6B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BreachAccelerator/Ring_BreachAccelerator.uasset",
+     "key": "9ACC68064F51465FD05711887D7E9A9E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BreachAccelerator_Icon"
+   },
+   "effects": "stamina+5%;dmg+5%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "bridge_wardens_crest",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BridgeWardensCrest/Ring_BridgeWardensCrest.uasset",
+     "key": "F20891B949FDF3AAB99A658FE0D80371"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BridgeWardensCrest/Ring_BridgeWardensCrest.uasset",
+     "key": "C360D7B844630CAFB28A54ABBEF7F115"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BridgeWardensCrest_Icon"
+   },
+   "effects": "on_evade:dmg_melee+20% 10s;on_evade:dr+10% 10s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "bright_steel_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BrightSteelRing/Ring_BrightSteelRing.uasset",
+     "key": "EE1D4B3341E2EF8E52A2D0B9FA6930C1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BrightSteelRing/Ring_BrightSteelRing.uasset",
+     "key": "1FC08EDD4BA0723FE228EDAD604EA629"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_BrightSteelRing_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_audacious",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/BurdenOfTheAudacious/Ring_BurdenOfTheAudacious.uasset",
+     "key": "7F6EA72C4F558B793E9B39A1DBE39FE3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/BurdenOfTheAudacious/Ring_BurdenOfTheAudacious.uasset",
+     "key": "B2C7C0024DD74F720E95DC80844D6261"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_BurdenOfTheAudacious_Icon"
+   },
+   "effects": "heal-50%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_departed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BurdenOfTheDeparted/Ring_BurdenOfTheDeparted.uasset",
+     "key": "10E8535249C8E594551430BB6E80956E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BurdenOfTheDeparted/Ring_BurdenOfTheDeparted.uasset",
+     "key": "137218F7422CEF0E472F2389561A9EED"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BurdenOfDeparted_Icon"
+   },
+   "effects": "relic_charges-33%;dmg+10%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "burden_of_the_destroyer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/BurdenOfTheDestroyer/Ring_BurdenOfTheDestroyer.uasset",
+     "key": "55E57826479C26BD2960318099174FC9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/BurdenOfTheDestroyer/Ring_BurdenOfTheDestroyer.uasset",
+     "key": "3869889C4B90012AC33D0683CEBB2E29"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_BurdenOfTheDestroyer_Icon"
+   },
+   "effects": "dmg+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_divine",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BurdenOfTheDivine/Ring_BurdenOfTheDivine.uasset",
+     "key": "BFF9E2744A6CD6EA4EC742A3E58D495F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BurdenOfTheDivine/Ring_BurdenOfTheDivine.uasset",
+     "key": "1423B4D442443AF0B33199BE73CE513A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_BurdenOfTheDivine_Icon"
+   },
+   "effects": "dmg-15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_excavator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BurdenOfTheExcavator/Ring_BurdenOfTheExcavator.uasset",
+     "key": "50651C434E745ACD27468A85955022CD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BurdenOfTheExcavator/Ring_BurdenOfTheExcavator.uasset",
+     "key": "F5F3673A4BDB5ADBAFB866A3C2E1AFA9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BurdenOfTheExcavator_Icon"
+   },
+   "effects": "dmg_explosive+35%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_follower",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BurdenOfTheFollower/Ring_BurdenOfTheFollower.uasset",
+     "key": "DC90F6134BB7B025F921669699CC3F4B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BurdenOfTheFollower/Ring_BurdenOfTheFollower.uasset",
+     "key": "D8E5B43E40B145D841A19D8B0CDF5F5D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BurdenoftheFollower_Icon"
+   },
+   "effects": "fire_rate-15%;mod_gen+30%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_gambler",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BurdenOfTheGambler/Ring_BurdenOfTheGambler.uasset",
+     "key": "ACB7D3D44B96AE0C09FE0D8B88FBD645"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/BurdenOfTheGambler/Ring_BurdenOfTheGambler.uasset",
+     "key": "BE3E58914DF6C3EAC9A315AD2E0E033A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_BurdenOfTheGambler_Icon"
+   },
+   "effects": "crit+10%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_mariner",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BurdenOfTheMariner/Ring_BurdenOfTheMariner.uasset",
+     "key": "FEF3D3B2483C87240704779F6730A330"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BurdenOfTheMariner/Ring_BurdenOfTheMariner.uasset",
+     "key": "BA2DA60E49F39DA8DD69F6BAEE165342"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_BurdenOfTheMariner_Icon"
+   },
+   "effects": "cdr-15%;mod_gen+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_mason",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BurdenOfTheMason/Ring_BurdenOfTheMason.uasset",
+     "key": "D669B54B43B942D77D0CC889D6407369"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BurdenOfTheMason/Ring_BurdenOfTheMason.uasset",
+     "key": "F621C5374519093FD1502291640CB10A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BurdenOfTheMason_Icon"
+   },
+   "effects": "dmg_melee+35%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "burden_of_the_mesmer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BurdenOfTheMesmer/Ring_BurdenOfTheMesmer.uasset",
+     "key": "9082646646040E3278869F973CD2DD0C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/BurdenOfTheMesmer/Ring_BurdenOfTheMesmer.uasset",
+     "key": "F3D034244EDE75CC03EF15955520B6B8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BurdenOfTheMesmer_Icon"
+   },
+   "effects": "max_hp-20%;dmg+1%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "burden_of_the_protector",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BurdenOfTheProtector/Ring_BurdenOfTheProtector.uasset",
+     "key": "86E995724C83371A2EE5029E289C9FEF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BurdenOfTheProtector/Ring_BurdenOfTheProtector.uasset",
+     "key": "DD3DFAB84B6CD1083919629723AD9679"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BurdenOfTheProtector_Icon"
+   },
+   "effects": "shield-50%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_rebel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BurdenoftheRebel/Ring_BurdenOfTheRebel.uasset",
+     "key": "8B4F573B424EFA5ADD3E8AA9A3BAC939"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/BurdenoftheRebel/Ring_BurdenOfTheRebel.uasset",
+     "key": "E1D0B6AF452AD29EE6FDA3B8A747C5A2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BurdenOfTheRebel_Icon"
+   },
+   "effects": "on_relic:relic_speed-25% 10s;cdr+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_sciolist",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BurdenOfTheSciolist/Ring_BurdenOfTheSciolist.uasset",
+     "key": "7F2A4F974825BE094DEBC0BB277752E8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/BurdenOfTheSciolist/Ring_BurdenOfTheSciolist.uasset",
+     "key": "7A6B1A1A4D5EC57DA0E1CF9FD3CBA171"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BurdenOfTheSciolist_Icon"
+   },
+   "effects": "ammo-20%;dmg_skill+15%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "burden_of_the_stargazer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BurdenOfTheStargazer/Ring_BurdenOfTheStargazer.uasset",
+     "key": "68FDD77F4BE73EF184A14F9759AA09ED"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/BurdenOfTheStargazer/Ring_BurdenOfTheStargazer.uasset",
+     "key": "F3F0CBE4423A5C26ABF456A26F5E6C7D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_BurdenOfTheStargazer_Icon"
+   },
+   "effects": "cdr+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "burden_of_the_warlock",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BurdenOfTheWarlock/Ring_BurdenOfTheWarlock.uasset",
+     "key": "BBF4A7D84DEFD75CA3ABC48DC8D40D19"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/BurdenOfTheWarlock/Ring_BurdenOfTheWarlock.uasset",
+     "key": "582068C44132444F37ADD5A5E87B4E2C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_BurdenOfTheWarlock_Icon"
+   },
+   "effects": "mod_gen+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "bypass_primer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BypassPrimer/Ring_BypassPrimer.uasset",
+     "key": "8BAC2FAF45ACC49F04C0F79C6FAAB61E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/BypassPrimer/Ring_BypassPrimer.uasset",
+     "key": "BCA900394B78A8BFD7B32D85B7B8F854"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BypassPrimer_Icon"
+   },
+   "effects": "on_evade:dmg+10% 10s",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "captains_insignia",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/CaptainsInsignia/Ring_CaptainsInsignia.uasset",
+     "key": "7AA9C29C449BDCB60014499539063A66"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/CaptainsInsignia/Ring_CaptainsInsignia.uasset",
+     "key": "9C56D639409A732FFF6741B223B9BBD9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_CaptainInsignia_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "catalogers_jewel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/CatalogersJewel/Ring_CatalogersJewel.uasset",
+     "key": "A0B695E5413C09C67B952C92A28E96F6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/CatalogersJewel/Ring_CatalogersJewel.uasset",
+     "key": "810D84564009B374BFD9D29C19390C94"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_CatalogerJewel_Icon"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "celerity_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/CelerityStone/Ring_CelerityStone.uasset",
+     "key": "FBA86C794FC70AE841B789851D4E225C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/CelerityStone/Ring_CelerityStone.uasset",
+     "key": "C10A02584A442818ED69ED897855F738"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_CelerityStone_Icon"
+   },
+   "effects": "on_relic:relic_speed+25% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "clear_halo",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ClearHalo/Ring_ClearHalo.uasset",
+     "key": "74D87B754B615F684F252E8B03BB789E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ClearHalo/Ring_ClearHalo.uasset",
+     "key": "5ADD77544AB73FC4DF177DA387163175"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ClearHalo_Icon"
+   },
+   "effects": "shield+10%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "closed_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/ClosedLoop/Ring_ClosedLoop.uasset",
+     "key": "962E258F4CBA1DD54BD0D6A39837C5FF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/ClosedLoop/Ring_ClosedLoop.uasset",
+     "key": "825A6B1142FA734CA65FB0B133182538"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ClosedLoop_Icon"
+   },
+   "effects": "shield+25%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "combat_shield_generator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/CombatShieldGenerator/Ring_CombatShieldGenerator.uasset",
+     "key": "4B96E75741D5D626A1487E84929E327E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/CombatShieldGenerator/Ring_CombatShieldGenerator.uasset",
+     "key": "BE04D81243342D095FFA7A8374BA6BDA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_CombatShieldGenerator_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "compulsion_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/CompulsionLoop/Ring_CompulsionLoop.uasset",
+     "key": "CEFEECDA4A1FE6C3B1658985531D9C94"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/CompulsionLoop/Ring_CompulsionLoop.uasset",
+     "key": "2E62C0F04F798346B81F54AB9AE418C9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_CompulsionLoop_Icon"
+   },
+   "effects": "fire_rate+5%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "conjurers_circle",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/ConjurersCircle/Ring_ConjurersCircle.uasset",
+     "key": "DD1B693D4765420B14B3189DEF59CE68"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/ConjurersCircle/Ring_ConjurersCircle.uasset",
+     "key": "D476971444FBBD82DFBD7594DF5753CC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ConjurersCircle_Icon"
+   },
+   "effects": "regen+1",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "conservation_seal",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ConservationSeal/Ring_ConservationSeal.uasset",
+     "key": "D1007D7C4714AA4293B79E8477FC2268"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ConservationSeal/Ring_ConservationSeal.uasset",
+     "key": "D9AF6B6D46D339568D4205A2AC4EA69C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_ConservationSeal_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "constant_variable_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ConstantVariableRing/Ring_ConstantVariableRing.uasset",
+     "key": "37055FF7475F8C063C22428BF0ED60F8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ConstantVariableRing/Ring_ConstantVariableRing.uasset",
+     "key": "C8300320454E56FF44150D83E57F5C00"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_ConstantVariable_Icon"
+   },
+   "effects": "dmg_ranged+8%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "crimson_dreamstone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/CrimsonDreamstone/Ring_CrimsonDreamstone.uasset",
+     "key": "9E64C27346E4B60B2A656D9055A0EFE9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/CrimsonDreamstone/Ring_CrimsonDreamstone.uasset",
+     "key": "D0DA5FF5422C02DF0FC58FA518BFC1D1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_CrimsonDreamstone_Icon_2"
+   },
+   "effects": "on_crit:dmg_skill+2% 5s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "custodians_bastion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/CustodiansBastion/Ring_CustodiansBastion.uasset",
+     "key": "79B22B1E410BFE63E3F9E4A9558B4875"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/CustodiansBastion/Ring_CustodiansBastion.uasset",
+     "key": "38D43C2C44533BA02B81DA8EAABE823D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_CustodiansBastion_Icon"
+   },
+   "effects": "dr+1",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "dark_sea_armada_crest",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/DarkSeaArmadaCrest/Ring_DarkSeaArmadaCrest.uasset",
+     "key": "D88AF76540B5342A401BB985A1C4CAAE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/DarkSeaArmadaCrest/Ring_DarkSeaArmadaCrest.uasset",
+     "key": "F9EC427C42A7B90589C496A92B597B33"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_DarkSeaArmadaCrest_Icon"
+   },
+   "effects": "on_relic:dmg_elem+15% 15s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "dead_kings_memento",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/DeadKingsMemento/Ring_DeadKingsMemento.uasset",
+     "key": "DF4B454740416095A320249F0BDEBD53"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/DeadKingsMemento/Ring_DeadKingsMemento.uasset",
+     "key": "C33E8AFA43626FDCAFF10DBA31BDD72E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_DeadKingsMemento_Icon"
+   },
+   "effects": "max_hp+15",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "deceivers_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DeceiversBand/Ring_DeceiversBand.uasset",
+     "key": "29971BF842D0DA576FCB23A763779BF1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DeceiversBand/Ring_DeceiversBand.uasset",
+     "key": "6FE1C2C4462A29E90D463983B9FD8D1D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_DeceiversBand_Icon"
+   },
+   "effects": "on_evade:stamina+10% 12s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "deep_pocket_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/DeepPocketRing/Ring_DeepPocketRing.uasset",
+     "key": "A4A97FCE49DE84CC6C3CDCB242743836"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/DeepPocketRing/Ring_DeepPocketRing.uasset",
+     "key": "0ED8084649E65E82DDC668B4916CB4E8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_DeepPocketRing_Icon"
+   },
+   "effects": "ammo+35%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "defensive_action_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/DefensiveActionLoop/Ring_DefensiveActionLoop.uasset",
+     "key": "081BC1CF4D0CA70BFA838DA11431523E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/DefensiveActionLoop/Ring_DefensiveActionLoop.uasset",
+     "key": "EC39C41E4921542D457F448F29D2F314"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_DefensiveActionLoop_Icon"
+   },
+   "effects": "on_reload:dr+10% 3s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "demolition_coil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/DemolitionCoil/Ring_DemolitionCoil.uasset",
+     "key": "E790CFA64CDE71BCB43B46B44EB7C437"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/DemolitionCoil/Ring_DemolitionCoil.uasset",
+     "key": "A007B6A14602EDF9FB26928F990BBE0F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_DemolitionCoil_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "dense_silicon_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/DenseSiliconRing/Ring_DenseSiliconRing.uasset",
+     "key": "C299730E44B667021E8FB1A9EB349510"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/DenseSiliconRing/Ring_DenseSiliconRing.uasset",
+     "key": "52FCD3ED4785DB3605452492BEB7C78F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Labyrinth/T_UI_Ring_DenseSilicon_Icon"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "detonating_cord",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/DetonatingCord/Ring_DetonatingCord.uasset",
+     "key": "ACE49DBB4D6E9E32F63899A2C53EB6E6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/DetonatingCord/Ring_DetonatingCord.uasset",
+     "key": "2E56F60C408833BE587467BAFBF5B3AA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_DetonatingCord_Icon"
+   },
+   "effects": "on_relic:proc+120 cd1s;on_relic:dmg_explosive+10% 15s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "devouring_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DevouringLoop/Ring_DevouringLoop.uasset",
+     "key": "4C4CAC234CE7FD67CC1E3CAE52A7CB36"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DevouringLoop/Ring_DevouringLoop.uasset",
+     "key": "71155F0A4BF4180BA65A3598E3576EFD"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_DevouringLoop_Icon"
+   },
+   "effects": "dr-10%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "digested_hog_lure",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/DigestedHogLure/Ring_DigestedHogLure.uasset",
+     "key": "77F7DF114F802FFD7CCB99858842626A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/DigestedHogLure/Ring_DigestedHogLure.uasset",
+     "key": "5585114C4F1F6C84672832B1E919DB2F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_DigestedHogLure_Icon_2"
+   },
+   "effects": "on_reload:dmg_mod+15% 7s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "disaster_converter",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/DisasterConverter/Ring_DisasterConverter.uasset",
+     "key": "2569BD2C479DB612C94D109D2446FE3C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/DisasterConverter/Ring_DisasterConverter.uasset",
+     "key": "431AF8C54E7CA87EF3152B817A25E03F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_DisasterConverter_Icon"
+   },
+   "effects": "shield+50% 10s",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "downgraded_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/DowngradedRing/Ring_DowngradedRing.uasset",
+     "key": "89E1AE3340BA12EEDFDCBA8EF72EB843"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/DowngradedRing/Ring_DowngradedRing.uasset",
+     "key": "8977B44A4683A2AEE9BF9B97A8AF894E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_DowngradedRing_Icon"
+   },
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "drakestone_pearl",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DrakestonePearl/Ring_DrakestonePearl.uasset",
+     "key": "302111FB49B364676C28B1BD85CA645F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DrakestonePearl/Ring_DrakestonePearl.uasset",
+     "key": "09B914154BFD770B332994B34E0BE614"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_DrakestonePearl_Icon"
+   },
+   "effects": "stamina+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "dran_memento",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DranMemento/Ring_DranMemento.uasset",
+     "key": "6041ADCF4CA51878EB1C2085DB017ED3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DranMemento/Ring_DranMemento.uasset",
+     "key": "C244AA4C4567E47315611184EBA5FCC0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_DranMemento_Icon"
+   },
+   "effects": "stamina+20",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "dran_scavenger_sigil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DranScavengerSigil/Ring_DranScavengerSigil.uasset",
+     "key": "3077AFA54A0C130707C024BCB8B9FFCE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DranScavengerSigil/Ring_DranScavengerSigil.uasset",
+     "key": "7279B1E14562CBC6BA49C3980600A3A4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_DranScavengerSigil_Icon"
+   },
+   "effects": "dmg+8% 30s",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "dread_font",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DreadFont/Ring_DreadFont.uasset",
+     "key": "271505444C565D0223A81CAE96B9D924"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DreadFont/Ring_DreadFont.uasset",
+     "key": "08E943FD43B9918C26B55D81B332FAA5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_DreadFont_Icon"
+   },
+   "effects": "max_hp+2",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "dried_clay_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/DriedClayRing/Ring_DriedClayRing.uasset",
+     "key": "5F0F971344F79C3B324615B0C347107D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/DriedClayRing/Ring_DriedClayRing.uasset",
+     "key": "75BCE4D34E43AE7F31621080D2B605C0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_DriedClayRing_Icon_2"
+   },
+   "effects": "dmg+50%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "drzyr_sniper_sigil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DrzyrSniperSigil/Ring_DrzyrSniperSigil.uasset",
+     "key": "5BA1E63E42751602636B148126178FC8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/DrzyrSniperSigil/Ring_DrzyrSniperSigil.uasset",
+     "key": "A1B6A3D3413C018111A9BF900A305F25"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_DryzrSniperSigil_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "dying_ember",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/DyingEmber/Ring_DyingEmber.uasset",
+     "key": "D751D21C442754E87F9EB69FA2983982"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/DyingEmber/Ring_DyingEmber.uasset",
+     "key": "415F40564F3F7945639334ACB40B193F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_DyingEmber_Icon"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "elevated_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/ElevatedRing/Ring_ElevatedRing.uasset",
+     "key": "22C527554F703E27CC3FA4BAAA9ED588"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/ElevatedRing/Ring_ElevatedRing.uasset",
+     "key": "535749A34E4A885B14DAD3B168D5A762"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ElevatedRing_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "empowering_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/EmpoweringLoop/Ring_EmpoweringLoop.uasset",
+     "key": "5A20CCDB4CEAB008FA824BB209101CF6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/EmpoweringLoop/Ring_EmpoweringLoop.uasset",
+     "key": "520B4D524AF53FFE8801A38EDC906B8B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_EmpoweringLoop_Icon"
+   },
+   "effects": "dmg_ranged+15%;fire_rate-10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "encrypted_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/EncryptedLoop/Ring_EncryptedLoop.uasset",
+     "key": "BE0FC2D349B43F60A6E9E4B332E01057"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/EncryptedLoop/Ring_EncryptedLoop.uasset",
+     "key": "479F30124FB77E2B6AB2C1A24B75B643"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Labyrinth/T_UI_Ring_EncryptedLoop_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "endairas_endless_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/EndairasEndlessLoop/Ring_EndairasEndlessLoop.uasset",
+     "key": "9128D7EF47196D690B86E08ED58BB28C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/EndairasEndlessLoop/Ring_EndairasEndlessLoop.uasset",
+     "key": "9F407E2C4F120393DAFFF580C741812D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_EndairasEndlessLoop_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "excess_coil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ExcessCoil/Ring_ExcessCoil.uasset",
+     "key": "8ACA3F5E495085F8D22DE3936B1A543F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ExcessCoil/Ring_ExcessCoil.uasset",
+     "key": "0D0570F9403C2DE26F0CA5A79E34906B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_ExcessCoil_Icon"
+   },
+   "effects": "on_skill:shield+25% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "fae_bruiser_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeBruiserRing/Ring_FaeBruiserRing.uasset",
+     "key": "324D18384872C3FDFDF410AE54B16533"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeBruiserRing/Ring_FaeBruiserRing.uasset",
+     "key": "A42D4CA542191B6A2710F1B711BBAF18"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaeBruiserRing_Icon"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "fae_hunter_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeHunterRing/Ring_FaeHunterRing.uasset",
+     "key": "DB2EEAF7427003DE6809BBAE8E59CB22"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeHunterRing/Ring_FaeHunterRing.uasset",
+     "key": "743268114603F215CF2874A8DE71F0DF"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaeHunterRing_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "faelins_sigil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaelinsSigil/Ring_FaelinsSigil.uasset",
+     "key": "E3D46E804A6400CD95BF04BAD3970A76"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaelinsSigil/Ring_FaelinsSigil.uasset",
+     "key": "1E6BF1F443AABC3BBA6A91B2E06BCD33"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaelinSigil_Icon"
+   },
+   "effects": "mod_gen+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "fae_protector_signet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeProtectorSignet/Ring_FaeProtectorSignet.uasset",
+     "key": "9DF6CDDF48B78C3108A756B7E10438B4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeProtectorSignet/Ring_FaeProtectorSignet.uasset",
+     "key": "8976D43D46B3E957CD0E8780005AA50D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaeProtectorSignet_Icon"
+   },
+   "effects": "max_hp+10;stamina+10",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "faerins_sigil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaerinsSigil/Ring_FaerinsSigil.uasset",
+     "key": "C4B95A5E431BABB9F9F063AFA964343B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaerinsSigil/Ring_FaerinsSigil.uasset",
+     "key": "EDC9DBA74E970FA9238C36B2A60E2748"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaerinSigil_Icon"
+   },
+   "effects": "on_weakspot:mod_gen+12.5% 10s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "fae_shaman_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DranShamanRing/Ring_FaeShamanRing.uasset",
+     "key": "2C5D49C045C916CA9AC90C8455221221"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/DranShamanRing/Ring_FaeShamanRing.uasset",
+     "key": "A6A228A44DDA231356AD5083AE3B99B6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaeShamanRing_Icon"
+   },
+   "effects": "on_relic:max_hp+0.35 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "fae_warrior_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeWarriorRing/Ring_FaeWarriorRing.uasset",
+     "key": "A6EC4B5441A2AB9DF6D1D087ABFAC626"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FaeWarriorRing/Ring_FaeWarriorRing.uasset",
+     "key": "FA4E4F454182BA675A230EAA16AFA760"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaeWarriorRing_Icon"
+   },
+   "effects": "dmg_melee+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "feastmasters_signet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FeastmastersSignet/Ring_FeastmastersSignet.uasset",
+     "key": "1E7FA7CF4D42665E29D44C91E5A66B43"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FeastmastersSignet/Ring_FeastmastersSignet.uasset",
+     "key": "81A4832B43EE49693C7BF2BFEDDC5E9E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FeastmasterSignet_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "feathery_binding",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/FeatheryBinding/Ring_FeatheryBinding.uasset",
+     "key": "66EA86B444F186428F7EC695AA4ADA9C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/FeatheryBinding/Ring_FeatheryBinding.uasset",
+     "key": "47D6CBDD4BFF3862F0927D8BBC440909"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_FeatheryBinding_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "feedback_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/FeedbackLoop/Ring_FeedbackLoop.uasset",
+     "key": "A3BECF1E4CE6022532C8AF9FD4FB03CE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/FeedbackLoop/Ring_FeedbackLoop.uasset",
+     "key": "7607BC41453BA188FFB7F8A49A571E37"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_FeedbackLoop_Icon"
+   },
+   "effects": "on_evade:proc+105 cd1s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "feeding_tube",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/FeedingTube/Ring_FeedingTube.uasset",
+     "key": "9B5CAC524A09E1497D50109D5E2DC1F2"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/FeedingTube/Ring_FeedingTube.uasset",
+     "key": "D5238A8F4756E6CBE15C3BB171E8A661"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_FeedingTube_Icon"
+   },
+   "effects": "on_relic:relic_speed+10% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "fire_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FireStone/Ring_FireStone.uasset",
+     "key": "AC2D73AA4EF27B4045A6868A5B544A0F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/FireStone/Ring_FireStone.uasset",
+     "key": "3AF4939E4E1E761409975F99E860D930"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FireStone_Icon"
+   },
+   "effects": "dmg_elem+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "floodlit_diamond",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/FloodlitDiamond/Ring_FloodlitDiamond.uasset",
+     "key": "EB43E89B4E3AD4929B2080818E645792"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/FloodlitDiamond/Ring_FloodlitDiamond.uasset",
+     "key": "9D9948BC456455777F0DAFBA6F078752"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_Floodlit_Diamond_Icon"
+   },
+   "effects": "weakspot+12%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "flyweights_sting",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/FlyweightsSting/Ring_FlyweightsSting.uasset",
+     "key": "2E4EA80546981023F3D9C591180249FC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/FlyweightsSting/Ring_FlyweightsSting.uasset",
+     "key": "6FE439D04A31C6856FF0BE8D52EBF90B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_FlyweightSting_Icon"
+   },
+   "effects": "dmg_melee+8%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "focused_jewel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/FocusedJewel/Ring_FocusedJewel.uasset",
+     "key": "A37E4EC241EC036321C17987852F22F8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/FocusedJewel/Ring_FocusedJewel.uasset",
+     "key": "1D5BD8334C2BDCCAFEEE23AD63C4BB6D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_FocusedJewel_Icon"
+   },
+   "effects": "accuracy+70%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "force_multiplier",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ForceMultiplier/Ring_ForceMultiplier.uasset",
+     "key": "C8B6593442D317ABF053A18AA308F206"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ForceMultiplier/Ring_ForceMultiplier.uasset",
+     "key": "D9AEB0A349682B95F0A00F9C7EE980E5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ForceMultiplier_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "frivolous_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/FrivolousBand/Ring_FrivolousBand.uasset",
+     "key": "B64A67BD433540882A60C4AFC705E562"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/FrivolousBand/Ring_FrivolousBand.uasset",
+     "key": "BF3170644E302B373E56B0A80B405802"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_FrivolousBand_Icon"
+   },
+   "effects": "on_evade:stamina+10% 10s;on_evade:fire_rate+10% 7s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "galvanized_resupply_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/GalvanizedResupplyBand/Ring_GalvanizedResupplyBand.uasset",
+     "key": "D01D4A314324A2F440D4439779A373BD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/GalvanizedResupplyBand/Ring_GalvanizedResupplyBand.uasset",
+     "key": "290ECD6B4785FC4FC70B6A9448AF640C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_GalvanizedResupplyBand_Icon"
+   },
+   "effects": "ammo+20%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "game_masters_pride",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/GameMastersPride/Ring_GameMastersPride.uasset",
+     "key": "B472B49546DE1ECFD4DCA9B2930A81D2"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/GameMastersPride/Ring_GameMastersPride.uasset",
+     "key": "5A8088F844AD2C1CBCEEFBB200295174"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_MarkOfTheHighRoller_Icon"
+   },
+   "effects": "heal-50%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "generating_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/GeneratingBand/Ring_GeneratingBand.uasset",
+     "key": "840060384BDBE1C4611B058D63A2E6C0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/GeneratingBand/Ring_GeneratingBand.uasset",
+     "key": "4D6B44BB464CBED53D5D98882EBFC9D5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_GeneratingBand_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "grounding_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/GroundingStone/Ring_GroundingStone.uasset",
+     "key": "D22F8A384A4AFF4C7FCB19A0736C490D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/GroundingStone/Ring_GroundingStone.uasset",
+     "key": "D869A2394FFDB5E22ECC1F8D8EDF63B1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_LightningStone_Icon"
+   },
+   "effects": "dmg_elem+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "guardians_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/GuardiansRing/Ring_GuardiansRing.uasset",
+     "key": "08BDDA6C4AB12D7FDC503A8E0E460ADF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/GuardiansRing/Ring_GuardiansRing.uasset",
+     "key": "ADD4F85A46573B2017779FA1CBC0CA8A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_GuardiansRing_Icon"
+   },
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "gul_signet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/GulSignet/Ring_GulSignet.uasset",
+     "key": "E507A5ED4244AA9570AFF5815A108694"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/GulSignet/Ring_GulSignet.uasset",
+     "key": "99184E014F882C04564C459D811829D3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_GulSignet_Icon"
+   },
+   "effects": "dr+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "gunslingers_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/GunslingersRing/Ring_GunslingersRing.uasset",
+     "key": "0A27A79147F1EFA05FF89D9AC2BA4FD7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/GunslingersRing/Ring_GunslingersRing.uasset",
+     "key": "6CA3479D44F470D31D9FEF8EB391763F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_GunslingersRing_Icon"
+   },
+   "effects": "reload+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "hardcore_metal_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/HardcoreMetalBand/Ring_HardcoreMetalBand.uasset",
+     "key": "890544F746BD5C13C5887D95655230DF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/HardcoreMetalBand/Ring_HardcoreMetalBand.uasset",
+     "key": "7C1668244196EFAEB8C2B3ADC73ED4C0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_HardcoreMetalBand_Icon"
+   },
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "hardened_coil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/HardenedCoil/Ring_HardenedCoil.uasset",
+     "key": "65FE6E284DB51B3CE1ABF1AFB8726043"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/HardenedCoil/Ring_HardenedCoil.uasset",
+     "key": "CB031DF54C6037DFC70B629AE20AFACB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_HardnedCoil_Icon"
+   },
+   "effects": "dr+3%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "haymakers_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/HaymakersRing/Ring_HaymakersRing.uasset",
+     "key": "5D745BA7473BAA828425BB92349A8E14"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/HaymakersRing/Ring_HaymakersRing.uasset",
+     "key": "F824B72440C07C8C5DEED98FD616A737"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_HaymakersRing_Icon"
+   },
+   "effects": "dmg_melee+0.2%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "heart_of_the_wolf",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/HeartOfTheWolf/Ring_HeartOfTheWolf.uasset",
+     "key": "880BAD8947B9D918281136AC48BA225E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/HeartOfTheWolf/Ring_HeartOfTheWolf.uasset",
+     "key": "A97629EA45B6DCD060314AA37B5EF9E0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_HeartoftheWolf_Icon"
+   },
+   "effects": "stamina+25",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "hex_ward",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/HexWard/Ring_HexWard.uasset",
+     "key": "3355D2654E1DA5CD5775078F44C0D061"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/HexWard/Ring_HexWard.uasset",
+     "key": "D0805C844FCB0D50CF673F95A97BB60B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/HexWard/Ring_HexWard_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "impact_augment",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ImpactAugment/Ring_ImpactAugment.uasset",
+     "key": "5E51B8954671EDEDFD4B89B588806124"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ImpactAugment/Ring_ImpactAugment.uasset",
+     "key": "3F3244C649FFCCDC22A3459D13335E11"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ImpactAugment_Icon"
+   },
+   "effects": "dmg+3% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "infinity_pocket",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/InfinityPocket/Ring_InfinityPocket.uasset",
+     "key": "00FBE7B44EA1A77F97EB2DA1AF749FBE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/InfinityPocket/Ring_InfinityPocket.uasset",
+     "key": "A729FDF04DF55FE50307948C12B07238"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_InfinityPocket_Icon"
+   },
+   "effects": "reload+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "jewel_of_the_beholden",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/JewelOfTheBeholden/Ring_JewelOfTheBeholden.uasset",
+     "key": "B8E2AB034A950226EA9F56A9178B3551"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/JewelOfTheBeholden/Ring_JewelOfTheBeholden.uasset",
+     "key": "7E6C5F4A479F214A67B2CDBBB582863F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_JewelOfTheBeholden_Icon"
+   },
+   "effects": "on_relic:dmg_mod+15% 15s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "kinetic_cycle_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/KineticCycleStone/Ring_KineticCycleStone.uasset",
+     "key": "199ADAB74E8DABAEE05BE29242DB6E98"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/KineticCycleStone/Ring_KineticCycleStone.uasset",
+     "key": "8086397042526A049ADBDAAD9A7FAA7C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_KineticCycleStone_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "kolket_eyelet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/KolketEyelet/Ring_KolketEyelet.uasset",
+     "key": "F6071F854AD02102DDF8C79CCB7025AD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/KolketEyelet/Ring_KolketEyelet.uasset",
+     "key": "77F134784C8F3495E867E2B9BF117381"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_KolketEyelet_Icon"
+   },
+   "effects": "max_hp+0.3",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "leaking_gemstone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/LeakingGemstone/Ring_LeakingGemstone.uasset",
+     "key": "C5B265164B8154486BAB6C8FB1AF55A0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/LeakingGemstone/Ring_LeakingGemstone.uasset",
+     "key": "6C29A74942BBFC3C230AF7B80750C056"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_LeakingSpiritstone_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "light_house_keepers_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/LightHouseKeepersRing/Ring_LightHouseKeepersRing.uasset",
+     "key": "51D48DAE45778C4906FA55A49F22465C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/LightHouseKeepersRing/Ring_LightHouseKeepersRing.uasset",
+     "key": "B39B7D6041FA31906EE72EA4245756C0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_LighthouseKeepersRing_Icon"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "lithic_signet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/LithicSignet/Ring_LithicSignet.uasset",
+     "key": "F482794A49F697E13A5A0F9956203E81"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/LithicSignet/Ring_LithicSignet.uasset",
+     "key": "447196404109252073D13E9A6E4698A2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_LithicSignet_Icon"
+   },
+   "effects": "dr+7%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "lodestone_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/LodestoneRing/Ring_LodestoneRing.uasset",
+     "key": "A81B771A4B26B4580BA8859567D840FD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/LodestoneRing/Ring_LodestoneRing.uasset",
+     "key": "FBFAFA834F728B7A44CED69B8D39BF4D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_LodestoneRing_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "low_yield_recovery_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/LowYieldRecoveryRing/Ring_LowYieldRecoveryRing.uasset",
+     "key": "D3B3BB1D472D0CF9ABFF9293BF0F4EBB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/LowYieldRecoveryRing/Ring_LowYieldRecoveryRing.uasset",
+     "key": "BEA124B84708C3FF2F1FF2BADC091587"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_LowYieldRecovery_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "mark_of_the_destroyer",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/MarkOfTheDestroyer/Ring_MarkOfTheDestroyer.uasset",
+     "key": "18BB336F47F95CFF04E708BF09A3AE80"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/MarkOfTheDestroyer/Ring_MarkOfTheDestroyer.uasset",
+     "key": "CD553EFC46CC692B6587C792ECCE683E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_MarkOfTheDestroyer_Icon"
+   },
+   "effects": "on_evade:proc+210 cd1s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "matriarchs_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/MatriarchsRing/Ring_MatriarchsRing.uasset",
+     "key": "B894324143DCE7AAE112978410116735"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/MatriarchsRing/Ring_MatriarchsRing.uasset",
+     "key": "663EBF8E40A9DD76A7F2B395DD9DD044"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_MatriarchsRing_Icon"
+   },
+   "effects": "on_evade:stamina+100% 7s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "mechanics_cog",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/MechanicsCog/Ring_MechanicsCog.uasset",
+     "key": "396E520F432B6CA7D8A2A7A7ECB3D346"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/MechanicsCog/Ring_MechanicsCog.uasset",
+     "key": "6079E0F44C0AAC4A4FFE00BF8ACBED80"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_MechanicCog_Icon"
+   },
+   "effects": "stamina+5%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "metal_driver",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/MetalDriver/Ring_MetalDriver.uasset",
+     "key": "00A89ED847280F768DFFC18C0166D2ED"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/MetalDriver/Ring_MetalDriver.uasset",
+     "key": "949A958D44C997F228473FB8F910375E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_MetalDriver_Icon"
+   },
+   "effects": "on_kill:reload+10% 15s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "meteorite_shard_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/MeteoriteShardRing/Ring_MeteoriteShardRing.uasset",
+     "key": "9EFBCE1749C19DD7A4EA2BB195199BDE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/MeteoriteShardRing/Ring_MeteoriteShardRing.uasset",
+     "key": "B29F0A1A4D16B61BA136C4AC5EBC7380"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_MeteoriteShardRing_Icon"
+   },
+   "effects": "dmg+50%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "microcompressor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/Microcompressor/Ring_Microcompressor.uasset",
+     "key": "2994914942A763077F2569AC9777932E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/Microcompressor/Ring_Microcompressor.uasset",
+     "key": "56928238473CC62AD93242B079FCB173"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_MicroCompressor_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "momentum_driver",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/MomentumDriver/Ring_MomentumDriver.uasset",
+     "key": "120E38EC4B4F7A72BC235F82E7EDE017"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/MomentumDriver/Ring_MomentumDriver.uasset",
+     "key": "E34416E048663EB2CC495CA3A572316A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_MomentumDriver_Icon"
+   },
+   "effects": "stamina+15% 1.5s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "mortal_coil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/MortalCoil/Ring_MortalCoil.uasset",
+     "key": "14E720634E6894A93E572DB69853C3BB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/MortalCoil/Ring_MortalCoil.uasset",
+     "key": "1C95A3FC411B76BDEC68D8B2E4343F1A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_MortalCoil_Icon"
+   },
+   "effects": "dmg+1%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "nano_fiber_strand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/NanoFiberStrand/Ring_NanoFiberStrand.uasset",
+     "key": "EB052A0C4A40B5687B481FBE0B081D58"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/NanoFiberStrand/Ring_NanoFiberStrand.uasset",
+     "key": "E1A8C2D148B69FBEB25E0D931D68B963"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_NanofiberStrand_Icon"
+   },
+   "effects": "shield+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "nightmare_sigil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/NightmareSigil/Ring_NightmareSigil.uasset",
+     "key": "C646A33144C514DFB8F070986E7CA01F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/NightmareSigil/Ring_NightmareSigil.uasset",
+     "key": "A386E7AF431C361D4224BCB461FECA6D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_NightmareSigil_Icon"
+   },
+   "effects": "on_evade:lifesteal+5% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "offering_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/Offering_Stone/Ring_OfferingStone.uasset",
+     "key": "379FD3714A5954A413F1DE8F5E590871"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/Offering_Stone/Ring_OfferingStone.uasset",
+     "key": "0F6A0E6544842938B9A385B5A4EA1E91"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_OfferingStone_Icon"
+   },
+   "effects": "dmg+1% 1s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "outcast_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/OutcastRing/Ring_OutcastRing.uasset",
+     "key": "3F823F8E42094C5B2F284594D1B01A07"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_OutcastRing_Icon"
+   },
+   "effects": "on_reload:reload+5% 10s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "painless_obsidian",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/PainlessObsidian/Ring_PainlessObsidian.uasset",
+     "key": "4B26D8664A2D1A43034C28A5BECB400E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/PainlessObsidian/Ring_PainlessObsidian.uasset",
+     "key": "5FA66B3C4954E19ECDF4F0B2771B68F6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_PainlessObsidian_Icon"
+   },
+   "effects": "regen+1",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "pan_mage_sigil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/PanMageSigil/Ring_PanMageSigil.uasset",
+     "key": "14BDA8964602B89DACE869A1459EDCEC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/PanMageSigil/Ring_PanMageSigil.uasset",
+     "key": "645444E8442B2327A73C6FAD78D37F5A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_PanMageSigil_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "pan_war_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/PanWarBand/Ring_PanWarBand.uasset",
+     "key": "65A27A184EFBE8AD63E0A5B1BC33DA33"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/PanWarBand/Ring_PanWarBand.uasset",
+     "key": "8CDD70A544511D4A40C279964A6B17AB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_PanWarBand_Icon"
+   },
+   "effects": "stamina+3%;reload+3%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "phantom_pain",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/RingOfPhantomPain/Ring_PhantomPain.uasset",
+     "key": "BACE8B754A4A214D9BF5BF82A091048E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/RingOfPhantomPain/Ring_PhantomPain.uasset",
+     "key": "CE437CE94135D7B582689E97B7881ECA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfPhantomPain_Icon"
+   },
+   "effects": "max_hp-90%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "point_focus_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/PointFocusRing/Ring_PointFocusRing.uasset",
+     "key": "1429503041B6371748CD7BA48DF1EE8D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/PointFocusRing/Ring_PointFocusRing.uasset",
+     "key": "DE3CFA274FDBBC64953D98B46DD83DCB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_PointFocusJewel_Icon"
+   },
+   "effects": "accuracy+30%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "power_complex",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/PowerComplex/Ring_PowerComplex.uasset",
+     "key": "B2AB5FCA4F836AE61165029A4E8A168D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/PowerComplex/Ring_PowerComplex.uasset",
+     "key": "8EBD52EF4318851C96DF3098101AA917"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_PowerComplex_Icon_2"
+   },
+   "effects": "dmg+1%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "power_saver",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/PowerSaver/Ring_PowerSaver.uasset",
+     "key": "D1474B164BFBFAFFAF381B82E5E51B2C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/PowerSaver/Ring_PowerSaver.uasset",
+     "key": "FD3DB6104D13228E0018EFB68CD699A1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_PowerSaver_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "probability_cord",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/ProbabilityCord/Ring_ProbabilityCord.uasset",
+     "key": "55138FF743F42C19099462954D3AF148"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/ProbabilityCord/Ring_ProbabilityCord.uasset",
+     "key": "F530B6A64A3C808E4CEFD29B25848501"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_ProbabilityCord_Icon"
+   },
+   "effects": "crit_dmg+20%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "propulsion_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/PropulsionLoop/Ring_PropulsionLoop.uasset",
+     "key": "A204389E4FBF07DA0D756DBF3B296484"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/PropulsionLoop/Ring_PropulsionLoop.uasset",
+     "key": "BE4326F6423A133C681D60A2935A2613"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_PropulsionLoop_Icon"
+   },
+   "effects": "on_kill:stamina+5% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "provisioner_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/02_OnHold/ProvisionerRing/Ring_ProvisionerRing.uasset",
+     "key": "F5D42B72458D588B0626F481B5AD025A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/02_OnHold/ProvisionerRing/Ring_ProvisionerRing.uasset",
+     "key": "85BE9E754DB1D64C338CCD9AF9BF4F9A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_ProvisionerRing_Icon"
+   },
+   "effects": "reload+10%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "rally_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RallyBand/Ring_RallyBand.uasset",
+     "key": "C82FF69A465DED7A8B51749C7293B653"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RallyBand/Ring_RallyBand.uasset",
+     "key": "C357EF4C4F2C7750ECD3888616C2B7A1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RallyBand_Icon"
+   },
+   "effects": "max_hp+10",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "ravagers_bargain",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RavagersBargain/Ring_RavagersBargain.uasset",
+     "key": "197C271041373830E2DF3E9685391948"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RavagersBargain/Ring_RavagersBargain.uasset",
+     "key": "FA25C3B04FC884F7902BAFB61ECB160B"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_Ravagers_Bargain"
+   },
+   "effects": "dmg+5%;crit+5%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "reaping_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/ReapingStone/Ring_ReapingStone.uasset",
+     "key": "3B84593440AEB9D6344B3B819A22C4E8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/ReapingStone/Ring_ReapingStone.uasset",
+     "key": "3C1DBE6A4AC726269A8B7981CDEE6D82"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_ReapingStone_Icon"
+   },
+   "effects": "dmg_status+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "red_ring_of_death",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RedRingofDeath/Ring_RedRingOfDeath.uasset",
+     "key": "55EDC94542BB6F279BC5059BF3B65896"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RedRingofDeath/Ring_RedRingOfDeath.uasset",
+     "key": "016A80644824C786100083859B482017"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_SM_Ring_RedRingOfDeath_Icon"
+   },
+   "effects": "dmg_status-10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "rerouting_cable",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ReroutingCable/Ring_ReroutingCable.uasset",
+     "key": "44BB612A41C5321ECF8E89A05966C4BC"
+    }
+   },
+   "desc": "none",
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_ReroutingCable_Icon"
+   },
+   "effects": "shield+50%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "reserve_boosting_gem",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ReserveBoostingGem/Ring_ReserveBoostingGem.uasset",
+     "key": "4F65E2EA49C30B12CD869C9854C32638"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/ReserveBoostingGem/Ring_ReserveBoostingGem.uasset",
+     "key": "910133CB4C28DAFF59C8F5ABB61FBD47"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_ReserveBoostingGem_Icon"
+   },
+   "effects": "max_hp+0.5;low_hp(50):max_hp+50%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "restriction_cord",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RestrictionCord/Ring_RestrictionCord.uasset",
+     "key": "5AC7083346CAD1A4808A73838B60F224"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RestrictionCord/Ring_RestrictionCord.uasset",
+     "key": "1443AAD34C12D8A5C6758CACAF8A918F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_RestrictionCord_Icon"
+   },
+   "effects": "dr+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "ring_of_ashes",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/RingOfAshes/Ring_RingOfAshes.uasset",
+     "key": "392F2CE742CC904E6515D9AA097A02FC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/RingOfAshes/Ring_RingOfAshes.uasset",
+     "key": "519F7FB44E23569C1D5372B3830783E4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfAshes_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "ring_of_bones",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/RingOfBones/Ring_RingOfBones.uasset",
+     "key": "563CB86740857B83EFD2A09ED224A7BE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/RingOfBones/Ring_RingOfBones.uasset",
+     "key": "CCCD13B748A08F1760A5E9BF33B72CD3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfBones_Icon"
+   },
+   "effects": "on_relic:dmg+10% 15s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_crisis",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/RingOfCrisis/Ring_RingOfCrisis.uasset",
+     "key": "03AE2A674E92922935269C8FEACB7617"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/RingOfCrisis/Ring_RingOfCrisis.uasset",
+     "key": "89332610476C84CBA6EE20A7C6047411"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_RingOfCrisis_Icon"
+   },
+   "effects": "shield+25%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_deflection",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/RingOfDeflection/Ring_RingOfDeflection.uasset",
+     "key": "12C4D02942C2F9DB9D5D61B6E6D22DAD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/RingOfDeflection/Ring_RingOfDeflection.uasset",
+     "key": "CECB5384479DF83AAF9EF5943589D080"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_RingOfDeflection_Icon"
+   },
+   "effects": "regen+1",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_diversion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RingOfDiversion/Ring_RingOfDiversion.uasset",
+     "key": "A137BAC14889731EC1EBF2959E3461EA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RingOfDiversion/Ring_RingOfDiversion.uasset",
+     "key": "61F2F927453B0B36A7377B8A0B06CD82"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_RingofDiversion_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "ring_of_flawed_beauty",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/RingOfFlawedBeauty/Ring_RingOfFlawedBeauty.uasset",
+     "key": "2F5E3972497BA84449A03CAE8AA2DB1B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/RingOfFlawedBeauty/Ring_RingOfFlawedBeauty.uasset",
+     "key": "A2C916A440BBCE51634F1DB8A94CEC78"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_FlawedBeauty_Icon"
+   },
+   "effects": "weakspot+25%;dmg_ranged-15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_grace",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RingOfGrace/Ring_RingOfGrace.uasset",
+     "key": "D5BDCECE4C3B2A3FC55709A3C0C13811"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RingOfGrace/Ring_RingOfGrace.uasset",
+     "key": "BA83F8914716995C5D002CAAFC02DC17"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_RingOfGrace_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "ring_of_infinite_damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RingOfInfiniteDamage/Ring_RingOfInfiniteDamage.uasset",
+     "key": "28C4D7104A930381891323AB8DF7F7CE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RingOfInfiniteDamage/Ring_RingOfInfiniteDamage.uasset",
+     "key": "9293C9D44DD7FACB2C90C79196CAD38F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfInfiniteDamage_Icon"
+   },
+   "effects": "fire_rate+8",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "ring_of_omens",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RingOfOmens/Ring_RingOfOmens.uasset",
+     "key": "F70F0D064CDD1937D0EECD9D81787F81"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RingOfOmens/Ring_RingOfOmens.uasset",
+     "key": "11C678A74A668910D4A38C9BAE7A04CA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_RingOfOmens_Icon"
+   },
+   "effects": "regen+1",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "ring_of_ordnance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RingOfOrdnance/Ring_RingOfOrdnance.uasset",
+     "key": "CDF64E4D478E639AC796F08A5759CB73"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RingOfOrdnance/Ring_RingOfOrdnance.uasset",
+     "key": "56FC87B546FB8EA594274FA6DE5CF98E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfOrdnance_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_restocking",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/RingOfRestocking/Ring_RingOfRestocking.uasset",
+     "key": "BBF93A8449AF9A05FBED3B81A0A5B446"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/RingOfRestocking/Ring_RingOfRestocking.uasset",
+     "key": "A91CAD044D037A4AD9B0ED84618819D2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_RingOfRestocking_Icon"
+   },
+   "effects": "reload+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_retribution",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RingOfRetribution/Ring_RingOfRetribution.uasset",
+     "key": "457F009947A38BAF9F8EF0B2A82CE9E6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RingOfRetribution/Ring_RingOfRetribution.uasset",
+     "key": "44340FB54473A221D6873D8648B2451F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_RingOfRetribution_Icon"
+   },
+   "effects": "reload+15%;dmg+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "ring_of_spirits",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RingOfSpirits/Ring_RingOfSpirits.uasset",
+     "key": "AA4024044031C9EB384AE69724B495CB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/RingOfSpirits/Ring_RingOfSpirits.uasset",
+     "key": "9C2389E94BE3765B5CF7789D1261FAD4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfSpirits_Icon"
+   },
+   "effects": "mod_gen+3%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "ring_of_the_admiral",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/01_Graveyard/RingOfTheAdmiral/Ring_RingOfTheAdmiral.uasset",
+     "key": "5C7D6C0143688F955D89EF8D5E88E3E8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/01_Graveyard/RingOfTheAdmiral/Ring_RingOfTheAdmiral.uasset",
+     "key": "6BD071AF4DF5DC32CDAD32B157F207A8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_RingOfTheAdmiral_Icon"
+   },
+   "effects": "dr-200%;dmg+15%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_the_castaway",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RingOfTheCastaway/Ring_RingOfTheCastaway.uasset",
+     "key": "A0BE018A4B26D30DD0C4B8961DE3EF2F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RingOfTheCastaway/Ring_RingOfTheCastaway.uasset",
+     "key": "CA429219455A8AEA796A1F964EC4C599"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfTheCastaway_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "ring_of_the_forest_spirit",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RingOfTheForestSpirit/Ring_RingOfTheForestSpirit.uasset",
+     "key": "065D763745A48C4C0029FCB716744FDF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/RingOfTheForestSpirit/Ring_RingOfTheForestSpirit.uasset",
+     "key": "2ED0CD9747B476F1E8F9D9BF1EE31D5E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_RingOfTheForestSpirit_Icon"
+   },
+   "effects": "relic_heal+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_the_robust",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RingOfTheRobust/Ring_RingOfTheRobust.uasset",
+     "key": "0B57CBE346F6A3F928F97991036E8E73"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RingOfTheRobust/Ring_RingOfTheRobust.uasset",
+     "key": "C1CDF0D647A75D29E84FC2B284A7B487"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_RingOfTheRobust_Icon"
+   },
+   "effects": "max_hp+10",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "ring_of_the_vain",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RingOfTheVain/Ring_RingOfTheVain.uasset",
+     "key": "0BF8CBF84F827DFA252943A3833F8A0E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/RingOfTheVain/Ring_RingOfTheVain.uasset",
+     "key": "21066F7F49FECB9DC1C5F28DD383B367"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfTheVain_Icon"
+   },
+   "effects": "stamina+35%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "rock_of_anguish",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/RockOfAnguish/Ring_RockOfAnguish.uasset",
+     "key": "0A15956245300574B3522C9981CA772B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/RockOfAnguish/Ring_RockOfAnguish.uasset",
+     "key": "C0B1A721467803A36153EA93ACC00490"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_RockOfAnguish_Icon"
+   },
+   "effects": "reload+7.5%",
+   "fidelity": "exact",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "rotward",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/Rotward/Ring_Rotward.uasset",
+     "key": "79D7626746E07F123172F6A2FEA34679"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/Rotward/Ring_Rotward.uasset",
+     "key": "C99254E341FFD9B5722F0AB5F0B41972"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_Rotward_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "rusted_heirloom",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RustedHeirloom/Ring_RustedHeirloom.uasset",
+     "key": "CE74AABF43C1AC0BBE097AAA1052C748"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/RustedHeirloom/Ring_RustedHeirloom.uasset",
+     "key": "9BF71A68468687FB3387CE835809931A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_RustedHeirloom_Icon"
+   },
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "sagestone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SageStone/Ring_Sagestone.uasset",
+     "key": "D5D5EA424406CD4704C6E2B64F502693"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SageStone/Ring_Sagestone.uasset",
+     "key": "1B3941B24F72FE0BF998ACBFCF1582E3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_Sagestone_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "sapphire_dreamstone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/SapphireDreamstone/Ring_SapphireDreamstone.uasset",
+     "key": "8402942A411E68E8D09B9CB8DFDC8A3A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/SapphireDreamstone/Ring_SapphireDreamstone.uasset",
+     "key": "BD2935B84EF54B5843FEFBB78AF1D81D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_SapphireDreamstone_Icon"
+   },
+   "effects": "on_crit:cdr+4% 10s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "sealed_resin_loop",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/SealedResinLoop/Ring_SealedResinLoop.uasset",
+     "key": "C91AE83E48DC229E93D29EBFA67586AF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/SealedResinLoop/Ring_SealedResinLoop.uasset",
+     "key": "53237126499DA451BB4F959B7BBB72B5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_SealedResinLoop_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "seal_of_the_empress",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SealOfTheEmpress/Ring_SealOfTheEmpress.uasset",
+     "key": "0ED2BDFB44027904AECE30B701A32F3B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SealOfTheEmpress/Ring_SealOfTheEmpress.uasset",
+     "key": "D805F2C745795697E9B85EAF1E87B111"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_SealOfTheEmpress_Icon"
+   },
+   "effects": "max_hp+20;stamina-5",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "security_half_measure",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SecurityHalfMeasure/Ring_SecurityHalfMeasure.uasset",
+     "key": "53B3B29A4CD2D566E91E9CA89F329416"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SecurityHalfMeasure/Ring_SecurityHalfMeasure.uasset",
+     "key": "74B56EE849622AAC4B3FB39691145EAC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_SecurityHalfMeasure_Icon"
+   },
+   "effects": "on_relic:shield+10% 10s",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "shadow_of_misery",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/ShadowOfMisery/Ring_ShadowOfMisery.uasset",
+     "key": "8463AA314E97C55C94DF8CBCA9CCEFD3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/ShadowOfMisery/Ring_ShadowOfMisery.uasset",
+     "key": "205690B44A9537521474DDA01C923D88"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ShadowOfMisery_Icon"
+   },
+   "effects": "dmg_status+20%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "shaed_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/ShaedStone/Ring_ShaedStone.uasset",
+     "key": "E0E7342142740F9F118CE6B94F933CC1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/ShaedStone/Ring_ShaedStone.uasset",
+     "key": "16A2C105485FB0DFCC985DB6374E1DE4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ShaedStone_Icon"
+   },
+   "effects": "dmg_skill+15%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "shard_banded_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/ShardBandedRing/Ring_ShardBandedRing.uasset",
+     "key": "75CF5D7D478F91CBF1D05F80AAA5E337"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Labyrinth/Items/Trinkets/Rings/ShardBandedRing/Ring_ShardBandedRing.uasset",
+     "key": "22F61C9643B969E9B54CB785EE5EE5F5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Labyrinth/T_UI_Ring_ShardBandedRing_Icon"
+   },
+   "effects": "dmg_mod+12%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "shield_alternator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ShieldAlternator/Ring_ShieldAlternator.uasset",
+     "key": "5261FDE14AE221C03F07A99B8EF2ACA8"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ShieldAlternator/Ring_ShieldAlternator.uasset",
+     "key": "F89A2ADD424336200F7926A04D4515F6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ShieldAlternator_Icon"
+   },
+   "effects": "shield+20%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "shiny_hog_lure",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/ShinyHogLure/Ring_ShinyHogLure.uasset",
+     "key": "BBE5D8EA419D7261213F31B400F54D25"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/ShinyHogLure/Ring_ShinyHogLure.uasset",
+     "key": "F5259C6F4EA0E73BA83C90BC9ECC7A83"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_ShinyHogLure_Icon"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "singed_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/SingedRing/Ring_SingedRing.uasset",
+     "key": "054277744C2DB9D2FE77E390F1CEEB6F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/SingedRing/Ring_SingedRing.uasset",
+     "key": "145D56A34E2A8623EF8D19AFFEEBB777"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_SingedRing_Icon"
+   },
+   "effects": "dmg+12%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "siphon_filter",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SiphonFilter/Ring_SiphonFilter.uasset",
+     "key": "14E1F0F84EF8199273DDF1847BC2CA09"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SiphonFilter/Ring_SiphonFilter.uasset",
+     "key": "EFB92E52401FC61AE81EBDB9FFF42C2C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_SiphonFilter_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "slayers_crest",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SlayersCrest/Ring_SlayersCrest.uasset",
+     "key": "148A26084F4F9A09498ACB881B054433"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SlayersCrest/Ring_SlayersCrest.uasset",
+     "key": "D34191C44C84CFCFF841D78E54229969"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_SlayersCrest_Icon"
+   },
+   "effects": "dmg_melee+25%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "soul_feast",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/SoulFeast/Ring_SoulFeast.uasset",
+     "key": "6D1AF1AB4F08956C238B63867B07D180"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/SoulFeast/Ring_SoulFeast.uasset",
+     "key": "D560312440F4CC5BCB15489D406783EC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_SoulFeast_Icon"
+   },
+   "effects": "cdr+8%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "soul_guard",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SoulGuard/Ring_SoulGuard.uasset",
+     "key": "AA74400248953074CBA63B82736D66D5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SoulGuard/Ring_SoulGuard.uasset",
+     "key": "74E340664B95D1171B2F728C0D72B065"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_SoulGuard_Icon"
+   },
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "soul_link",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SoulLink/Ring_SoulLink.uasset",
+     "key": "E6F5DF6044AEC2606E7FB2B834FF9141"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SoulLink/Ring_SoulLink.uasset",
+     "key": "EF228C494AF7BD9BD8F9319C429027C1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_SoulLink_Icon"
+   },
+   "effects": "dmg_skill+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "soul_shard",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/SoulShard/Ring_SoulShard.uasset",
+     "key": "1B41C7D44E27D5BF7B493986B98FE780"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/SoulShard/Ring_SoulShard.uasset",
+     "key": "D2ADAECD4FB931C3AC8D19970744B3A9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_SoulShard_Icon_2"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "spirit_alternator",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SpiritAlternator/Ring_SpiritAlternator.uasset",
+     "key": "92CD382C46D68E321132DCB4E0FEFEA5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SpiritAlternator/Ring_SpiritAlternator.uasset",
+     "key": "E706EA7346D342E363FB28B8B58FA195"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_SpiritAlternator_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "spirit_stone",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SpiritStone/Ring_SpiritStone.uasset",
+     "key": "EED7EB284E7DEFD3456B0A84BB7CB301"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/SpiritStone/Ring_SpiritStone.uasset",
+     "key": "B80DE6A54EB6C3DFE30446AC721D4E3D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_SpiritStone_Icon"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "stockpile_charger",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StockpileDelayLoop/Ring_StockpileCharger.uasset",
+     "key": "3CD189D94A597E17565FDE99855385B1"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StockpileDelayLoop/Ring_StockpileCharger.uasset",
+     "key": "125F0D7F4CDDB0583C857083A37FD8D7"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_StockpileDelayLoop_Icon"
+   },
+   "effects": "dmg+15% 20s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "stone_of_balance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/StoneofBalance/Ring_StoneOfBalance.uasset",
+     "key": "BEA8D4754533F4E3B1C18CB53454216A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/StoneofBalance/Ring_StoneOfBalance.uasset",
+     "key": "82E614974276019914C88AB5F89CCCE1"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_StoneofBalance_Icon"
+   },
+   "effects": "dmg+7%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "stone_of_continuance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/StoneOfContinuance/Ring_StoneOfContinuance.uasset",
+     "key": "F7F23F5E4EE5B7CAFAFB968F4D4B5937"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/StoneOfContinuance/Ring_StoneOfContinuance.uasset",
+     "key": "8EA22E28473B95FD045AFF8FFFF0BBB4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_StoneOfContinuance_Icon"
+   },
+   "effects": "skill_dur+15%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "stone_of_expanse",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/StoneOfExpanse/Ring_StoneOfExpanse.uasset",
+     "key": "9F3A2F6B496309F469764EB72F73B513"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/StoneOfExpanse/Ring_StoneOfExpanse.uasset",
+     "key": "A945B1544E1AA7D9B94834B50A6C7F16"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_StoneOfExpanse_Icon"
+   },
+   "effects": "dmg_ranged+12%;dmg-5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "stone_of_malevolence",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StoneOfMalevolence/Ring_StoneOfMalevolence.uasset",
+     "key": "26821ADC47E8E5E5693AC48C0C7D4B1C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StoneOfMalevolence/Ring_StoneOfMalevolence.uasset",
+     "key": "90C9408245C7FE27BD76BF8126E12B0D"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_StoneOfMalevolence_Icon"
+   },
+   "effects": "mod_gen+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "stone_of_revelation",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/StoneOfRevelation/Ring_StoneOfRevelation.uasset",
+     "key": "B5629F0F4D99578B34D42FBBAAA66F39"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/StoneOfRevelation/Ring_StoneOfRevelation.uasset",
+     "key": "3EEA0D5C44F39D46D7F26BBA34E695F7"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_StoneOfRevelation_Icon"
+   },
+   "effects": "mod_gen+5%;dmg_mod+5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "strand_of_sinew",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/StrandOfSinew/Ring_StrandOfSinew.uasset",
+     "key": "47212ACF47682E534EC98F91919EB8D4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/StrandOfSinew/Ring_StrandOfSinew.uasset",
+     "key": "79C9714F401FDC80090A39B333284B31"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_StrandOfSinew_Icon"
+   },
+   "effects": "dmg+20%",
+   "fidelity": "exact",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "stream_coupler",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StreamCoupler/Ring_StreamCoupler.uasset",
+     "key": "BA447C3745B3EA755C7E78B215B2BD30"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StreamCoupler/Ring_StreamCoupler.uasset",
+     "key": "F48B377749076B6339623D9360FE03F6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_StreamCoupler_Icon"
+   },
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "strong_arm_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StrongArmBand/Ring_StrongArmBand.uasset",
+     "key": "40D66F63483A5C3675483EB8B3A21B6D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/StrongArmBand/Ring_StrongArmBand.uasset",
+     "key": "025BCA50451947A10D9005804700A6F2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_StrongArmBand_Icon"
+   },
+   "effects": "dmg+0.4%;crit+5%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "subterfuge_link",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/SubterfugeLink/Ring_SubterfugeLink.uasset",
+     "key": "55D6A2444EE6E2F29DC1D4B19FFD3066"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/SubterfugeLink/Ring_SubterfugeLink.uasset",
+     "key": "A71D381B407CEA4AB5C81A9FD77E3E04"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_ExpiringStone_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "suppression_ward",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/SuppressionWard/Ring_SuppressionWard.uasset",
+     "key": "D8B41EBE432AE5761D90FCA9DEEE9E4C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/SuppressionWard/Ring_SuppressionWard.uasset",
+     "key": "3B13C89642A83207574252B81171924E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_SupressionWard_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 900,
+   "recipe": [
+    "ore_low*2",
+    "bone_low*1"
+   ]
+  },
+  {
+   "id": "symbol_of_royalty",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SymbolOfRoyalty/Ring_SymbolOfRoyalty.uasset",
+     "key": "FEBBDBE840BE601EF32B5780F2CD9F9E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/SymbolOfRoyalty/Ring_SymbolOfRoyalty.uasset",
+     "key": "0C44F32744304B1DBBCA7AA3DA1D21EB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_SymbolOfRoyalty_Icon"
+   },
+   "effects": "on_evade:dmg+10% 10s",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "targeting_jewel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/TargetingJewel/Ring_TargetingJewel.uasset",
+     "key": "629A8B95438138D2D17B8B8B11701AE2"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/TargetingJewel/Ring_TargetingJewel.uasset",
+     "key": "1BC1B05E4C52FE1CFA78BF8708C5B766"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_TargetingJewel_Icon"
+   },
+   "effects": "accuracy+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "tarnished_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/TarnishedRing/Ring_TarnishedRing.uasset",
+     "key": "09452D40467D92F288323796E3A67D0A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Trinkets/Rings/TarnishedRing/Ring_TarnishedRing.uasset",
+     "key": "B08EC0AB42087FA9B9D9E6A166D0C36C"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_TarnishedRing_Icon"
+   },
+   "effects": "dmg+30%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "tear_of_kaeula",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/TearOfKaeula/Ring_TearOfKaeula.uasset",
+     "key": "394172EF4B681D67C2C4DDA5AB28B66D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/TearOfKaeula/Ring_TearOfKaeula.uasset",
+     "key": "0341089D41F7A008815F12849A790906"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_TearOfKauela_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "tear_of_lydusa",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/TearOfLydusa/Ring_TearOfLydusa.uasset",
+     "key": "7DFB937A4640956BF35AF2AF2BB46A69"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/TearOfLydusa/Ring_TearOfLydusa.uasset",
+     "key": "CC4C571443103F857E05C3A8671272DB"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_TearOfLydusa_Icon"
+   },
+   "effects": "heal+20%;lifesteal+20%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "tempest_conduit",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/TempestConduit/Ring_TempestConduit.uasset",
+     "key": "37D6A84C4A87A001886DE7A05F4296BE"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/TempestConduit/Ring_TempestConduit.uasset",
+     "key": "8252FF744688C5DC71EF5DB825FDE9CC"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_TempestConduit_Icon"
+   },
+   "effects": "dmg+15% 15s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "thalos_eyelet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/ThalosEyelet/Ring_ThalosEyelet.uasset",
+     "key": "1F33F24A4960F02F0B68E586A3A9CD4A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/ThalosEyelet/Ring_ThalosEyelet.uasset",
+     "key": "2B228C694B2930497E35908647A7CFD8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ThalosEyelet_Icon"
+   },
+   "effects": "stamina+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "tightly_wound_coil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/TightlyWoundCoil/Ring_TightlyWoundCoil.uasset",
+     "key": "FE53BC4341230F4C0DBC6FAE7B6F80DC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/TightlyWoundCoil/Ring_TightlyWoundCoil.uasset",
+     "key": "8830265E40046DE6D5080BBBC03B5DA4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_TightlyWoundCoil_Icon"
+   },
+   "effects": "shield+15% 5s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "timekeepers_jewel",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/TimekeepersJewel/Ring_TimekeepersJewel.uasset",
+     "key": "51BCA61B445EBD37033DB890169789AB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/TimekeepersJewel/Ring_TimekeepersJewel.uasset",
+     "key": "527101394E8709D37EC0989955A22E80"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_TimekeepersJewel_Icon"
+   },
+   "effects": "dmg_status+10%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "token_of_favor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/TokenOfFavor/Ring_TokenOfFavor.uasset",
+     "key": "5DED1DA246EB899FD7B67381F2D6107A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Trinkets/Rings/TokenOfFavor/Ring_TokenOfFavor.uasset",
+     "key": "D2FC1F50445A29BF781313A812B70BAA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_TokenOfFavor_Icon"
+   },
+   "effects": "dmg+5%",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "tolerance_band",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ToleranceBand/Ring_ToleranceBand.uasset",
+     "key": "232CC92F4E92B61ED69CF1B8BAF52EFB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/ToleranceBand/Ring_ToleranceBand.uasset",
+     "key": "BF361A0345DFC947C5CE36B1A08D52C3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ToleranceBand_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "tomb_dwellers_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/TombDwellersRing/Ring_TombDwellersRing.uasset",
+     "key": "5331420B47B4ABA42149C9A9D671680D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/TombDwellersRing/Ring_TombDwellersRing.uasset",
+     "key": "07D03AFE49E077F54BCF3BB6E67B5EE3"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_TombDwellersRing_Icon"
+   },
+   "effects": "stamina+10% 15s x3;dmg-50%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "transient_cord",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/TransientCord/Ring_TransientCord.uasset",
+     "key": "210E67FB4CBDB14DDFDDEC8BBA908A64"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/TransientCord/Ring_TransientCord.uasset",
+     "key": "8501269A4E34299069632BAFFC1D4AE6"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_TransientCord_Icon"
+   },
+   "effects": "on_relic:crit+10% 15s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "vacuum_seal",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/VacuumSeal/Ring_VacuumSeal.uasset",
+     "key": "74287D44446E862A155A5EB204F85F1D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Items/Trinkets/Rings/VacuumSeal/Ring_VacuumSeal.uasset",
+     "key": "D8118F6C4013D0D7E51E49B280AA2AF0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_VacuumSeal_Icon"
+   },
+   "effects": "shield+15% 15s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "vestige_of_power",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/VestigeOfPower/Ring_VestigeOfPower.uasset",
+     "key": "4FADE13B42571ECE9008BFACF42C833A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/VestigeOfPower/Ring_VestigeOfPower.uasset",
+     "key": "B0CD170A49C3AB2958FCFB9EB0A86EBE"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_VestigeOfPower_Icon"
+   },
+   "effects": "dmg_melee+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "wax_sealed_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/WaxSealedRing/Ring_WaxSealedRing.uasset",
+     "key": "A683983F436A1CE895AFBEBF24D7AA9C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/WaxSealedRing/Ring_WaxSealedRing.uasset",
+     "key": "0455E66F4076EEAE21A0C5BA566B8148"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BloodAltarRing_Icon"
+   },
+   "effects": "on_kill:dmg_melee+4% 15s",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "white_glass_bead",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/WhiteGlassBead/Ring_WhiteGlassBead.uasset",
+     "key": "02A5E0F44F3EC10C09CA398D97C11EF0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/WhiteGlassBead/Ring_WhiteGlassBead.uasset",
+     "key": "73676B05482835AF3FFE87B52AAAC5F7"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_SM_Ring_WhiteGlassBead_Icon"
+   },
+   "effects": "on_evade:shield+15% 10s",
+   "fidelity": "exact",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 15000,
+   "recipe": [
+    "ore_high2*4",
+    "elder_high*2",
+    "part_high2*2"
+   ]
+  },
+  {
+   "id": "white_pawn_stamp",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/WhitePawnStamp/Ring_WhitePawnStamp.uasset",
+     "key": "E71025CE4D664DB37C62738F51FF3579"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Items/Trinkets/Rings/WhitePawnStamp/Ring_WhitePawnStamp.uasset",
+     "key": "EFBB85ED4C459A85B7099EB9ED174A93"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_WhitePawnStamp_Icon"
+   },
+   "effects": "mod_gen+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "wind_hollow_circlet",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/WindHollowCirclet/Ring_WindHollowCirclet.uasset",
+     "key": "A33E917842D137CF19A158934B5DFD17"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/WindHollowCirclet/Ring_WindHollowCirclet.uasset",
+     "key": "F15D79674335B2BE105F4D8B6FDEFA2A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_WindHollowCirclet_Icon"
+   },
+   "effects": "reload+12%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "wired_inhibitor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/WiredInhibitor/Ring_WiredInhibitor.uasset",
+     "key": "C9641D3648D7CA92E3D8348F04B50EFF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Trinkets/Rings/WiredInhibitor/Ring_WiredInhibitor.uasset",
+     "key": "C5DA334E40F7E90684313094E36343B5"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_WiredInhibitor_Icon"
+   },
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 5,
+   "menu": "melder",
+   "zenny": 30000,
+   "recipe": [
+    "ore_master*4",
+    "bone_master*2",
+    "elder_master*2",
+    "gem_master*1"
+   ]
+  },
+  {
+   "id": "wood_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/WoodRing/Ring_WoodRing.uasset",
+     "key": "8D1617134984C5B48B798F806E95374E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Trinkets/Rings/WoodRing/Ring_WoodRing.uasset",
+     "key": "28D74F434EF3710A37CAF18E76569335"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_WoodRing_Icon"
+   },
+   "effects": "dmg+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 2400,
+   "recipe": [
+    "ore_low2*2",
+    "bone_low2*2",
+    "crystal_low*1"
+   ]
+  },
+  {
+   "id": "zanias_malice",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/ZaniasMalice/Ring_ZaniasMalice.uasset",
+     "key": "4EE6BDAB431F383583D8A692954FD70D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Items/Trinkets/Rings/ZaniasMalice/Ring_ZaniasMalice.uasset",
+     "key": "BB17FCDE425C78D283EFBC9B983334E4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_RingOfMalice_Icon"
+   },
+   "effects": "weakspot+5% 5s",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  },
+  {
+   "id": "zohees_ring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/ZoheesRing/Ring_ZoheesRing.uasset",
+     "key": "4EA70E8D41A347AAB6F4F592F6A82070"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Items/Trinkets/Rings/ZoheesRing/Ring_ZoheesRing.uasset",
+     "key": "9B5A8740457BA95B36AF5B81061CC8D9"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_ZoheesRing_Icon"
+   },
+   "effects": "mod_dur+20%",
+   "fidelity": "exact",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 7200,
+   "recipe": [
+    "ore_high*3",
+    "bone_high*2",
+    "part_high*1"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "_why": "Hand-checked effects for items the parser reads poorly. Applied by tools/author_arsenal.py after parsing.",
+ "skills.wellspring.effects": "use:heal 150% 15s",
+ "skills.bulletstorm.effects": "use:buff fire_rate+20% 20s;use:buff reload+50% 20s;use:ammo 100%",
+ "skills.juggernaut.effects": "use:buff dmg_melee+50% 25s;use:buff dr+25% 25s",
+ "skills.hunters_mark.effects": "use:buff dmg+15% 25s;use:buff crit+10% 25s",
+ "skills.chaosgate.effects": "use:buff dmg+10% 20s;use:buff mod_gen+25% 20s",
+ "mods.healing_shot.effects": "use:heal 40% 4s;use:buff heal+20% 10s",
+ "mods.concussive_shot.effects": "use:burst 210",
+ "relics.dragon_heart.effects": "use:heal 70% 0.5s"
+}

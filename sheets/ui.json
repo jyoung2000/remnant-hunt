@@ -54,52 +54,51 @@
    "art": {
     "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
    },
-   "title": "design:Ward 13 terminal",
+   "title": "design:Ward 13 terminal: your Remnant loadout",
    "shows": [
-    "npcs.name",
-    "npcs.greet_1",
-    "archetype",
-    "scrap",
-    "loadout"
+    "archetypes.emblem",
+    "archetypes.name",
+    "skills.icon",
+    "weapons.icon",
+    "mods.icon",
+    "mutators.icon",
+    "relics.icon",
+    "fragments.icon",
+    "amulets.icon",
+    "rings.icon",
+    "armor.icon",
+    "consumables.icon"
    ],
    "closes": "esc_or_leave"
   },
   {
-   "id": "vendor_brabus",
+   "id": "npc_menu",
    "theme": "remnant",
    "opens": "event",
-   "hotkey": "none",
+   "hotkey": "P",
    "art": {
     "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
    },
-   "title": "design:npcs.brabus.name",
+   "title": "design:menus.host.name at the MHW NPC (Smithy, Elder Melder, Provisions Manager)",
    "shows": [
+    "npcs.greet_1",
     "npcs.shop_line",
     "weapons.icon",
     "weapons.name",
     "weapons.desc",
-    "weapons.price_scrap",
-    "npcs.done_line"
-   ],
-   "closes": "esc_or_leave"
-  },
-  {
-   "id": "workbench_mccabe",
-   "theme": "remnant",
-   "opens": "event",
-   "hotkey": "none",
-   "art": {
-    "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
-   },
-   "title": "design:npcs.mccabe.name",
-   "shows": [
-    "npcs.shop_line",
-    "upgrades.level",
-    "upgrades.cost_scrap",
+    "weapons.effects",
     "mods.icon",
-    "mods.name",
-    "mods.desc",
-    "npcs.done_line"
+    "mutators.icon",
+    "armor.icon",
+    "archetypes.emblem",
+    "rings.icon",
+    "amulets.icon",
+    "relics.icon",
+    "fragments.icon",
+    "consumables.icon",
+    "materials.mhw_item_id",
+    "weapons.zenny",
+    "weapons.recipe"
    ],
    "closes": "esc_or_leave"
   },

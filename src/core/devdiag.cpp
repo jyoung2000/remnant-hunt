@@ -9,7 +9,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <atomic>
 #include <map>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -167,9 +169,7 @@ static bool readable_cached(uintptr_t a, size_t len, std::map<uintptr_t, std::pa
     return a + len <= e ? ok : (ok && mem_readable((void*)a, len));
 }
 
-const char* dti_name_of(const void* obj) {
-    if (!obj || !mem_readable(obj, 8)) return nullptr;
-    uintptr_t vt = *(const uintptr_t*)obj;
+static const char* dti_name_of_vtable(uintptr_t vt) {
     if (!in_image((void*)vt) || !mem_readable((void*)vt, 5 * 8)) return nullptr;
     uintptr_t f = ((const uintptr_t*)vt)[4];
     if (f < g_textBeg || f + 8 > g_textEnd) return nullptr;
@@ -180,6 +180,11 @@ const char* dti_name_of(const void* obj) {
     const char* n = *(const char**)(dti + 8);
     if (!n || !in_image(n) || !mem_readable(n, 2)) return nullptr;
     return n;
+}
+
+const char* dti_name_of(const void* obj) {
+    if (!obj || !mem_readable(obj, 8)) return nullptr;
+    return dti_name_of_vtable(*(const uintptr_t*)obj);
 }
 
 static void scan_singletons() {
@@ -199,9 +204,12 @@ static void scan_singletons() {
         uintptr_t v = *(const uintptr_t*)a;
         if (v < 0x10000 || (v & 7) || v > 0x7FFFFFFFFFFFull || in_image((void*)v)) continue;
         if (!readable_cached(v, 8, regions)) continue;
-        uintptr_t vt = *(const uintptr_t*)v;
+        // The object may be freed by a game thread at any moment: read its vtable without risking a fault.
+        uintptr_t vt = 0;
+        SIZE_T got = 0;
+        if (!ReadProcessMemory(GetCurrentProcess(), (void*)v, &vt, 8, &got) || got != 8) continue;
         if (!in_image((void*)vt)) continue;
-        const char* n = dti_name_of((void*)v);
+        const char* n = dti_name_of_vtable(vt);
         if (!n) continue;
         objects++;
         if (n[0] == 's' && !g_singletons.count(n)) g_singletons[n] = a;
@@ -214,8 +222,14 @@ uintptr_t singleton_static(const char* name) {
     return it == g_singletons.end() ? 0 : it->second;
 }
 
-// Each lookup stands on its own; returns true when all of them resolved.
+static std::mutex g_apiLock;
+static std::atomic<bool> g_apiDone{false};
+static void ud_sources();
+
+// Each lookup stands on its own; returns true when all of them resolved. Only reads memory (code, data and the
+// objects they point at), so it can run on a worker thread; the first caller does the work, others wait for it.
 bool game_api_init() {
+    std::lock_guard<std::mutex> lk(g_apiLock);
     static bool done = false, ok = false;
     if (done) return ok;
     done = true;
@@ -279,8 +293,20 @@ bool game_api_init() {
     ok = g_findDti && g_getResource && g_sResource;
     log("api: FindDti %p GetResource %p sMhResource %p SelectSlot %p -> %s", (void*)g_findDti,
         (void*)g_getResource, (void*)g_sResource, (void*)g_selectSlot, ok ? "ok" : "partial");
+    ud_sources();
+    g_apiDone = true;
     return ok;
 }
+
+// Starts the lookups on a worker thread (they scan the game's code and data for a second or two).
+void game_api_start() {
+    static std::once_flag once;
+    std::call_once(once, [] {
+        HANDLE h = CreateThread(nullptr, 0, [](LPVOID) -> DWORD { game_api_init(); return 0; }, nullptr, 0, nullptr);
+        if (h) CloseHandle(h);
+    });
+}
+bool game_api_ready() { return g_apiDone; }
 
 static bool looks_like_func(uintptr_t f) {
     if (!f || (f & 15) || f <= g_textBeg || f >= g_textEnd) return false;
@@ -296,7 +322,6 @@ static bool in_image(const void* p) {
 }
 
 void* find_dti(const char* name) {
-    game_api_init();
     if (!looks_like_func((uintptr_t)g_findDti)) return nullptr;
     uint8_t* d = (uint8_t*)g_findDti(mt_crc(name) & 0x7FFFFFFF);
     if (!d || !mem_readable(d + 8, 8)) return nullptr;
@@ -306,7 +331,7 @@ void* find_dti(const char* name) {
 
 // Game thread only.
 void* get_resource(const char* dtiName, const char* path) {
-    game_api_init();
+    if (!g_apiDone) return nullptr;
     if (!looks_like_func((uintptr_t)g_getResource) || !g_sResource) return nullptr;
     void* dti = find_dti(dtiName);
     uint8_t* mgr = rd_ptr(g_sResource);
@@ -344,9 +369,8 @@ struct UdSource { const char* how; uintptr_t st; };
 static std::vector<UdSource> g_udSources;
 static int g_udChosen = -1;
 
-static void ud_sources() {
+static void ud_sources() {  // inside game_api_init
     if (!g_udSources.empty()) return;
-    game_api_init();
     uintptr_t rebase = g_base - 0x140000000ull;
     if (uintptr_t st = singleton_static("sUserData")) g_udSources.push_back({"class name sUserData", st});
     if (g_selectSlot) {
@@ -360,7 +384,7 @@ static void ud_sources() {
 }
 
 uint8_t* user_data() {
-    ud_sources();
+    if (!g_apiDone) return nullptr;
     if (g_udChosen >= 0) {
         if (uint8_t* u = slot_via(g_udSources[g_udChosen].st)) return u;
         return nullptr;  // between saves (title screen): keep the source
@@ -692,6 +716,8 @@ void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3&
     char flag[MAX_PATH];
     snprintf(flag, sizeof(flag), "%s\\dev_diag", mod_dir());
     if (GetFileAttributesA(flag) == INVALID_FILE_ATTRIBUTES) return;
+    game_api_start();
+    if (!game_api_ready()) return;
     // In a save: report once the save data is found, or after a minute in game either way.
     if (!user_data() && now - inGameSince < 60.0) return;
     g_reported = true;

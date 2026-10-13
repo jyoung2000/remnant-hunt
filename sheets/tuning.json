@@ -71,6 +71,46 @@
    "id": "aggro_shells",
    "value": 1,
    "why": "1 = fire a slinger shot so the monster notices the hunter (MHW hit handling)"
+  },
+  {
+   "id": "rank_scale_hp",
+   "value": 8000,
+   "why": "Remnant damage grows with the monster: x1 up to this max HP, then in proportion (capped by rank_scale_max), so guns stay useful from low rank to master rank"
+  },
+  {
+   "id": "rank_scale_max",
+   "value": 6,
+   "why": "upper bound of the rank scaling above"
+  },
+  {
+   "id": "relic_base_charges",
+   "value": 3,
+   "why": "Remnant II relics start with 3 charges; Relic Charges effects add to it"
+  },
+  {
+   "id": "skill_cooldown_floor",
+   "value": 0.25,
+   "why": "cooldown reduction never takes a skill below this fraction of its cooldown"
+  },
+  {
+   "id": "dr_cap",
+   "value": 0.75,
+   "why": "damage reduction from Remnant effects is capped here (MHW damage is refunded, not prevented)"
+  },
+  {
+   "id": "concoction_s",
+   "value": 1800,
+   "why": "a concoction lasts until the next rest, at most this long"
+  },
+  {
+   "id": "companion_dps",
+   "value": 40,
+   "why": "damage per second of summons and companions before scaling"
+  },
+  {
+   "id": "item_name_stride",
+   "value": 0,
+   "why": "MHW's item text holds this many messages per item id (name first); 0 until the in-game diagnostic confirms it, and then materials show MHW's own names"
   }
  ]
 }

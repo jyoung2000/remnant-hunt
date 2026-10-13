@@ -34,8 +34,9 @@ static void load_settings() {
         FILE* f = fopen(ini, "wb");
         if (f) {
             fputs("; Remnant x Monster Hunter: World settings\r\n"
-                  "[keys]\r\n; gun mode, reload, swap guns, weapon mod, archetype skill, relic, Ward 13 terminal\r\n"
-                  "gun=B\r\nreload=R\r\nswap=X\r\nmod=V\r\nskill=G\r\nrelic=T\r\nterminal=P\r\n"
+                  "[keys]\r\n; gun mode, reload, swap guns, weapon mod, archetype skill, second archetype's skill, relic,\r\n"
+                  "; Ward 13 terminal and the Remnant menus at MHW's NPCs\r\n"
+                  "gun=B\r\nreload=R\r\nswap=X\r\nmod=V\r\nskill=G\r\nskill2=H\r\nrelic=T\r\nterminal=P\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);
@@ -46,6 +47,7 @@ static void load_settings() {
     g_keys.swap = read_key(ini, "swap", 'X');
     g_keys.mod = read_key(ini, "mod", 'V');
     g_keys.skill = read_key(ini, "skill", 'G');
+    g_keys.skill2 = read_key(ini, "skill2", 'H');
     g_keys.relic = read_key(ini, "relic", 'T');
     g_keys.terminal = read_key(ini, "terminal", 'P');
     char env[8];
