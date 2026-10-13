@@ -13,25 +13,25 @@ items. Remnant screens look like Remnant; the rest of the game stays Monster Hun
 ## What's in it (v0.1, solo)
 - **Worldstone intro**, then **choose your archetype**: Hunter, Medic, Challenger or Gunslinger, with Remnant II's
   own names, emblems, prime perks and skills.
-- **Ward 13 terminal** (press **H** in Astera, Seliana or your room):
+- **Ward 13 terminal** (press **P** in Astera, Seliana or your room):
   - **Brabus** sells long guns and hand guns for scrap: Western Classic, Tech 22, Blackmaw AR-47, Coach Gun,
     Huntmaster M1 and Widowmaker.
   - **McCabe** upgrades your guns (+1 to +5).
   - You can change archetype here.
   - Both NPCs greet you with their own lines from Remnant II.
 - **Remnant combat on a hunt** (solo):
-  - **G** switches to your Remnant guns. Aim with the right mouse button, fire with the left, **R** reloads and
-    **X** or the mouse wheel swaps guns.
+  - **B** switches to your Remnant guns. Aim with the right mouse button, fire with the left, **R** reloads and
+    **X** swaps guns.
   - Shots hit the monster's body, with weak spots on the head and tail. Damage numbers show in MHW's own style.
   - Each long gun has its **mod** (Hot Shot, Concussive Shot, Corrosive Rounds, Healing Shot). It charges as you deal
-    damage, with guns or MHW weapons. Press **B** to use it.
-  - **T** uses your archetype skill: Hunter's Mark, Wellspring, Juggernaut or Bulletstorm.
-  - **V** uses the **Dragon Heart**. Its charges refill when you return to town.
+    damage, with guns or MHW weapons. Press **V** to use it.
+  - **G** uses your archetype skill: Hunter's Mark, Wellspring, Juggernaut or Bulletstorm.
+  - **T** uses the **Dragon Heart**. Its charges refill when you return to town.
 - **Scrap**, Remnant's currency, comes from damaging and slaying large monsters.
 - MHW's weapons, armor, items, Palico and quests all still work. Your archetype's perks and skill also boost your MHW
   weapon hits.
 
-Every key can be changed in `remnant_hunt/remnant_hunt.ini`. Progress is saved in `%LOCALAPPDATA%\RemnantHunt\save.json`.
+The keys avoid MHW's default PC bindings; every key can be changed in `remnant_hunt/remnant_hunt.ini`. Progress is saved in `%LOCALAPPDATA%\RemnantHunt\save.json`.
 
 ## Multiplayer
 v0.1 is solo: Remnant combat switches itself off when other hunters are in your quest. Co-op for up to 4 hunters

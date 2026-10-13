@@ -35,19 +35,19 @@ static void load_settings() {
         if (f) {
             fputs("; Remnant x Monster Hunter: World settings\r\n"
                   "[keys]\r\n; gun mode, reload, swap guns, weapon mod, archetype skill, relic, Ward 13 terminal\r\n"
-                  "gun=G\r\nreload=R\r\nswap=X\r\nmod=B\r\nskill=T\r\nrelic=V\r\nterminal=H\r\n"
+                  "gun=B\r\nreload=R\r\nswap=X\r\nmod=V\r\nskill=G\r\nrelic=T\r\nterminal=P\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);
         }
     }
-    g_keys.gun = read_key(ini, "gun", 'G');
+    g_keys.gun = read_key(ini, "gun", 'B');
     g_keys.reload = read_key(ini, "reload", 'R');
     g_keys.swap = read_key(ini, "swap", 'X');
-    g_keys.mod = read_key(ini, "mod", 'B');
-    g_keys.skill = read_key(ini, "skill", 'T');
-    g_keys.relic = read_key(ini, "relic", 'V');
-    g_keys.terminal = read_key(ini, "terminal", 'H');
+    g_keys.mod = read_key(ini, "mod", 'V');
+    g_keys.skill = read_key(ini, "skill", 'G');
+    g_keys.relic = read_key(ini, "relic", 'T');
+    g_keys.terminal = read_key(ini, "terminal", 'P');
     char env[8];
     g_test = (GetEnvironmentVariableA("MELTY_TEST", env, sizeof(env)) && env[0] == '1') ||
              GetPrivateProfileIntA("test", "enabled", 0, ini) == 1;

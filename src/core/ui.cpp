@@ -593,7 +593,7 @@ void mod_frame() {
         if (key_pressed(k.relic)) post(CMD_RELIC);
         if (key_pressed(k.mod)) post(CMD_MOD);
         if (gunMode && key_pressed(k.reload)) post(CMD_RELOAD);
-        if (gunMode && (key_pressed(k.swap) || ImGui::GetIO().MouseWheel != 0)) post(CMD_SWAP);
+        if (gunMode && key_pressed(k.swap)) post(CMD_SWAP);
     }
 
     InputBlock b;

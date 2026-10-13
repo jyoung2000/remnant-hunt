@@ -287,12 +287,16 @@ static void __fastcall tick_move(void* self) {
         log("game tick: sMhCamera::move runs on thread %lu", g_gameThread);
         mark(HOOKS_CAM_MOVE_SLOT, true, "game called the copied slot");
     }
-    g_origMove(self);
-    // After the camera's own move: apply the aim zoom so the next view matrices use it.
-    if (g_fovOverride > 5.0f) {
+    // Aim zoom: written before and after the camera's own move, since which one sticks depends on when the game
+    // rebuilds the FOV (checked in game).
+    auto apply_fov = [&] {
+        if (g_fovOverride <= 5.0f) return;
         uint8_t* cam = rd_ptr((uintptr_t)self + kVp0Camera);
         if (cam && mem_readable(cam + kCamFov, 4)) *(float*)(cam + kCamFov) = g_fovOverride;
-    }
+    };
+    apply_fov();
+    g_origMove(self);
+    apply_fov();
     mod_game_tick();
     InterlockedDecrement(&g_inTick);
 }

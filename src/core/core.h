@@ -106,7 +106,8 @@ void ui_init_fonts();   // render thread, before the first frame
 void ui_draw();         // render thread
 
 // Settings (remnant_hunt.ini in the mod folder).
-struct Keys { int gun = 'G', reload = 'R', swap = 'X', mod = 'B', skill = 'T', relic = 'V', terminal = 'H'; };
+// Defaults avoid MHW's own default PC bindings (B, G, V, T, P are free or unused in solo play).
+struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', relic = 'T', terminal = 'P'; };
 const Keys& keys();
 bool test_mode();  // MELTY_TEST=1 or test=1 in the ini
 

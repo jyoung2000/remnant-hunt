@@ -50,7 +50,7 @@
    "id": "ward13_terminal",
    "theme": "remnant",
    "opens": "hotkey_in_base",
-   "hotkey": "H",
+   "hotkey": "P",
    "art": {
     "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
    },
@@ -107,7 +107,7 @@
    "id": "hud_gun",
    "theme": "mhw",
    "opens": "in_hunt",
-   "hotkey": "G",
+   "hotkey": "B",
    "art": "none",
    "title": "design:(none)",
    "shows": [

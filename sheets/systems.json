@@ -119,7 +119,7 @@
   {
    "id": "gun_mode",
    "summary": "toggle Remnant gun mode; sheathes nothing itself, blocks MHW attack inputs while active",
-   "trigger": "hotkey G",
+   "trigger": "hotkey B (gun mode)",
    "reads": [
     "game_window"
    ],
@@ -183,7 +183,7 @@
   {
    "id": "swap_gun",
    "summary": "mouse wheel / X swaps long gun and hand gun",
-   "trigger": "wheel or X",
+   "trigger": "X in gun mode",
    "reads": [
     "none"
    ],
@@ -198,7 +198,7 @@
   {
    "id": "mod_charge",
    "summary": "damage dealt fills the long gun's mod meter; F activates the mod",
-   "trigger": "fire hits / F",
+   "trigger": "fire hits / V",
    "reads": [
     "s_enemy",
     "enemy_health_mgr",
@@ -216,7 +216,7 @@
   {
    "id": "skill",
    "summary": "T activates the archetype skill: monster damage mult / heal over time / damage reduction / infinite ammo",
-   "trigger": "hotkey T",
+   "trigger": "hotkey G",
    "reads": [
     "player_health_mgr",
     "s_enemy",
@@ -252,7 +252,7 @@
   {
    "id": "relic",
    "summary": "V uses a Dragon Heart charge: heals heal_pct of max HP over heal_over_s",
-   "trigger": "hotkey V",
+   "trigger": "hotkey T",
    "reads": [
     "player_health_mgr"
    ],
