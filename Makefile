@@ -2,10 +2,12 @@
 #   make            build/win/{dinput8.dll, remnant_hunt.dll, r2read.exe}
 #   make gen        regenerate src/core/gen/sheets.gen.h from the sheets (runs preflight first)
 #   make package    out/remnant_hunt-<version>.zip, the release Melty installs into the game folder
+#   make installer  out/RemnantHuntSetup-<version>.exe, the same files in a one-file Windows installer with a window
 #   make test       Linux build of r2read cross-checked against the dev tools (needs Remnant II installed)
 TC      ?= $(HOME)/tc/llvm-mingw-20261006-ucrt-ubuntu-22.04-x86_64/bin
 CXX     := $(TC)/x86_64-w64-mingw32-clang++
 CC      := $(TC)/x86_64-w64-mingw32-clang
+WINDRES := $(TC)/x86_64-w64-mingw32-windres
 VERSION ?= 0.3.0
 B       := build/win
 O       := build/obj
@@ -99,4 +101,12 @@ test: linux
 package: all
 	python3 tools/package.py $(VERSION)
 
-.PHONY: all gen test package linux
+installer: all
+	python3 tools/make_installer.py $(VERSION)
+	$(WINDRES) build/installer/setup.rc -O coff -o build/installer/setup.res.o
+	@mkdir -p out
+	$(CXX) -O2 -std=c++17 -Wall -DNOMINMAX -municode -mwindows -static -s -Wl,--no-insert-timestamp \
+	    -Ibuild/installer src/installer/setup.cpp build/installer/setup.res.o \
+	    -lcomctl32 -lole32 -lshell32 -luxtheme -luuid -o out/RemnantHuntSetup-$(VERSION).exe
+
+.PHONY: all gen test package installer linux

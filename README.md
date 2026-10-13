@@ -5,21 +5,28 @@ Remnant's guns, archetypes, weapon mods and the Dragon Heart, and you can still 
 items. Remnant screens look like Remnant; the rest of the game stays Monster Hunter.
 
 ## Install
-Close Monster Hunter: World, open **PowerShell** and paste:
+1. Download **`RemnantHuntSetup-<version>.exe`** from [Releases](https://github.com/jyoung2000/remnant-hunt/releases/latest).
+2. Close Monster Hunter: World and run it. It finds Monster Hunter: World and Remnant II in your Steam libraries
+   (or use **Browse**), then **Install** puts `dinput8.dll` and the `remnant_hunt` folder next to
+   `MonsterHunterWorld.exe`. Everything is inside the exe; nothing is downloaded.
+3. Press **Play**, or start the game from Steam as usual.
+
+Windows SmartScreen may say the installer is from an unknown publisher (it is not code-signed): choose
+**More info → Run anyway**. Run it again later to **Update** or **Uninstall**.
+
+Or, from **PowerShell**:
 
 ```powershell
 irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 | iex
 ```
 
-It finds Monster Hunter: World in your Steam libraries, downloads the latest release and puts `dinput8.dll` and the
-`remnant_hunt` folder next to `MonsterHunterWorld.exe`. Then start the game from Steam as usual.
-
 - **By hand:** download `remnant_hunt-<version>.zip` from [Releases](https://github.com/jyoung2000/remnant-hunt/releases)
   and extract it into your Monster Hunter: World folder (the one with `MonsterHunterWorld.exe`).
-- **Another mod loader:** Stracker's Loader also uses `dinput8.dll`. The installer stops rather than replace it;
-  run it with `-Force` to keep yours as `dinput8.dll.bak`.
-- **Game in another folder:** `.\install.ps1 -GameDir "D:\Games\Monster Hunter World"`.
-- **Uninstall:** `.\install.ps1 -Uninstall`, or delete `dinput8.dll` and the `remnant_hunt` folder.
+- **Another mod loader:** Stracker's Loader also uses `dinput8.dll`. Both installers stop rather than replace it;
+  tick **Replace it** in the setup window (or run `install.ps1 -Force`) to keep yours as `dinput8.dll.bak`.
+- **Game in another folder:** **Browse** in the setup window, or `.\install.ps1 -GameDir "D:\Games\Monster Hunter World"`.
+- **Uninstall:** **Uninstall** in the setup window, `.\install.ps1 -Uninstall`, or delete `dinput8.dll` and the
+  `remnant_hunt` folder.
 
 ## What you need
 - **Monster Hunter: World** on Steam, Ver. 15.23.00 (the final PC patch). The mod runs inside it.
@@ -83,7 +90,8 @@ who all have the mod is planned, with joining through MHW's own sessions and SOS
   open-source ooz decoder. It never writes game files anywhere.
 
 ## Uninstall
-Delete `dinput8.dll` and the `remnant_hunt` folder from the Monster Hunter: World folder.
+Run the setup again and press **Uninstall**, or delete `dinput8.dll` and the `remnant_hunt` folder from the
+Monster Hunter: World folder.
 
 ## License and credits
 GPL-3.0-or-later; remixes are welcome under the same license. The full source is in `source/remnant-hunt-source.zip`. Credits are in `licenses/NOTICE.txt`. Built with Claude (Anthropic) for Jalon.
