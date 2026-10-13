@@ -60,7 +60,26 @@ static std::vector<std::string> steam_libraries() {
     return libs;
 }
 
+// "--remnant2 <folder>" or "--remnant2=<folder>" on the game's command line (Melty passes {game:<slug>} this way).
+static std::string from_command_line() {
+    std::string cl = GetCommandLineA();
+    size_t p = cl.find("--remnant2");
+    if (p == std::string::npos) return "";
+    p += 10;
+    while (p < cl.size() && (cl[p] == '=' || cl[p] == ' ')) p++;
+    if (p >= cl.size()) return "";
+    size_t e;
+    if (cl[p] == '"') {
+        e = cl.find('"', p + 1);
+        return cl.substr(p + 1, e == std::string::npos ? std::string::npos : e - p - 1);
+    }
+    e = cl.find(' ', p);
+    return cl.substr(p, e == std::string::npos ? std::string::npos : e - p);
+}
+
 static std::string find_remnant() {
+    std::string arg = from_command_line();
+    if (!arg.empty() && dir_has_remnant(arg)) return arg;
     char env[MAX_PATH];
     if (GetEnvironmentVariableA("REMNANTHUNT_R2", env, sizeof(env)) && dir_has_remnant(env)) return env;
     char ini[MAX_PATH], val[MAX_PATH];

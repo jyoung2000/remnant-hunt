@@ -11,7 +11,7 @@ Layout (paths inside the zip are relative to the game folder):
 No game files from either game are included: the zip is checked for that before it is written.
 usage: package.py <version>
 """
-import hashlib, os, sys, zipfile
+import hashlib, os, subprocess, sys, zipfile
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 B = os.path.join(ROOT, "build", "win")
@@ -38,6 +38,10 @@ def files():
         if os.path.exists(p):
             yield p, "remnant_hunt/licenses/" + name
     yield os.path.join(ROOT, "README.md"), "remnant_hunt/README.txt"
+    # GPL-3.0: the complete source of this release travels with it.
+    src = os.path.join(ROOT, "out", "source.zip")
+    subprocess.run(["git", "-C", ROOT, "archive", "--format=zip", "-o", src, "HEAD"], check=True)
+    yield src, "remnant_hunt/source/remnant-hunt-source.zip"
 
 
 def main():
@@ -49,6 +53,11 @@ def main():
     for src, arc in entries:
         if os.path.splitext(arc)[1].lower() in BANNED_EXT:
             sys.exit(f"refusing to package game data: {arc}")
+        if arc.endswith(".zip"):
+            with zipfile.ZipFile(src) as inner:
+                bad = [n for n in inner.namelist() if os.path.splitext(n)[1].lower() in BANNED_EXT]
+            if bad:
+                sys.exit(f"refusing to package game data inside {arc}: {bad[:5]}")
         if not os.path.exists(src):
             sys.exit(f"missing {src} (run make first)")
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:

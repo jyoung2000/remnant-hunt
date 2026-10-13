@@ -48,4 +48,4 @@ who all have the mod is planned, with joining through MHW's own sessions and SOS
 Delete `dinput8.dll` and the `remnant_hunt` folder from the Monster Hunter: World folder.
 
 ## License and credits
-GPL-3.0-or-later; remixes are welcome under the same license. Credits are in `licenses/NOTICE.txt`. Built with Claude (Anthropic) for Jalon.
+GPL-3.0-or-later; remixes are welcome under the same license. The full source is in `source/remnant-hunt-source.zip`. Credits are in `licenses/NOTICE.txt`. Built with Claude (Anthropic) for Jalon.
