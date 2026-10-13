@@ -1,0 +1,3 @@
+c546d5fb04c5dc4aa1bc7afd5be0296c2b73343a Wed Feb 17 14:41:09 2021 -0500
+https://github.com/baconwaifu/ooz (fork of https://github.com/powzix/ooz), GPL-3.0-or-later. Decoder files only.
+Local changes: vectorize.h (no target_clones on Windows; SSE2 path for COPY_64_ADD), stdafx.h (_rotl guard for mingw).

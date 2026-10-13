@@ -6,3 +6,4 @@ build/
 *.png.local
 reports/
 __pycache__/
+src/core/gen/

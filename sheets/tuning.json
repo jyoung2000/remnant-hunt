@@ -1,0 +1,76 @@
+{
+ "sheet": "tuning",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "value": "num",
+  "why": "str"
+ },
+ "rows": [
+  {
+   "id": "damage_scale",
+   "value": 1.0,
+   "why": "global multiplier on Remnant gun damage vs MHW monster HP; tuned in game"
+  },
+  {
+   "id": "crit_chance",
+   "value": 0.05,
+   "why": "Remnant II base critical chance"
+  },
+  {
+   "id": "crit_mult",
+   "value": 1.5,
+   "why": "Remnant II base critical damage"
+  },
+  {
+   "id": "weakspot_band",
+   "value": 0.6,
+   "why": "hit counts as weakspot past this fraction of the body's long half-axis, upper half (head/tail)"
+  },
+  {
+   "id": "scrap_per_1000_damage",
+   "value": 20,
+   "why": "scrap earned per 1000 damage to large monsters"
+  },
+  {
+   "id": "scrap_per_large_kill",
+   "value": 120,
+   "why": "scrap for a large monster slain"
+  },
+  {
+   "id": "starting_scrap",
+   "value": 300,
+   "why": "enough for one handgun so the shop matters on day one"
+  },
+  {
+   "id": "slinger_interval_s",
+   "value": 0.35,
+   "why": "at most one aggro slinger shot this often while firing"
+  },
+  {
+   "id": "bonus_health_regen_delay_s",
+   "value": 8,
+   "why": "Bonus health (archetype hp_bonus) starts refilling after this long without damage"
+  },
+  {
+   "id": "bonus_health_regen_per_s",
+   "value": 5,
+   "why": "Bonus health refill rate"
+  },
+  {
+   "id": "ads_fov_mult",
+   "value": 0.72,
+   "why": "aim-down-sights zoom on the camera's vertical FOV"
+  },
+  {
+   "id": "ads_spread_mult",
+   "value": 0.45,
+   "why": "spread while aiming"
+  },
+  {
+   "id": "aggro_shells",
+   "value": 1,
+   "why": "1 = fire a slinger shot so the monster notices the hunter (MHW hit handling)"
+  }
+ ]
+}

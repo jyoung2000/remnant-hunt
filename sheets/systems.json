@@ -137,12 +137,18 @@
    "summary": "hitscan from camera along view; first monster OBB hit takes damage (weakspot = upper third of box), monster notices via a slinger shell, damage number shown",
    "trigger": "LMB in gun mode",
    "reads": [
-    "s_mh_camera",
-    "s_enemy",
-    "enemy_obb",
-    "enemy_health_mgr",
+    "check_segment",
     "enemy_dead_flag",
-    "player_pos"
+    "enemy_health_mgr",
+    "enemy_obb",
+    "param_ctor",
+    "param_dtor",
+    "player_pos",
+    "s_collision",
+    "s_enemy",
+    "s_mh_camera",
+    "tri_info_ctor",
+    "tri_info_reset"
    ],
    "writes": [
     "add_hp",

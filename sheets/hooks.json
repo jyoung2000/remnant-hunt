@@ -161,6 +161,54 @@
    "base": "process",
    "check": "IsWindowVisible, class name logged",
    "source": "own"
+  },
+  {
+   "id": "s_collision",
+   "kind": "static_ptr",
+   "value": "0x1451C4C50",
+   "base": "image",
+   "check": "readable",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "check_segment",
+   "kind": "func",
+   "value": "0x14231AC00",
+   "base": "image",
+   "check": "sig:48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 81 EC B0 01 00 00 48 8B F2 49 8B D9 33 D2 41 0F B6 F8",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "tri_info_ctor",
+   "kind": "func",
+   "value": "0x142319440",
+   "base": "image",
+   "check": "sig:33 D2 C7 41 08 FF FF FF FF 33 C0",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "tri_info_reset",
+   "kind": "func",
+   "value": "0x1423194B0",
+   "base": "image",
+   "check": "sig:33 C0 C7 41 08 FF FF FF FF 48 89 41 20",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "param_ctor",
+   "kind": "func",
+   "value": "0x14231A6E0",
+   "base": "image",
+   "check": "sig:45 33 C9 48 8D 05 ?? ?? ?? ?? 48 89 01 44 89 89 BC 00 00 00",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "param_dtor",
+   "kind": "func",
+   "value": "0x140282390",
+   "base": "image",
+   "check": "sig:48 8D 05 ?? ?? ?? ?? 48 89 01 C3",
+   "source": "crossover-bridge"
   }
  ]
 }
