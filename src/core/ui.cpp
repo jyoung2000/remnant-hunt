@@ -435,6 +435,17 @@ static void screen_workbench(SaveData sv) {
 
 // ---------------------------------------------------------------- HUD (MHW colours)
 
+// World (cm) -> screen, with MHW's row-vector view and projection matrices.
+static bool project(const GameView& v, const Vec3& p, ImVec2 vpPos, ImVec2 vpSize, ImVec2* out) {
+    float in[4] = {p.x, p.y, p.z, 1}, a[4], c[4];
+    for (int j = 0; j < 4; j++) a[j] = in[0] * v.view[0 * 4 + j] + in[1] * v.view[1 * 4 + j] + in[2] * v.view[2 * 4 + j] + in[3] * v.view[3 * 4 + j];
+    for (int j = 0; j < 4; j++) c[j] = a[0] * v.proj[0 * 4 + j] + a[1] * v.proj[1 * 4 + j] + a[2] * v.proj[2 * 4 + j] + a[3] * v.proj[3 * 4 + j];
+    if (c[3] <= 1.0f) return false;
+    out->x = vpPos.x + (c[0] / c[3] * 0.5f + 0.5f) * vpSize.x;
+    out->y = vpPos.y + (0.5f - c[1] / c[3] * 0.5f) * vpSize.y;
+    return true;
+}
+
 static void hud(const SaveData& s, const Live& l) {
     const Archetypes* a = archetype();
     if (!a || !l.snap.inGame) return;
@@ -458,6 +469,20 @@ static void hud(const SaveData& s, const Live& l) {
         float r = (6 + spread * 6) * sc;
         fg->AddCircle(c, r, IM_COL32(255, 255, 255, 170), 32, 1.5f);
         fg->AddCircleFilled(c, 2.0f * sc, IM_COL32(255, 255, 255, 230));
+        // Tracers from the gun to where the shots went, and a muzzle flash.
+        ImVec2 muzzle(c.x + vp->Size.x * 0.11f, c.y + vp->Size.y * 0.17f);
+        for (const Live::Tracer& tr : l.tracers) {
+            if (t >= tr.until || !l.snap.view.valid) continue;
+            ImVec2 to;
+            if (!project(l.snap.view, tr.to, vp->Pos, vp->Size, &to)) continue;
+            float k = (float)((tr.until - t) / 0.09);
+            fg->AddLine(muzzle, to, IM_COL32(255, 214, 150, (int)(200 * k)), 2.0f * sc);
+            if (tr.hit) fg->AddCircleFilled(to, 5 * sc * (1.5f - k), IM_COL32(255, 190, 110, (int)(230 * k)));
+        }
+        if (t < l.muzzleUntil) {
+            fg->AddCircleFilled(muzzle, 14 * sc, IM_COL32(255, 220, 160, 200));
+            fg->AddCircleFilled(muzzle, 7 * sc, IM_COL32(255, 255, 235, 255));
+        }
         if (t < l.hitMarkerUntil) {
             ImU32 hc = l.hitMarkerWeak ? col::red : IM_COL32(255, 255, 255, 240);
             float a1 = 7 * sc, a2 = 14 * sc;

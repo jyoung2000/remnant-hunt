@@ -49,7 +49,7 @@ $(B)/dinput8.dll: $(call obj,src/loader/loader.cpp src/common/log.cpp) src/loade
 
 $(B)/remnant_hunt.dll: $(call obj,$(CORE) $(IMGUI) $(MINHOOK))
 	@mkdir -p $(B)
-	$(CXX) $(LDFLAGS) -o $@ $^ -ld3d11 -ldxgi -ldinput8 -ldxguid -ld3dcompiler -luser32 -lgdi32 -ldwmapi -limm32 -ladvapi32
+	$(CXX) $(LDFLAGS) -o $@ $^ -ld3d11 -ldxgi -ldinput8 -ldxguid -luuid -ld3dcompiler -luser32 -lgdi32 -ldwmapi -limm32 -ladvapi32
 
 $(O)/ooz/%.o: third_party/ooz/%
 	@mkdir -p $(dir $@)

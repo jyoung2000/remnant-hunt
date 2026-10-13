@@ -51,6 +51,11 @@ struct Live {
     int lastZone = -1;
     // Feedback for the HUD.
     double hitMarkerUntil = 0;
+    struct Tracer { Vec3 to; double until; bool hit; };
+    Tracer tracers[16];
+    int nextTracer = 0;
+    double muzzleUntil = 0;
+    bool shotLogged = false;
     bool hitMarkerWeak = false;
     char toast[160] = {0};
     double toastUntil = 0;

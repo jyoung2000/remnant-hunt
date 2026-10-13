@@ -1,14 +1,19 @@
-// Remnant x MHW mashup core: D3D11 overlay (Dear ImGui) and input routing. MIT License (see LICENSE).
+// Remnant x MHW mashup core: overlay (Dear ImGui on D3D11, or on D3D12 through D3D11On12) and input routing.
+// MIT License (see LICENSE).
 //
-// Hooks IDXGISwapChain::Present/ResizeBuffers inside dxgi.dll (not MHW code) to draw the mod's screens, and the
-// DirectInput device read calls inside the system dinput8.dll to keep MHW from acting on input the mod consumes.
+// Everything hooked here lives in Windows' own DLLs, never in MHW's code:
+//   dxgi.dll   IDXGISwapChain::Present / Present1 / ResizeBuffers   draw the mod's screens on the game's frame
+//   d3d12.dll  ID3D12CommandQueue::ExecuteCommandLists              find the game's queue when it runs in DX12 mode
+//   dinput8    IDirectInputDevice8::GetDeviceState / GetDeviceData   hide input the mod consumes from the game
+//   user32     GetRawInputData / GetRawInputBuffer                  same, for raw input
 #include <d3d11.h>
+#include <d3d11on12.h>
+#include <d3d12.h>
 #include <dinput.h>
-#include <dxgi.h>
+#include <dxgi1_4.h>
 
 #include <cstdio>
 #include <map>
-#include <mutex>
 #include <string>
 
 #include "MinHook.h"
@@ -22,20 +27,35 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 namespace rh {
 
 typedef HRESULT(WINAPI* Present_t)(IDXGISwapChain*, UINT, UINT);
+typedef HRESULT(WINAPI* Present1_t)(IDXGISwapChain1*, UINT, UINT, const DXGI_PRESENT_PARAMETERS*);
 typedef HRESULT(WINAPI* Resize_t)(IDXGISwapChain*, UINT, UINT, UINT, DXGI_FORMAT, UINT);
-static Present_t oPresent = nullptr;
-static Resize_t oResize = nullptr;
-static void* g_presentTarget = nullptr;
-static void* g_resizeTarget = nullptr;
+typedef void(WINAPI* Execute_t)(ID3D12CommandQueue*, UINT, ID3D12CommandList* const*);
+
+struct HookSet { void* present = nullptr; void* present1 = nullptr; void* resize = nullptr; };
+static Present_t oPresent[2];
+static Present1_t oPresent1[2];
+static Resize_t oResize[2];
+static Execute_t oExecute = nullptr;
+static HookSet g_targets[2];
 
 static ID3D11Device* g_dev = nullptr;
 static ID3D11DeviceContext* g_ctx = nullptr;
-static ID3D11RenderTargetView* g_rtv = nullptr;
 static HWND g_hwnd = nullptr;
 static WNDPROC g_origWndProc = nullptr;
 static bool g_imguiReady = false;
-static bool g_dx12Logged = false;
+static bool g_initFailed = false;
 static volatile LONG g_inPresent = 0;
+
+// DX11 path.
+static ID3D11RenderTargetView* g_rtv = nullptr;
+// DX12 path (D3D11On12 over the game's queue).
+static bool g_dx12 = false;
+static ID3D12CommandQueue* volatile g_queue = nullptr;
+static ID3D11On12Device* g_on12 = nullptr;
+static const int kMaxBuffers = 8;
+static ID3D11Resource* g_wrapped[kMaxBuffers] = {};
+static ID3D11RenderTargetView* g_wrappedRtv[kMaxBuffers] = {};
+static UINT g_bufferCount = 0;
 
 HWND game_window() { return g_hwnd; }
 
@@ -45,6 +65,15 @@ static SRWLOCK g_inputLock = SRWLOCK_INIT;
 static InputBlock g_block;
 static bool g_prevDown[256];
 static bool g_pressed[256];
+typedef SHORT(WINAPI* GetAsyncKeyState_t)(int);
+static GetAsyncKeyState_t pGetAsyncKeyState = GetAsyncKeyState;
+
+static InputBlock current_block() {
+    AcquireSRWLockShared(&g_inputLock);
+    InputBlock b = g_block;
+    ReleaseSRWLockShared(&g_inputLock);
+    return b;
+}
 
 void set_input_block(const InputBlock& b) {
     AcquireSRWLockExclusive(&g_inputLock);
@@ -54,7 +83,7 @@ void set_input_block(const InputBlock& b) {
 
 static bool focused() { return g_hwnd && GetForegroundWindow() == g_hwnd; }
 
-bool key_down(int vk) { return focused() && (GetAsyncKeyState(vk) & 0x8000) != 0; }
+bool key_down(int vk) { return focused() && (pGetAsyncKeyState(vk) & 0x8000) != 0; }
 bool key_pressed(int vk) { return vk > 0 && vk < 256 && g_pressed[vk]; }
 
 static void poll_keys() {
@@ -65,14 +94,23 @@ static void poll_keys() {
     }
 }
 
-// DirectInput: MHW reads keyboard and mouse through IDirectInputDevice8. Shared vtable for both device kinds.
+static bool vk_blocked(const InputBlock& b, int vk) {
+    if (vk <= 0 || vk >= 256) return false;
+    bool mouseVk = vk == VK_LBUTTON || vk == VK_RBUTTON || vk == VK_MBUTTON || vk == VK_XBUTTON1 || vk == VK_XBUTTON2;
+    if (mouseVk) return b.mouse || b.mouseButtons;
+    return b.keyboard || b.keys[vk];
+}
+
+// Which input paths the game uses (logged once, so the in-game test shows what was filtered).
+static volatile LONG g_cntDiState = 0, g_cntDiData = 0, g_cntRaw = 0, g_cntRawBuf = 0, g_cntAsync = 0;
+
+// --- DirectInput
 typedef HRESULT(WINAPI* GetState_t)(IDirectInputDevice8W*, DWORD, LPVOID);
 typedef HRESULT(WINAPI* GetData_t)(IDirectInputDevice8W*, DWORD, LPDIDEVICEOBJECTDATA, LPDWORD, DWORD);
 static GetState_t oGetState = nullptr;
 static GetData_t oGetData = nullptr;
-static volatile LONG g_diStateCalls = 0, g_diDataCalls = 0;
 
-static bool blocked_key(const InputBlock& b, DWORD dik) {
+static bool dik_blocked(const InputBlock& b, DWORD dik) {
     if (b.keyboard) return true;
     for (int vk = 1; vk < 256; vk++)
         if (b.keys[vk] && MapVirtualKeyA(vk, MAPVK_VK_TO_VSC) == dik) return true;
@@ -81,15 +119,13 @@ static bool blocked_key(const InputBlock& b, DWORD dik) {
 
 static HRESULT WINAPI hkGetState(IDirectInputDevice8W* dev, DWORD cb, LPVOID data) {
     HRESULT hr = oGetState(dev, cb, data);
-    InterlockedIncrement(&g_diStateCalls);
+    InterlockedIncrement(&g_cntDiState);
     if (FAILED(hr) || !data) return hr;
-    AcquireSRWLockShared(&g_inputLock);
-    InputBlock b = g_block;
-    ReleaseSRWLockShared(&g_inputLock);
+    InputBlock b = current_block();
     uint8_t* p = (uint8_t*)data;
-    if (cb == 256) {  // keyboard
+    if (cb == 256) {
         for (DWORD k = 0; k < 256; k++)
-            if ((p[k] & 0x80) && blocked_key(b, k)) p[k] = 0;
+            if ((p[k] & 0x80) && dik_blocked(b, k)) p[k] = 0;
     } else if (cb == sizeof(DIMOUSESTATE) || cb == sizeof(DIMOUSESTATE2)) {
         size_t buttons = cb == sizeof(DIMOUSESTATE) ? 4 : 8;
         if (b.mouse) memset(p, 0, cb);
@@ -101,26 +137,18 @@ static HRESULT WINAPI hkGetState(IDirectInputDevice8W* dev, DWORD cb, LPVOID dat
 static HRESULT WINAPI hkGetData(IDirectInputDevice8W* dev, DWORD cb, LPDIDEVICEOBJECTDATA rg, LPDWORD inOut,
                                 DWORD flags) {
     HRESULT hr = oGetData(dev, cb, rg, inOut, flags);
-    InterlockedIncrement(&g_diDataCalls);
-    if (FAILED(hr) || !rg || !inOut || (flags & DIGDD_PEEK)) return hr;
-    AcquireSRWLockShared(&g_inputLock);
-    InputBlock b = g_block;
-    ReleaseSRWLockShared(&g_inputLock);
-    if (!b.keyboard && !b.mouse && !b.mouseButtons) {
-        bool any = false;
-        for (int i = 0; i < 256 && !any; i++) any = b.keys[i] != 0;
-        if (!any) return hr;
-    }
+    InterlockedIncrement(&g_cntDiData);
+    if (FAILED(hr) || !rg || !inOut || (flags & DIGDD_PEEK) || *inOut == 0) return hr;
+    InputBlock b = current_block();
     DIDEVICEINSTANCEW info = {sizeof(info)};
     bool isMouse = SUCCEEDED(dev->GetDeviceInfo(&info)) && GET_DIDEVICE_TYPE(info.dwDevType) == DI8DEVTYPE_MOUSE;
     DWORD w = 0;
     for (DWORD i = 0; i < *inOut; i++) {
         DIDEVICEOBJECTDATA* e = (DIDEVICEOBJECTDATA*)((uint8_t*)rg + i * cb);
-        bool drop;
-        if (isMouse) drop = b.mouse || (b.mouseButtons && e->dwOfs >= DIMOFS_BUTTON0 && e->dwOfs <= DIMOFS_BUTTON7);
-        else drop = blocked_key(b, e->dwOfs);
+        bool drop = isMouse ? (b.mouse || (b.mouseButtons && e->dwOfs >= DIMOFS_BUTTON0 && e->dwOfs <= DIMOFS_BUTTON7))
+                            : dik_blocked(b, e->dwOfs);
         if (!drop) {
-            if (w != i) memcpy((uint8_t*)rg + w * cb, e, cb);
+            if (w != i) memmove((uint8_t*)rg + w * cb, e, cb);
             w++;
         }
     }
@@ -137,7 +165,7 @@ static void hook_dinput() {
     Create_t create = real ? (Create_t)GetProcAddress(real, "DirectInput8Create") : nullptr;
     IDirectInput8W* di = nullptr;
     if (!create || FAILED(create(GetModuleHandleA(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8W, (void**)&di, nullptr))) {
-        log("input: no DirectInput (%p)", (void*)create);
+        log("input: no DirectInput");
         return;
     }
     IDirectInputDevice8W* kb = nullptr;
@@ -146,31 +174,109 @@ static void hook_dinput() {
         bool ok = MH_CreateHook(vt[9], (void*)hkGetState, (void**)&oGetState) == MH_OK &&
                   MH_CreateHook(vt[10], (void*)hkGetData, (void**)&oGetData) == MH_OK &&
                   MH_EnableHook(vt[9]) == MH_OK && MH_EnableHook(vt[10]) == MH_OK;
-        log("input: DirectInput device reads %s", ok ? "filtered" : "NOT filtered");
+        log("input: DirectInput reads %s", ok ? "filtered" : "NOT filtered");
         kb->Release();
     }
     di->Release();
 }
 
-// ---------------------------------------------------------------- window
+// --- Raw input
+typedef UINT(WINAPI* GetRawInputData_t)(HRAWINPUT, UINT, LPVOID, PUINT, UINT);
+typedef UINT(WINAPI* GetRawInputBuffer_t)(PRAWINPUT, PUINT, UINT);
+static GetRawInputData_t oGetRawInputData = nullptr;
+static GetRawInputBuffer_t oGetRawInputBuffer = nullptr;
 
-static bool modal_wants_input() {
-    if (!g_imguiReady) return false;
-    AcquireSRWLockShared(&g_inputLock);
-    bool m = g_block.mouse && g_block.keyboard;
-    ReleaseSRWLockShared(&g_inputLock);
-    return m;
+static void filter_raw(RAWINPUT* ri, const InputBlock& b) {
+    if (ri->header.dwType == RIM_TYPEMOUSE) {
+        if (b.mouse) {
+            ri->data.mouse.lLastX = ri->data.mouse.lLastY = 0;
+            ri->data.mouse.usButtonFlags = 0;
+        } else if (b.mouseButtons) {
+            ri->data.mouse.usButtonFlags &= (USHORT)(RI_MOUSE_WHEEL | RI_MOUSE_HWHEEL);
+        }
+    } else if (ri->header.dwType == RIM_TYPEKEYBOARD) {
+        if (vk_blocked(b, ri->data.keyboard.VKey)) {
+            ri->data.keyboard.VKey = 0xFF;
+            ri->data.keyboard.MakeCode = 0;
+        }
+    }
 }
+
+static UINT WINAPI hkGetRawInputData(HRAWINPUT h, UINT cmd, LPVOID data, PUINT size, UINT hdr) {
+    UINT r = oGetRawInputData(h, cmd, data, size, hdr);
+    InterlockedIncrement(&g_cntRaw);
+    if (cmd == RID_INPUT && data && r != (UINT)-1 && r >= sizeof(RAWINPUTHEADER)) filter_raw((RAWINPUT*)data, current_block());
+    return r;
+}
+
+static UINT WINAPI hkGetRawInputBuffer(PRAWINPUT data, PUINT size, UINT hdr) {
+    UINT n = oGetRawInputBuffer(data, size, hdr);
+    InterlockedIncrement(&g_cntRawBuf);
+    if (data && n != (UINT)-1 && n > 0) {
+        InputBlock b = current_block();
+        RAWINPUT* ri = data;
+        for (UINT i = 0; i < n; i++) {
+            filter_raw(ri, b);
+            ri = (RAWINPUT*)(((uintptr_t)ri + ri->header.dwSize + 7) & ~(uintptr_t)7);
+        }
+    }
+    return n;
+}
+
+static SHORT WINAPI hkGetAsyncKeyState(int vk) {
+    SHORT s = pGetAsyncKeyState(vk);
+    InterlockedIncrement(&g_cntAsync);
+    return vk_blocked(current_block(), vk) ? 0 : s;
+}
+
+// While a Remnant screen is open the game must not re-centre or confine the cursor.
+typedef BOOL(WINAPI* SetCursorPos_t)(int, int);
+typedef BOOL(WINAPI* ClipCursor_t)(const RECT*);
+static SetCursorPos_t oSetCursorPos = nullptr;
+static ClipCursor_t oClipCursor = nullptr;
+static BOOL WINAPI hkSetCursorPos(int x, int y) {
+    if (current_block().mouse) return TRUE;
+    return oSetCursorPos(x, y);
+}
+static BOOL WINAPI hkClipCursor(const RECT* r) {
+    if (current_block().mouse) return oClipCursor(nullptr);
+    return oClipCursor(r);
+}
+
+static void hook_user32() {
+    HMODULE u = GetModuleHandleA("user32.dll");
+    struct { const char* name; void* detour; void** orig; } h[] = {
+        {"GetRawInputData", (void*)hkGetRawInputData, (void**)&oGetRawInputData},
+        {"GetRawInputBuffer", (void*)hkGetRawInputBuffer, (void**)&oGetRawInputBuffer},
+        {"GetAsyncKeyState", (void*)hkGetAsyncKeyState, (void**)&pGetAsyncKeyState},
+        {"SetCursorPos", (void*)hkSetCursorPos, (void**)&oSetCursorPos},
+        {"ClipCursor", (void*)hkClipCursor, (void**)&oClipCursor},
+    };
+    int ok = 0;
+    for (auto& e : h) {
+        void* t = (void*)GetProcAddress(u, e.name);
+        if (t && MH_CreateHook(t, e.detour, e.orig) == MH_OK && MH_EnableHook(t) == MH_OK) ok++;
+        else log("input: could not filter %s", e.name);
+    }
+    log("input: %d of 5 user32 input calls filtered", ok);
+}
+
+// ---------------------------------------------------------------- window messages
 
 static LRESULT CALLBACK wndproc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
     if (g_imguiReady) {
         ImGui_ImplWin32_WndProcHandler(h, msg, wp, lp);
-        if (modal_wants_input()) {
-            bool inputMsg = (msg >= WM_MOUSEFIRST && msg <= WM_MOUSELAST) || (msg >= WM_KEYFIRST && msg <= WM_KEYLAST) ||
-                            msg == WM_INPUT;
-            if (inputMsg) return msg == WM_INPUT ? DefWindowProcW(h, msg, wp, lp) : 0;
-            if (msg == WM_SETCURSOR) return TRUE;
-        }
+        InputBlock b = current_block();
+        bool mouseMsg = msg >= WM_MOUSEFIRST && msg <= WM_MOUSELAST;
+        bool buttonMsg = mouseMsg && msg != WM_MOUSEMOVE && msg != WM_MOUSEWHEEL && msg != WM_MOUSEHWHEEL;
+        bool keyMsg = msg >= WM_KEYFIRST && msg <= WM_KEYLAST;
+        if (b.mouse && mouseMsg) return 0;
+        if (b.mouseButtons && buttonMsg) return 0;
+        if (keyMsg && (msg == WM_KEYDOWN || msg == WM_KEYUP || msg == WM_SYSKEYDOWN || msg == WM_SYSKEYUP) &&
+            vk_blocked(b, (int)wp))
+            return 0;
+        if (keyMsg && b.keyboard) return 0;
+        if (b.mouse && msg == WM_SETCURSOR) return TRUE;
     }
     return CallWindowProcW(g_origWndProc, h, msg, wp, lp);
 }
@@ -239,27 +345,85 @@ void* texture_for(const char* asset, int maxSide, int* w, int* h) {
     return t.srv;
 }
 
-// ---------------------------------------------------------------- present
+// ---------------------------------------------------------------- render targets
 
-static void make_rtv(IDXGISwapChain* sc) {
-    ID3D11Texture2D* back = nullptr;
-    if (SUCCEEDED(sc->GetBuffer(0, IID_ID3D11Texture2D, (void**)&back)) && back) {
-        g_dev->CreateRenderTargetView(back, nullptr, &g_rtv);
-        back->Release();
+static void release_targets() {
+    if (g_rtv) { g_rtv->Release(); g_rtv = nullptr; }
+    for (int i = 0; i < kMaxBuffers; i++) {
+        if (g_wrappedRtv[i]) { g_wrappedRtv[i]->Release(); g_wrappedRtv[i] = nullptr; }
+        if (g_wrapped[i]) { g_wrapped[i]->Release(); g_wrapped[i] = nullptr; }
     }
+    if (g_ctx) g_ctx->Flush();
+    g_bufferCount = 0;
 }
 
-static bool init_imgui(IDXGISwapChain* sc) {
-    if (FAILED(sc->GetDevice(IID_ID3D11Device, (void**)&g_dev)) || !g_dev) {
-        if (!g_dx12Logged) {
-            log("overlay: the game is not using Direct3D 11 (DirectX 12 mode?). The mod's screens need DX11 mode.");
-            g_dx12Logged = true;
-        }
-        return false;
+static bool make_targets(IDXGISwapChain* sc) {
+    if (!g_dx12) {
+        ID3D11Texture2D* back = nullptr;
+        if (FAILED(sc->GetBuffer(0, IID_ID3D11Texture2D, (void**)&back)) || !back) return false;
+        g_dev->CreateRenderTargetView(back, nullptr, &g_rtv);
+        back->Release();
+        return g_rtv != nullptr;
     }
-    g_dev->GetImmediateContext(&g_ctx);
     DXGI_SWAP_CHAIN_DESC sd;
     sc->GetDesc(&sd);
+    g_bufferCount = std::min<UINT>(sd.BufferCount, kMaxBuffers);
+    D3D11_RESOURCE_FLAGS fl = {D3D11_BIND_RENDER_TARGET, 0, 0, 0};
+    for (UINT i = 0; i < g_bufferCount; i++) {
+        ID3D12Resource* res = nullptr;
+        if (FAILED(sc->GetBuffer(i, IID_ID3D12Resource, (void**)&res)) || !res) return false;
+        HRESULT hr = g_on12->CreateWrappedResource(res, &fl, D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_PRESENT,
+                                                   IID_ID3D11Resource, (void**)&g_wrapped[i]);
+        res->Release();
+        if (FAILED(hr)) { log("overlay: wrapping back buffer %u failed (0x%08lx)", i, hr); return false; }
+        g_dev->CreateRenderTargetView(g_wrapped[i], nullptr, &g_wrappedRtv[i]);
+    }
+    return true;
+}
+
+// ---------------------------------------------------------------- D3D12: find the game's queue
+
+static void WINAPI hkExecute(ID3D12CommandQueue* q, UINT n, ID3D12CommandList* const* lists) {
+    if (!g_queue) {
+        D3D12_COMMAND_QUEUE_DESC d = q->GetDesc();
+        if (d.Type == D3D12_COMMAND_LIST_TYPE_DIRECT) {
+            q->AddRef();
+            g_queue = q;
+            log("overlay: D3D12 direct queue %p found", (void*)q);
+        }
+    }
+    oExecute(q, n, lists);
+}
+
+// ---------------------------------------------------------------- set-up on the first frame
+
+static bool init_imgui(IDXGISwapChain* sc) {
+    ID3D11Device* d11 = nullptr;
+    ID3D12Device* d12 = nullptr;
+    DXGI_SWAP_CHAIN_DESC sd;
+    sc->GetDesc(&sd);
+    if (SUCCEEDED(sc->GetDevice(IID_ID3D11Device, (void**)&d11)) && d11) {
+        g_dev = d11;
+        g_dev->GetImmediateContext(&g_ctx);
+        g_dx12 = false;
+    } else if (SUCCEEDED(sc->GetDevice(IID_ID3D12Device, (void**)&d12)) && d12) {
+        if (!g_queue) { d12->Release(); return false; }  // wait for the game to submit work
+        IUnknown* queues[] = {(IUnknown*)g_queue};
+        HRESULT hr = D3D11On12CreateDevice(d12, D3D11_CREATE_DEVICE_BGRA_SUPPORT, nullptr, 0, queues, 1, 0, &g_dev,
+                                           &g_ctx, nullptr);
+        d12->Release();
+        if (FAILED(hr) || !g_dev) {
+            log("overlay: D3D11On12 device failed (0x%08lx)", hr);
+            g_initFailed = true;
+            return false;
+        }
+        g_dev->QueryInterface(IID_ID3D11On12Device, (void**)&g_on12);
+        g_dx12 = true;
+    } else {
+        log("overlay: the swapchain has neither a D3D11 nor a D3D12 device");
+        g_initFailed = true;
+        return false;
+    }
     g_hwnd = sd.OutputWindow;
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
@@ -272,44 +436,100 @@ static bool init_imgui(IDXGISwapChain* sc) {
     g_origWndProc = (WNDPROC)SetWindowLongPtrW(g_hwnd, GWLP_WNDPROC, (LONG_PTR)wndproc);
     char cls[128] = {0};
     GetClassNameA(g_hwnd, cls, sizeof(cls));
-    log("overlay: Direct3D 11, window %p class '%s', %ux%u", (void*)g_hwnd, cls, sd.BufferDesc.Width,
-        sd.BufferDesc.Height);
+    log("overlay: %s, window class '%s', %ux%u, %u buffers, format %d", g_dx12 ? "Direct3D 12 (via 11on12)" : "Direct3D 11",
+        cls, sd.BufferDesc.Width, sd.BufferDesc.Height, sd.BufferCount, (int)sd.BufferDesc.Format);
+    melty_log("check overlay ok %s", g_dx12 ? "dx12" : "dx11");
     g_imguiReady = true;
     return true;
 }
 
-static HRESULT WINAPI hkPresent(IDXGISwapChain* sc, UINT sync, UINT flags) {
-    InterlockedIncrement(&g_inPresent);
-    if (!g_imguiReady) init_imgui(sc);
-    if (g_imguiReady) {
-        if (!g_rtv) make_rtv(sc);
-        poll_keys();
-        ImGui_ImplDX11_NewFrame();
-        ImGui_ImplWin32_NewFrame();
-        ImGui::NewFrame();
-        mod_frame();
-        ImGui::Render();
-        if (g_rtv) {
-            g_ctx->OMSetRenderTargets(1, &g_rtv, nullptr);
+static double g_inputReportAt = 0;
+
+static void render(IDXGISwapChain* sc) {
+    if (!g_imguiReady && !g_initFailed) init_imgui(sc);
+    if (!g_imguiReady) return;
+    if (!g_rtv && !g_bufferCount && !make_targets(sc)) return;
+    poll_keys();
+    ImGui_ImplDX11_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+    mod_frame();
+    ImGui::Render();
+    if (!g_dx12) {
+        g_ctx->OMSetRenderTargets(1, &g_rtv, nullptr);
+        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+    } else {
+        IDXGISwapChain3* sc3 = nullptr;
+        UINT idx = 0;
+        if (SUCCEEDED(sc->QueryInterface(IID_IDXGISwapChain3, (void**)&sc3)) && sc3) {
+            idx = sc3->GetCurrentBackBufferIndex();
+            sc3->Release();
+        }
+        if (idx < g_bufferCount && g_wrapped[idx]) {
+            g_on12->AcquireWrappedResources(&g_wrapped[idx], 1);
+            g_ctx->OMSetRenderTargets(1, &g_wrappedRtv[idx], nullptr);
             ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+            g_on12->ReleaseWrappedResources(&g_wrapped[idx], 1);
+            g_ctx->Flush();
         }
     }
-    HRESULT hr = oPresent(sc, sync, flags);
+    double t = GetTickCount64() / 1000.0;
+    if (g_inputReportAt == 0) g_inputReportAt = t + 20;
+    if (t > g_inputReportAt && g_inputReportAt > 0) {
+        log("input paths used by the game: dinput state %ld, dinput data %ld, raw %ld, raw buffer %ld, key state %ld",
+            g_cntDiState, g_cntDiData, g_cntRaw, g_cntRawBuf, g_cntAsync);
+        g_inputReportAt = -1;
+    }
+}
+
+static HRESULT WINAPI hkPresent0(IDXGISwapChain* sc, UINT sync, UINT flags) {
+    InterlockedIncrement(&g_inPresent);
+    if (!(flags & DXGI_PRESENT_TEST)) render(sc);
+    HRESULT hr = oPresent[0](sc, sync, flags);
     InterlockedDecrement(&g_inPresent);
     return hr;
 }
-
-static HRESULT WINAPI hkResize(IDXGISwapChain* sc, UINT n, UINT w, UINT h, DXGI_FORMAT f, UINT fl) {
-    if (g_rtv) { g_rtv->Release(); g_rtv = nullptr; }
-    return oResize(sc, n, w, h, f, fl);
+static HRESULT WINAPI hkPresent1_0(IDXGISwapChain1* sc, UINT sync, UINT flags, const DXGI_PRESENT_PARAMETERS* p) {
+    InterlockedIncrement(&g_inPresent);
+    if (!(flags & DXGI_PRESENT_TEST)) render(sc);
+    HRESULT hr = oPresent1[0](sc, sync, flags, p);
+    InterlockedDecrement(&g_inPresent);
+    return hr;
+}
+static HRESULT WINAPI hkResize0(IDXGISwapChain* sc, UINT n, UINT w, UINT h, DXGI_FORMAT f, UINT fl) {
+    release_targets();
+    return oResize[0](sc, n, w, h, f, fl);
+}
+static HRESULT WINAPI hkPresent1(IDXGISwapChain* sc, UINT sync, UINT flags) {
+    InterlockedIncrement(&g_inPresent);
+    if (!(flags & DXGI_PRESENT_TEST)) render(sc);
+    HRESULT hr = oPresent[1](sc, sync, flags);
+    InterlockedDecrement(&g_inPresent);
+    return hr;
+}
+static HRESULT WINAPI hkPresent1_1(IDXGISwapChain1* sc, UINT sync, UINT flags, const DXGI_PRESENT_PARAMETERS* p) {
+    InterlockedIncrement(&g_inPresent);
+    if (!(flags & DXGI_PRESENT_TEST)) render(sc);
+    HRESULT hr = oPresent1[1](sc, sync, flags, p);
+    InterlockedDecrement(&g_inPresent);
+    return hr;
+}
+static HRESULT WINAPI hkResize1(IDXGISwapChain* sc, UINT n, UINT w, UINT h, DXGI_FORMAT f, UINT fl) {
+    release_targets();
+    return oResize[1](sc, n, w, h, f, fl);
 }
 
-static bool swapchain_vtable(void*** out) {
+// ---------------------------------------------------------------- probes (throwaway device + swapchain)
+
+static HWND probe_window() {
     WNDCLASSEXA wc = {sizeof(wc), CS_HREDRAW | CS_VREDRAW, DefWindowProcA, 0, 0, GetModuleHandleA(nullptr),
                       nullptr, nullptr, nullptr, nullptr, "RemnantHuntProbe", nullptr};
     RegisterClassExA(&wc);
-    HWND hw = CreateWindowA(wc.lpszClassName, "", WS_OVERLAPPEDWINDOW, 0, 0, 64, 64, nullptr, nullptr, wc.hInstance,
-                            nullptr);
+    return CreateWindowA(wc.lpszClassName, "", WS_OVERLAPPEDWINDOW, 0, 0, 64, 64, nullptr, nullptr, wc.hInstance,
+                         nullptr);
+}
+
+static bool probe_dx11(HWND hw, HookSet* out) {
     DXGI_SWAP_CHAIN_DESC sd = {};
     sd.BufferCount = 1;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -327,31 +547,90 @@ static bool swapchain_vtable(void*** out) {
     bool ok = SUCCEEDED(hr) && sc;
     if (ok) {
         void** vt = *(void***)sc;
-        out[0] = (void**)vt[8];
-        out[1] = (void**)vt[13];
+        out->present = vt[8];
+        out->resize = vt[13];
+        out->present1 = vt[22];
     }
     if (sc) sc->Release();
     if (ctx) ctx->Release();
     if (dev) dev->Release();
-    DestroyWindow(hw);
-    UnregisterClassA(wc.lpszClassName, wc.hInstance);
     return ok;
+}
+
+static bool probe_dx12(HWND hw, HookSet* out, void** execute) {
+    HMODULE m = LoadLibraryA("d3d12.dll");
+    if (!m) return false;
+    typedef HRESULT(WINAPI * Create_t)(IUnknown*, D3D_FEATURE_LEVEL, REFIID, void**);
+    Create_t create = (Create_t)GetProcAddress(m, "D3D12CreateDevice");
+    if (!create) return false;
+    ID3D12Device* dev = nullptr;
+    if (FAILED(create(nullptr, D3D_FEATURE_LEVEL_11_0, IID_ID3D12Device, (void**)&dev)) || !dev) return false;
+    D3D12_COMMAND_QUEUE_DESC qd = {};
+    qd.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+    ID3D12CommandQueue* q = nullptr;
+    bool ok = SUCCEEDED(dev->CreateCommandQueue(&qd, IID_ID3D12CommandQueue, (void**)&q)) && q;
+    if (ok) {
+        *execute = (*(void***)q)[10];
+        IDXGIFactory4* f = nullptr;
+        if (SUCCEEDED(CreateDXGIFactory1(IID_IDXGIFactory4, (void**)&f)) && f) {
+            DXGI_SWAP_CHAIN_DESC1 sd = {};
+            sd.BufferCount = 2;
+            sd.Width = sd.Height = 64;
+            sd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+            sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+            sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+            sd.SampleDesc.Count = 1;
+            IDXGISwapChain1* sc = nullptr;
+            if (SUCCEEDED(f->CreateSwapChainForHwnd(q, hw, &sd, nullptr, nullptr, &sc)) && sc) {
+                void** vt = *(void***)sc;
+                out->present = vt[8];
+                out->resize = vt[13];
+                out->present1 = vt[22];
+                sc->Release();
+            }
+            f->Release();
+        }
+        q->Release();
+    }
+    dev->Release();
+    return ok;
+}
+
+static bool hook(void* target, void* detour, void** orig, const char* what) {
+    if (!target) return false;
+    MH_STATUS s = MH_CreateHook(target, detour, orig);
+    if (s == MH_OK) s = MH_EnableHook(target);
+    if (s != MH_OK) log("overlay: hook %s failed (%d)", what, (int)s);
+    return s == MH_OK;
 }
 
 bool overlay_install() {
     MH_Initialize();
     hook_dinput();
-    void** fns[2] = {};
-    if (!swapchain_vtable(fns)) {
-        log("overlay: could not create a probe swapchain");
-        return false;
+    hook_user32();
+    HWND hw = probe_window();
+    void* execute = nullptr;
+    bool d11 = probe_dx11(hw, &g_targets[0]);
+    bool d12 = probe_dx12(hw, &g_targets[1], &execute);
+    DestroyWindow(hw);
+    UnregisterClassA("RemnantHuntProbe", GetModuleHandleA(nullptr));
+    bool ok = false;
+    if (d11) {
+        ok |= hook(g_targets[0].present, (void*)hkPresent0, (void**)&oPresent[0], "Present");
+        hook(g_targets[0].present1, (void*)hkPresent1_0, (void**)&oPresent1[0], "Present1");
+        hook(g_targets[0].resize, (void*)hkResize0, (void**)&oResize[0], "ResizeBuffers");
     }
-    g_presentTarget = fns[0];
-    g_resizeTarget = fns[1];
-    bool ok = MH_CreateHook(g_presentTarget, (void*)hkPresent, (void**)&oPresent) == MH_OK &&
-              MH_CreateHook(g_resizeTarget, (void*)hkResize, (void**)&oResize) == MH_OK &&
-              MH_EnableHook(g_presentTarget) == MH_OK && MH_EnableHook(g_resizeTarget) == MH_OK;
-    log("overlay: DXGI Present hook %s", ok ? "installed" : "FAILED");
+    if (d12) {
+        hook(execute, (void*)hkExecute, (void**)&oExecute, "ExecuteCommandLists");
+        // A flip-model swapchain may use another implementation in dxgi.dll: hook it too when it differs.
+        if (g_targets[1].present && g_targets[1].present != g_targets[0].present)
+            ok |= hook(g_targets[1].present, (void*)hkPresent1, (void**)&oPresent[1], "Present (flip)");
+        if (g_targets[1].present1 && g_targets[1].present1 != g_targets[0].present1)
+            hook(g_targets[1].present1, (void*)hkPresent1_1, (void**)&oPresent1[1], "Present1 (flip)");
+        if (g_targets[1].resize && g_targets[1].resize != g_targets[0].resize)
+            hook(g_targets[1].resize, (void*)hkResize1, (void**)&oResize[1], "ResizeBuffers (flip)");
+    }
+    log("overlay: probes dx11=%d dx12=%d, present hooks %s", d11, d12, ok ? "installed" : "FAILED");
     return ok;
 }
 
@@ -369,12 +648,13 @@ void overlay_remove() {
     for (auto& e : g_tex)
         if (e.second.srv) e.second.srv->Release();
     g_tex.clear();
-    if (g_rtv) { g_rtv->Release(); g_rtv = nullptr; }
+    release_targets();
+    if (g_on12) { g_on12->Release(); g_on12 = nullptr; }
     if (g_ctx) { g_ctx->Release(); g_ctx = nullptr; }
     if (g_dev) { g_dev->Release(); g_dev = nullptr; }
     MH_RemoveHook(MH_ALL_HOOKS);
     MH_Uninitialize();
-    log("overlay: removed (DirectInput state calls %ld, data calls %ld)", g_diStateCalls, g_diDataCalls);
+    log("overlay: removed");
 }
 
 }  // namespace rh

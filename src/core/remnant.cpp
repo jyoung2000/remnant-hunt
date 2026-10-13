@@ -138,7 +138,7 @@ static void deal(Live& l, const Monster& m, float dmg, Vec3 at, bool crit) {
     l.totalDamage += dmg;
 }
 
-static void fire(SaveData& s, Live& l, int gun, double t) {
+static int fire(SaveData& s, Live& l, int gun, double t) {
     const Weapons& w = kWeapons[gun];
     const Archetypes* a = archetype();
     const GameView& v = l.snap.view;
@@ -195,6 +195,7 @@ static void fire(SaveData& s, Live& l, int gun, double t) {
         l.hits++;
         l.hitMarkerUntil = t + 0.18;
         l.hitMarkerWeak = acc[k].weak;
+        l.tracers[l.nextTracer++ % 16] = {acc[k].at, t + 0.09, true};
         int mod = s.equippedLong >= 0 ? kWeapons[s.equippedLong].mod : -1;
         if (mod >= 0 && t >= l.modUntil) l.modCharge = std::min(kMods[mod].charge_damage, l.modCharge + acc[k].dmg);
         if (acc[k].m->large) s.scrap += (int)(acc[k].dmg * tune(TUNING_SCRAP_PER_1000_DAMAGE) / 1000.0f + frand());
@@ -205,6 +206,7 @@ static void fire(SaveData& s, Live& l, int gun, double t) {
         }
         if (k == 0) l.burnTarget = acc[k].m->em;
     }
+    return nacc;
 }
 
 // ---------------------------------------------------------------- the tick
@@ -401,11 +403,19 @@ void mod_game_tick() {
             }
             if (l.gunMode && g.view.valid && key_down(VK_LBUTTON) && l.reloadDone == 0 && t >= l.nextShot &&
                 (l.mag[gun] > 0 || infinite)) {
-                fire(s, l, gun, t);
+                int nacc_last = fire(s, l, gun, t);
                 if (!infinite) l.mag[gun]--;
                 float rpm = w.rpm * (infinite ? kSkills[a->skill].magnitude : 1.0f);
                 l.nextShot = t + 60.0 / std::max(1.0f, rpm);
-                if (test_mode() && l.hits == 1 && l.shots >= 1) melty_log("check shot-landed ok");
+                l.muzzleUntil = t + 0.05;
+                if (nacc_last == 0 && g.view.valid) {
+                    Vec3 fwd = norm(sub(g.view.camTarget, g.view.camPos));
+                    l.tracers[l.nextTracer++ % 16] = {add(g.view.camPos, mul(fwd, kWeapons[gun].range_m * 100.0f)), t + 0.07, false};
+                }
+                if (test_mode() && l.hits > 0 && !l.shotLogged) {
+                    melty_log("check shot-landed ok %.0f-damage", l.totalDamage);
+                    l.shotLogged = true;
+                }
             }
         }
     }
