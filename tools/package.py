@@ -32,6 +32,8 @@ def files():
            ("third_party/minhook/LICENSE.txt", "MinHook-BSD-2-Clause.txt"),
            ("third_party/ww2ogg/COPYING", "ww2ogg-BSD-3-Clause.txt"),
            ("third_party/imgui/LICENSE.txt", "DearImGui-MIT.txt"),
+           ("third_party/acl/LICENSE", "acl-MIT.txt"),
+           ("third_party/rtm/LICENSE", "rtm-MIT.txt"),
            ("assets/fonts/OFL-Montserrat.txt", "Montserrat-OFL.txt"),
            ("assets/fonts/OFL-EBGaramond.txt", "EBGaramond-OFL.txt")]
     for src, name in lic:

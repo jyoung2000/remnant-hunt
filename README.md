@@ -4,13 +4,44 @@ Your Remnant II hero comes through a worldstone into the New World. You hunt Mon
 Remnant's guns, archetypes, weapon mods and the Dragon Heart, and you can still use MHW's own weapons, armor and
 items. Remnant screens look like Remnant; the rest of the game stays Monster Hunter.
 
+## Install
+Close Monster Hunter: World, open **PowerShell** and paste:
+
+```powershell
+irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 | iex
+```
+
+It finds Monster Hunter: World in your Steam libraries, downloads the latest release and puts `dinput8.dll` and the
+`remnant_hunt` folder next to `MonsterHunterWorld.exe`. Then start the game from Steam as usual.
+
+- **By hand:** download `remnant_hunt-<version>.zip` from [Releases](https://github.com/jyoung2000/remnant-hunt/releases)
+  and extract it into your Monster Hunter: World folder (the one with `MonsterHunterWorld.exe`).
+- **Another mod loader:** Stracker's Loader also uses `dinput8.dll`. The installer stops rather than replace it;
+  run it with `-Force` to keep yours as `dinput8.dll.bak`.
+- **Game in another folder:** `.\install.ps1 -GameDir "D:\Games\Monster Hunter World"`.
+- **Uninstall:** `.\install.ps1 -Uninstall`, or delete `dinput8.dll` and the `remnant_hunt` folder.
+
 ## What you need
 - **Monster Hunter: World** on Steam, Ver. 15.23.00 (the final PC patch). The mod runs inside it.
 - **Remnant II** installed on the same PC. The mod reads Remnant II's names, descriptions, lines and icons from
   your own copy while you play. Nothing from either game is included in this download.
 - Windows 10 or 11. DirectX 11 and DirectX 12 mode both work.
 
-## What's in it (v0.2, solo)
+## New in v0.3
+- **Remnant II's bosses roam MHW's hunting zones** as creatures of their own, drawn with Remnant II's own models,
+  textures, animations and sounds: 29 of them, from the Corrupted Ravager and the Nightweaver to Annihilation, the One
+  True King, Lydusa and Alepsis-Taura. They are scaled to the zone's rank, and the strongest only appear in high or
+  master rank. Press **F9** in the Training Area to bring them out one by one.
+- **Stagger** for the bosses from both games' weapons; MHW's bows and bowguns hit them too.
+- **Remnant-style health bars** for the bosses and for MHW's monsters, damage numbers, and a tracker for Remnant
+  creatures in the zone.
+- **Remnant statuses** (BLEEDING, BURNING, CORRODED, OVERLOADED, EXPOSED, SLOWED, MARKED) on monsters and on you,
+  with Remnant II's icons; armor resistances and cures. Archetype skills such as War Stomp, Miasma, Eruption and
+  Hunter's Mark work as in Remnant II.
+- **Remnant gun models** in gun mode with their own shot and reload animations and Remnant's muzzle flash.
+- The hunter flinches from Remnant hits with MHW's own reactions, learned from MHW's monsters as you play.
+
+## What's in it (solo)
 - **Worldstone intro**, then **choose your archetype** from Remnant II's starting four (Challenger, Handler, Hunter,
   Medic), with their own names, emblems, skills and perks read from your install.
 - **The whole Remnant II arsenal**: all 14 archetypes with their skills, perks and traits, 112 weapons (long guns,
@@ -41,7 +72,7 @@ items. Remnant screens look like Remnant; the rest of the game stays Monster Hun
 The keys avoid MHW's default PC bindings; every key can be changed in `remnant_hunt/remnant_hunt.ini`. Progress is saved in `%LOCALAPPDATA%\RemnantHunt\save.json`.
 
 ## Multiplayer
-v0.1 is solo: Remnant combat switches itself off when other hunters are in your quest. Co-op for up to 4 hunters
+Remnant Hunt is solo for now: Remnant combat switches itself off when other hunters are in your quest. Co-op for up to 4 hunters
 who all have the mod is planned, with joining through MHW's own sessions and SOS.
 
 ## How it works
