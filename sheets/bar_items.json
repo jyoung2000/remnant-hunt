@@ -1,0 +1,72 @@
+{
+ "sheet": "bar_items",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "what": "str",
+  "source_ref": "str",
+  "bar": "enum:item_pouch|special",
+  "mhw_item_id": "num",
+  "reusable": "enum:yes|no",
+  "count_from": "str",
+  "on_use": "str",
+  "icon": "str"
+ },
+ "rows": [
+  {
+   "id": "dragon_heart",
+   "what": "Dragon Heart relic",
+   "source_ref": "relics.dragon_heart",
+   "bar": "item_pouch",
+   "mhw_item_id": null,
+   "reusable": "no",
+   "count_from": "save.relicCharges",
+   "on_use": "relic heal (systems.relic)",
+   "icon": "relics.dragon_heart.icon over the slot"
+  },
+  {
+   "id": "archetype_skill",
+   "what": "archetype skill (Hunter's Mark, Wellspring, Juggernaut, Bulletstorm)",
+   "source_ref": "skills.<archetype skill>",
+   "bar": "special",
+   "mhw_item_id": null,
+   "reusable": "yes",
+   "count_from": "1",
+   "on_use": "skill (systems.skill)",
+   "icon": "skills.icon over the slot"
+  },
+  {
+   "id": "long_gun",
+   "what": "equipped Remnant long gun",
+   "source_ref": "weapons.<equipped long>",
+   "bar": "special",
+   "mhw_item_id": null,
+   "reusable": "yes",
+   "count_from": "1",
+   "on_use": "gun mode on with the long gun",
+   "icon": "weapons.icon over the slot"
+  },
+  {
+   "id": "hand_gun",
+   "what": "equipped Remnant hand gun",
+   "source_ref": "weapons.<equipped hand>",
+   "bar": "special",
+   "mhw_item_id": null,
+   "reusable": "yes",
+   "count_from": "1",
+   "on_use": "gun mode on with the hand gun",
+   "icon": "weapons.icon over the slot"
+  },
+  {
+   "id": "weapon_mod",
+   "what": "long gun's weapon mod",
+   "source_ref": "mods.<long gun mod>",
+   "bar": "special",
+   "mhw_item_id": null,
+   "reusable": "yes",
+   "count_from": "1 when charged",
+   "on_use": "mod (systems.mod_charge)",
+   "icon": "mods.icon over the slot"
+  }
+ ]
+}
