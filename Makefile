@@ -56,18 +56,40 @@ $(O)/ooz/%.o: third_party/ooz/%
 	@mkdir -p $(dir $@)
 	$(CXX) -O2 -std=c++17 -DNDEBUG -DOODLE_ENABLE_AVX2 -include immintrin.h -Wno-everything -Ithird_party/ooz -c $< -o $@
 
-$(O)/r2read/%.o: src/r2read/%
-	@mkdir -p $(dir $@)
-	$(CXX) -O2 -std=c++17 -Wall -c $< -o $@
+# Wwise Vorbis: ww2ogg (BSD-3) rebuilds Ogg Vorbis, stb_vorbis (public domain) decodes it.
+WW2OGG := third_party/ww2ogg/wwriff.cpp third_party/ww2ogg/codebook.cpp
+build/gen/codebooks.inc: third_party/ww2ogg/packed_codebooks_aoTuV_603.bin
+	@mkdir -p build/gen
+	python3 -c "import sys;d=open(sys.argv[1],'rb').read();open(sys.argv[2],'w').write('static const unsigned char kCodebooks[] = {'+','.join(str(x) for x in d)+'};\nstatic const size_t kCodebooksSize = %d;\n'%len(d))" $< $@
 
-$(B)/r2read.exe: $(O)/r2read/main.cpp.o $(O)/r2read/r2pak.cpp.o $(patsubst third_party/ooz/%,$(O)/ooz/%.o,$(OOZ))
+$(O)/r2read/%.o: src/r2read/% build/gen/codebooks.inc
+	@mkdir -p $(dir $@)
+	$(CXX) -O2 -std=c++17 -Wall -Wno-unused-function -Ithird_party/ww2ogg -Ibuild/gen -c $< -o $@
+
+$(O)/ww2ogg/%.o: third_party/ww2ogg/%
+	@mkdir -p $(dir $@)
+	$(CXX) -O2 -std=c++17 -Wno-everything -c $< -o $@
+
+$(O)/ww2ogg/crc.c.o: third_party/ww2ogg/crc.c
+	@mkdir -p $(dir $@)
+	$(CC) -O2 -Wno-everything -c $< -o $@
+
+$(O)/stb/stb_vorbis.c.o: third_party/stb/stb_vorbis.c
+	@mkdir -p $(dir $@)
+	$(CC) -O2 -Wno-everything -DSTB_VORBIS_NO_STDIO -c $< -o $@
+
+R2READ_OBJ := $(O)/r2read/main.cpp.o $(O)/r2read/r2pak.cpp.o $(O)/r2read/wwise.cpp.o \
+              $(patsubst third_party/ww2ogg/%,$(O)/ww2ogg/%.o,$(WW2OGG)) $(O)/ww2ogg/crc.c.o $(O)/stb/stb_vorbis.c.o
+
+$(B)/r2read.exe: $(R2READ_OBJ) $(patsubst third_party/ooz/%,$(O)/ooz/%.o,$(OOZ))
 	@mkdir -p $(B)
 	$(CXX) -static -s -O2 -o $@ $^
 
 test:
 	@mkdir -p build/linux
-	g++ -O2 -std=c++17 -DOODLE_ENABLE_AVX2 -include immintrin.h -Ithird_party/ooz -o build/linux/r2read \
-	    src/r2read/main.cpp src/r2read/r2pak.cpp $(OOZ) -w
+	g++ -O2 -std=c++17 -DOODLE_ENABLE_AVX2 -include immintrin.h -Ithird_party/ooz -Ithird_party/ww2ogg -Ibuild/gen \
+	    -o build/linux/r2read src/r2read/main.cpp src/r2read/r2pak.cpp src/r2read/wwise.cpp $(WW2OGG) \
+	    -x c third_party/ww2ogg/crc.c third_party/stb/stb_vorbis.c -x none $(OOZ) -w
 	python3 tools/test_r2read.py build/linux/r2read "$(R2)"
 
 package: all

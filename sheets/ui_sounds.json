@@ -1,0 +1,34 @@
+{
+ "sheet": "ui_sounds",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "event": "r2snd"
+ },
+ "rows": [
+  {
+   "id": "craft",
+   "event": "Remnant2/Content/WwiseAudio/Events/UI/Widget_Crafting/UI_Crafting_Craft.uasset"
+  },
+  {
+   "id": "buy",
+   "event": "Remnant2/Content/WwiseAudio/Events/UI/Widget_BuySellConfirm/UI_BuySellConfirm_Buy.uasset"
+  },
+  {
+   "id": "upgrade",
+   "event": "Remnant2/Content/WwiseAudio/Events/UI/Widget_UpgradeConfirm/UI_UpgradeConfirm.uasset"
+  },
+  {
+   "id": "equip",
+   "event": "Remnant2/Content/WwiseAudio/Events/UI/Equip/UI_Equip_Weapon_Ranged_AssaultRifle.uasset"
+  },
+  {
+   "id": "open",
+   "event": "Remnant2/Content/WwiseAudio/Events/UI/Widget_Screen_Terminal/UI_Screen_Terminal_OnClicked.uasset"
+  },
+  {
+   "id": "socket",
+   "event": "Remnant2/Content/WwiseAudio/Events/UI/RelicFragments/UI_RelicFragments_Gem_Socket.uasset"
+  }
+ ]
+}

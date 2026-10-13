@@ -1,0 +1,5 @@
+ww2ogg 0.24 by Adam Gashlin (hcs), BSD-3-Clause (COPYING), https://github.com/hcs64/ww2ogg
+Files: Bit_stream.h codebook.{h,cpp} crc.{h,c} errors.h wwriff.{h,cpp} packed_codebooks_aoTuV_603.bin
+Local changes for r2read (marked "r2read:"): the .wem is read from memory (istringstream) instead of a file, the
+packed codebook library is read from memory, and generate_ogg writes to any ostream. The command-line front end
+(ww2ogg.cpp) is not used.

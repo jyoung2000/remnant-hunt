@@ -85,6 +85,13 @@ const std::string& r2_name(const sheets::R2Name& n);
 struct R2Image { int w = 0, h = 0; std::string format; std::vector<uint8_t> pixels; bool failed = false; };
 const R2Image* r2_image(const char* asset, int maxSide);  // nullptr until loaded (loads on a worker thread)
 int r2_cells_checked(int* failed);  // test mode: resolves every Remnant II cell of the sheets
+// A play of a Remnant II sound event (one variation of each layer), stereo 16-bit; nullptr until decoded.
+struct R2Sound { int rate = 0; std::vector<int16_t> pcm; bool failed = false; };
+const R2Sound* r2_sound(const char* event, int variant);
+
+// Remnant II sounds through the mod's own audio (audio.cpp, XAudio2). Any thread.
+void audio_play(const char* event, float volume = 1.0f);
+void audio_prefetch(const char* event);
 
 // ---------------------------------------------------------------- overlay + input (overlay.cpp)
 bool overlay_install();

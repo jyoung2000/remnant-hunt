@@ -11,7 +11,8 @@
   "tier": "num",
   "menu": "enum:smithy|melder|provisions|archetype",
   "zenny": "num",
-  "recipe": "recipe"
+  "recipe": "recipe",
+  "snd_use": "r2snd|none"
  },
  "rows": [
   {
@@ -38,7 +39,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/AllSeeingEye/Consumable_AllSeeingEye_Foley_Grab.uasset"
   },
   {
    "id": "ammo_box",
@@ -64,7 +66,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/AmmoBox/Consumable_AmmoBox_Bullets_Reveived.uasset"
   },
   {
    "id": "antidote",
@@ -90,7 +93,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "bandage",
@@ -116,7 +120,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Bandage/Consumable_Bandage_Tear.uasset"
   },
   {
    "id": "binding_orb",
@@ -142,7 +147,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/BindingOrb/Consumable_BindingOrb_BindPool_Tell.uasset"
   },
   {
    "id": "black_tar",
@@ -168,7 +174,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/BlackTar/Consumable_BlackTar_Explosion.uasset"
   },
   {
    "id": "blood_root",
@@ -194,7 +201,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "brightstone",
@@ -220,7 +228,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Brightstone/Consumable_Brightstone_Projectile_Bounce.uasset"
   },
   {
    "id": "confidence_booster",
@@ -246,7 +255,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "drans_dream",
@@ -272,7 +282,8 @@
    "zenny": 1250,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "dried_fruit",
@@ -298,7 +309,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "ethereal_orb",
@@ -324,7 +336,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "faerie_needle",
@@ -350,7 +363,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "gul_serum",
@@ -376,7 +390,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "hunters_dream",
@@ -402,7 +417,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "koara_pellet",
@@ -428,7 +444,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/KoaraPellet/KoaraPellet_Buff.uasset"
   },
   {
    "id": "light_extract",
@@ -454,7 +471,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "liquid_escape",
@@ -480,7 +498,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "mud_rub",
@@ -506,7 +525,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "mystery_jerky",
@@ -532,7 +552,8 @@
    "zenny": 1250,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "nimues_dream",
@@ -553,7 +574,8 @@
    "zenny": 600,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "oilskin_balm",
@@ -579,7 +601,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "orb_of_undoing",
@@ -605,7 +628,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "pipe_bomb",
@@ -631,7 +655,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/PipeBomb/Consumable_PipeBomb_Explosion.uasset"
   },
   {
    "id": "poisoned_spice_capsule",
@@ -657,7 +682,8 @@
    "zenny": 600,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "processed_koara",
@@ -683,7 +709,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "purified_salve",
@@ -709,7 +736,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "rocket_fuel",
@@ -735,7 +763,8 @@
    "zenny": 100,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "spice",
@@ -761,7 +790,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "sweet_leaf",
@@ -787,7 +817,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "thaen_fruit_celestial",
@@ -813,7 +844,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "thaen_fruit_elder",
@@ -839,7 +871,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "thaen_fruit_mature",
@@ -865,7 +898,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "timeworn_unguent",
@@ -891,7 +925,8 @@
    "zenny": 200,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "bark_extract",
@@ -917,7 +952,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "bottled_shaedberry",
@@ -943,7 +979,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "chilled_steam",
@@ -969,7 +1006,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "dark_cider",
@@ -995,7 +1033,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "dark_fluid",
@@ -1016,7 +1055,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "egg_drink",
@@ -1042,7 +1082,8 @@
    "zenny": 2500,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "meat_shake",
@@ -1068,7 +1109,8 @@
    "zenny": 2500,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "mud_tooths_elixir",
@@ -1094,7 +1136,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "mudtooths_snake_oil",
@@ -1120,7 +1163,8 @@
    "zenny": 5000,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "mud_tooths_stew",
@@ -1146,7 +1190,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset"
   },
   {
    "id": "mud_tooths_tonic",
@@ -1172,7 +1217,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "numbing_agent",
@@ -1198,7 +1244,8 @@
    "zenny": 5000,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "root_water",
@@ -1224,7 +1271,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "sacred_lakewater",
@@ -1250,7 +1298,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "sanguine_vapor",
@@ -1276,7 +1325,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "strong_drink",
@@ -1302,7 +1352,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "tranquility_font",
@@ -1328,7 +1379,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "verdant_tea",
@@ -1354,7 +1406,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   },
   {
    "id": "xenoplasm",
@@ -1380,7 +1433,8 @@
    "zenny": 150,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset"
   }
  ]
 }

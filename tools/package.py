@@ -30,6 +30,7 @@ def files():
     lic = [("LICENSE", "LICENSE-GPL-3.0.txt"), ("NOTICE.md", "NOTICE.txt"),
            ("third_party/ooz/UPSTREAM.txt", "ooz-source.txt"),
            ("third_party/minhook/LICENSE.txt", "MinHook-BSD-2-Clause.txt"),
+           ("third_party/ww2ogg/COPYING", "ww2ogg-BSD-3-Clause.txt"),
            ("third_party/imgui/LICENSE.txt", "DearImGui-MIT.txt"),
            ("assets/fonts/OFL-Montserrat.txt", "Montserrat-OFL.txt"),
            ("assets/fonts/OFL-EBGaramond.txt", "EBGaramond-OFL.txt")]

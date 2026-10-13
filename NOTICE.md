@@ -16,6 +16,8 @@ the player's own installed copies at run time.
 | MinHook | Tsuda Kageyu | BSD-2-Clause | hooks in Windows' own DLLs (dxgi, d3d12, dinput8, user32) |
 | Montserrat | The Montserrat Project Authors | SIL Open Font License 1.1 | body text |
 | EB Garamond | The EB Garamond Project Authors | SIL Open Font License 1.1 | titles |
+| ww2ogg 0.24 (with its packed aoTuV 6.03 codebooks) | Adam Gashlin (hcs), Xiph.org Foundation | BSD-3-Clause | `r2read.exe` turns Remnant II's Wwise Vorbis sounds into standard Ogg Vorbis, in memory |
+| stb_vorbis | Sean Barrett and contributors | public domain (or MIT) | `r2read.exe` decodes those sounds |
 
 ## Research credits
 - Monster Hunter: World 15.23.00 addresses and structures: justbustin/minecraft-crossover-bridge (MIT) and

@@ -73,6 +73,10 @@ def main():
                 kinds = typ.split("|")
                 if v == "none" and "none" in kinds:
                     continue
+                if typ.startswith("r2snd"):
+                    if not (isinstance(v, str) and v.startswith("Remnant2/Content/WwiseAudio/Events/") and v.endswith(".uasset")):
+                        invalid.append(f"{where}: not a Remnant II sound event ({v!r})")
+                    continue
                 if typ.startswith("effects"):
                     if not isinstance(v, str) or not effects_ok(v):
                         invalid.append(f"{where}: not in the effect language ({v!r})")

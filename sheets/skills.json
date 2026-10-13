@@ -8,7 +8,8 @@
   "effects": "effects",
   "fidelity": "enum:exact|approx|fallback",
   "cooldown_s": "num",
-  "duration_s": "num"
+  "duration_s": "num",
+  "snd_use": "r2snd|none"
  },
  "rows": [
   {
@@ -25,7 +26,8 @@
    "effects": "use:buff dr+25% 15s",
    "fidelity": "approx",
    "cooldown_s": 75.0,
-   "duration_s": 10.0
+   "duration_s": 10.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_StoneMist_Activate.uasset"
   },
   {
    "id": "alchemistvial_frenzydust",
@@ -41,7 +43,8 @@
    "effects": "use:buff fire_rate+20% 15s;use:buff reload+20% 15s",
    "fidelity": "approx",
    "cooldown_s": 75.0,
-   "duration_s": 10.0
+   "duration_s": 10.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_FrenzyDust_Activate.uasset"
   },
   {
    "id": "alchemistvial_elixiroflife",
@@ -57,7 +60,8 @@
    "effects": "use:heal 100% 20s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 10.0
+   "duration_s": 10.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_ElixirOfLife_Activate.uasset"
   },
   {
    "id": "realityrune",
@@ -73,7 +77,8 @@
    "effects": "use:buff dmg_status+10% 15s",
    "fidelity": "fallback",
    "cooldown_s": 75.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_RealityRune_Aura_Activate.uasset"
   },
   {
    "id": "chaosgate",
@@ -89,7 +94,8 @@
    "effects": "use:buff dmg+10% 20s;use:buff mod_gen+25% 20s",
    "fidelity": "exact",
    "cooldown_s": 85.0,
-   "duration_s": 20.0
+   "duration_s": 20.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_ChaosGate_Aura_Loop.uasset"
   },
   {
    "id": "havocform",
@@ -105,7 +111,8 @@
    "effects": "use:burst 150;use:buff dr+50% 15s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 30.0
+   "duration_s": 30.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_HavocForm_Blink_End.uasset"
   },
   {
    "id": "warstomp",
@@ -121,7 +128,8 @@
    "effects": "use:burst 150",
    "fidelity": "approx",
    "cooldown_s": 50.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_WarStomp.uasset"
   },
   {
    "id": "juggernaut",
@@ -137,7 +145,8 @@
    "effects": "use:buff dmg_melee+50% 25s;use:buff dr+25% 25s",
    "fidelity": "exact",
    "cooldown_s": 60.0,
-   "duration_s": 25.0
+   "duration_s": 25.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_Juggernaut_Cast.uasset"
   },
   {
    "id": "rampage",
@@ -153,7 +162,8 @@
    "effects": "use:buff fire_rate+10% 15s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 10.0
+   "duration_s": 10.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_Rampage_Berserk_Cast.uasset"
   },
   {
    "id": "deployable_gatling",
@@ -169,7 +179,8 @@
    "effects": "use:summon 40 20s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "deployable_flamethrower",
@@ -185,7 +196,8 @@
    "effects": "use:summon 40 20s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Engineer/Engineer_FlameCannon_Projectile_Loop.uasset"
   },
   {
    "id": "deployable_impactcannon",
@@ -201,7 +213,8 @@
    "effects": "use:summon 40 20s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Engineer/Engineer_VulcanCannon_Barrel_Winddown.uasset"
   },
   {
    "id": "plainswalker",
@@ -217,7 +230,8 @@
    "effects": "use:buff stamina+20% 15s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
-   "duration_s": 30.0
+   "duration_s": 30.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_Plainswalker_Activate.uasset"
   },
   {
    "id": "golddigger",
@@ -233,7 +247,8 @@
    "effects": "use:buff dmg+10% 15s;use:buff dr+15% 15s",
    "fidelity": "approx",
    "cooldown_s": 45.0,
-   "duration_s": 45.0
+   "duration_s": 45.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_GoldDigger_Dirt_Slide_01.uasset"
   },
   {
    "id": "fortunehunter",
@@ -249,7 +264,8 @@
    "effects": "use:buff dmg+15% 15s",
    "fidelity": "fallback",
    "cooldown_s": 90.0,
-   "duration_s": 60.0
+   "duration_s": 60.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_FortuneHunter_Activate.uasset"
   },
   {
    "id": "aimable_quickdraw",
@@ -265,7 +281,8 @@
    "effects": "use:burst 52",
    "fidelity": "approx",
    "cooldown_s": 40.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_QuickDraw_Draw.uasset"
   },
   {
    "id": "sidewinder",
@@ -281,7 +298,8 @@
    "effects": "use:buff stamina+50% 15s",
    "fidelity": "approx",
    "cooldown_s": 50.0,
-   "duration_s": 60.0
+   "duration_s": 60.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_Sidewinder_Cast.uasset"
   },
   {
    "id": "bulletstorm",
@@ -297,7 +315,8 @@
    "effects": "use:buff fire_rate+20% 20s;use:buff reload+50% 20s;use:ammo 100%",
    "fidelity": "exact",
    "cooldown_s": 60.0,
-   "duration_s": 20.0
+   "duration_s": 20.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_Bulletstorm_Cast.uasset"
   },
   {
    "id": "guarddog",
@@ -313,7 +332,8 @@
    "effects": "use:summon 40 20s;use:buff dmg-20% 15s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 20.0
+   "duration_s": 20.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_GuardDog.uasset"
   },
   {
    "id": "supportdog_command",
@@ -329,7 +349,8 @@
    "effects": "use:summon 40 25s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 25.0
+   "duration_s": 25.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_SupportDog.uasset"
   },
   {
    "id": "attackdog",
@@ -345,7 +366,8 @@
    "effects": "use:summon 40 20s;use:buff dmg+20% 15s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 20.0
+   "duration_s": 20.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_AttackDog.uasset"
   },
   {
    "id": "hunters_mark",
@@ -361,7 +383,8 @@
    "effects": "use:buff dmg+15% 25s;use:buff crit+10% 25s",
    "fidelity": "exact",
    "cooldown_s": 70.0,
-   "duration_s": 25.0
+   "duration_s": 25.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_Mark_Cast.uasset"
   },
   {
    "id": "huntersfocus",
@@ -377,7 +400,8 @@
    "effects": "use:buff accuracy+50% 15s;use:buff crit+10% 15s",
    "fidelity": "approx",
    "cooldown_s": 50.0,
-   "duration_s": 25.0
+   "duration_s": 25.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_Focus_Aura_Cast.uasset"
   },
   {
    "id": "huntersshroud",
@@ -393,7 +417,8 @@
    "effects": "use:buff dmg_melee+50% 15s;use:buff crit+10% 15s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_ShroudCloak_Cast.uasset"
   },
   {
    "id": "voidcloak",
@@ -409,7 +434,8 @@
    "effects": "use:buff dmg+15% 15s",
    "fidelity": "fallback",
    "cooldown_s": 75.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_VoidCloak_ActivateDodge_Ping.uasset"
   },
   {
    "id": "wormhole",
@@ -425,7 +451,8 @@
    "effects": "use:buff dmg+300% 15s",
    "fidelity": "approx",
    "cooldown_s": 35.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_WormHole_Teleport_Arrive.uasset"
   },
   {
    "id": "reboot",
@@ -441,7 +468,8 @@
    "effects": "use:buff stamina+15% 15s",
    "fidelity": "approx",
    "cooldown_s": 55.0,
-   "duration_s": 3.0
+   "duration_s": 3.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_Reboot_Activate.uasset"
   },
   {
    "id": "wayofwater",
@@ -457,7 +485,8 @@
    "effects": "use:buff stamina-10% 15s",
    "fidelity": "approx",
    "cooldown_s": 120.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "wayofforest",
@@ -473,7 +502,8 @@
    "effects": "use:heal 2%;use:buff dmg_elem+15% 15s",
    "fidelity": "approx",
    "cooldown_s": 120.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "wayofsand",
@@ -489,7 +519,8 @@
    "effects": "use:buff crit+5% 15s",
    "fidelity": "fallback",
    "cooldown_s": 120.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "wellspring",
@@ -505,7 +536,8 @@
    "effects": "use:heal 150% 15s",
    "fidelity": "exact",
    "cooldown_s": 60.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "healingsurge",
@@ -521,7 +553,8 @@
    "effects": "use:buff dmg+15% 15s",
    "fidelity": "fallback",
    "cooldown_s": 100.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Medic/Medic_HealingSurge_Cast.uasset"
   },
   {
    "id": "redemption",
@@ -537,7 +570,8 @@
    "effects": "use:buff dmg+15% 15s",
    "fidelity": "fallback",
    "cooldown_s": 120.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Medic/Medic_Redemption_Cast_Buildup.uasset"
   },
   {
    "id": "eruption",
@@ -553,7 +587,8 @@
    "effects": "use:buff dmg_status+10% 15s",
    "fidelity": "fallback",
    "cooldown_s": 40.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "miasma",
@@ -569,7 +604,8 @@
    "effects": "use:buff dmg_status+10% 15s",
    "fidelity": "fallback",
    "cooldown_s": 45.0,
-   "duration_s": 10.0
+   "duration_s": 10.0,
+   "snd_use": "none"
   },
   {
    "id": "deathwish",
@@ -585,7 +621,8 @@
    "effects": "use:buff dmg+50% 15s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "summonhollowminion",
@@ -601,7 +638,8 @@
    "effects": "use:summon 40 20s",
    "fidelity": "approx",
    "cooldown_s": 30.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset"
   },
   {
    "id": "summonflyerminion",
@@ -617,7 +655,8 @@
    "effects": "use:summon 40 20s",
    "fidelity": "approx",
    "cooldown_s": 45.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset"
   },
   {
    "id": "summonbruteminion",
@@ -633,7 +672,8 @@
    "effects": "use:summon 40 20s",
    "fidelity": "approx",
    "cooldown_s": 120.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset"
   },
   {
    "id": "summonshielddrone",
@@ -649,7 +689,8 @@
    "effects": "use:shield 8% 10s;use:summon 40 5s;use:buff dr+10% 15s;use:buff shield+8% 15s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "summonhealdrone",
@@ -665,7 +706,8 @@
    "effects": "use:heal 10%;use:summon 40 5s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   },
   {
    "id": "summoncombatdrone",
@@ -681,7 +723,8 @@
    "effects": "use:summon 40 5s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
-   "duration_s": 15.0
+   "duration_s": 15.0,
+   "snd_use": "none"
   }
  ]
 }

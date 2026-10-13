@@ -11,7 +11,8 @@
   "tier": "num",
   "menu": "enum:smithy|melder|provisions|archetype",
   "zenny": "num",
-  "recipe": "recipe"
+  "recipe": "recipe",
+  "snd_use": "r2snd|none"
  },
  "rows": [
   {
@@ -38,7 +39,8 @@
    "zenny": 0,
    "recipe": [
     "none"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "bloodless_heart",
@@ -66,7 +68,8 @@
     "ore_high2*5",
     "elder_high*2",
     "part_high2*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "blooming_heart",
@@ -94,7 +97,8 @@
     "ore_low2*3",
     "bone_low2*2",
     "crystal_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "broken_heart",
@@ -122,7 +126,8 @@
     "ore_high2*5",
     "elder_high*2",
     "part_high2*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "constrained_heart",
@@ -149,7 +154,8 @@
    "recipe": [
     "ore_low*2",
     "bone_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "crystal_heart",
@@ -177,7 +183,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "decayed_heart",
@@ -205,7 +212,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "diverting_heart",
@@ -232,7 +240,8 @@
    "recipe": [
     "ore_low*2",
     "bone_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "enlarged_heart",
@@ -259,7 +268,8 @@
    "recipe": [
     "ore_low*2",
     "bone_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "gossamer_heart",
@@ -288,7 +298,8 @@
     "bone_master*3",
     "elder_master*2",
     "gem_master*1"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "latent_heart",
@@ -317,7 +328,8 @@
     "bone_master*3",
     "elder_master*2",
     "gem_master*1"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "lifeless_heart",
@@ -345,7 +357,8 @@
     "ore_low2*3",
     "bone_low2*2",
     "crystal_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "paper_heart",
@@ -373,7 +386,8 @@
     "ore_high2*5",
     "elder_high*2",
     "part_high2*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "profane_heart",
@@ -401,7 +415,8 @@
     "ore_high2*5",
     "elder_high*2",
     "part_high2*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "pulsing_heart",
@@ -429,7 +444,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "quilted_heart",
@@ -457,7 +473,8 @@
     "ore_low2*3",
     "bone_low2*2",
     "crystal_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "reprocessed_heart",
@@ -485,7 +502,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "resonating_heart",
@@ -513,7 +531,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "ripened_heart",
@@ -541,7 +560,8 @@
     "ore_low2*3",
     "bone_low2*2",
     "crystal_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "runed_heart",
@@ -569,7 +589,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "salvaged_heart",
@@ -596,7 +617,8 @@
    "recipe": [
     "ore_low*2",
     "bone_low*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "shielded_heart",
@@ -624,7 +646,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "siphon_heart",
@@ -652,7 +675,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "tormented_heart",
@@ -680,7 +704,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "tranquil_heart",
@@ -708,7 +733,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "unsullied_heart",
@@ -736,7 +762,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   },
   {
    "id": "void_heart",
@@ -764,7 +791,8 @@
     "ore_high*4",
     "bone_high*3",
     "part_high*2"
-   ]
+   ],
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset"
   }
  ]
 }

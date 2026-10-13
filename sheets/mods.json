@@ -12,7 +12,8 @@
   "tier": "num",
   "menu": "enum:smithy|melder|provisions|archetype",
   "zenny": "num",
-  "recipe": "recipe"
+  "recipe": "recipe",
+  "snd_use": "r2snd|none"
  },
  "rows": [
   {
@@ -37,7 +38,8 @@
     "elder_high*3",
     "part_high2*3"
    ],
-   "charge_damage": 1050
+   "charge_damage": 1050,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods_DLC2/DLC2_AbrasiveRounds/Mod_AbrasiveRounds_Activate.uasset"
   },
   {
    "id": "astral_burst",
@@ -66,7 +68,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/AstralBurst/Mod_AstralBurst_Shoot.uasset"
   },
   {
    "id": "blood_draw",
@@ -90,7 +93,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/BloodDraw/Mod_BloodDraw_Fire.uasset"
   },
   {
    "id": "bore",
@@ -119,7 +123,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Bore/Mod_Bore_Shoot.uasset"
   },
   {
    "id": "concussive_shot",
@@ -147,7 +152,8 @@
     "ore_low*3",
     "bone_low*2"
    ],
-   "charge_damage": 600
+   "charge_damage": 600,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/ConcussiveShot/Mod_ConcussiveShot_Shoot.uasset"
   },
   {
    "id": "corrosive_rounds",
@@ -176,7 +182,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/CorrosiveRounds/Mod_CorrosiveRounds_Activate.uasset"
   },
   {
    "id": "creeping_mist",
@@ -205,7 +212,8 @@
     "elder_high*3",
     "part_high2*3"
    ],
-   "charge_damage": 1050
+   "charge_damage": 1050,
+   "snd_use": "none"
   },
   {
    "id": "defrag",
@@ -234,7 +242,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Defrag/Mod_Defrag_Activate.uasset"
   },
   {
    "id": "energy_wall",
@@ -263,7 +272,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/EnergyWall/Mod_EnergyWall_Shoot.uasset"
   },
   {
    "id": "familiar",
@@ -292,7 +302,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "none"
   },
   {
    "id": "fargazer",
@@ -321,7 +332,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Fargazer/Mod_Fargazer_Shoot.uasset"
   },
   {
    "id": "firestorm",
@@ -345,7 +357,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Firestorm/Mod_Firestorm_Shoot.uasset"
   },
   {
    "id": "flying_bomb_trap",
@@ -369,7 +382,8 @@
     "elder_high*3",
     "part_high2*3"
    ],
-   "charge_damage": 1050
+   "charge_damage": 1050,
+   "snd_use": "none"
   },
   {
    "id": "harvester_bots",
@@ -394,7 +408,8 @@
     "elder_master*3",
     "gem_master*1"
    ],
-   "charge_damage": 1200
+   "charge_damage": 1200,
+   "snd_use": "none"
   },
   {
    "id": "healing_shot",
@@ -422,7 +437,8 @@
     "ore_low*3",
     "bone_low*2"
    ],
-   "charge_damage": 600
+   "charge_damage": 600,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/HealingShot/Mod_HealingShot_Shoot.uasset"
   },
   {
    "id": "heatwave",
@@ -446,7 +462,8 @@
     "elder_high*3",
     "part_high2*3"
    ],
-   "charge_damage": 1050
+   "charge_damage": 1050,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods_DLC2/DLC2_Heatwave/Mod_Heatwave_Activate.uasset"
   },
   {
    "id": "helix",
@@ -475,7 +492,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Helix/Mod_Helix_Shoot.uasset"
   },
   {
    "id": "hot_shot",
@@ -503,7 +521,8 @@
     "ore_low*3",
     "bone_low*2"
    ],
-   "charge_damage": 600
+   "charge_damage": 600,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/HotShot/Mod_HotShot_Activate_Fire.uasset"
   },
   {
    "id": "knight_guard",
@@ -532,7 +551,8 @@
     "elder_high*3",
     "part_high2*3"
    ],
-   "charge_damage": 1050
+   "charge_damage": 1050,
+   "snd_use": "none"
   },
   {
    "id": "overflow",
@@ -561,7 +581,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Overflow/Mod_Overflow_Activate.uasset"
   },
   {
    "id": "prismatic_driver",
@@ -590,7 +611,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/PrismaticDriver/PrismaticDriver_Shoot_Beam.uasset"
   },
   {
    "id": "ring_of_spears",
@@ -619,7 +641,8 @@
     "elder_high*3",
     "part_high2*3"
    ],
-   "charge_damage": 1050
+   "charge_damage": 1050,
+   "snd_use": "none"
   },
   {
    "id": "rootlash",
@@ -648,7 +671,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Rootlash/Mod_Rootlash_Shoot.uasset"
   },
   {
    "id": "rotted_arrow",
@@ -677,7 +701,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/RottedArrow/Mod_RottedArrow_Shoot.uasset"
   },
   {
    "id": "scrap_shot",
@@ -705,7 +730,8 @@
     "ore_low*3",
     "bone_low*2"
    ],
-   "charge_damage": 600
+   "charge_damage": 600,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/ScrapShot/Mod_ScrapShot_Shoot.uasset"
   },
   {
    "id": "shielding_shot",
@@ -730,7 +756,8 @@
     "elder_master*3",
     "gem_master*1"
    ],
-   "charge_damage": 1200
+   "charge_damage": 1200,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods_DLC3/DLC3_ShieldingShot/Mod_ShieldingShot_Activate.uasset"
   },
   {
    "id": "skewer",
@@ -759,7 +786,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Skewer/Mod_Skewer_Activate_Spikes.uasset"
   },
   {
    "id": "song_of_eafir",
@@ -788,7 +816,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/SongOfEafir/Mod_SongOfEafir_Shoot.uasset"
   },
   {
    "id": "soulbinder",
@@ -817,7 +846,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Soulbinder/Mod_Soulbinder_Shoot.uasset"
   },
   {
    "id": "space_crabs",
@@ -846,7 +876,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/SpaceCrabs/Mod_SpaceCrabs_Shoot.uasset"
   },
   {
    "id": "stasis_beam",
@@ -875,7 +906,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/StasisBeam/Mod_StasisBeam_Enermy_MegaSlow_Activate.uasset"
   },
   {
    "id": "time_lapse",
@@ -904,7 +936,8 @@
     "bone_low2*3",
     "crystal_low*2"
    ],
-   "charge_damage": 750
+   "charge_damage": 750,
+   "snd_use": "none"
   },
   {
    "id": "tremor",
@@ -933,7 +966,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Tremor/Mod_Tremor_Shoot.uasset"
   },
   {
    "id": "voidlight",
@@ -958,7 +992,8 @@
     "elder_master*3",
     "gem_master*1"
    ],
-   "charge_damage": 1200
+   "charge_damage": 1200,
+   "snd_use": "none"
   },
   {
    "id": "voltaic_rondure",
@@ -987,7 +1022,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/VoltaicRondure/Mod_VoltaicRondure_Projectile_Shoot.uasset"
   },
   {
    "id": "witchfire",
@@ -1016,7 +1052,8 @@
     "bone_high*4",
     "part_high*2"
    ],
-   "charge_damage": 900
+   "charge_damage": 900,
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Weapons/Mods/Mod_Basic/Witchfire/Witchfire_Shoot.uasset"
   }
  ]
 }

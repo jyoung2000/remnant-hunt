@@ -159,7 +159,13 @@ static ItemView g_pick;          // selected item in a list
 static int g_slotPick = -1;      // loadout slot being changed
 static char g_filter[64] = {0};
 
+static void ui_sound(const char* id) {
+    int i = ui_sounds_index(id);
+    if (i >= 0) audio_play(kUi_sounds[i].event, 0.7f);
+}
+
 static void open(Screen s) {
+    if (s != SCR_NONE && g_screen == SCR_NONE) ui_sound("open");
     g_screen = s;
     g_screenOpened = now_s();
     g_greet = (int)(GetTickCount() / 7) % 3;
@@ -449,7 +455,7 @@ static void screen_menu(const SaveData& s, const Live& l) {
                         bool ok = recipe_box(u.recipe, (int)u.zenny);
                         char b[48];
                         snprintf(b, sizeof(b), "UPGRADE TO +%d", lvl + 1);
-                        if (remnant_button(b, ImVec2(-1, 40), ok)) { r.kind = Request::UPGRADE; request(r); g_npcSays = r2_text(n.done_line); }
+                        if (remnant_button(b, ImVec2(-1, 40), ok)) { r.kind = Request::UPGRADE; request(r); g_npcSays = r2_text(n.done_line); ui_sound("upgrade"); }
                     } else {
                         ImGui::TextColored(ImColor(col::gold).Value, "Fully upgraded (+%d)", lvl);
                     }
@@ -457,7 +463,7 @@ static void screen_menu(const SaveData& s, const Live& l) {
                     bool ok = recipe_box("", v.zenny);
                     char b[48];
                     snprintf(b, sizeof(b), "BUY  (%d ZENNY)", v.zenny);
-                    if (remnant_button(b, ImVec2(-1, 40), ok)) { r.kind = Request::BUY_CONSUMABLE; request(r); g_npcSays = r2_text(n.done_line); }
+                    if (remnant_button(b, ImVec2(-1, 40), ok)) { r.kind = Request::BUY_CONSUMABLE; request(r); g_npcSays = r2_text(n.done_line); ui_sound("buy"); }
                 } else if (!s.has(v.cat, v.row)) {
                     bool free = v.cat == CAT_ARCHETYPE && v.zenny <= 0;
                     bool ok = free || recipe_box(v.recipe, v.zenny);
@@ -465,6 +471,7 @@ static void screen_menu(const SaveData& s, const Live& l) {
                         if (free) choose_archetype(v.row, s.archetype < 0 ? 0 : 1);
                         else request(r);
                         g_npcSays = r2_text(n.done_line);
+                        ui_sound("craft");
                     }
                 } else {
                     ImGui::TextColored(ImColor(col::gold).Value, "Owned. Equip it at the Ward 13 terminal [%c].", (char)keys().terminal);
@@ -589,7 +596,10 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         if (g_pick.row >= 0 && g_pick.cat == sl.cat) {
             item_detail(g_pick, s);
             bool okHere = can_equip_here(l);
-            if (remnant_button("EQUIP", ImVec2(-1, 38), okHere)) equip(sl.cat, g_pick.row, sl.sub);
+            if (remnant_button("EQUIP", ImVec2(-1, 38), okHere)) {
+                equip(sl.cat, g_pick.row, sl.sub);
+                ui_sound(sl.cat == CAT_FRAGMENT ? "socket" : "equip");
+            }
         }
         ImGui::EndChild();
         if (slot_row(s, sl) >= 0 && sl.cat != CAT_WEAPON && remnant_button("REMOVE", ImVec2(200, 36))) equip(sl.cat, -1, sl.sub);

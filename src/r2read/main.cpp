@@ -13,6 +13,7 @@
 //   TEXT <asset> <32-hex key>              OK <bytes>\n<utf-8>
 //   NAME <asset> <regex with one group>    OK <bytes>\n<utf-8>
 //   TEX <asset without ext> <max side>     OK <BC7|BC3|BC1|BC5|BC4|BGRA8> <w> <h> <bytes>\n<pixels>
+//   SND <event asset> <seed>               OK <rate> <frames> <bytes>\n<stereo 16-bit PCM>
 //   QUIT
 // Errors: ERR <message>
 #include <algorithm>
@@ -24,6 +25,7 @@
 #include <string>
 
 #include "r2pak.h"
+#include "wwise.h"
 
 #ifdef _WIN32
 #include <fcntl.h>
@@ -111,6 +113,16 @@ static void handle(const std::string& line) {
         char head[96];
         snprintf(head, sizeof(head), "OK %s %d %d %zu", fmtName(t.format).c_str(), m.w, m.h, px.size());
         reply(head, px.data(), px.size());
+    } else if (f[0] == "SND" && f.size() == 3) {
+        const Bytes* p = package(f[1], &err);
+        if (!p) return reply("ERR " + err);
+        std::vector<int16_t> pcm;
+        int rate = 0;
+        if (!eventPcm(g_paks, *p, (uint32_t)strtoul(f[2].c_str(), nullptr, 10), &pcm, &rate, &err))
+            return reply("ERR " + err);
+        char head[96];
+        snprintf(head, sizeof(head), "OK %d %zu %zu", rate, pcm.size() / 2, pcm.size() * 2);
+        reply(head, pcm.data(), pcm.size() * 2);
     } else {
         reply("ERR bad request");
     }

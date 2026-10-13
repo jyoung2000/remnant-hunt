@@ -394,6 +394,7 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
         }
     }
     l.shots++;
+    audio_play(w.snd_fire, 1.0f);
     int mod = gun_mod(s, gun);
     for (int k = 0; k < nacc; k++) {
         deal(l, *acc[k].m, acc[k].dmg, acc[k].at, acc[k].crit || acc[k].weak);
@@ -482,6 +483,7 @@ void use_consumable(int row) {
     if (row >= 0 && s.stock[row] > 0) {
         s.stock[row]--;
         apply_use(l, kConsumables[row].effects, t, 1.0f, 0.0f, 10.0f, 1.0f);
+        audio_play(kConsumables[row].snd_use);
         bool concoction = false;
         for (const Effect& e : effects_of(kConsumables[row].effects))
             concoction |= e.act == ACT_BUFF;
@@ -515,6 +517,17 @@ void mod_game_tick() {
     if (l.loadoutChanged) {
         rebuild_sources(s, l);
         l.loadoutChanged = false;
+        // Decode the loadout's sounds ahead of the first shot.
+        for (int g : {s.longGun, s.handGun})
+            if (g >= 0) {
+                audio_prefetch(kWeapons[g].snd_fire);
+                audio_prefetch(kWeapons[g].snd_reload);
+                int md = gun_mod(s, g);
+                if (md >= 0) audio_prefetch(kMods[md].snd_use);
+            }
+        for (int slot = 0; slot < 2; slot++)
+            for (int k : skills_of(slot == 0 ? s.archetype : s.archetype2)) audio_prefetch(kSkills[k].snd_use);
+        if (s.relic >= 0) audio_prefetch(kRelics[s.relic].snd_use);
     }
     l.fx.expire(t);
     l.fx.inHand = l.gunMode ? (l.usingLong ? 1 : 2) : 0;  // a gun's own effects count while it is in hand
@@ -611,6 +624,7 @@ void mod_game_tick() {
                 apply_use(l, kRelics[s.relic].effects, t, 1.0f / std::max(0.2f, speed), 0.0f, 5.0f,
                           1.0f + stat(l, ST_RELIC_HEAL, t));
                 l.relicBusyUntil = t + 0.8 / speed;
+                audio_play(kRelics[s.relic].snd_use);
                 trigger(l, TR_ON_RELIC, t);
                 l.dirty = true;
             } else if (s.relicCharges <= 0) {
@@ -631,6 +645,7 @@ void mod_game_tick() {
             l.skillUntil[slot] = t + k.duration_s * durScale;
             l.skillReady[slot] = t + k.cooldown_s * (1.0f - cdr);
             apply_use(l, k.effects, t, durScale, stat(l, ST_DMG_SKILL, t), k.duration_s, 1.0f);
+            audio_play(k.snd_use);
             trigger(l, TR_ON_SKILL, t);
             log("skill %s", k.id);
         }
@@ -686,6 +701,7 @@ void mod_game_tick() {
                 float durScale = 1.0f + stat(l, ST_MOD_DUR, t);
                 l.modUntil = t + 10.0 * durScale;
                 apply_use(l, md.effects, t, durScale, stat(l, ST_DMG_MOD, t) + stat(l, ST_DMG_ELEM, t), 10.0f, 1.0f);
+                audio_play(md.snd_use);
                 trigger(l, TR_ON_MOD, t);
                 log("mod %s", md.id);
             }
@@ -707,8 +723,10 @@ void mod_game_tick() {
                 trigger(l, TR_ON_RELOAD, t);
             }
             bool wantReload = has(CMD_RELOAD) || (l.mag[gun] == 0 && l.reserve[gun] > 0);
-            if (l.gunMode && wantReload && l.reloadDone == 0 && l.mag[gun] < magMax && l.reserve[gun] > 0)
+            if (l.gunMode && wantReload && l.reloadDone == 0 && l.mag[gun] < magMax && l.reserve[gun] > 0) {
                 l.reloadDone = t + reloadTime;
+                audio_play(w.snd_reload, 0.8f);
+            }
             bool wasAiming = l.aiming;
             l.aiming = l.gunMode && key_down(VK_RBUTTON);
             if (!l.aiming && wasAiming && l.baseFov > 5.0f) {

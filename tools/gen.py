@@ -61,7 +61,7 @@ def main():
                 ctype = "R2Text"
             elif typ.startswith("r2name"):
                 ctype = "R2Name"
-            elif typ.startswith("r2tex"):
+            elif typ.startswith("r2tex") or typ.startswith("r2snd"):
                 ctype = "const char*"  # asset path, nullptr = none
             else:
                 raise SystemExit(f"{name}.{col}: unknown column type {typ}")
@@ -94,6 +94,8 @@ def main():
                     vals.append(f"{{{cstr(t['asset'])}, {cstr(t.get('pattern', '^(' + t.get('name', '') + ')$'))}}}")
                 elif typ.startswith("r2tex"):
                     vals.append(cstr(v["r2tex"]) if isinstance(v, dict) else "nullptr")
+                elif typ.startswith("r2snd"):
+                    vals.append("nullptr" if v == "none" else cstr(v))
                 elif isinstance(v, list):
                     vals.append(cstr(",".join(x for x in v if x != "none")))
                 elif typ.startswith("effects") and v == "none":

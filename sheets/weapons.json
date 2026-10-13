@@ -23,7 +23,9 @@
   "tier": "num",
   "menu": "enum:smithy|melder|provisions|archetype",
   "zenny": "num",
-  "recipe": "recipe"
+  "recipe": "recipe",
+  "snd_fire": "r2snd|none",
+  "snd_reload": "r2snd|none"
  },
  "rows": [
   {
@@ -64,7 +66,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "alphaomega",
@@ -99,7 +103,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/AlphaOmega/AlphaOmega_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/AlphaOmega/AlphaOmega_Foley_Reload.uasset"
   },
   {
    "id": "anguish",
@@ -139,7 +145,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "aphelion",
@@ -179,7 +187,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Aphelion/Aphelion_Mod_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Aphelion/Aphelion_Reload.uasset"
   },
   {
    "id": "assassinsdagger",
@@ -219,7 +229,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "blackmaw_ar47",
@@ -258,7 +270,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/AssaultRifle/AssaultRifle_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/AssaultRifle/AssaultRifle_Foley_Clip_Load.uasset"
   },
   {
    "id": "atomsmasher",
@@ -298,7 +312,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "atomsplitter",
@@ -338,7 +354,9 @@
     "ore_low2*4",
     "bone_low2*3",
     "crystal_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "autoshotgun",
@@ -377,7 +395,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/AutoShotgun/AutoShotgun_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "basicshovel",
@@ -416,7 +436,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "blackgreatsword",
@@ -455,7 +477,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "bladeofgul",
@@ -494,7 +518,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "boltdriver",
@@ -529,7 +555,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/BoltDriver/BoltDriver_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "bonechopper",
@@ -569,7 +597,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "bow",
@@ -609,7 +639,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Bow/Bow_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Bow/Bow_Foley_Arrow_Load.uasset"
   },
   {
    "id": "claws",
@@ -648,7 +680,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "coach_gun",
@@ -687,7 +721,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Coachgun/Coachgun_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Coachgun/CoachGun_Foley_Pump_Reload.uasset"
   },
   {
    "id": "corruptedaphelion",
@@ -728,7 +764,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedAphelion/Corrupted_Aphelion_Mod_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedAphelion/Corrupted_Aphelion_Reload.uasset"
   },
   {
    "id": "corruptedcubegun",
@@ -769,7 +807,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedCubeGun/CorruptedCubeGun_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedCubeGun/CorruptedCubeGun_Foley_Reload.uasset"
   },
   {
    "id": "corrupteddeceit",
@@ -810,7 +850,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedDeceit/CorruptedDeceit_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedDeceit/CorruptedDeceit_Foley_ReloadGlitch.uasset"
   },
   {
    "id": "corruptedmerciless",
@@ -851,7 +893,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedMerciless/CorruptedMerciless_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedMerciless/CorruptedMerciless_ReloadGlitch.uasset"
   },
   {
    "id": "corruptedmeridian",
@@ -892,7 +936,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedMeridian/CorruptedMeridian_Mortar_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "corruptednebula",
@@ -933,7 +979,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedNebula/CorruptedNebula_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedNebula/CorruptedNebula_Reload_Glitch.uasset"
   },
   {
    "id": "corruptedrunepistol",
@@ -974,7 +1022,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedRunePistol/CorruptedRunePistol_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedRunePistol/CorruptedRunePistol_Reload_End.uasset"
   },
   {
    "id": "corruptedsavior",
@@ -1015,7 +1065,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSavior/CorruptedSavior_Mod_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSavior/CorruptedSavior_Foley_Reload.uasset"
   },
   {
    "id": "corruptedsorrow",
@@ -1056,7 +1108,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSorrow/CorruptedSorrow_Mod_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSorrow/CorruptedSorrow_Foley_Reload_End_Sweet.uasset"
   },
   {
    "id": "corruptedtwistedarbalest",
@@ -1097,7 +1151,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "crescentmoon",
@@ -1137,7 +1193,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CrescentMoon/CrescentMoon_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CrescentMoon/CrescentMoon_Foley_Arrow_Load.uasset"
   },
   {
    "id": "crossbow",
@@ -1177,7 +1235,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Crossbow/Crossbow_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Crossbow/Crossbow_Foley_Reload.uasset"
   },
   {
    "id": "crystalstaff",
@@ -1217,7 +1277,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "cubegun",
@@ -1257,7 +1319,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/CubeGun/CubeGun_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/CubeGun/CubeGun_Projectile_Ammo_Return_Reload.uasset"
   },
   {
    "id": "darkmattergauntlets",
@@ -1298,7 +1362,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "decayedclaws",
@@ -1338,7 +1404,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "deceit",
@@ -1378,7 +1446,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Deceit/Deceit_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Deceit/Deceit_Foley_Reload_End.uasset"
   },
   {
    "id": "dreamcatcher",
@@ -1418,7 +1488,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "edgeoftheforest",
@@ -1458,7 +1530,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "enigma",
@@ -1498,7 +1572,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Enigma/Enigma_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Enigma/Foley_Enigma_Reload_Electricity.uasset"
   },
   {
    "id": "feraljudgment",
@@ -1538,7 +1614,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "flail",
@@ -1577,7 +1655,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "genesis",
@@ -1618,7 +1698,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "godsplitter",
@@ -1658,7 +1740,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "greatsword",
@@ -1697,7 +1781,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "hammer",
@@ -1736,7 +1822,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "harvesterscythe",
@@ -1777,7 +1865,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "hatchet",
@@ -1816,7 +1906,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "hellfire",
@@ -1856,7 +1948,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Hellfire/Hellfire_Shoot_Loop.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Hellfire/Hellfire_Foley_Load_Clip.uasset"
   },
   {
    "id": "herossword",
@@ -1895,7 +1989,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "huntingpistol",
@@ -1934,7 +2030,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/HuntingPistol/HuntingPistol_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/HuntingPistol/HuntingPistol_Foley_Ammo_Reload.uasset"
   },
   {
    "id": "huntmaster_m1",
@@ -1973,7 +2071,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Huntmaster/Huntmaster_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Huntmaster/Huntmaster_Foley_Mag_In.uasset"
   },
   {
    "id": "huntressspear",
@@ -2013,7 +2113,9 @@
     "ore_low2*4",
     "bone_low2*3",
     "crystal_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "katana",
@@ -2052,7 +2154,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "knuckledusters",
@@ -2091,7 +2195,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "krellaxe",
@@ -2131,7 +2237,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "labyrinthstaff",
@@ -2171,7 +2279,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "leveraction",
@@ -2210,7 +2320,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Foley_Ammo_Reload.uasset"
   },
   {
    "id": "leveraction_rusty",
@@ -2249,7 +2361,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Foley_Ammo_Reload.uasset"
   },
   {
    "id": "lmg",
@@ -2288,7 +2402,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LMG/LMG_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "tech_22",
@@ -2327,7 +2443,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/MachinePistol/MachinePistol_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/MachinePistol/MachinePistol_Foley_Clip_Load.uasset"
   },
   {
    "id": "magnum",
@@ -2366,7 +2484,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Magnum/Magnum_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Magnum/Magnum_Foley_Ammo_Reload.uasset"
   },
   {
    "id": "merciless",
@@ -2406,7 +2526,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Merciless/Merciless_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Merciless/Merciless_Foley_Reload_End.uasset"
   },
   {
    "id": "meridian",
@@ -2446,7 +2568,9 @@
     "ore_low2*4",
     "bone_low2*3",
     "crystal_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Meridian/Meridian_Grenade_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Meridian/Meridian_Reload_Clip_In.uasset"
   },
   {
    "id": "mirage",
@@ -2486,7 +2610,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "monarch",
@@ -2526,7 +2652,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "monolith",
@@ -2566,7 +2694,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "monorail",
@@ -2607,7 +2737,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "nebula",
@@ -2647,7 +2779,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nebula/Mod_NanoSwarm_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nebula/Nebula_Foley_Reload.uasset"
   },
   {
    "id": "nightfall",
@@ -2687,7 +2821,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nightfall/Nightfall_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nightfall/Nightfall_Foley_Reload.uasset"
   },
   {
    "id": "nightshade",
@@ -2727,7 +2863,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "ornateblade",
@@ -2767,7 +2905,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "ornateflail",
@@ -2807,7 +2947,9 @@
     "ore_low2*4",
     "bone_low2*3",
     "crystal_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "plasmacutter",
@@ -2847,7 +2989,9 @@
     "ore_low2*4",
     "bone_low2*3",
     "crystal_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/PlasmaCutter/PlasmaCutter_Shoot_Start.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/PlasmaCutter/PlasmaCutter_Foley_Reload.uasset"
   },
   {
    "id": "polygun",
@@ -2882,7 +3026,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "pulserifle",
@@ -2922,7 +3068,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/PulseRifle/PulseRifle_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/PulseRifle/PulseRifle_Foley_Reload_Clip_Eject.uasset"
   },
   {
    "id": "rebellionspear",
@@ -2962,7 +3110,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "reddoestaff",
@@ -3002,7 +3152,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "redeemer",
@@ -3043,7 +3195,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "repairtool",
@@ -3084,7 +3238,9 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "repeater",
@@ -3123,7 +3279,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Foley_Clip_Load.uasset"
   },
   {
    "id": "repeater_rusty",
@@ -3162,7 +3320,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Foley_Clip_Load.uasset"
   },
   {
    "id": "repulsor",
@@ -3201,7 +3361,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Repulsor/Repulsor_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "western_classic",
@@ -3240,7 +3402,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Revolver/Revolver_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "ritualistscythe",
@@ -3280,7 +3444,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "royalbroadsword",
@@ -3320,7 +3486,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "runepistol",
@@ -3360,7 +3528,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/RunePistol/RunePistol_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/RunePistol/Rune_Pistol_Reload_End.uasset"
   },
   {
    "id": "rupturecannon",
@@ -3400,7 +3570,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/RuptureCannon/RuptureCannon_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/RuptureCannon/RuptureCannon_Foley_Reload_Close.uasset"
   },
   {
    "id": "sagittarius",
@@ -3440,7 +3612,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sagittarius/Sagittarius_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sagittarius/Sagittarius_Foley_Arrow_Load.uasset"
   },
   {
    "id": "savior",
@@ -3479,7 +3653,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Savior/Savior_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Savior/Savior_Foley_Reload_Crystal_Spin.uasset"
   },
   {
    "id": "scythe",
@@ -3518,7 +3694,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "service_pistol",
@@ -3557,7 +3735,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/ServicePistol/ServicePistol_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "shortbarrel",
@@ -3597,7 +3777,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "shotgun",
@@ -3637,7 +3819,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Shotgun/Shotgun_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Shotgun/Shotgun_Foley_Pump_Reload.uasset"
   },
   {
    "id": "smg",
@@ -3677,7 +3861,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/SMG/SMG_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/SMG/SMG_Foley_Load_Clip.uasset"
   },
   {
    "id": "smolder",
@@ -3716,7 +3902,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "widowmaker",
@@ -3755,7 +3943,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/SniperRifle/SniperRifle_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/SniperRifle/SniperRifle_Foley_Ammo_Reload.uasset"
   },
   {
    "id": "sorrow",
@@ -3795,7 +3985,9 @@
     "ore_low2*4",
     "bone_low2*3",
     "crystal_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sorrow/Sorrow_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sorrow/Sorrow_Foley_Reload_End.uasset"
   },
   {
    "id": "sparkfire",
@@ -3835,7 +4027,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "spear",
@@ -3874,7 +4068,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "spectralblade",
@@ -3914,7 +4110,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "sporebloom",
@@ -3953,7 +4151,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/SporeBloom/SporeBloom_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/SporeBloom/SporeBloom_Foley_Reload.uasset"
   },
   {
    "id": "staff",
@@ -3992,7 +4192,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "starkiller",
@@ -4031,7 +4233,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Starkiller/Starkiller_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Starkiller/Starkiller_Foley_Reload_End.uasset"
   },
   {
    "id": "starshot",
@@ -4071,7 +4275,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/StarShot/StarShot_Mod_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/StarShot/Start_Shot_Reload_End.uasset"
   },
   {
    "id": "stonebreaker",
@@ -4111,7 +4317,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "sword",
@@ -4150,7 +4358,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "talratha_hammer",
@@ -4190,7 +4400,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "thorn",
@@ -4230,7 +4442,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "tommygun",
@@ -4270,7 +4484,9 @@
     "ore_low2*4",
     "bone_low2*3",
     "crystal_low*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/TommyGun/TommyGun_Shoot.uasset",
+   "snd_reload": "none"
   },
   {
    "id": "trinitycrossbow",
@@ -4310,7 +4526,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "twistedarbalest",
@@ -4350,7 +4568,9 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/TwistedArbalest/TwistedArbalest_Shoot.uasset",
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/TwistedArbalest/TwistedArbalest_Foley_Reload.uasset"
   },
   {
    "id": "vicegrips",
@@ -4389,7 +4609,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "worldsedge",
@@ -4428,7 +4650,9 @@
    "recipe": [
     "ore_low*3",
     "bone_low*2"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   },
   {
    "id": "wrathbringer",
@@ -4468,7 +4692,9 @@
     "ore_high2*6",
     "elder_high*3",
     "part_high2*3"
-   ]
+   ],
+   "snd_fire": "none",
+   "snd_reload": "none"
   }
  ]
 }

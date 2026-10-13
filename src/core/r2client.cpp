@@ -140,6 +140,7 @@ static bool ask(const std::string& req, std::string* head, std::vector<uint8_t>*
 static std::mutex g_cacheLock;
 static std::map<std::string, std::string> g_text;   // "asset\tkey" -> text
 static std::map<std::string, R2Image> g_img;        // "asset|max" -> image
+static std::map<std::string, R2Sound> g_snd;        // "event|variant" -> decoded sound
 static const std::string kEmpty;
 
 static std::string strip_markup(const std::string& s) {
@@ -209,6 +210,50 @@ static void fetch_image(const std::string& asset, int maxSide) {
 }
 
 static std::vector<std::pair<std::string, std::string>> g_textQueue;  // (asset, key) asked for, not yet read
+static std::vector<std::pair<std::string, int>> g_sndQueue;           // (event, variant) asked for
+
+const R2Sound* r2_sound(const char* event, int variant) {
+    if (!event || !*event) return nullptr;
+    std::string k = std::string(event) + "|" + std::to_string(variant);
+    {
+        std::lock_guard<std::mutex> l(g_cacheLock);
+        auto it = g_snd.find(k);
+        if (it != g_snd.end()) return &it->second;
+    }
+    std::lock_guard<std::mutex> q(g_queueLock);
+    for (auto& e : g_sndQueue)
+        if (e.first == event && e.second == variant) return nullptr;
+    g_sndQueue.push_back({event, variant});
+    if (g_wake) SetEvent(g_wake);
+    return nullptr;
+}
+
+static void fetch_sound(const std::string& event, int variant) {
+    std::string head;
+    std::vector<uint8_t> body;
+    R2Sound snd;
+    if (ask("SND\t" + event + "\t" + std::to_string(variant + 1), &head, &body)) {
+        size_t frames = 0, bytes = 0;
+        sscanf(head.c_str(), "OK %d %zu %zu", &snd.rate, &frames, &bytes);
+        snd.pcm.resize(body.size() / 2);
+        memcpy(snd.pcm.data(), body.data(), snd.pcm.size() * 2);
+        // Long tails are cut at 4 s with a short fade, so rapid fire never piles up minutes of audio.
+        size_t maxFrames = (size_t)snd.rate * 4, fade = (size_t)snd.rate / 4;
+        if (snd.rate > 0 && snd.pcm.size() / 2 > maxFrames) {
+            snd.pcm.resize(maxFrames * 2);
+            for (size_t f = maxFrames - fade; f < maxFrames; f++) {
+                float k = (float)(maxFrames - f) / (float)fade;
+                snd.pcm[f * 2] = (int16_t)(snd.pcm[f * 2] * k);
+                snd.pcm[f * 2 + 1] = (int16_t)(snd.pcm[f * 2 + 1] * k);
+            }
+        }
+    } else {
+        snd.failed = true;
+        log("r2: sound %s unavailable (%s)", event.c_str(), head.c_str());
+    }
+    std::lock_guard<std::mutex> l(g_cacheLock);
+    g_snd[event + "|" + std::to_string(variant)] = std::move(snd);
+}
 
 const std::string& r2_text(const R2Text& t) {
     if (!t.asset || !t.key) return kEmpty;
@@ -290,8 +335,33 @@ static DWORD WINAPI worker(LPVOID) {
     si.hStdOutput = out_w;
     si.hStdError = GetStdHandle(STD_ERROR_HANDLE);
     PROCESS_INFORMATION pi = {};
+    // A newer helper left by an update while the game was running replaces the old one now. The helper then runs
+    // from a copy, so r2read.exe itself is never locked and can be updated at any time.
+    char exe[MAX_PATH], next[MAX_PATH], run[MAX_PATH], dir[MAX_PATH];
+    snprintf(exe, sizeof(exe), "%s\\r2read.exe", mod_dir());
+    snprintf(next, sizeof(next), "%s\\r2read_next.exe", mod_dir());
+    if (GetFileAttributesA(next) != INVALID_FILE_ATTRIBUTES && MoveFileExA(next, exe, MOVEFILE_REPLACE_EXISTING))
+        log("r2: updated r2read.exe");
+    snprintf(dir, sizeof(dir), "%s\\loaded", mod_dir());
+    CreateDirectoryA(dir, nullptr);
+    {
+        // Copies left by earlier game sessions (a running one stays locked and is skipped).
+        char pat[MAX_PATH], old[MAX_PATH];
+        snprintf(pat, sizeof(pat), "%s\\r2read_*.exe", dir);
+        WIN32_FIND_DATAA fd;
+        HANDLE h = FindFirstFileA(pat, &fd);
+        if (h != INVALID_HANDLE_VALUE) {
+            do {
+                snprintf(old, sizeof(old), "%s\\%s", dir, fd.cFileName);
+                DeleteFileA(old);
+            } while (FindNextFileA(h, &fd));
+            FindClose(h);
+        }
+    }
+    snprintf(run, sizeof(run), "%s\\r2read_%lu.exe", dir, GetCurrentProcessId());
+    if (!CopyFileA(exe, run, FALSE)) snprintf(run, sizeof(run), "%s", exe);
     char cmd[MAX_PATH * 3];
-    snprintf(cmd, sizeof(cmd), "\"%s\\r2read.exe\" \"%s\"", mod_dir(), g_dir.c_str());
+    snprintf(cmd, sizeof(cmd), "\"%s\" \"%s\"", run, g_dir.c_str());
     if (!CreateProcessA(nullptr, cmd, nullptr, nullptr, TRUE, CREATE_NO_WINDOW | BELOW_NORMAL_PRIORITY_CLASS, nullptr,
                         mod_dir(), &si, &pi)) {
         snprintf(g_status, sizeof(g_status), "cannot start r2read.exe (%lu)", GetLastError());
@@ -330,6 +400,17 @@ static DWORD WINAPI worker(LPVOID) {
             fetch_text(tj.first, tj.second);
             std::lock_guard<std::mutex> q(g_queueLock);
             g_textQueue.erase(g_textQueue.begin());
+        }
+        for (;;) {
+            std::pair<std::string, int> sj;
+            {
+                std::lock_guard<std::mutex> q(g_queueLock);
+                if (g_sndQueue.empty()) break;
+                sj = g_sndQueue.front();
+            }
+            fetch_sound(sj.first, sj.second);
+            std::lock_guard<std::mutex> q(g_queueLock);
+            g_sndQueue.erase(g_sndQueue.begin());
         }
         for (;;) {
             std::pair<std::string, int> job;
