@@ -648,7 +648,21 @@ if "--write" in sys.argv:
             "zones": "list", "spawn_weight": "num", "loot": "list", "fx_color": "str"}
     acols = {"id": "id", "boss": "ref:bosses", "anim": "str", "kind": "enum:melee|aoe|ranged", "min_m": "num",
              "max_m": "num", "hits": "list", "reach_m": "num", "arc_deg": "num", "damage": "num", "weight": "num",
-             "cooldown_s": "num", "track": "num", "snd": "r2snd|none"}
+             "cooldown_s": "num", "track": "num", "snd": "r2snd|none",
+             "inflict": "enum:none|bleeding|burning|corroded|overloaded"}
+
+    def inflict_of(world, a):
+        n = a["anim"].lower()
+        for st, pat in (("burning", r"fire|flame|burn|lava|cinder|ember|inferno|blaze|magma|heat|nova|sun"),
+                        ("overloaded", r"laser|beam|shock|lightning|electr|spark|volt|arc|plasma|energy|comet|star"),
+                        ("corroded", r"acid|spit|poison|rot|corrod|toxic|bile|vomit|blight|spore|ooze"),
+                        ("bleeding", r"bite|claw|swipe|slash|blade|spear|impale|stab|cleave|saw|thorn|spike|whip|pounce")):
+            if re.search(pat, n):
+                return st
+        if a["kind"] != "melee":
+            return {"root": "corroded", "nerud": "overloaded", "losomn": "burning", "yaesha": "bleeding",
+                    "labyrinth": "overloaded"}[world]
+        return "none"
     rows, arows, seen = [], [], set()
     for r in roster:
         t = r["threat"]
@@ -667,7 +681,8 @@ if "--write" in sys.argv:
             for a in old_atk["rows"]:
                 if a["boss"] == r["id"]:
                     a = dict(a)
-                    a["kind"] = "aoe" if a["arc_deg"] >= 359 else "melee"
+                    a["kind"] = a.get("kind") or ("aoe" if a["arc_deg"] >= 359 else "melee")
+                    a["inflict"] = inflict_of(r["world"], a)
                     arows.append({k: a[k] for k in acols})
             continue
         cp = os.path.join(CACHE, r["id"] + ".json")
@@ -686,6 +701,7 @@ if "--write" in sys.argv:
             while a["id"] in seen:
                 a["id"] += "_b"
             seen.add(a["id"])
+            a["inflict"] = inflict_of(r["world"], a)
             arows.append({k: a[k] for k in acols})
     about = ("Remnant II's bosses roaming MHW's field zones as creatures of their own, written by tools/author_bosses.py "
              "from the player's install (asset paths and text keys only). tier: boss = Remnant II's large bar at the top "

@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core: read-only research for the diagnostic run (dev_diag in the mod folder). GPL-3.0-or-later.
+// Remnant x MHW mashup core: read-only research while Jalon plays. GPL-3.0-or-later.
 //
 // Finds, by watching MHW's memory while Jalon plays, what the next features need and nothing documents:
 //  - the hunter's joint matrices (Remnant guns in the hunter's hands, Remnant armor pieces on the hunter);
@@ -7,6 +7,7 @@
 // Nothing is written to the game. Results go to dev_research.txt in the mod folder.
 #include <algorithm>
 #include <cmath>
+#include <cstdarg>
 #include <cstdio>
 #include <cstring>
 #include <map>
@@ -196,13 +197,14 @@ void flinch_sample(const Monster& m, double dt) {
 
 }  // namespace
 
-// Game thread, after the snapshot. Only while the diagnostic is on (dev_diag file in the mod folder).
+// Game thread, after the snapshot.
 void research_tick(const Live& l, double now) {
     if (!g_checked) {
         g_checked = true;
-        char flag[MAX_PATH];
-        snprintf(flag, sizeof(flag), "%s\\dev_diag", mod_dir());
-        g_on = GetFileAttributesA(flag) != INVALID_FILE_ATTRIBUTES;
+        // On by default (read-only, a few minutes per session), so playing is enough; [research] enabled=0 turns it off.
+        char ini[MAX_PATH];
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
+        g_on = GetPrivateProfileIntA("research", "enabled", 1, ini) != 0;
         if (g_on) { outf("== Remnant Hunt research (read-only) =="); flush(); }
     }
     if (!g_on) return;

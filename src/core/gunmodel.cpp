@@ -27,7 +27,11 @@ struct GunDraw {
     float world[16];
     Vec3 muzzle{};
     double flashUntil = 0;
+    std::string anim;  // the gun's own shot or reload animation, and the time in it
+    float animT = 0;
 };
+int g_lastShots = -1;
+double g_fireAt = -10, g_reloadStart = 0;
 std::mutex g_lock;
 GunDraw g_gun;
 int g_enabled = -1;
@@ -107,6 +111,27 @@ void gunmodel_tick(const SaveData& s, const Live& l) {
             d.on = true;
             d.row = gun;
             d.flashUntil = l.muzzleUntil;
+            // its moving parts: the shot animation after each shot, the reload animation over the reload
+            double t = now_s();
+            if (l.shots != g_lastShots) {
+                if (g_lastShots >= 0) g_fireAt = t;
+                g_lastShots = l.shots;
+            }
+            if (l.reloadDone > 0) {
+                if (g_reloadStart == 0) g_reloadStart = t;
+            } else {
+                g_reloadStart = 0;
+            }
+            const Weapons& w = kWeapons[gun];
+            const Anim* rl = strcmp(w.anim_reload, "none") ? anim_get(w.anim_reload, w.skeleton, m) : nullptr;
+            const Anim* fi = strcmp(w.anim_fire, "none") ? anim_get(w.anim_fire, w.skeleton, m) : nullptr;
+            if (rl && g_reloadStart > 0 && l.reloadDone > g_reloadStart) {
+                d.anim = w.anim_reload;
+                d.animT = (float)((t - g_reloadStart) / (l.reloadDone - g_reloadStart)) * rl->length();
+            } else if (fi && t - g_fireAt < fi->length()) {
+                d.anim = w.anim_fire;
+                d.animT = (float)(t - g_fireAt);
+            }
         }
     }
     std::lock_guard<std::mutex> lk(g_lock);
@@ -126,7 +151,8 @@ void gunmodel_append(std::vector<DrawItem>* items) {
     DrawItem it;
     it.model = m;
     memcpy(it.world, d.world, 64);
-    pose(*m, nullptr, 0, false, nullptr, 0, 0, &it.palette);  // the gun's rest pose
+    const Anim* a = d.anim.empty() ? nullptr : anim_get(d.anim.c_str(), kWeapons[d.row].skeleton, m);
+    pose(*m, a, d.animT, false, nullptr, 0, 0, &it.palette);  // its rest pose, or the shot / reload moving its parts
     static std::set<std::string> keep;
     size_t slots = m->materials.size();
     for (const ModelSection& s : m->sections) slots = std::max(slots, (size_t)std::max<int16_t>(0, s.material) + 1);
@@ -178,7 +204,7 @@ void gunmodel_hud() {
             float t = a + k * 1.5707963f;
             c[k] = {p.x + r * cosf(t), p.y + r * sinf(t)};
         }
-        bg->AddImageQuad((ImTextureID)tex, c[0], c[1], c[2], c[3], {0, 0}, {1, 0}, {1, 1}, {0, 1}, IM_COL32(255, 220, 170, 255));
+        bg->AddImageQuad((ImTextureID)(uintptr_t)tex, c[0], c[1], c[2], c[3], {0, 0}, {1, 0}, {1, 1}, {0, 1}, IM_COL32(255, 220, 170, 255));
     } else {
         bg->AddCircleFilled(p, r * 0.5f, IM_COL32(255, 210, 140, 200), 16);
     }

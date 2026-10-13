@@ -28,7 +28,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Mods/T_UI_Mod_AbrasiveRounds"
    },
-   "effects": "use:dot 20 10s;use:buff lifesteal+5% 20s",
+   "effects": "use:buff lifesteal+5% 20s;use:imbue bleeding 200 10s 20s",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -83,7 +83,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_BloodDraw"
    },
-   "effects": "use:dot 18.3333 15s",
+   "effects": "use:inflict bleeding 275 15s 5m@target",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -172,7 +172,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_CorrosiveRounds"
    },
-   "effects": "use:dot 15 10s;use:buff crit+15% 20s",
+   "effects": "use:buff crit+15% 20s;use:imbue corroded 150 10s 20s",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -347,7 +347,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_FireStorm"
    },
-   "effects": "use:burst 75",
+   "effects": "use:burst 75;use:inflict burning 0 10s 5m",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -372,7 +372,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Mods/T_UI_Mod_FlyingBombTrap"
    },
-   "effects": "use:dot 10 10s",
+   "effects": "use:inflict corroded 100 10s 7m@target",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -452,7 +452,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Heatwave"
    },
-   "effects": "use:dot 50 5s",
+   "effects": "use:inflict burning 250 5s 15m",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -512,7 +512,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Hotshot"
    },
-   "effects": "use:dot 20 10s;use:buff dmg_ranged+15% 20s",
+   "effects": "use:buff dmg_ranged+15% 20s;use:imbue burning 200 10s 20s",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -571,7 +571,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Overflow"
    },
-   "effects": "use:buff fire_rate+15% 15s",
+   "effects": "use:buff fire_rate+15% 15s;use:imbue overloaded 105 15s 15s",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -721,7 +721,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_ScrapShot"
    },
-   "effects": "use:dot 20 10s",
+   "effects": "use:inflict bleeding 400 10s 5m@target;use:inflict slowed 0 10s 5m@target",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -896,7 +896,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_StasisBeam"
    },
-   "effects": "use:burst 15",
+   "effects": "use:burst 15;use:inflict slowed 0 10s 5m@target",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -926,7 +926,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Timelapse"
    },
-   "effects": "use:buff dmg_status+10% 15s",
+   "effects": "use:buff dmg_status+10% 15s;use:inflict slowed 0 10s 5m@target",
    "fidelity": "fallback",
    "tier": 2,
    "menu": "smithy",
@@ -1012,7 +1012,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_VoltaicRondure"
    },
-   "effects": "use:buff dmg_status+10% 15s",
+   "effects": "use:buff dmg_status+10% 15s;use:inflict overloaded 75 15s 5m@target",
    "fidelity": "fallback",
    "tier": 3,
    "menu": "smithy",
@@ -1042,7 +1042,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Witchfire"
    },
-   "effects": "use:dot 20 10s",
+   "effects": "use:inflict burning 200 10s 5m@target",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",

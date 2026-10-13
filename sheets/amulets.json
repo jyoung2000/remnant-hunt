@@ -114,7 +114,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Amulets/T_UI_Amulet_BirthrightOfTheLost_Icon"
    },
-   "effects": "dmg+10%",
+   "effects": "dmg+10%;on_evade:inflict:exposed 0 15s",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -953,7 +953,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Amulets/T_UI_Amulet_FragrantThorn_Icon"
    },
-   "effects": "dmg_status+20%",
+   "effects": "dmg_status+20%;on_hit:inflict:exposed 0 15s",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -2071,7 +2071,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Amulets/Pan/T_UI_Amulet_RavagerMark_Icon"
    },
-   "effects": "dmg+20%",
+   "effects": "vs_bleeding+20%",
    "fidelity": "exact",
    "tier": 3,
    "menu": "melder",

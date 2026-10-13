@@ -74,7 +74,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Archon/T_UI_Icon_Skill_Archon_RealityRune"
    },
-   "effects": "use:buff dmg_status+10% 15s",
+   "effects": "use:inflict slowed 0 15s 12m;use:buff mod_gen+25% 15s",
    "fidelity": "fallback",
    "cooldown_s": 75.0,
    "duration_s": 15.0,
@@ -108,7 +108,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Archon/T_UI_Icon_Skill_Archon_HavocForm"
    },
-   "effects": "use:burst 150;use:buff dr+50% 15s",
+   "effects": "use:aoe 150 6m;use:buff dr+50% 15s",
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 30.0,
@@ -125,7 +125,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Challenger/T_UI_Icon_Skill_Challenger_Warstomp"
    },
-   "effects": "use:burst 150",
+   "effects": "use:aoe 150 10m",
    "fidelity": "approx",
    "cooldown_s": 50.0,
    "duration_s": 15.0,
@@ -193,7 +193,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Engineer/T_UI_Icon_Skill_Engineer_FlameThrower"
    },
-   "effects": "use:summon 40 20s",
+   "effects": "use:summon 40 20s;use:inflict burning 300 20s 0m",
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
@@ -210,7 +210,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Engineer/T_UI_Icon_Skill_Engineer_ImpactCannon"
    },
-   "effects": "use:summon 40 20s",
+   "effects": "use:summon 40 20s;use:aoe 120 5m@target",
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
@@ -363,7 +363,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Handler/T_UI_Icon_Skill_Handler_Attack"
    },
-   "effects": "use:summon 40 20s;use:buff dmg+20% 15s",
+   "effects": "use:summon 40 20s;use:inflict bleeding 200 10s 0m",
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 20.0,
@@ -380,7 +380,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Hunter/T_UI_Icon_Skill_Hunter_HuntersMark"
    },
-   "effects": "use:buff dmg+15% 25s;use:buff crit+10% 25s",
+   "effects": "use:mark 25s 35m",
    "fidelity": "exact",
    "cooldown_s": 70.0,
    "duration_s": 25.0,
@@ -448,7 +448,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Invader/T_UI_Icon_Skill_Invader_WormHole"
    },
-   "effects": "use:buff dmg+300% 15s",
+   "effects": "use:burst 300;use:inflict exposed 0 10s 0m",
    "fidelity": "approx",
    "cooldown_s": 35.0,
    "duration_s": 15.0,
@@ -584,7 +584,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Skills/Ritualist/T_UI_Icon_Skill_Ritualist_01_Eruption"
    },
-   "effects": "use:buff dmg_status+10% 15s",
+   "effects": "use:eruption 200 15m",
    "fidelity": "fallback",
    "cooldown_s": 40.0,
    "duration_s": 15.0,
@@ -601,7 +601,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Skills/Ritualist/T_UI_Icon_Skill_Ritualist_02_Miasma"
    },
-   "effects": "use:buff dmg_status+10% 15s",
+   "effects": "use:inflict bleeding 225 10s 15m;use:inflict burning 225 10s 15m;use:inflict corroded 225 10s 15m;use:inflict overloaded 225 10s 15m",
    "fidelity": "fallback",
    "cooldown_s": 45.0,
    "duration_s": 10.0,

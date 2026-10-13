@@ -18,6 +18,9 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt);  // returns BossEvent
 // Damage to a boss (game thread). False when em is not one of the bosses.
 bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak);
 bool is_boss(const uint8_t* em);
+// As boss_hit, with how much the hit staggers (1 = a normal hit; area skills and heavy blows more).
+bool boss_hit_ex(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak, float stagger);
+float boss_time_scale(const uint8_t* em);  // SLOWED bosses move and act slower
 
 // Render thread: draws the bosses into rtv (before the overlay), and their health bar and damage numbers.
 void bosses_render(void* device, void* context, void* rtv, int width, int height);

@@ -161,6 +161,11 @@
    "id": "boss_proj_speed",
    "value": 2600,
    "why": "speed of the Remnant bosses projectiles, cm/s"
+  },
+  {
+   "id": "boss_status_frac",
+   "value": 0.15,
+   "why": "a Remnant boss status (BLEEDING, BURNING ...) costs the hunter this share of their max health over its duration, more in higher ranks"
   }
  ]
 }

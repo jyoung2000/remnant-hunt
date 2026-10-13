@@ -40,3 +40,17 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
 - research.cpp (diagnostic only): hunter joint matrices, monster flinch counters, save-slot rank ints.
 - Guns: weapons.json mesh / mesh_fwd / mesh_tex (tools/author_gun_meshes.py, 95/112). gunmodel.cpp draws the gun at
   an estimated right hand until the hand joint is known; Remnant muzzle flare texture on shots.
+
+## 2026-10-13 13:48 request: gun anims, armor, Remnant effects, flinch, abilities
+- Effect language: statuses (inflict:/use:inflict/imbue/aoe/mark/eruption/cure), res_* and vs_* stats; preflight
+  updated; tests/test_effects.cpp: 846 strings parse. tools/author_statuses.py writes mods/guns/rings/amulets/
+  consumables/armor clauses from the toolkit descriptions (numbers only) and 10 skills' real mechanics.
+- remnant.cpp: status runtime (DoTs, EXPOSED +15%, MARKED +10% crit, SLOWED bosses x0.7, eruption, cures,
+  resistances, dodge shortens BURNING). Boss attacks inflict statuses (boss_attacks.inflict, tuning boss_status_frac).
+- HUD: Remnant status icons (UI_Icons_Status) on every bar and for the hunter; status particles on monsters.
+- reactions.cpp: learns MHW's hunter hit reactions from MHW's own hits (learned_reactions.txt) and plays them via
+  ActionController::DoAction (SPL pattern) when Remnant bosses hit. Untested.
+- Guns: weapons.json skeleton/anim_fire/anim_reload (24 shot, 34 reload anims); gunmodel plays them.
+- research.cpp now on by default ([research] enabled=0 to stop): dev_research.txt.
+- Still blocked on data from play: armor visuals on the hunter and gun in the hand (joint matrices, hunter facing),
+  MHW monsters flinching from Remnant damage (flinch counters), Remnant player arm animations (retarget).

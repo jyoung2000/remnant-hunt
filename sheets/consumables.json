@@ -86,7 +86,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_AntidoteSyringe_Icon"
    },
-   "effects": "use:buff dr+5% 15s",
+   "effects": "use:buff dr+5% 15s;use:cure corroded",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "provisions",
@@ -113,7 +113,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_Bandage_Icon"
    },
-   "effects": "use:buff regen+1 15s",
+   "effects": "use:buff regen+1 15s;use:cure bleeding",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "provisions",
@@ -140,7 +140,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_BindingOrb_Icon"
    },
-   "effects": "use:buff dmg_status+10% 15s",
+   "effects": "use:buff dmg_status+10% 15s;use:inflict slowed 0 10s 4m@target",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "provisions",
@@ -329,7 +329,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_ConsumableEthereal_Orb_Icon"
    },
-   "effects": "use:buff dr+5% 15s",
+   "effects": "use:buff dr+5% 15s;use:cure overloaded",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "provisions",
@@ -518,7 +518,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MudRub_Icon"
    },
-   "effects": "use:buff dr+5% 15s",
+   "effects": "use:buff dr+5% 15s;use:cure burning",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "provisions",
@@ -648,7 +648,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_PipeBomb_Icon"
    },
-   "effects": "use:dot 8.33333 30s",
+   "effects": "use:aoe 150 4m@target;use:inflict bleeding 250 30s 4m@target",
    "fidelity": "approx",
    "tier": 1,
    "menu": "provisions",

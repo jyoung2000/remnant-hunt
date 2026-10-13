@@ -16,7 +16,8 @@
   "weight": "num",
   "cooldown_s": "num",
   "track": "num",
-  "snd": "r2snd|none"
+  "snd": "r2snd|none",
+  "inflict": "enum:none|bleeding|burning|corroded|overloaded"
  },
  "rows": [
   {
@@ -35,7 +36,8 @@
    "weight": 3,
    "cooldown_s": 3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "ravager_swipe_l",
@@ -53,7 +55,8 @@
    "weight": 3,
    "cooldown_s": 3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "ravager_bite_double",
@@ -72,7 +75,8 @@
    "weight": 2,
    "cooldown_s": 6,
    "track": 0.9,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Bite_Quick.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Bite_Quick.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "ravager_bite",
@@ -90,7 +94,8 @@
    "weight": 2,
    "cooldown_s": 5,
    "track": 0.9,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Bite_Quick.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Bite_Quick.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "ravager_shockwave",
@@ -109,7 +114,8 @@
    "weight": 1.5,
    "cooldown_s": 12,
    "track": 0.3,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Shockwave.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Shockwave.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "ravager_flash_kick",
@@ -127,7 +133,8 @@
    "weight": 1,
    "cooldown_s": 9,
    "track": 0.6,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe_High.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe_High.uasset",
+   "inflict": "none"
   },
   {
    "id": "ravager_charge_bite",
@@ -145,7 +152,8 @@
    "weight": 2,
    "cooldown_s": 8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Attack_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Attack_Long.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "ravager_leap",
@@ -163,7 +171,8 @@
    "weight": 1.5,
    "cooldown_s": 10,
    "track": 0.4,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Jump_Retreat.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Jump_Retreat.uasset",
+   "inflict": "none"
   },
   {
    "id": "nightweaver_nightweaveratkmortar",
@@ -181,7 +190,8 @@
    "weight": 2,
    "cooldown_s": 7.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset",
+   "inflict": "none"
   },
   {
    "id": "nightweaver_nightweaverminionatkleap",
@@ -199,7 +209,8 @@
    "weight": 2,
    "cooldown_s": 4.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset",
+   "inflict": "none"
   },
   {
    "id": "nightweaver_nightweaveratkfrenzyslams",
@@ -218,7 +229,8 @@
    "weight": 1.5,
    "cooldown_s": 8.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset",
+   "inflict": "burning"
   },
   {
    "id": "nightweaver_nightweaveratkmeleerakeup",
@@ -236,7 +248,8 @@
    "weight": 2,
    "cooldown_s": 6.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Boss/Boss_NW_Atk_BuildUp_V1.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Boss/Boss_NW_Atk_BuildUp_V1.uasset",
+   "inflict": "none"
   },
   {
    "id": "nightweaver_nightweaveratkchargehookslam",
@@ -254,7 +267,8 @@
    "weight": 1.5,
    "cooldown_s": 7.4,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Boss/Boss_NW_Atk_Whoosh_Hook.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Boss/Boss_NW_Atk_Whoosh_Hook.uasset",
+   "inflict": "burning"
   },
   {
    "id": "nightweaver_ightweaveratkairstrikenarrow",
@@ -273,7 +287,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Boss/Boss_NW_Move_Whoosh_Air_Leaves.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Boss/Boss_NW_Move_Whoosh_Air_Leaves.uasset",
+   "inflict": "none"
   },
   {
    "id": "nightweaver_ightweaveratkcrawlcoilstrike",
@@ -292,7 +307,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset",
+   "inflict": "none"
   },
   {
    "id": "nightweaver_ghtweaveratkcrawlswipelunger",
@@ -311,7 +327,8 @@
    "weight": 2,
    "cooldown_s": 6.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Bug/Boss_NW_Bug_Voc_Atk.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "faerin_faelinfaerinatkgodfalldrop",
@@ -329,7 +346,8 @@
    "weight": 2,
    "cooldown_s": 8.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset",
+   "inflict": "none"
   },
   {
    "id": "faerin_faelinfaerinatkshiftplayer",
@@ -349,7 +367,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_ShiftPlayer.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_ShiftPlayer.uasset",
+   "inflict": "none"
   },
   {
    "id": "faerin_faelinfaerinatkgodfallcharge",
@@ -369,7 +388,8 @@
    "weight": 2,
    "cooldown_s": 11.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset",
+   "inflict": "none"
   },
   {
    "id": "faerin_faelinfaerinswordatkcrashaoe",
@@ -388,7 +408,8 @@
    "weight": 1.5,
    "cooldown_s": 8.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faerin_elinfaerinswordatkdashlthrow",
@@ -406,7 +427,8 @@
    "weight": 1.5,
    "cooldown_s": 6.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_CIP_Buildup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_CIP_Buildup.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faerin_faerinatkportalsummonbarrage",
@@ -424,7 +446,8 @@
    "weight": 1.5,
    "cooldown_s": 6.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Barrage.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Barrage.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faerin_aerinatkportalsummonstandard",
@@ -442,7 +465,8 @@
    "weight": 1.5,
    "cooldown_s": 5.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Standard.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Standard.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faerin_aerinswordatkcrashaoeinplace",
@@ -460,7 +484,8 @@
    "weight": 1.5,
    "cooldown_s": 8.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faelin_faelinfaerinatkgodfalldrop",
@@ -478,7 +503,8 @@
    "weight": 2,
    "cooldown_s": 8.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset",
+   "inflict": "none"
   },
   {
    "id": "faelin_faelinfaerinatkshiftplayer",
@@ -498,7 +524,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_ShiftPlayer.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_ShiftPlayer.uasset",
+   "inflict": "none"
   },
   {
    "id": "faelin_faelinfaerinatkgodfallcharge",
@@ -518,7 +545,8 @@
    "weight": 2,
    "cooldown_s": 11.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Godfall_Charge.uasset",
+   "inflict": "none"
   },
   {
    "id": "faelin_faelinfaerinswordatkcrashaoe",
@@ -537,7 +565,8 @@
    "weight": 1.5,
    "cooldown_s": 8.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faelin_elinfaerinswordatkdashlthrow",
@@ -555,7 +584,8 @@
    "weight": 1.5,
    "cooldown_s": 6.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_CIP_Buildup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_CIP_Buildup.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faelin_faerinatkportalsummonbarrage",
@@ -573,7 +603,8 @@
    "weight": 1.5,
    "cooldown_s": 6.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Barrage.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Barrage.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faelin_aerinatkportalsummonstandard",
@@ -591,7 +622,8 @@
    "weight": 1.5,
    "cooldown_s": 5.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Standard.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_PortalSummon_Standard.uasset",
+   "inflict": "burning"
   },
   {
    "id": "faelin_aerinswordatkcrashaoeinplace",
@@ -609,7 +641,8 @@
    "weight": 1.5,
    "cooldown_s": 8.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Atk_Sword_Crash_Explosion.uasset",
+   "inflict": "burning"
   },
   {
    "id": "shahala_nerudguardianatk01",
@@ -627,7 +660,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk02",
@@ -645,7 +679,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk01lr",
@@ -663,7 +698,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk02cr",
@@ -681,7 +717,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk02lr",
@@ -699,7 +736,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk03cl",
@@ -718,7 +756,8 @@
    "weight": 2,
    "cooldown_s": 11.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk03cr",
@@ -737,7 +776,8 @@
    "weight": 2,
    "cooldown_s": 11.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk03lr",
@@ -756,7 +796,8 @@
    "weight": 2,
    "cooldown_s": 11.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk04cl",
@@ -776,7 +817,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk05cr",
@@ -795,7 +837,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianatk05lr",
@@ -814,7 +857,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianarmsatk01",
@@ -832,7 +876,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianarmsatk02",
@@ -850,7 +895,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "shahala_nerudguardianarmsatk03",
@@ -869,7 +915,8 @@
    "weight": 2,
    "cooldown_s": 11.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Death_Transition.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatk180l",
@@ -887,7 +934,8 @@
    "weight": 2,
    "cooldown_s": 5.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatk180r",
@@ -905,7 +953,8 @@
    "weight": 2,
    "cooldown_s": 5.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkrolll",
@@ -923,7 +972,8 @@
    "weight": 2,
    "cooldown_s": 6.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Roll_Building_Shake.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Roll_Building_Shake.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkrollr",
@@ -941,7 +991,8 @@
    "weight": 2,
    "cooldown_s": 6.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Roll_Building_Shake.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Roll_Building_Shake.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkgutslam",
@@ -959,7 +1010,8 @@
    "weight": 1.5,
    "cooldown_s": 5.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Body_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Body_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkcombo01",
@@ -977,7 +1029,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkcombo02",
@@ -995,7 +1048,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkcombo03",
@@ -1013,7 +1067,8 @@
    "weight": 2,
    "cooldown_s": 7.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkbacklegl",
@@ -1031,7 +1086,8 @@
    "weight": 2,
    "cooldown_s": 5.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkbacklegr",
@@ -1049,7 +1105,8 @@
    "weight": 2,
    "cooldown_s": 5.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Bite.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkthrowl01",
@@ -1067,7 +1124,8 @@
    "weight": 1.5,
    "cooldown_s": 5.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Pod_Throw_Metal_Rattle_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Pod_Throw_Metal_Rattle_Tell.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkthrowr01",
@@ -1085,7 +1143,8 @@
    "weight": 1.5,
    "cooldown_s": 5.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Pod_Throw_Metal_Rattle_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Pod_Throw_Metal_Rattle_Tell.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkraisedebris",
@@ -1104,7 +1163,8 @@
    "weight": 2,
    "cooldown_s": 7.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_RaiseDebris_Land_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_RaiseDebris_Land_Impact.uasset",
+   "inflict": "none"
   },
   {
    "id": "tal_ratha_nerudtalrathaatkthrowl180",
@@ -1122,7 +1182,8 @@
    "weight": 1.5,
    "cooldown_s": 5.1,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Pod_Throw_Metal_Rattle_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Atk_Pod_Throw_Metal_Rattle_Tell.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "one_true_king_faetruekingatkslam01",
@@ -1140,7 +1201,8 @@
    "weight": 1.5,
    "cooldown_s": 12.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Embew_Fist_Slam_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Embew_Fist_Slam_Tell.uasset",
+   "inflict": "burning"
   },
   {
    "id": "one_true_king_faetruekingatkpound01",
@@ -1158,7 +1220,8 @@
    "weight": 2,
    "cooldown_s": 9.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Pound_Blast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Pound_Blast.uasset",
+   "inflict": "none"
   },
   {
    "id": "one_true_king_faetruekingatkstomp01",
@@ -1176,7 +1239,8 @@
    "weight": 1.5,
    "cooldown_s": 10.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_OTK_Atk_Stomp_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_OTK_Atk_Stomp_Impact.uasset",
+   "inflict": "burning"
   },
   {
    "id": "one_true_king_faetruekingatkstomp02",
@@ -1194,7 +1258,8 @@
    "weight": 1.5,
    "cooldown_s": 8.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_OTK_Atk_Stomp_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_OTK_Atk_Stomp_Impact.uasset",
+   "inflict": "burning"
   },
   {
    "id": "one_true_king_faetruekingatkstomp03",
@@ -1212,7 +1277,8 @@
    "weight": 1.5,
    "cooldown_s": 10.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_OTK_Atk_Stomp_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_OTK_Atk_Stomp_Impact.uasset",
+   "inflict": "burning"
   },
   {
    "id": "one_true_king_faetruekingatkswipe01",
@@ -1230,7 +1296,8 @@
    "weight": 2,
    "cooldown_s": 9.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Swipe.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Swipe.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "one_true_king_faetruekingatkpoundempwrd",
@@ -1248,7 +1315,8 @@
    "weight": 2,
    "cooldown_s": 10.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Pound_Blast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Pound_Blast.uasset",
+   "inflict": "none"
   },
   {
    "id": "one_true_king_faetruekingatkswipeempwrd",
@@ -1266,7 +1334,8 @@
    "weight": 2,
    "cooldown_s": 7.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Swipe.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/DLC1_Fae_OTK_Empowered_Swipe.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "lydusa_lydusabossatkhum",
@@ -1285,7 +1354,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Hum_Puddles.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Hum_Puddles.uasset",
+   "inflict": "none"
   },
   {
    "id": "lydusa_lydusabossatklance01",
@@ -1303,7 +1373,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Lance_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Lance_Impact.uasset",
+   "inflict": "none"
   },
   {
    "id": "lydusa_lydusabossatklance02",
@@ -1321,7 +1392,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Lance_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Lance_Impact.uasset",
+   "inflict": "none"
   },
   {
    "id": "lydusa_lydusabossatkslashup",
@@ -1339,7 +1411,8 @@
    "weight": 2,
    "cooldown_s": 5.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Slash_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Slash_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "lydusa_lydusabossatkslashdown",
@@ -1357,7 +1430,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Slash_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Slash_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "lydusa_lydusabossatksaucertoss",
@@ -1376,7 +1450,8 @@
    "weight": 2,
    "cooldown_s": 4.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Saucer_Explode_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Saucer_Explode_Tell.uasset",
+   "inflict": "none"
   },
   {
    "id": "lydusa_lydusabossatkslashacross",
@@ -1394,7 +1469,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Slash_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Slash_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "lydusa_ydusabossatkchokeupheadshake",
@@ -1412,7 +1488,8 @@
    "weight": 2,
    "cooldown_s": 5.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_P3_Smash_BuildUp_Sweet.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_P3_Smash_BuildUp_Sweet.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_alepsistauraatkflux",
@@ -1430,7 +1507,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_alepsistauraatkboxblast",
@@ -1448,7 +1526,8 @@
    "weight": 1.5,
    "cooldown_s": 7.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Blast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Blast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "alepsis_taura_alepsistauraatkwhackdrop",
@@ -1467,7 +1546,8 @@
    "weight": 2,
    "cooldown_s": 3.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Launch_Drop_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Launch_Drop_Tell.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_alepsistauraatkwhackland",
@@ -1485,7 +1565,8 @@
    "weight": 2,
    "cooldown_s": 3.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/Voc_Nerud_Alepsis_Taura_Jump_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/Voc_Nerud_Alepsis_Taura_Jump_Land.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_alepsistauraatkscreenfire",
@@ -1503,7 +1584,8 @@
    "weight": 1.5,
    "cooldown_s": 5.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "alepsis_taura_alepsistauraatkwhacktwist",
@@ -1522,7 +1604,8 @@
    "weight": 2,
    "cooldown_s": 7.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_alepsistaurafinalphasefire",
@@ -1540,7 +1623,8 @@
    "weight": 1.5,
    "cooldown_s": 8.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Phase_Final_Convey.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Phase_Final_Convey.uasset",
+   "inflict": "burning"
   },
   {
    "id": "alepsis_taura_alepsistauraatkboxlaunchmove",
@@ -1558,7 +1642,8 @@
    "weight": 2,
    "cooldown_s": 4.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Launch_Drop_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Launch_Drop_Tell.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_alepsistauraatkwhackquadslam",
@@ -1576,7 +1661,8 @@
    "weight": 1.5,
    "cooldown_s": 5.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "alepsis_taura_sistauraatkpanelcomboforward",
@@ -1594,7 +1680,8 @@
    "weight": 2,
    "cooldown_s": 4.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_sistauraatkwhackdropsideways",
@@ -1613,7 +1700,8 @@
    "weight": 2,
    "cooldown_s": 3.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Launch_Drop_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Atk_Box_Launch_Drop_Tell.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_istauraatkcloneattacktrigger",
@@ -1631,7 +1719,8 @@
    "weight": 2,
    "cooldown_s": 9.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_MS/DLC3_AlepsisTaura_Arena_Slam.uasset",
+   "inflict": "none"
   },
   {
    "id": "alepsis_taura_sistauraatkpanelcomboslash01",
@@ -1650,7 +1739,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_ST/DLC3_AT_Atk_Panel_Combo_Slash.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_ST/DLC3_AT_Atk_Panel_Combo_Slash.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "alepsis_taura_sistauraatkpanelcomboslash02",
@@ -1670,7 +1760,8 @@
    "weight": 2,
    "cooldown_s": 6.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_ST/DLC3_AT_Atk_Panel_Combo_Slash.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_ST/DLC3_AT_Atk_Panel_Combo_Slash.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_rootworldbosshoveratkstab",
@@ -1690,7 +1781,8 @@
    "weight": 2,
    "cooldown_s": 6.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Sword_Stab_Ground.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Sword_Stab_Ground.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_ootworldbosshoveratkstabdrag",
@@ -1709,7 +1801,8 @@
    "weight": 2,
    "cooldown_s": 7.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Sword_Stab_Ground.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Sword_Stab_Ground.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_otworldbosshoveratkswordslam",
@@ -1727,7 +1820,8 @@
    "weight": 1.5,
    "cooldown_s": 7.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_WorldBoss_Slam_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_WorldBoss_Slam_AOE_Tell.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "annihilation_tworldbossflyingatkswordslam",
@@ -1745,7 +1839,8 @@
    "weight": 1.5,
    "cooldown_s": 6.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_WorldBoss_Slam_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_WorldBoss_Slam_AOE_Tell.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "annihilation_tworldbosshoveratkstabplunge",
@@ -1764,7 +1859,8 @@
    "weight": 2,
    "cooldown_s": 6.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Sword_Stab_Ground.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Sword_Stab_Ground.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_worldbosssplitatkgroundpound",
@@ -1782,7 +1878,8 @@
    "weight": 1.5,
    "cooldown_s": 5.9,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Ground_Impact_A.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Ground_Impact_A.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "annihilation_rldbosshoveratkbackhandslash",
@@ -1800,7 +1897,8 @@
    "weight": 2,
    "cooldown_s": 6.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_rldbosshoveratkforehandslash",
@@ -1818,7 +1916,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_rldbosssplitatkinvasionpulse",
@@ -1836,7 +1935,8 @@
    "weight": 1.5,
    "cooldown_s": 4.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_Invasion_Pulse.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_Invasion_Pulse.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "annihilation_rldbosssplitatkswordslashtop",
@@ -1854,7 +1954,8 @@
    "weight": 2,
    "cooldown_s": 4.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_ldbosssplitatkswordslashleft",
@@ -1872,7 +1973,8 @@
    "weight": 2,
    "cooldown_s": 8.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_dbosssplitatkswordslashright",
@@ -1890,7 +1992,8 @@
    "weight": 2,
    "cooldown_s": 8.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_litatkswordslashfollowupleft",
@@ -1908,7 +2011,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "annihilation_itatkswordslashfollowupright",
@@ -1926,7 +2030,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_SFX/Root_FinalBoss_P2_SwordSlash_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "abomination_nerudabominationatkslam",
@@ -1944,7 +2049,8 @@
    "weight": 1.5,
    "cooldown_s": 8.4,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "abomination_nerudabominationatkaffix",
@@ -1962,7 +2068,8 @@
    "weight": 2,
    "cooldown_s": 4.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_nerudabominationatkcharge",
@@ -1980,7 +2087,8 @@
    "weight": 2,
    "cooldown_s": 7.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_nerudabominationatkslamf",
@@ -1998,7 +2106,8 @@
    "weight": 1.5,
    "cooldown_s": 8.4,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "abomination_nerudabominationatkfloatl",
@@ -2016,7 +2125,8 @@
    "weight": 2,
    "cooldown_s": 4.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Magic_Float_Start.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Magic_Float_Start.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_nerudabominationatkfloatr",
@@ -2034,7 +2144,8 @@
    "weight": 2,
    "cooldown_s": 4.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Magic_Float_Start.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Magic_Float_Start.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_nerudabominationatkslamfall",
@@ -2052,7 +2163,8 @@
    "weight": 1.5,
    "cooldown_s": 3.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "abomination_nerudabominationatkslamland",
@@ -2070,7 +2182,8 @@
    "weight": 1.5,
    "cooldown_s": 5.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "abomination_nerudabominationatkthrashing",
@@ -2090,7 +2203,8 @@
    "weight": 2,
    "cooldown_s": 9.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_udabominationatkfloatrepulse",
@@ -2109,7 +2223,8 @@
    "weight": 1.5,
    "cooldown_s": 9.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_PsyShield_Repulse.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_PsyShield_Repulse.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "abomination_dabominationatkrollingcharge",
@@ -2127,7 +2242,8 @@
    "weight": 2,
    "cooldown_s": 4.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_minationatkrollingchargepipe",
@@ -2146,7 +2262,8 @@
    "weight": 2,
    "cooldown_s": 5.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_inationatkrollingchargeleanl",
@@ -2164,7 +2281,8 @@
    "weight": 2,
    "cooldown_s": 4.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "abomination_inationatkrollingchargeleanr",
@@ -2182,7 +2300,8 @@
    "weight": 2,
    "cooldown_s": 4.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Abomination_Atk_Goo_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_nerudamalgamatktwister",
@@ -2200,7 +2319,8 @@
    "weight": 2,
    "cooldown_s": 5.9,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Atk_Twister_Cast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Atk_Twister_Cast.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_nerudamalgamatk180snap",
@@ -2218,7 +2338,8 @@
    "weight": 2,
    "cooldown_s": 6.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_nerudamalgamatksnapwalk",
@@ -2236,7 +2357,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_nerudamalgamatksnapshock",
@@ -2254,7 +2376,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "amalgam_nerudamalgamatkslamascend",
@@ -2272,7 +2395,8 @@
    "weight": 1.5,
    "cooldown_s": 5.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "amalgam_nerudamalgamatktwiststrike",
@@ -2290,7 +2414,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_nerudamalgamatkslamrotating",
@@ -2308,7 +2433,8 @@
    "weight": 1.5,
    "cooldown_s": 5.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Slam.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "amalgam_nerudamalgamatkslamtwisting",
@@ -2326,7 +2452,8 @@
    "weight": 1.5,
    "cooldown_s": 6.1,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Slam.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "amalgam_erudamalgamatkcriticalthrust",
@@ -2344,7 +2471,8 @@
    "weight": 2,
    "cooldown_s": 7.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_erudamalgamatkrotatingstrike",
@@ -2362,7 +2490,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "amalgam_damalgamatktwiststrikeascend",
@@ -2380,7 +2509,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_algamatkcriticalthrustascend",
@@ -2398,7 +2528,8 @@
    "weight": 2,
    "cooldown_s": 8.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "none"
   },
   {
    "id": "amalgam_algamatkrotatingstrikethrust",
@@ -2417,7 +2548,8 @@
    "weight": 2,
    "cooldown_s": 7.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Ascend_Land.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "bloat_king_faebloatatkrush",
@@ -2436,7 +2568,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "none"
   },
   {
    "id": "bloat_king_faebloatatkslam",
@@ -2454,7 +2587,8 @@
    "weight": 1.5,
    "cooldown_s": 6.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "burning"
   },
   {
    "id": "bloat_king_faebloatatkaffix",
@@ -2472,7 +2606,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "none"
   },
   {
    "id": "bloat_king_faebloatatktackle",
@@ -2492,7 +2627,8 @@
    "weight": 2,
    "cooldown_s": 6.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "none"
   },
   {
    "id": "bloat_king_faebloatatkshockwave",
@@ -2510,7 +2646,8 @@
    "weight": 1.5,
    "cooldown_s": 4.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "bloat_king_faebloatatkintdrowndeath",
@@ -2529,7 +2666,8 @@
    "weight": 2,
    "cooldown_s": 9.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Voc_Fae_BloatKing_Death.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Voc_Fae_BloatKing_Death.uasset",
+   "inflict": "none"
   },
   {
    "id": "bloat_king_aeminibossbloatlaserfireloop",
@@ -2547,7 +2685,8 @@
    "weight": 1.5,
    "cooldown_s": 4.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "burning"
   },
   {
    "id": "bloat_king_minibossbloatlaserchargeloop",
@@ -2565,7 +2704,8 @@
    "weight": 1.5,
    "cooldown_s": 4.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "bloat_king_bloatatkintdrownstruggleloop",
@@ -2583,7 +2723,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "none"
   },
   {
    "id": "bloat_king_inibossbloatlaserchargestart",
@@ -2601,7 +2742,8 @@
    "weight": 1.5,
    "cooldown_s": 3.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Orb_Start.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Orb_Start.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "bloat_king_inibossbloatlaserfireloopend",
@@ -2619,7 +2761,8 @@
    "weight": 1.5,
    "cooldown_s": 4.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Atk_Proj_Beam_BuildUp.uasset",
+   "inflict": "burning"
   },
   {
    "id": "custodians_eye_nerudcustodianeyeatkaffix",
@@ -2637,7 +2780,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "custodians_eye_nerudcustodianeyeatksweepl",
@@ -2657,7 +2801,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "custodians_eye_nerudcustodianeyeatksweepr",
@@ -2677,7 +2822,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "custodians_eye_nerudcustodianeyeatksweepu",
@@ -2697,7 +2843,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_BeamBomb_Explosion.uasset",
+   "inflict": "none"
   },
   {
    "id": "custodians_eye_erudcustodianeyeatkquickbolt",
@@ -2715,7 +2862,8 @@
    "weight": 1.5,
    "cooldown_s": 4.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_QuickShock_AOE_Oneshot.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_QuickShock_AOE_Oneshot.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "custodians_eye_dcustodianeyeatkdeathblossom",
@@ -2734,7 +2882,8 @@
    "weight": 2,
    "cooldown_s": 5.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_DeathBlossom_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Atk_DeathBlossom_Tell.uasset",
+   "inflict": "none"
   },
   {
    "id": "custodians_eye_eyeminibossatkempchargeburst",
@@ -2752,7 +2901,8 @@
    "weight": 1.5,
    "cooldown_s": 4.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/Miniboss/CustodianEye_Miniboss_Add_Death_Explosion.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/Miniboss/CustodianEye_Miniboss_Add_Death_Explosion.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatkaffix",
@@ -2771,7 +2921,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Bite.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Bite.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatkvomit",
@@ -2790,7 +2941,8 @@
    "weight": 2,
    "cooldown_s": 9.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Vomit.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Vomit.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatkstaffslam",
@@ -2808,7 +2960,8 @@
    "weight": 1.5,
    "cooldown_s": 6.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Staff_Blast_Buildup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Staff_Blast_Buildup.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatktonguelash",
@@ -2827,7 +2980,8 @@
    "weight": 2,
    "cooldown_s": 6.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Tongue_Base.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Tongue_Base.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatkstaffswipe",
@@ -2845,7 +2999,8 @@
    "weight": 2,
    "cooldown_s": 6.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Staff_Blast_Buildup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Staff_Blast_Buildup.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatklanternblast",
@@ -2863,7 +3018,8 @@
    "weight": 1.5,
    "cooldown_s": 8.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Lantern_Blast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Lantern_Blast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatklanternthrow",
@@ -2881,7 +3037,8 @@
    "weight": 1.5,
    "cooldown_s": 6.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Lantern_Blast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Lantern_Blast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "fae_archon_faearchonatk180lanternswipe",
@@ -2899,7 +3056,8 @@
    "weight": 2,
    "cooldown_s": 6.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Lantern_Blast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Atk_Lantern_Blast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "harvester_nerudharvesteratkaffix",
@@ -2917,7 +3075,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "none"
   },
   {
    "id": "harvester_nerudharvesteratkpouncef",
@@ -2936,7 +3095,8 @@
    "weight": 2,
    "cooldown_s": 7.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "harvester_nerudharvesteratkgasgiant",
@@ -2954,7 +3114,8 @@
    "weight": 2,
    "cooldown_s": 8.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_Giant_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_Giant_BuildUp.uasset",
+   "inflict": "none"
   },
   {
    "id": "harvester_nerudharvesteratkpouncefl",
@@ -2973,7 +3134,8 @@
    "weight": 2,
    "cooldown_s": 7.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "harvester_nerudharvesteratkpouncefr",
@@ -2992,7 +3154,8 @@
    "weight": 2,
    "cooldown_s": 7.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "harvester_nerudharvesteratkweavewall",
@@ -3010,7 +3173,8 @@
    "weight": 2,
    "cooldown_s": 5.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "none"
   },
   {
    "id": "harvester_rudharvesteratkpossessedspew",
@@ -3028,7 +3192,8 @@
    "weight": 2,
    "cooldown_s": 5.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Possessed_Spew_Build.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Possessed_Spew_Build.uasset",
+   "inflict": "none"
   },
   {
    "id": "harvester_udharvesteratkstompflurryl90",
@@ -3048,7 +3213,8 @@
    "weight": 1.5,
    "cooldown_s": 6.4,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "harvester_harvesteratkexplosiveswipe01",
@@ -3067,7 +3233,8 @@
    "weight": 1.5,
    "cooldown_s": 5.1,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "harvester_harvesteratkexplosiveswipe02",
@@ -3085,7 +3252,8 @@
    "weight": 1.5,
    "cooldown_s": 5.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "harvester_arvesteratkpossesseddemented",
@@ -3104,7 +3272,8 @@
    "weight": 2,
    "cooldown_s": 7.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Demented_Proj_Launch.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Demented_Proj_Launch.uasset",
+   "inflict": "none"
   },
   {
    "id": "harvester_arvesteratkexplosiveswipel01",
@@ -3123,7 +3292,8 @@
    "weight": 1.5,
    "cooldown_s": 5.1,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "harvester_arvesteratkexplosiveswipel02",
@@ -3141,7 +3311,8 @@
    "weight": 1.5,
    "cooldown_s": 5.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Atk_Gas_BuildUp.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "hatchery_barnaclehatcherysummon",
@@ -3159,7 +3330,8 @@
    "weight": 1.5,
    "cooldown_s": 5.6,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "hatchery_barnaclehatcheryatkaffix",
@@ -3178,7 +3350,8 @@
    "weight": 2,
    "cooldown_s": 5.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_barnaclehatcheryatksting",
@@ -3196,7 +3369,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_arnaclehatcheryatkdeadshot01",
@@ -3215,7 +3389,8 @@
    "weight": 2,
    "cooldown_s": 4.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_arnaclehatcheryatkdeadshot03",
@@ -3233,7 +3408,8 @@
    "weight": 2,
    "cooldown_s": 4.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_arnaclehatcheryatkdeadshot04",
@@ -3251,7 +3427,8 @@
    "weight": 2,
    "cooldown_s": 4.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_arnaclehatcheryatklbroadside",
@@ -3271,7 +3448,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_arnaclehatcheryatkrbroadside",
@@ -3289,7 +3467,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_arnaclehatcheryatkstingshort",
@@ -3307,7 +3486,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Voc_Nerud_BarnacleHatchery_Attack_Short.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Voc_Nerud_BarnacleHatchery_Attack_Short.uasset",
+   "inflict": "none"
   },
   {
    "id": "hatchery_naclehatcheryatktopbroadside",
@@ -3326,7 +3506,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Cin_Voc_Nerud_BarnacleHatchery_Summon.uasset",
+   "inflict": "none"
   },
   {
    "id": "impaler_faeimpaleratkjumpup",
@@ -3344,7 +3525,8 @@
    "weight": 2,
    "cooldown_s": 3.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkjumpdown",
@@ -3363,7 +3545,8 @@
    "weight": 2,
    "cooldown_s": 3.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkjumpland",
@@ -3381,7 +3564,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkjumppeak",
@@ -3399,7 +3583,8 @@
    "weight": 2,
    "cooldown_s": 3.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_BalconyJump_Land.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkfrontkick",
@@ -3419,7 +3604,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Whoosh_Kick.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Whoosh_Kick.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkpowerstab",
@@ -3437,7 +3623,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkstabcombo01",
@@ -3455,7 +3642,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkstabcombo02",
@@ -3473,7 +3661,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkstabcombo03",
@@ -3491,7 +3680,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkpowerstabhit",
@@ -3510,7 +3700,8 @@
    "weight": 2,
    "cooldown_s": 5.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratksweepcombo01",
@@ -3528,7 +3719,8 @@
    "weight": 2,
    "cooldown_s": 6.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Barrage_Imbue.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Barrage_Imbue.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratksweepcombo02",
@@ -3546,7 +3738,8 @@
    "weight": 2,
    "cooldown_s": 5.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Barrage_Imbue.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Barrage_Imbue.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkstabcombo01a",
@@ -3564,7 +3757,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "impaler_faeimpaleratkstabcombo02a",
@@ -3582,7 +3776,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Atk_Spear_PowerStab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "kiln_pankilnatkaffix",
@@ -3600,7 +3795,8 @@
    "weight": 2,
    "cooldown_s": 4.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Add_Explode.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Add_Explode.uasset",
+   "inflict": "none"
   },
   {
    "id": "kiln_pankilnatkmortar",
@@ -3618,7 +3814,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Add_Explode.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Add_Explode.uasset",
+   "inflict": "none"
   },
   {
    "id": "kiln_pankilnatkharpoon",
@@ -3637,7 +3834,8 @@
    "weight": 2,
    "cooldown_s": 4.9,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Add_Explode.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Add_Explode.uasset",
+   "inflict": "none"
   },
   {
    "id": "kiln_pankilnminibossarmslam",
@@ -3655,7 +3853,8 @@
    "weight": 1.5,
    "cooldown_s": 6.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Atk_Claw_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Atk_Claw_Slam.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "phantom_nerudphantomatkaffix",
@@ -3673,7 +3872,8 @@
    "weight": 2,
    "cooldown_s": 4.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset",
+   "inflict": "none"
   },
   {
    "id": "phantom_nerudphantomatkclaws",
@@ -3691,7 +3891,8 @@
    "weight": 2,
    "cooldown_s": 5.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "phantom_nerudphantomatklaser",
@@ -3709,7 +3910,8 @@
    "weight": 1.5,
    "cooldown_s": 6.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "phantom_nerudphantomatkspawns",
@@ -3727,7 +3929,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset",
+   "inflict": "none"
   },
   {
    "id": "phantom_nerudphantomatksummon",
@@ -3745,7 +3948,8 @@
    "weight": 1.5,
    "cooldown_s": 4.9,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Magic_Portal_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Magic_Portal_Summon.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "phantom_nerudphantomatkclaw01",
@@ -3763,7 +3967,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Claw.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Claw.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "phantom_nerudphantomatkclaw02",
@@ -3781,7 +3986,8 @@
    "weight": 2,
    "cooldown_s": 4.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Claw.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Claw.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "phantom_nerudphantomatkdeflect",
@@ -3799,7 +4005,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Phantom_Miniboss_Core_Impact.uasset",
+   "inflict": "none"
   },
   {
    "id": "phantom_nerudphantomatkburst01",
@@ -3817,7 +4024,8 @@
    "weight": 1.5,
    "cooldown_s": 6.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_WispBurst_Cast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_WispBurst_Cast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "phantom_nerudphantomatkburst02",
@@ -3835,7 +4043,8 @@
    "weight": 1.5,
    "cooldown_s": 6.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_WispBurst_Cast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_WispBurst_Cast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "phantom_nerudphantomatksummon02",
@@ -3853,7 +4062,8 @@
    "weight": 1.5,
    "cooldown_s": 4.9,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Magic_Portal_Summon.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Magic_Portal_Summon.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "phantom_nerudphantomatkspawnsexit",
@@ -3871,7 +4081,8 @@
    "weight": 2,
    "cooldown_s": 4.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Magic_Portal_Exit.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Magic_Portal_Exit.uasset",
+   "inflict": "none"
   },
   {
    "id": "phantom_nerudphantomatkprojectile01",
@@ -3889,7 +4100,8 @@
    "weight": 1.5,
    "cooldown_s": 4.4,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Projectile_Cast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Projectile_Cast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "phantom_nerudphantomatkprojectile02",
@@ -3907,7 +4119,8 @@
    "weight": 1.5,
    "cooldown_s": 4.4,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Projectile_Cast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Phantom_Atk_Projectile_Cast.uasset",
+   "inflict": "overloaded"
   },
   {
    "id": "root_horror_roothorroratkspin",
@@ -3925,7 +4138,8 @@
    "weight": 1.5,
    "cooldown_s": 5.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "root_horror_roothorroratkwave",
@@ -3944,7 +4158,8 @@
    "weight": 2,
    "cooldown_s": 8.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkaffix",
@@ -3963,7 +4178,8 @@
    "weight": 2,
    "cooldown_s": 8.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkthrow",
@@ -3981,7 +4197,8 @@
    "weight": 1.5,
    "cooldown_s": 6.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Alert.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "root_horror_spriggantentacleatk",
@@ -4000,7 +4217,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_krakententacleatk01",
@@ -4018,7 +4236,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_krakententacleatk02",
@@ -4036,7 +4255,8 @@
    "weight": 2,
    "cooldown_s": 5.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkaxe01",
@@ -4054,7 +4274,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Axe_Extract.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Axe_Extract.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkaxe02",
@@ -4072,7 +4293,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Axe_Extract.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Axe_Extract.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkaxe03",
@@ -4090,7 +4312,8 @@
    "weight": 2,
    "cooldown_s": 7.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Axe_Extract.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Axe_Extract.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkemerge",
@@ -4108,7 +4331,8 @@
    "weight": 2,
    "cooldown_s": 7.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Emerge.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Emerge.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkthrust",
@@ -4126,7 +4350,8 @@
    "weight": 2,
    "cooldown_s": 6.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Thrust.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_Thrust.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_spriggantentacleatk02",
@@ -4145,7 +4370,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Attack_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_horror_roothorroratkgroundslam",
@@ -4163,7 +4389,8 @@
    "weight": 1.5,
    "cooldown_s": 7.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_GroundSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Root_Horror_GroundSlam.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_panshiftingsoldieratkrally",
@@ -4183,7 +4410,8 @@
    "weight": 2,
    "cooldown_s": 9.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_RallyTune_Ping.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_RallyTune_Ping.uasset",
+   "inflict": "none"
   },
   {
    "id": "shifting_soldier_panshiftingsoldieratkslash",
@@ -4201,7 +4429,8 @@
    "weight": 2,
    "cooldown_s": 4.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SpinSlash_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SpinSlash_Impact.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_panshiftingsoldieratkslash02",
@@ -4219,7 +4448,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SpinSlash_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SpinSlash_Impact.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_anshiftingsoldieratksandtoss",
@@ -4237,7 +4467,8 @@
    "weight": 2,
    "cooldown_s": 5.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SandToss_Drag.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SandToss_Drag.uasset",
+   "inflict": "none"
   },
   {
    "id": "shifting_soldier_anshiftingsoldieratkslamdown",
@@ -4255,7 +4486,8 @@
    "weight": 1.5,
    "cooldown_s": 4.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Slam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Slam.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_shiftingsoldieratkshieldbash",
@@ -4273,7 +4505,8 @@
    "weight": 2,
    "cooldown_s": 4.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Proj_Shield_Throw.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Proj_Shield_Throw.uasset",
+   "inflict": "none"
   },
   {
    "id": "shifting_soldier_hiftingsoldieratkcommandfire",
@@ -4291,7 +4524,8 @@
    "weight": 1.5,
    "cooldown_s": 3.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/Voc_MB/Voc_DLC2_SS_MB_Atk_Enrage.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/Voc_MB/Voc_DLC2_SS_MB_Atk_Enrage.uasset",
+   "inflict": "burning"
   },
   {
    "id": "shifting_soldier_hiftingsoldieratkevolvedstab",
@@ -4309,7 +4543,8 @@
    "weight": 2,
    "cooldown_s": 7.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Spear_Stab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Spear_Stab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_iftingsoldieratkhelmsplitter",
@@ -4327,7 +4562,8 @@
    "weight": 2,
    "cooldown_s": 5.9,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/Voc_MB/Voc_DLC2_SS_MB_Atk_Enrage.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/Voc_MB/Voc_DLC2_SS_MB_Atk_Enrage.uasset",
+   "inflict": "none"
   },
   {
    "id": "shifting_soldier_ftingsoldieratkrallyrootlock",
@@ -4347,7 +4583,8 @@
    "weight": 2,
    "cooldown_s": 9.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_RallyTune_Ping.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_RallyTune_Ping.uasset",
+   "inflict": "none"
   },
   {
    "id": "shifting_soldier_tingsoldieratktransstab2toss",
@@ -4365,7 +4602,8 @@
    "weight": 2,
    "cooldown_s": 4.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SandToss_Drag.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SandToss_Drag.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_ngsoldieratkevolvedspinslash",
@@ -4383,7 +4621,8 @@
    "weight": 1.5,
    "cooldown_s": 8.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SpinSlash_Impact.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_SpinSlash_Impact.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_ngsoldieratkevolvedstabspear",
@@ -4401,7 +4640,8 @@
    "weight": 2,
    "cooldown_s": 7.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Spear_Stab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Spear_Stab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shifting_soldier_ngsoldieratkminibossspearult",
@@ -4421,7 +4661,8 @@
    "weight": 2,
    "cooldown_s": 9.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Spear_Stab.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Atk_Spear_Stab.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shrewd_rootwraithatkdash01",
@@ -4439,7 +4680,8 @@
    "weight": 2,
    "cooldown_s": 5.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Shrewd/Root_Wraith_Shrewd_Dash.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Shrewd/Root_Wraith_Shrewd_Dash.uasset",
+   "inflict": "none"
   },
   {
    "id": "shrewd_rootwraithatkbowflail",
@@ -4457,7 +4699,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Attack_Bow_Charge_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Attack_Bow_Charge_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "shrewd_rootwraithatkbowthrow",
@@ -4475,7 +4718,8 @@
    "weight": 1.5,
    "cooldown_s": 5.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Attack_Bow_Charge_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Attack_Bow_Charge_Long.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shrewd_rootwraithatkbowshotidle",
@@ -4495,7 +4739,8 @@
    "weight": 2,
    "cooldown_s": 9.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Voc_Root_Wraith_Idle_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Voc_Root_Wraith_Idle_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "shrewd_rootwraithatkshootupward",
@@ -4513,7 +4758,8 @@
    "weight": 1.5,
    "cooldown_s": 6.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Champ_Hellfire_Bow_Shoot.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Champ_Hellfire_Bow_Shoot.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "shrewd_rootwraithdormantatkaffix",
@@ -4531,7 +4777,8 @@
    "weight": 2,
    "cooldown_s": 5.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Attack_Bow_Charge_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Attack_Bow_Charge_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "shrewd_rootwraithatkchargedbowshot",
@@ -4549,7 +4796,8 @@
    "weight": 2,
    "cooldown_s": 6.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Shrewd/Root_Wraith_Shrewd_ChargedShot_Draw.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Shrewd/Root_Wraith_Shrewd_ChargedShot_Draw.uasset",
+   "inflict": "none"
   },
   {
    "id": "shrewd_rootwraithatkbowshotaltidle",
@@ -4567,7 +4815,8 @@
    "weight": 2,
    "cooldown_s": 9.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Voc_Root_Wraith_Idle_Long.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Voc_Root_Wraith_Idle_Long.uasset",
+   "inflict": "none"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkslam1h",
@@ -4585,7 +4834,8 @@
    "weight": 1.5,
    "cooldown_s": 6.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkslam2h",
@@ -4603,7 +4853,8 @@
    "weight": 1.5,
    "cooldown_s": 7.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkspin01",
@@ -4621,7 +4872,8 @@
    "weight": 1.5,
    "cooldown_s": 4.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_Whoosh_SpinSwipe.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_Whoosh_SpinSwipe.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkspin02",
@@ -4639,7 +4891,8 @@
    "weight": 1.5,
    "cooldown_s": 4.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_Whoosh_SpinSwipe.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_Whoosh_SpinSwipe.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatksweepl",
@@ -4657,7 +4910,8 @@
    "weight": 2,
    "cooldown_s": 7.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatksweepr",
@@ -4676,7 +4930,8 @@
    "weight": 2,
    "cooldown_s": 7.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkuppercut",
@@ -4694,7 +4949,8 @@
    "weight": 2,
    "cooldown_s": 7.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkjumpdown",
@@ -4713,7 +4969,8 @@
    "weight": 2,
    "cooldown_s": 4.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkjumpland",
@@ -4731,7 +4988,8 @@
    "weight": 2,
    "cooldown_s": 6.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/MiniBoss_Voc/Voc_DLC1_Dran_Witch_MB_Jump_Land.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/MiniBoss_Voc/Voc_DLC1_Dran_Witch_MB_Jump_Land.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_dransunkenwitchatkslamquick",
@@ -4749,7 +5007,8 @@
    "weight": 1.5,
    "cooldown_s": 6.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_ansunkenwitchatkslamoverhead",
@@ -4767,7 +5026,8 @@
    "weight": 1.5,
    "cooldown_s": 7.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "sunken_witch_ansunkenwitchatkjumpslamland",
@@ -4785,7 +5045,8 @@
    "weight": 1.5,
    "cooldown_s": 6.1,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Atk_Anchor_JumpSlam.uasset",
+   "inflict": "burning"
   },
   {
    "id": "mother_mind_rootflyersummonemerge",
@@ -4803,7 +5064,8 @@
    "weight": 1.5,
    "cooldown_s": 6.1,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "mother_mind_rootflyerattackspit01",
@@ -4821,7 +5083,8 @@
    "weight": 1.5,
    "cooldown_s": 5.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Spit.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Spit.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "mother_mind_rootflyerattackspit02",
@@ -4839,7 +5102,8 @@
    "weight": 1.5,
    "cooldown_s": 5.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Spit.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Spit.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "mother_mind_rootflyerattackaffix01",
@@ -4857,7 +5121,8 @@
    "weight": 2,
    "cooldown_s": 4.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset",
+   "inflict": "none"
   },
   {
    "id": "mother_mind_rootflyerattackslash01",
@@ -4875,7 +5140,8 @@
    "weight": 2,
    "cooldown_s": 5.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "mother_mind_rootflyerattackslash02",
@@ -4893,7 +5159,8 @@
    "weight": 2,
    "cooldown_s": 5.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "mother_mind_rootflyersummonchastised",
@@ -4911,7 +5178,8 @@
    "weight": 1.5,
    "cooldown_s": 6.1,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "mother_mind_rootflyersummonsacrificed",
@@ -4929,7 +5197,8 @@
    "weight": 1.5,
    "cooldown_s": 5.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Acid_Puddle_1Shot.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "mother_mind_rootflyerteleportslash01",
@@ -4947,7 +5216,8 @@
    "weight": 2,
    "cooldown_s": 6.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "mother_mind_rootflyerteleportslash02",
@@ -4965,7 +5235,8 @@
    "weight": 2,
    "cooldown_s": 6.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_SpinSlash.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "legion_panpriestatkdash",
@@ -4983,7 +5254,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "none"
   },
   {
    "id": "legion_panpriestatkaffix",
@@ -5002,7 +5274,8 @@
    "weight": 2,
    "cooldown_s": 4.4,
    "track": 0.8,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "none"
   },
   {
    "id": "legion_panpriestatkaoebuff",
@@ -5020,7 +5293,8 @@
    "weight": 1.5,
    "cooldown_s": 6.0,
    "track": 0.5,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "bleeding"
   },
   {
    "id": "legion_panpriestatkstaff180",
@@ -5038,7 +5312,8 @@
    "weight": 2,
    "cooldown_s": 5.7,
    "track": 0.8,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "none"
   },
   {
    "id": "legion_panpriestatkarcanebolt",
@@ -5056,7 +5331,8 @@
    "weight": 1.5,
    "cooldown_s": 5.5,
    "track": 0.5,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "overloaded"
   },
   {
    "id": "legion_panpriestcombatatkground",
@@ -5075,7 +5351,8 @@
    "weight": 1.5,
    "cooldown_s": 6.0,
    "track": 0.5,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "bleeding"
   },
   {
    "id": "legion_panprieststormcalleratkbolt",
@@ -5093,7 +5370,8 @@
    "weight": 1.5,
    "cooldown_s": 6.2,
    "track": 0.5,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "bleeding"
   },
   {
    "id": "legion_priestmountainsatkarcanebolt",
@@ -5111,7 +5389,8 @@
    "weight": 1.5,
    "cooldown_s": 5.5,
    "track": 0.5,
-   "snd": "none"
+   "snd": "none",
+   "inflict": "overloaded"
   },
   {
    "id": "gwendil_dranfatkaffix",
@@ -5130,7 +5409,8 @@
    "weight": 2,
    "cooldown_s": 4.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranfrifleatkpush",
@@ -5148,7 +5428,8 @@
    "weight": 2,
    "cooldown_s": 4.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranfmeleeatk180r",
@@ -5167,7 +5448,8 @@
    "weight": 2,
    "cooldown_s": 5.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranfrifleatkstock",
@@ -5185,7 +5467,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranfbombatkthrow01",
@@ -5203,7 +5486,8 @@
    "weight": 1.5,
    "cooldown_s": 6.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Throw_Tell_Whistle.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Throw_Tell_Whistle.uasset",
+   "inflict": "burning"
   },
   {
    "id": "gwendil_dranfbombatkthrow02",
@@ -5221,7 +5505,8 @@
    "weight": 1.5,
    "cooldown_s": 8.6,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Throw_Tell_Whistle.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Throw_Tell_Whistle.uasset",
+   "inflict": "burning"
   },
   {
    "id": "gwendil_dranfmeleeatkswiper",
@@ -5239,7 +5524,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "gwendil_dranfbombatkthrowdown",
@@ -5257,7 +5543,8 @@
    "weight": 1.5,
    "cooldown_s": 5.5,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Throw_Tell_Whistle.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Throw_Tell_Whistle.uasset",
+   "inflict": "burning"
   },
   {
    "id": "gwendil_dranfmeleeatkflurry01",
@@ -5277,7 +5564,8 @@
    "weight": 2,
    "cooldown_s": 6.8,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranfmeleeatkflurry02",
@@ -5297,7 +5585,8 @@
    "weight": 2,
    "cooldown_s": 9.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranfpoibyfirefidget02",
@@ -5315,7 +5604,8 @@
    "weight": 1.5,
    "cooldown_s": 11.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Voc_Dran_F_Bomber_Pain_Fire.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Voc_Dran_F_Bomber_Pain_Fire.uasset",
+   "inflict": "burning"
   },
   {
    "id": "gwendil_dranfrifleatkpushtoaim",
@@ -5333,7 +5623,8 @@
    "weight": 2,
    "cooldown_s": 5.3,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranfrifleatkstocktoaim",
@@ -5351,7 +5642,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "gwendil_dranftorchatkflurryaway",
@@ -5371,7 +5663,8 @@
    "weight": 2,
    "cooldown_s": 8.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Activate.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_mantis_rootintrominibossatkchop",
@@ -5389,7 +5682,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_Chop.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_Chop.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_mantis_rootintrominibossatkthrow",
@@ -5407,7 +5701,8 @@
    "weight": 1.5,
    "cooldown_s": 6.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_Throw.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_Throw.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "root_mantis_rootintrominibossatkdashb",
@@ -5425,7 +5720,8 @@
    "weight": 2,
    "cooldown_s": 7.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Dash_Sweetener_A.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Dash_Sweetener_A.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_mantis_rootintrominibossatkmortar",
@@ -5444,7 +5740,8 @@
    "weight": 2,
    "cooldown_s": 6.9,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_Mortar_Buildup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_Mortar_Buildup.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_mantis_rootintrominibossatkdashb2",
@@ -5462,7 +5759,8 @@
    "weight": 2,
    "cooldown_s": 8.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Dash_Sweetener_A.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Dash_Sweetener_A.uasset",
+   "inflict": "none"
   },
   {
    "id": "root_mantis_rootintrominibossatkslashl",
@@ -5480,7 +5778,8 @@
    "weight": 2,
    "cooldown_s": 5.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "root_mantis_rootintrominibossatkslashr",
@@ -5498,7 +5797,8 @@
    "weight": 2,
    "cooldown_s": 5.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "root_mantis_tintrominibossatkdoubleslash",
@@ -5517,7 +5817,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_DoubleStrike_Tell_A.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_DoubleStrike_Tell_A.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "root_mantis_trominibossatkdoubleslash180",
@@ -5536,7 +5837,8 @@
    "weight": 2,
    "cooldown_s": 6.0,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_DoubleStrike_Tell_A.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Atk_DoubleStrike_Tell_A.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "root_mantis_trominibossatkslashlfollowup",
@@ -5554,7 +5856,8 @@
    "weight": 2,
    "cooldown_s": 6.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "root_mantis_trominibossatkslashrfollowup",
@@ -5572,7 +5875,8 @@
    "weight": 2,
    "cooldown_s": 6.7,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Atk_Followup.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "venom_rootknightsummon",
@@ -5590,7 +5894,8 @@
    "weight": 1.5,
    "cooldown_s": 5.0,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "venom_rootknightatkcast",
@@ -5608,7 +5913,8 @@
    "weight": 1.5,
    "cooldown_s": 6.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Magic_Charge_Cast.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Magic_Charge_Cast.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "venom_rootknightatkspin",
@@ -5626,7 +5932,8 @@
    "weight": 1.5,
    "cooldown_s": 6.2,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Whoosh_Air_Spin.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Whoosh_Air_Spin.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "venom_rootknightatkbashl",
@@ -5644,7 +5951,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset",
+   "inflict": "none"
   },
   {
    "id": "venom_rootknightatkbashr",
@@ -5662,7 +5970,8 @@
    "weight": 2,
    "cooldown_s": 5.6,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset",
+   "inflict": "none"
   },
   {
    "id": "venom_rootknightatkheavyslam",
@@ -5680,7 +5989,8 @@
    "weight": 1.5,
    "cooldown_s": 7.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Slam_Heavy.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Slam_Heavy.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "venom_rootknightatkpulserise",
@@ -5698,7 +6008,8 @@
    "weight": 1.5,
    "cooldown_s": 5.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "venom_rootknightatkspearthrow",
@@ -5716,7 +6027,8 @@
    "weight": 1.5,
    "cooldown_s": 5.8,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Spear_Throw.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Spear_Throw.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "venom_rootknightatkspearlunge",
@@ -5734,7 +6046,8 @@
    "weight": 2,
    "cooldown_s": 6.2,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "venom_rootknightatkairknife01",
@@ -5752,7 +6065,8 @@
    "weight": 2,
    "cooldown_s": 5.4,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Whoosh_Air_Launch.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Whoosh_Air_Launch.uasset",
+   "inflict": "none"
   },
   {
    "id": "venom_rootknightatkairknife02",
@@ -5770,7 +6084,8 @@
    "weight": 2,
    "cooldown_s": 6.1,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Whoosh_Air_Launch.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Whoosh_Air_Launch.uasset",
+   "inflict": "none"
   },
   {
    "id": "venom_rootknightatkpulsestrike",
@@ -5788,7 +6103,8 @@
    "weight": 1.5,
    "cooldown_s": 4.3,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Knight_Miniboss/Root_Knight_Miniboss_Spear_AOE_Tell.uasset",
+   "inflict": "corroded"
   },
   {
    "id": "venom_rootknightatkspearthrust",
@@ -5806,7 +6122,8 @@
    "weight": 2,
    "cooldown_s": 5.5,
    "track": 0.8,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Spear_Thrust.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Spear_Thrust.uasset",
+   "inflict": "bleeding"
   },
   {
    "id": "venom_rootknightatkknifethrow01",
@@ -5824,7 +6141,8 @@
    "weight": 1.5,
    "cooldown_s": 5.7,
    "track": 0.5,
-   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Spear_Throw.uasset"
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Atk_Spear_Throw.uasset",
+   "inflict": "corroded"
   }
  ]
 }

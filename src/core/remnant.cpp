@@ -259,8 +259,82 @@ static float rank_mult(const Monster& m) {
     return std::max(1.0f, std::min(tune(TUNING_RANK_SCALE_MAX), k));
 }
 
+// ---------------------------------------------------------------- Remnant statuses
+// BLEEDING, BURNING, CORRODED, OVERLOADED deal their damage over time (OVERLOADED in bursts); EXPOSED makes the target
+// take 15% more damage; SLOWED slows Remnant bosses; MARKED gives +10% critical chance against it. A status refreshes
+// rather than stacks, as in Remnant II. Monsters are keyed by uEnemy* (MHW's and the bosses' pseudo pointers).
+
+struct StatusInst { float perSec = 0; double until = 0, nextTick = 0; };
+struct Afflict { StatusInst s[SS_COUNT]; };
+static std::map<const void*, Afflict> g_aff;
+static Afflict g_me;
+static float tick_of(int st) { return st == SS_OVERLOADED ? 2.5f : 0.5f; }
+static bool negative(int st) { return st >= SS_BLEEDING && st <= SS_OVERLOADED; }
+
+uint32_t status_bits(const void* em) {
+    double t = now_s();
+    const Afflict* a = em ? nullptr : &g_me;
+    if (em) {
+        auto it = g_aff.find(em);
+        if (it == g_aff.end()) return 0;
+        a = &it->second;
+    }
+    uint32_t bits = 0;
+    for (int s = 1; s < SS_COUNT; s++)
+        if (a->s[s].until > t) bits |= 1u << s;
+    return bits;
+}
+
+static float stat(const Live& l, Stat st, double t);
+static float rank_mult(const Monster& m);
+
+static void inflict(Live& l, const Monster& m, Status st, float total, float dur, double t) {
+    if (st <= SS_NONE || st >= SS_COUNT) return;
+    dur = std::max(1.0f, dur * (1.0f + stat(l, ST_STATUS_DUR, t)));
+    StatusInst& s = g_aff[m.em].s[st];
+    float scale = tune(TUNING_DAMAGE_SCALE) * rank_mult(m) * (1.0f + stat(l, ST_DMG, t) + stat(l, ST_DMG_STATUS, t));
+    float ps = negative(st) ? total * scale / dur : 0;
+    s.perSec = std::max(t < s.until ? s.perSec : 0.0f, ps);
+    if (t >= s.until) s.nextTick = t + tick_of(st);
+    s.until = std::max(s.until, t + dur);
+}
+
+void inflict_player(Live& l, Status st, float total, float dur, double t) {
+    if (st <= SS_NONE || st >= SS_COUNT) return;
+    Stat res = st == SS_BLEEDING ? ST_RES_BLEED : st == SS_BURNING ? ST_RES_FIRE : st == SS_OVERLOADED ? ST_RES_SHOCK
+                                                                                : ST_RES_ACID;
+    total *= 1.0f - std::max(0.0f, std::min(0.75f, stat(l, res, t)));
+    StatusInst& s = g_me.s[st];
+    s.perSec = std::max(t < s.until ? s.perSec : 0.0f, total / std::max(1.0f, dur));
+    if (t >= s.until) s.nextTick = t + tick_of(st);
+    s.until = std::max(s.until, t + dur);
+    toast(l, "%s", status_label(st));
+}
+
+void status_player_dodge(double t) {
+    StatusInst& b = g_me.s[SS_BURNING];
+    if (b.until > t) b.until -= 1.5;  // rolling puts the fire out sooner
+}
+
+static void cure_player(Status st) { g_me.s[st] = StatusInst(); }
+
+// Remnant damage against a target: EXPOSED and the "damage to <status> targets" bonuses.
+static float status_mult(const Live& l, const Monster& m, double t) {
+    uint32_t b = status_bits(m.em);
+    if (!b) return 1.0f;
+    float k = 1.0f;
+    if (b & (1u << SS_EXPOSED)) k += 0.15f + stat(l, ST_VS_EXPOSED, t);
+    if (b & (1u << SS_BLEEDING)) k += stat(l, ST_VS_BLEEDING, t);
+    if (b & (1u << SS_BURNING)) k += stat(l, ST_VS_BURNING, t);
+    if (b & (1u << SS_CORRODED)) k += stat(l, ST_VS_CORRODED, t);
+    if (b & (1u << SS_OVERLOADED)) k += stat(l, ST_VS_OVERLOADED, t);
+    if (b & 0x1E) k += stat(l, ST_VS_STATUS, t);
+    return k;
+}
+
 static void deal(Live& l, const Monster& m, float dmg, Vec3 at, bool crit) {
     if (dmg <= 0) return;
+    dmg *= status_mult(l, m, now_s());
     bool boss = boss_hit(m.em, dmg, at, crit, false);  // a Remnant II boss: the mod keeps its health
     if (!boss) add_hp(m.health, -dmg);
     Live::Track& tr = l.track[m.em];
@@ -269,6 +343,49 @@ static void deal(Live& l, const Monster& m, float dmg, Vec3 at, bool crit) {
     tr.fought = true;
     if (!boss) show_damage(m.em, (int)lroundf(dmg), at, crit);
     l.totalDamage += dmg;
+}
+
+static Vec3 sub(Vec3 a, Vec3 b);
+static float dot(Vec3 a, Vec3 b);
+
+// Monsters near a point (the box's centre, its size counted).
+static void each_near(Live& l, Vec3 c, float radius, void (*fn)(Live&, const Monster&, void*), void* ctx) {
+    std::vector<Monster> ms = l.snap.monsters;  // fn may change the list's monsters' health
+    for (const Monster& m : ms) {
+        Vec3 d = sub(m.center, c);
+        float r = radius + std::max(m.half.x, m.half.z) * 0.7f;
+        if (dot(d, d) <= r * r) fn(l, m, ctx);
+    }
+}
+
+// Status damage over time, on monsters and on the hunter.
+static void statuses_tick(Live& l, double t) {
+    for (auto it = g_aff.begin(); it != g_aff.end();) {
+        const Monster* m = nullptr;
+        for (const Monster& x : l.snap.monsters)
+            if (x.em == it->first) m = &x;
+        bool live = false;
+        for (int s = 1; s < SS_COUNT; s++) {
+            StatusInst& si = it->second.s[s];
+            if (si.until <= t) continue;
+            live = true;
+            if (m && si.perSec > 0 && t >= si.nextTick) {
+                float k = tick_of(s);
+                si.nextTick += k;
+                deal(l, *m, si.perSec * k, m->center, false);
+            }
+        }
+        if (!live || !m) it = g_aff.erase(it);
+        else ++it;
+    }
+    for (int s = 1; s < SS_COUNT; s++) {
+        StatusInst& si = g_me.s[s];
+        if (si.until <= t || si.perSec <= 0 || t < si.nextTick || !l.snap.playerHealth) continue;
+        float k = tick_of(s);
+        si.nextTick += k;
+        reactions_note_own_damage(t);
+        add_hp(l.snap.playerHealth, -si.perSec * k);
+    }
 }
 
 static void heal_player(Live& l, float amount, double t) {
@@ -292,6 +409,40 @@ static void trigger(Live& l, Trig tr, double t) {
     float pd = 0;
     l.fx.fire(tr, t, &pd);
     proc(l, pd, t);
+    // statuses this trigger applies (e.g. on_hit:inflict:bleeding) go on the hunter's target
+    std::vector<std::pair<const Effect*, float>> inf;
+    l.fx.inflicts(tr, t, &inf);
+    if (inf.empty()) return;
+    const Monster* m = find_monster(l, l.target);
+    if (!m) m = current_target(l);
+    if (m)
+        for (auto& x : inf) inflict(l, *m, x.first->status, x.first->value * x.second, x.first->dur, t);
+}
+
+// Area statuses and damage from "use:" effects.
+struct AreaUse { const Effect* e; float scale; double t; };
+static void area_inflict(Live& l, const Monster& m, void* c) {
+    AreaUse* a = (AreaUse*)c;
+    inflict(l, m, a->e->status, a->e->value, a->e->dur * a->scale, a->t);
+}
+static void area_mark(Live& l, const Monster& m, void* c) {
+    AreaUse* a = (AreaUse*)c;
+    inflict(l, m, SS_MARKED, 0, a->e->dur * a->scale, a->t);
+}
+static void area_damage(Live& l, const Monster& m, void* c) {
+    AreaUse* a = (AreaUse*)c;
+    float dmg = a->e->value * a->scale * rank_mult(m);
+    if (is_boss(m.em)) boss_hit_ex(m.em, dmg * status_mult(l, m, a->t), m.center, false, false, 2.5f);  // area skills stagger
+    else deal(l, m, dmg, m.center, false);
+}
+static void area_erupt(Live& l, const Monster& m, void* c) {
+    AreaUse* a = (AreaUse*)c;
+    auto it = g_aff.find(m.em);
+    if (it == g_aff.end()) return;
+    int n = 0;
+    for (int s = SS_BLEEDING; s <= SS_OVERLOADED; s++)
+        if (it->second.s[s].until > a->t) { n++; it->second.s[s] = StatusInst(); }  // the eruption uses them up
+    if (n) deal(l, m, a->e->value * a->scale * rank_mult(m) * n, m.center, true);
 }
 
 // Runs an item's "use:" effects. durScale stretches durations (skill and mod duration bonuses); dmgBonus adds the
@@ -329,6 +480,29 @@ static void apply_use(Live& l, const char* dsl, double t, float durScale, float 
                     if (g >= 0) l.reserve[g] = std::min(reserve_size(l, g, t), l.reserve[g] + (int)(reserve_size(l, g, t) * e.value));
                 break;
             }
+            case ACT_INFLICT:
+            case ACT_MARK:
+            case ACT_AOE:
+            case ACT_ERUPTION: {
+                AreaUse a{&e, e.act == ACT_INFLICT || e.act == ACT_MARK ? durScale
+                                                                         : tune(TUNING_DAMAGE_SCALE) * (1.0f + stat(l, ST_DMG, t) + dmgBonus),
+                          t};
+                auto fn = e.act == ACT_INFLICT ? area_inflict : e.act == ACT_MARK ? area_mark
+                        : e.act == ACT_AOE     ? area_damage  : area_erupt;
+                if (e.radius <= 0) {  // the target only
+                    if (tgt) fn(l, *tgt, &a);
+                } else {
+                    Vec3 c = e.atTarget && tgt ? tgt->center : l.snap.pos;
+                    each_near(l, c, e.radius * 100.0f, fn, &a);
+                }
+                break;
+            }
+            case ACT_IMBUE:
+                l.imbues.push_back({e.status, e.value, e.dur, t + e.span * durScale});
+                break;
+            case ACT_CURE:
+                cure_player(e.status);
+                break;
             case ACT_GRENADE:
                 if (tgt)
                     for (const Monster& m : l.snap.monsters) {
@@ -383,7 +557,7 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
         int longAxis = best->half.x > best->half.z ? 0 : 2;
         float h[3] = {best->half.x, best->half.y, best->half.z};
         bool weak = fabsf(bestLp[longAxis]) > tune(TUNING_WEAKSPOT_BAND) * h[longAxis] && at.y > best->center.y;
-        bool crit = frand() < critChance;
+        bool crit = frand() < critChance + ((status_bits(best->em) & (1u << SS_MARKED)) ? 0.10f : 0.0f);
         float dmg = base * rank_mult(*best) * (weak ? weakMult : 1.0f) * (crit ? critMult : 1.0f);
         if (bestT > range) dmg *= std::max(0.5f, 1.0f - 0.5f * (bestT - range) / range);  // falloff
         int k = 0;
@@ -400,6 +574,8 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
     int mod = gun_mod(s, gun);
     for (int k = 0; k < nacc; k++) {
         deal(l, *acc[k].m, acc[k].dmg, acc[k].at, acc[k].crit || acc[k].weak);
+        for (const Live::Imbue& im : l.imbues)  // ammo mods: hits apply their status
+            if (t < im.until) inflict(l, *acc[k].m, im.status, im.total, im.dur, t);
         lifesteal(l, acc[k].dmg, t);
         l.hits++;
         l.hitMarkerUntil = t + 0.18;
@@ -516,6 +692,7 @@ void mod_game_tick() {
     snapshot(&l.snap);
     int bossEv = bosses_tick(s, l, t, dt);  // Remnant II bosses join the monsters here
     research_tick(l, t);
+    reactions_tick(l, t);
     gunmodel_tick(s, l);
     const GameSnapshot& g = l.snap;
     const Archetypes* a = archetype();
@@ -535,6 +712,9 @@ void mod_game_tick() {
         if (s.relic >= 0) audio_prefetch(kRelics[s.relic].snd_use);
     }
     l.fx.expire(t);
+    l.imbues.erase(std::remove_if(l.imbues.begin(), l.imbues.end(), [&](const Live::Imbue& x) { return t >= x.until; }),
+                   l.imbues.end());
+    statuses_tick(l, t);
     l.fx.inHand = l.gunMode ? (l.usingLong ? 1 : 2) : 0;  // a gun's own effects count while it is in hand
 
     // Zone changes: back at base, or setting out on a hunt, is Remnant's rest at a worldstone.

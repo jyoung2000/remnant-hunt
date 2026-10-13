@@ -18,13 +18,18 @@ BUILD_PHASES = ("v0.1", "v0.2")  # sheets the build generates code from; later p
 # The effect language (tools/author_arsenal.py, src/core/effects.cpp).
 _STAT = (r"(?:proc|dmg|dmg_ranged|dmg_melee|dmg_mod|dmg_skill|dmg_elem|dmg_status|dmg_explosive|weakspot|crit|crit_dmg|"
          r"fire_rate|reload|mag|ammo|accuracy|mod_gen|mod_dur|cdr|skill_dur|relic_speed|relic_heal|relic_charges|heal|"
-         r"lifesteal|dr|max_hp|regen|stamina|shield)")
+         r"lifesteal|dr|max_hp|regen|stamina|shield|res_bleed|res_fire|res_shock|res_acid|vs_bleeding|vs_burning|"
+         r"vs_corroded|vs_overloaded|vs_exposed|vs_status|status_dur)")
+_STATUS = r"(?:bleeding|burning|corroded|overloaded|exposed|slowed|marked)"
 _N = r"\d+(?:\.\d+)?"
 _TRIG = r"(?:on_kill|on_crit|on_weakspot|on_hit|on_evade|on_relic|on_skill|on_mod|on_reload|on_hurt|low_hp\(\d+\)|high_hp\(\d+\))"
 EFFECT_RX = re.compile(
     rf"^(?:(?:{_TRIG}:)?{_STAT}[+-]{_N}%?(?: {_N}s)?(?: x\d+)?(?: cd{_N}s)?"
     rf"|use:(?:heal {_N}%(?: {_N}s)?|shield {_N}% {_N}s|burst {_N}|dot {_N} {_N}s|summon {_N} {_N}s"
-    rf"|buff {_STAT}[+-]{_N}%? {_N}s|ammo {_N}%|grenade {_N}))$")
+    rf"|buff {_STAT}[+-]{_N}%? {_N}s|ammo {_N}%|grenade {_N}"
+    rf"|inflict {_STATUS} {_N} {_N}s {_N}m(?:@target)?|imbue {_STATUS} {_N} {_N}s {_N}s|aoe {_N} {_N}m(?:@target)?"
+    rf"|mark {_N}s {_N}m|eruption {_N} {_N}m|cure {_STATUS})"
+    rf"|(?:{_TRIG}:)?inflict:{_STATUS} {_N} {_N}s(?: {_N}%)?(?: cd{_N}s)?)$")
 
 
 def effects_ok(v):

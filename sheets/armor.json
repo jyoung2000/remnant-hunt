@@ -33,7 +33,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Alchemist_Icon"
    },
-   "effects": "dr+9.8%;stamina-10.4%",
+   "effects": "dr+9.8%;stamina-10.4%;res_bleed+4%;res_acid+18%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -62,7 +62,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Arcanist_Icon"
    },
-   "effects": "dr+10.2%;stamina-10.8%",
+   "effects": "dr+10.2%;stamina-10.8%;res_fire+8%;res_shock+12%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -90,7 +90,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Torso2_Icon"
    },
-   "effects": "dr+6.3%;stamina-6.4%",
+   "effects": "dr+6.3%;stamina-6.4%;res_bleed+4%;res_fire+6%;res_acid+8%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -119,7 +119,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Bandit_LONG_Icon"
    },
-   "effects": "dr+5.4%;stamina-5.4%",
+   "effects": "dr+5.4%;stamina-5.4%;res_bleed+6%;res_acid+8%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -147,7 +147,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Defender_Icon"
    },
-   "effects": "dr+14%;stamina-16.2%",
+   "effects": "dr+14%;stamina-16.2%;res_bleed+4%;res_fire+12%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -175,7 +175,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Torso_Icon"
    },
-   "effects": "dr+12.2%;stamina-13.4%",
+   "effects": "dr+12.2%;stamina-13.4%;res_bleed+8%;res_fire+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -204,7 +204,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Cultist_Icon"
    },
-   "effects": "dr+8.9%;stamina-9.2%",
+   "effects": "dr+8.9%;stamina-9.2%;res_bleed+2%;res_fire+2%;res_shock+4%;res_acid+10%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -232,7 +232,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Elder_Icon"
    },
-   "effects": "dr+5.9%;stamina-6%",
+   "effects": "dr+5.9%;stamina-6%;res_fire+8%;res_acid+12%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -260,7 +260,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_NerudEngineer_Icon"
    },
-   "effects": "dr+13.3%;stamina-15%",
+   "effects": "dr+13.3%;stamina-15%;res_fire+4%;res_shock+12%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -289,7 +289,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Explorer_Icon"
    },
-   "effects": "dr+5.8%;stamina-5.8%",
+   "effects": "dr+5.8%;stamina-5.8%;res_bleed+6%;res_fire+4%;res_shock+6%;res_acid+8%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -317,7 +317,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_FaeHeavy_Icon"
    },
-   "effects": "dr+12%;stamina-13.2%",
+   "effects": "dr+12%;stamina-13.2%;res_bleed+8%;res_fire+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -346,7 +346,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Gunslinger_Icon"
    },
-   "effects": "dr+9.4%;stamina-9.8%",
+   "effects": "dr+9.4%;stamina-9.8%;res_fire+8%;res_shock+8%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -374,7 +374,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Handler_Icon"
    },
-   "effects": "dr+8%;stamina-8.2%",
+   "effects": "dr+8%;stamina-8.2%;res_bleed+6%;res_shock+8%;res_acid+8%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -402,7 +402,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Sharpshooter_Icon"
    },
-   "effects": "dr+8.7%;stamina-9%",
+   "effects": "dr+8.7%;stamina-9%;res_bleed+4%;res_fire+6%;res_shock+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -430,7 +430,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_RootInvader_Icon"
    },
-   "effects": "dr+6.2%;stamina-6.2%",
+   "effects": "dr+6.2%;stamina-6.2%;res_bleed+8%;res_acid+14%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -459,7 +459,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Torso_Invoker_Icon"
    },
-   "effects": "dr+12.8%;stamina-14.4%",
+   "effects": "dr+12.8%;stamina-14.4%;res_fire+8%;res_shock+10%;res_acid+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -488,7 +488,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Leto_A_Icon"
    },
-   "effects": "dr+18.1%;stamina-23.8%",
+   "effects": "dr+18.1%;stamina-23.8%;res_bleed+8%;res_fire+10%;res_shock+10%;res_acid+20%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -516,7 +516,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Leto_B_Icon"
    },
-   "effects": "dr+17.8%;stamina-22.6%",
+   "effects": "dr+17.8%;stamina-22.6%;res_bleed+6%;res_fire+8%;res_shock+8%;res_acid+16%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -545,7 +545,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Medic_Icon"
    },
-   "effects": "dr+8.6%;stamina-8.8%",
+   "effects": "dr+8.6%;stamina-8.8%;res_bleed+18%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -573,7 +573,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Torso_Icon"
    },
-   "effects": "dr+16.1%;stamina-19.9%",
+   "effects": "dr+16.1%;stamina-19.9%;res_bleed+8%;res_fire+12%;res_shock+12%;res_acid+20%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",
@@ -603,7 +603,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Radiant_Icon"
    },
-   "effects": "dr+13.8%;stamina-15.8%",
+   "effects": "dr+13.8%;stamina-15.8%;res_bleed+4%;res_fire+4%;res_shock+8%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -631,7 +631,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_RedWidowRegalia_Icon"
    },
-   "effects": "dr+10.6%;stamina-11.2%",
+   "effects": "dr+10.6%;stamina-11.2%;res_bleed+10%;res_acid+10%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -660,7 +660,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Torso_Ritualist_Icon"
    },
-   "effects": "dr+9%;stamina-9.4%",
+   "effects": "dr+9%;stamina-9.4%;res_bleed+4%;res_shock+2%;res_acid+12%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -689,7 +689,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_NerudLight_Icon"
    },
-   "effects": "dr+5.6%;stamina-5.6%",
+   "effects": "dr+5.6%;stamina-5.6%;res_bleed+2%;res_fire+2%;res_shock+8%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -718,7 +718,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_RootSummoner_Icon"
    },
-   "effects": "dr+12.4%;stamina-13.8%",
+   "effects": "dr+12.4%;stamina-13.8%;res_bleed+2%;res_acid+20%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -746,7 +746,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Drifter_Icon"
    },
-   "effects": "dr+7.8%;stamina-8%",
+   "effects": "dr+7.8%;stamina-8%;res_bleed+6%;res_fire+4%;res_shock+4%;res_acid+8%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -775,7 +775,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Torso/T_UI_Torso_Void_Icon"
    },
-   "effects": "dr+12.7%;stamina-14.2%",
+   "effects": "dr+12.7%;stamina-14.2%;res_fire+6%;res_shock+8%;res_acid+8%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -803,7 +803,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Torso"
    },
-   "effects": "dr+5.9%;stamina-6%",
+   "effects": "dr+5.9%;stamina-6%;res_bleed+8%;res_fire+4%;res_acid+8%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",
@@ -833,7 +833,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Alchemist_Icon"
    },
-   "effects": "dr+2.5%;stamina-2.6%",
+   "effects": "dr+2.5%;stamina-2.6%;res_acid+6%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -862,7 +862,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Arcanist_Icon"
    },
-   "effects": "dr+2.6%;stamina-2.7%",
+   "effects": "dr+2.6%;stamina-2.7%;res_fire+2%;res_shock+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -890,7 +890,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Gloves3_Icon"
    },
-   "effects": "dr+1.6%;stamina-1.6%",
+   "effects": "dr+1.6%;stamina-1.6%;res_bleed+2%;res_fire+2%;res_acid+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -919,7 +919,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Bandit_Icon"
    },
-   "effects": "dr+1.4%;stamina-1.4%",
+   "effects": "dr+1.4%;stamina-1.4%;res_bleed+4%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -947,7 +947,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Defender_Icon"
    },
-   "effects": "dr+3.5%;stamina-4%",
+   "effects": "dr+3.5%;stamina-4%;res_bleed+2%;res_fire+4%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -975,7 +975,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Gloves_Icon"
    },
-   "effects": "dr+3%;stamina-3.4%",
+   "effects": "dr+3%;stamina-3.4%;res_bleed+2%;res_fire+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -1004,7 +1004,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Cultist_Icon"
    },
-   "effects": "dr+2.2%;stamina-2.3%",
+   "effects": "dr+2.2%;stamina-2.3%;res_fire+2%;res_shock+2%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1032,7 +1032,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Elder_Icon"
    },
-   "effects": "dr+1.5%;stamina-1.5%",
+   "effects": "dr+1.5%;stamina-1.5%;res_fire+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1060,7 +1060,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_NerudEngineer_Icon"
    },
-   "effects": "dr+3.3%;stamina-3.8%",
+   "effects": "dr+3.3%;stamina-3.8%;res_fire+2%;res_shock+4%;res_acid+2%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1089,7 +1089,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Explorer_Icon"
    },
-   "effects": "dr+1.4%;stamina-1.4%",
+   "effects": "dr+1.4%;stamina-1.4%;res_fire+2%;res_shock+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1117,7 +1117,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_FaeHeavy_Icon"
    },
-   "effects": "dr+3%;stamina-3.3%",
+   "effects": "dr+3%;stamina-3.3%;res_bleed+2%;res_fire+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1146,7 +1146,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Gunslinger_Icon"
    },
-   "effects": "dr+2.3%;stamina-2.5%",
+   "effects": "dr+2.3%;stamina-2.5%;res_fire+4%;res_shock+4%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1174,7 +1174,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Handler_Icon"
    },
-   "effects": "dr+2%;stamina-2%",
+   "effects": "dr+2%;stamina-2%;res_bleed+4%;res_shock+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1202,7 +1202,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Sharpshooter_Icon"
    },
-   "effects": "dr+2.2%;stamina-2.2%",
+   "effects": "dr+2.2%;stamina-2.2%;res_bleed+4%;res_fire+2%;res_shock+2%;res_acid+14%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1230,7 +1230,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_RootInvader_Icon"
    },
-   "effects": "dr+1.5%;stamina-1.6%",
+   "effects": "dr+1.5%;stamina-1.6%;res_bleed+2%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1259,7 +1259,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Gloves_Invoker_Icon"
    },
-   "effects": "dr+3.2%;stamina-3.6%",
+   "effects": "dr+3.2%;stamina-3.6%;res_fire+2%;res_shock+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -1288,7 +1288,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Leto_A_Icon"
    },
-   "effects": "dr+4.5%;stamina-6%",
+   "effects": "dr+4.5%;stamina-6%;res_bleed+4%;res_fire+2%;res_shock+4%;res_acid+10%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1316,7 +1316,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Leto_B_Icon"
    },
-   "effects": "dr+4.4%;stamina-5.5%",
+   "effects": "dr+4.4%;stamina-5.5%;res_bleed+4%;res_fire+2%;res_shock+4%;res_acid+8%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -1345,7 +1345,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Medic_Icon"
    },
-   "effects": "dr+2.1%;stamina-2.2%",
+   "effects": "dr+2.1%;stamina-2.2%;res_bleed+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1373,7 +1373,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Gloves_Icon"
    },
-   "effects": "dr+3.5%;stamina-4.3%",
+   "effects": "dr+3.5%;stamina-4.3%;res_bleed+4%;res_fire+4%;res_shock+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",
@@ -1398,7 +1398,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Radiant_Icon"
    },
-   "effects": "dr+3.4%;stamina-4%",
+   "effects": "dr+3.4%;stamina-4%;res_bleed+2%;res_fire+2%;res_shock+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1426,7 +1426,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_RedWidowRegalia_Icon"
    },
-   "effects": "dr+2.6%;stamina-2.8%",
+   "effects": "dr+2.6%;stamina-2.8%;res_bleed+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1455,7 +1455,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Gloves_Ritualist_Icon"
    },
-   "effects": "dr+2.3%;stamina-2.4%",
+   "effects": "dr+2.3%;stamina-2.4%;res_bleed+2%;res_acid+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -1484,7 +1484,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_NerudLight_Icon"
    },
-   "effects": "dr+1.4%;stamina-1.4%",
+   "effects": "dr+1.4%;stamina-1.4%;res_bleed+2%;res_fire+2%;res_shock+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1513,7 +1513,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_RootSummoner_Icon"
    },
-   "effects": "dr+3.1%;stamina-3.5%",
+   "effects": "dr+3.1%;stamina-3.5%;res_bleed+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1541,7 +1541,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Drifter_Icon"
    },
-   "effects": "dr+2%;stamina-2%",
+   "effects": "dr+2%;stamina-2%;res_bleed+2%;res_fire+2%;res_shock+2%;res_acid+4%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -1570,7 +1570,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Gloves/T_UI_Gloves_Void_Icon"
    },
-   "effects": "dr+3.2%;stamina-3.5%",
+   "effects": "dr+3.2%;stamina-3.5%;res_fire+2%;res_shock+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1598,7 +1598,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Gloves"
    },
-   "effects": "dr+1.5%;stamina-1.5%",
+   "effects": "dr+1.5%;stamina-1.5%;res_bleed+2%;res_fire+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",
@@ -1628,7 +1628,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Alchemist_Icon"
    },
-   "effects": "dr+2.5%;stamina-2.6%",
+   "effects": "dr+2.5%;stamina-2.6%;res_bleed+2%;res_acid+10%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1657,7 +1657,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Arcanist_Icon"
    },
-   "effects": "dr+2.6%;stamina-2.7%",
+   "effects": "dr+2.6%;stamina-2.7%;res_fire+4%;res_shock+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1685,7 +1685,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Head2_Icon"
    },
-   "effects": "dr+2.6%;stamina-2.6%",
+   "effects": "dr+2.6%;stamina-2.6%;res_bleed+10%;res_fire+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -1714,7 +1714,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Bandit_Icon"
    },
-   "effects": "dr+1.4%;stamina-1.4%",
+   "effects": "dr+1.4%;stamina-1.4%;res_bleed+4%;res_acid+12%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1742,7 +1742,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_BloodlessCrown2_Icon"
    },
-   "effects": "dr+1.3%;stamina-1.4%",
+   "effects": "dr+1.3%;stamina-1.4%;res_bleed+30%;res_fire-6%;res_shock+6%;res_acid-12%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -1771,7 +1771,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Defender_Icon"
    },
-   "effects": "dr+3.5%;stamina-4%",
+   "effects": "dr+3.5%;stamina-4%;res_bleed+2%;res_fire+4%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1799,7 +1799,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Head_Icon"
    },
-   "effects": "dr+3.1%;stamina-3.4%",
+   "effects": "dr+3.1%;stamina-3.4%;res_bleed+4%;res_fire+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -1828,7 +1828,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Cultist_Icon"
    },
-   "effects": "dr+2.2%;stamina-2.3%",
+   "effects": "dr+2.2%;stamina-2.3%;res_bleed+2%;res_fire+2%;res_shock+2%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1856,7 +1856,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Elder_Icon"
    },
-   "effects": "dr+1.5%;stamina-1.5%",
+   "effects": "dr+1.5%;stamina-1.5%;res_fire+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1884,7 +1884,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_NerudEngineer_Icon"
    },
-   "effects": "dr+3.3%;stamina-3.8%",
+   "effects": "dr+3.3%;stamina-3.8%;res_fire+2%;res_shock+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1913,7 +1913,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Explorer_Icon"
    },
-   "effects": "dr+1.4%;stamina-1.4%",
+   "effects": "dr+1.4%;stamina-1.4%;res_shock+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1941,7 +1941,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_FaeHeavy_Icon"
    },
-   "effects": "dr+3.1%;stamina-3.3%",
+   "effects": "dr+3.1%;stamina-3.3%;res_bleed+4%;res_fire+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -1970,7 +1970,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_MedicHat_Sunglasses_Icon"
    },
-   "effects": "dr+2.1%;stamina-2.2%",
+   "effects": "dr+2.1%;stamina-2.2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -1998,7 +1998,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Gunslinger_Icon"
    },
-   "effects": "dr+2.3%;stamina-2.5%",
+   "effects": "dr+2.3%;stamina-2.5%;res_fire+2%;res_shock+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2026,7 +2026,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Handler_Icon"
    },
-   "effects": "dr+2%;stamina-2%",
+   "effects": "dr+2%;stamina-2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2054,7 +2054,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Sharpshooter_Icon"
    },
-   "effects": "dr+2.2%;stamina-2.2%",
+   "effects": "dr+2.2%;stamina-2.2%;res_fire+2%;res_shock+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2082,7 +2082,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_RootInvader_Icon"
    },
-   "effects": "dr+1.5%;stamina-1.6%",
+   "effects": "dr+1.5%;stamina-1.6%;res_bleed+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2111,7 +2111,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Head_Invoker_Icon"
    },
-   "effects": "dr+3.2%;stamina-3.6%",
+   "effects": "dr+3.2%;stamina-3.6%;res_fire+4%;res_shock+4%;res_acid+2%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -2140,7 +2140,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Leto_A_Icon"
    },
-   "effects": "dr+4.5%;stamina-6%",
+   "effects": "dr+4.5%;stamina-6%;res_bleed+6%;res_fire+8%;res_shock+4%;res_acid+12%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2168,7 +2168,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Leto_B_Icon"
    },
-   "effects": "dr+4.4%;stamina-5.5%",
+   "effects": "dr+4.4%;stamina-5.5%;res_bleed+4%;res_fire+6%;res_shock+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -2197,7 +2197,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_LodestoneCrown_Icon"
    },
-   "effects": "dr+1.3%;stamina-1.3%",
+   "effects": "dr+1.3%;stamina-1.3%;res_bleed+4%;res_shock-2%;res_acid+10%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2226,7 +2226,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Medic_Icon"
    },
-   "effects": "dr+2.1%;stamina-2.2%",
+   "effects": "dr+2.1%;stamina-2.2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2254,7 +2254,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_MudtoothsHat2_Icon"
    },
-   "effects": "dr+2.1%;stamina-2.2%",
+   "effects": "dr+2.1%;stamina-2.2%;res_bleed+2%;res_fire+2%;res_shock+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -2283,7 +2283,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Head_Icon"
    },
-   "effects": "dr+4%;stamina-4.9%",
+   "effects": "dr+4%;stamina-4.9%;res_bleed+6%;res_fire+6%;res_shock+6%;res_acid+18%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",
@@ -2313,7 +2313,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Nerud_Navigator_Icon"
    },
-   "effects": "dr+3.2%;stamina-3.8%",
+   "effects": "dr+3.2%;stamina-3.8%;res_bleed-2%;res_fire-2%;res_shock+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -2342,7 +2342,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Radiant_Icon"
    },
-   "effects": "dr+3.4%;stamina-4%",
+   "effects": "dr+3.4%;stamina-4%;res_bleed+2%;res_fire+2%;res_shock+6%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2370,7 +2370,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_FaeCrown_Icon"
    },
-   "effects": "dr+1.2%;stamina-3%",
+   "effects": "dr+1.2%;stamina-3%;res_bleed-12%;res_fire+50%;res_shock-12%;res_acid+14%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2399,7 +2399,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_RedWidowRegalia_Icon"
    },
-   "effects": "dr+2.6%;stamina-2.8%",
+   "effects": "dr+2.6%;stamina-2.8%;res_bleed+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2428,7 +2428,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_Ritualist_Icon"
    },
-   "effects": "dr+2.3%;stamina-2.4%",
+   "effects": "dr+2.3%;stamina-2.4%;res_bleed+2%;res_shock+2%;res_acid+8%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -2457,7 +2457,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_NerudLight_Icon"
    },
-   "effects": "dr+1.4%;stamina-1.4%",
+   "effects": "dr+1.4%;stamina-1.4%;res_bleed+2%;res_shock+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2486,7 +2486,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_RootSummoner_Icon"
    },
-   "effects": "dr+3.1%;stamina-3.5%",
+   "effects": "dr+3.1%;stamina-3.5%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2514,7 +2514,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_TopHat2_Icon"
    },
-   "effects": "dr+2.6%;stamina-2.6%",
+   "effects": "dr+2.6%;stamina-2.6%;res_acid+10%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2543,7 +2543,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_TrueCrimsonCrown2_Icon"
    },
-   "effects": "dr+3.3%;stamina-5%",
+   "effects": "dr+3.3%;stamina-5%;res_bleed-12%;res_fire+70%;res_shock-12%;res_acid-24%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2572,7 +2572,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Heads/T_UI_Head_Void_Icon"
    },
-   "effects": "dr+3.2%;stamina-3.5%",
+   "effects": "dr+3.2%;stamina-3.5%;res_fire+2%;res_shock+4%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2600,7 +2600,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Head"
    },
-   "effects": "dr+2.5%;stamina-2.5%",
+   "effects": "dr+2.5%;stamina-2.5%;res_bleed+4%;res_fire+2%;res_acid+4%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",
@@ -2630,7 +2630,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Head_Welding_Goggles"
    },
-   "effects": "dr+1.8%;stamina-2%",
+   "effects": "dr+1.8%;stamina-2%;res_fire+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2658,7 +2658,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Alchemist_Icon"
    },
-   "effects": "dr+4.9%;stamina-5.2%",
+   "effects": "dr+4.9%;stamina-5.2%;res_bleed+4%;res_acid+10%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2687,7 +2687,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Arcanist_Icon"
    },
-   "effects": "dr+5.1%;stamina-5.4%",
+   "effects": "dr+5.1%;stamina-5.4%;res_fire+6%;res_shock+8%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2715,7 +2715,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_MilitaryUniform_Legs2_Icon"
    },
-   "effects": "dr+3.2%;stamina-3.2%",
+   "effects": "dr+3.2%;stamina-3.2%;res_bleed+2%;res_fire+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -2744,7 +2744,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Bandit_Icon"
    },
-   "effects": "dr+2.7%;stamina-2.7%",
+   "effects": "dr+2.7%;stamina-2.7%;res_bleed+4%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2772,7 +2772,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Defender_Icon"
    },
-   "effects": "dr+7%;stamina-8.1%",
+   "effects": "dr+7%;stamina-8.1%;res_bleed+2%;res_fire+8%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2800,7 +2800,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_CrimsonGuard_Legs_Icon"
    },
-   "effects": "dr+6.1%;stamina-6.7%",
+   "effects": "dr+6.1%;stamina-6.7%;res_bleed+4%;res_fire+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -2829,7 +2829,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Cultist_Icon"
    },
-   "effects": "dr+4.4%;stamina-4.6%",
+   "effects": "dr+4.4%;stamina-4.6%;res_bleed+2%;res_fire+2%;res_shock+2%;res_acid+8%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2857,7 +2857,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Elder_Icon"
    },
-   "effects": "dr+3%;stamina-3%",
+   "effects": "dr+3%;stamina-3%;res_fire+6%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2885,7 +2885,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_NerudEngineer_Icon"
    },
-   "effects": "dr+6.6%;stamina-7.5%",
+   "effects": "dr+6.6%;stamina-7.5%;res_fire+2%;res_shock+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2914,7 +2914,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Explorer_Icon"
    },
-   "effects": "dr+2.9%;stamina-2.9%",
+   "effects": "dr+2.9%;stamina-2.9%;res_bleed+4%;res_fire+2%;res_shock+4%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2942,7 +2942,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_FaeHeavy_Icon"
    },
-   "effects": "dr+6%;stamina-6.6%",
+   "effects": "dr+6%;stamina-6.6%;res_bleed+4%;res_fire+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -2971,7 +2971,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Gunslinger_Icon"
    },
-   "effects": "dr+4.7%;stamina-4.9%",
+   "effects": "dr+4.7%;stamina-4.9%;res_fire+6%;res_shock+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -2999,7 +2999,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Handler_Icon"
    },
-   "effects": "dr+4%;stamina-4.1%",
+   "effects": "dr+4%;stamina-4.1%;res_bleed+2%;res_shock+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -3027,7 +3027,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Sharpshooter_Icon"
    },
-   "effects": "dr+4.4%;stamina-4.5%",
+   "effects": "dr+4.4%;stamina-4.5%;res_bleed+4%;res_fire+4%;res_shock+2%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -3055,7 +3055,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_RootInvader_Icon"
    },
-   "effects": "dr+3.1%;stamina-3.1%",
+   "effects": "dr+3.1%;stamina-3.1%;res_bleed+6%;res_acid+8%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -3084,7 +3084,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_Legs_Invoker_Icon"
    },
-   "effects": "dr+6.4%;stamina-7.2%",
+   "effects": "dr+6.4%;stamina-7.2%;res_fire+4%;res_shock+6%;res_acid+2%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -3113,7 +3113,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Leto_A_Icon"
    },
-   "effects": "dr+9%;stamina-11.8%",
+   "effects": "dr+9%;stamina-11.8%;res_bleed+8%;res_fire+6%;res_shock+8%;res_acid+14%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -3141,7 +3141,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Leto_B_Icon"
    },
-   "effects": "dr+8.9%;stamina-11.3%",
+   "effects": "dr+8.9%;stamina-11.3%;res_bleed+6%;res_fire+4%;res_shock+6%;res_acid+10%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -3170,7 +3170,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Medic_Icon"
    },
-   "effects": "dr+4.3%;stamina-4.4%",
+   "effects": "dr+4.3%;stamina-4.4%;res_bleed+8%;res_acid+4%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -3198,7 +3198,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Armor_NerudWarrior_Legs_Icon"
    },
-   "effects": "dr+8.8%;stamina-10.8%",
+   "effects": "dr+8.8%;stamina-10.8%;res_bleed+4%;res_fire+4%;res_shock+6%;res_acid+12%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",
@@ -3228,7 +3228,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Radiant_Icon"
    },
-   "effects": "dr+6.9%;stamina-7.9%",
+   "effects": "dr+6.9%;stamina-7.9%;res_bleed+2%;res_fire+2%;res_shock+6%;res_acid+2%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -3256,7 +3256,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_RedWidowRegalia_Icon"
    },
-   "effects": "dr+5.2%;stamina-5.6%",
+   "effects": "dr+5.2%;stamina-5.6%;res_bleed+6%;res_acid+8%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -3285,7 +3285,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Legs_Ritualist_Icon"
    },
-   "effects": "dr+4.5%;stamina-4.7%",
+   "effects": "dr+4.5%;stamina-4.7%;res_bleed+4%;res_shock+2%;res_acid+8%",
    "fidelity": "approx",
    "tier": 4,
    "menu": "smithy",
@@ -3314,7 +3314,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_NerudLight_Icon"
    },
-   "effects": "dr+2.8%;stamina-2.8%",
+   "effects": "dr+2.8%;stamina-2.8%;res_bleed+2%;res_fire+2%;res_shock+6%;res_acid+4%",
    "fidelity": "approx",
    "tier": 3,
    "menu": "smithy",
@@ -3343,7 +3343,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_RootSummoner_Icon"
    },
-   "effects": "dr+6.2%;stamina-6.9%",
+   "effects": "dr+6.2%;stamina-6.9%;res_bleed+2%;res_acid+12%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -3371,7 +3371,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Drifter_Icon"
    },
-   "effects": "dr+3.9%;stamina-4%",
+   "effects": "dr+3.9%;stamina-4%;res_bleed+2%;res_fire+2%;res_shock+2%;res_acid+6%",
    "fidelity": "approx",
    "tier": 2,
    "menu": "smithy",
@@ -3400,7 +3400,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/UI_Icons_Gear_Armor_Legs/T_UI_Legs_Void_Icon"
    },
-   "effects": "dr+6.4%;stamina-7.1%",
+   "effects": "dr+6.4%;stamina-7.1%;res_fire+4%;res_shock+4%;res_acid+6%",
    "fidelity": "approx",
    "tier": 1,
    "menu": "smithy",
@@ -3428,7 +3428,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Armor/T_UI_Warden_Legs"
    },
-   "effects": "dr+3%;stamina-3%",
+   "effects": "dr+3%;stamina-3%;res_bleed+6%;res_fire+4%;res_acid+4%",
    "fidelity": "approx",
    "tier": 5,
    "menu": "smithy",

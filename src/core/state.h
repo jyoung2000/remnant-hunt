@@ -78,6 +78,8 @@ struct Live {
     float bonusHealth = 0, bonusMax = 0;
     double shieldUntil = 0;
     double lastHurt = 0;
+    struct Imbue { Status status; float total, dur; double until; };
+    std::vector<Imbue> imbues;  // Remnant ammo mods: hits apply a status for a while
     double regenAcc = 0;
     struct Track { float hp = 0, max = 0; bool large = false, fought = false; };
     std::map<uint8_t*, Track> track;  // per monster: last HP we know of, to see damage from MHW weapons
@@ -117,7 +119,15 @@ Shared& S();
 
 double now_s();
 void toast(Live& l, const char* fmt, ...);
-void research_tick(const Live& l, double now);  // research.cpp: read-only findings for the diagnostic run
+void research_tick(const Live& l, double now);
+// Remnant statuses (remnant.cpp). Game thread, under S().lock.
+uint32_t status_bits(const void* em);  // bit per Status active on a monster (uEnemy*), nullptr = the hunter
+void inflict_player(Live& l, Status st, float total, float dur, double t);  // total: hunter HP over dur
+void status_player_dodge(double t);   // a dodge roll: burning goes out faster
+// The hunter's hit reactions (reactions.cpp), learned from MHW's own hits. Game thread.
+void reactions_tick(const Live& l, double t);
+void reactions_note_own_damage(double t);   // the mod is about to damage the hunter itself
+bool reactions_flinch(float share, double t);  // a Remnant hit worth this share of max health: MHW's reaction  // research.cpp: read-only findings for the diagnostic run
 
 // Commands from the screens (render thread) to the game thread.
 enum Cmd : int { CMD_NONE, CMD_RELOAD, CMD_SWAP, CMD_SKILL, CMD_SKILL2, CMD_RELIC, CMD_MOD };

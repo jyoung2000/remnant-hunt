@@ -15,13 +15,21 @@ static const char* kStatNames[ST_COUNT] = {
     "proc", "dmg", "dmg_ranged", "dmg_melee", "dmg_mod", "dmg_skill", "dmg_elem", "dmg_status", "dmg_explosive",
     "weakspot", "crit", "crit_dmg", "fire_rate", "reload", "mag", "ammo", "accuracy", "mod_gen", "mod_dur", "cdr",
     "skill_dur", "relic_speed", "relic_heal", "relic_charges", "heal", "lifesteal", "dr", "max_hp", "regen", "stamina",
-    "shield"};
+    "shield", "res_bleed", "res_fire", "res_shock", "res_acid", "vs_bleeding", "vs_burning", "vs_corroded",
+    "vs_overloaded", "vs_exposed", "vs_status", "status_dur"};
+static const char* kStatusKeys[SS_COUNT] = {"", "bleeding", "burning", "corroded", "overloaded", "exposed", "slowed", "marked"};
+static const char* kStatusLabels[SS_COUNT] = {"", "BLEEDING", "BURNING", "CORRODED", "OVERLOADED", "EXPOSED", "SLOWED", "MARKED"};
+const char* status_key(Status s) { return s > 0 && s < SS_COUNT ? kStatusKeys[s] : ""; }
+const char* status_label(Status s) { return s > 0 && s < SS_COUNT ? kStatusLabels[s] : ""; }
 static const char* kStatLabels[ST_COUNT] = {
     "Damage", "All Damage", "Ranged Damage", "Melee Damage", "Mod Damage", "Skill Damage", "Elemental Damage",
     "Status Damage", "Explosive Damage", "Weakspot Damage", "Critical Chance", "Critical Damage", "Fire Rate",
     "Reload Speed", "Magazine Size", "Ammo Reserves", "Accuracy", "Mod Power Generation", "Mod Duration",
     "Skill Cooldown Reduction", "Skill Duration", "Relic Use Speed", "Relic Healing", "Relic Charges", "Healing",
-    "Lifesteal", "Damage Reduction", "Max Health", "Health Regeneration", "Stamina", "Shield"};
+    "Lifesteal", "Damage Reduction", "Max Health", "Health Regeneration", "Stamina", "Shield", "Bleed Resistance",
+    "Fire Resistance", "Shock Resistance", "Acid Resistance", "Damage to BLEEDING targets", "Damage to BURNING targets",
+    "Damage to CORRODED targets", "Damage to OVERLOADED targets", "Damage to EXPOSED targets",
+    "Damage to targets with a status", "Status Duration"};
 static const char* kTrigNames[TR_COUNT] = {"",          "on_kill",  "on_crit",  "on_weakspot", "on_hit",
                                            "on_evade",  "on_relic", "on_skill", "on_mod",      "on_reload",
                                            "on_hurt",   "low_hp",   "high_hp"};
@@ -83,10 +91,55 @@ static void options(const char* p, Effect* e) {
     }
 }
 
+static bool status_from(const char*& p, Status* out) {
+    for (int i = 1; i < SS_COUNT; i++) {
+        size_t n = strlen(kStatusKeys[i]);
+        if (!strncmp(p, kStatusKeys[i], n) && (p[n] == ' ' || !p[n])) {
+            *out = (Status)i;
+            p += n;
+            return true;
+        }
+    }
+    return false;
+}
+
+// Numbers after a status verb: "N", "Ts", "Rm", "Rm@target", "C%", "cdTs" in any order; the first bare number is the
+// damage, the first seconds value the duration, the second (imbue) the span.
+static void status_args(const char* p, Effect* e) {
+    int secs = 0;
+    while (*p) {
+        while (*p == ' ') p++;
+        if (!*p) break;
+        char* end;
+        if (!strncmp(p, "cd", 2)) { e->cd = strtof(p + 2, &end); p = end + (*end == 's'); continue; }
+        float v = strtof(p, &end);
+        if (end == p) break;
+        p = end;
+        if (*p == 's') { (secs++ == 0 ? e->dur : e->span) = v; p++; }
+        else if (*p == 'm') {
+            e->radius = v;
+            p++;
+            if (!strncmp(p, "@target", 7)) { e->atTarget = true; p += 7; }
+        } else if (*p == '%') { e->chance = v / 100.0f; p++; }
+        else e->value = v;
+    }
+}
+
 static bool parse_one(const std::string& s, Effect* e) {
     const char* p = s.c_str();
     if (!strncmp(p, "use:", 4)) {
         p += 4;
+        struct { const char* w; Act a; } sverbs[] = {{"inflict ", ACT_INFLICT}, {"imbue ", ACT_IMBUE}, {"aoe ", ACT_AOE},
+                                                     {"mark ", ACT_MARK},       {"eruption ", ACT_ERUPTION},
+                                                     {"cure ", ACT_CURE}};
+        for (auto& v : sverbs)
+            if (!strncmp(p, v.w, strlen(v.w))) {
+                e->act = v.a;
+                p += strlen(v.w);
+                if ((v.a == ACT_INFLICT || v.a == ACT_IMBUE || v.a == ACT_CURE) && !status_from(p, &e->status)) return false;
+                status_args(p, e);
+                return true;
+            }
         struct { const char* w; Act a; } verbs[] = {{"heal ", ACT_HEAL},    {"shield ", ACT_SHIELD}, {"burst ", ACT_BURST},
                                                    {"dot ", ACT_DOT},      {"summon ", ACT_SUMMON}, {"buff ", ACT_BUFF},
                                                    {"ammo ", ACT_AMMO},    {"grenade ", ACT_GRENADE}};
@@ -111,6 +164,7 @@ static bool parse_one(const std::string& s, Effect* e) {
         return false;
     }
     const char* colon = strchr(p, ':');
+    if (colon && !strncmp(p, "inflict:", 8)) colon = nullptr;  // an untriggered inflict: clause
     if (colon) {
         std::string t(p, colon - p);
         size_t par = t.find('(');
@@ -121,6 +175,14 @@ static bool parse_one(const std::string& s, Effect* e) {
         if (!ok) return false;
         if (par != std::string::npos) e->trigArg = (float)atof(t.c_str() + par + 1);
         p = colon + 1;
+    }
+    if (!strncmp(p, "inflict:", 8)) {  // a passive status on a trigger (on_hit by default)
+        p += 8;
+        e->act = ACT_INFLICT;
+        if (e->trig == TR_ALWAYS) e->trig = TR_ON_HIT;
+        if (!status_from(p, &e->status)) return false;
+        status_args(p, e);
+        return true;
     }
     if (!stat_from(p, &e->stat) || !signed_value(p, &e->value, &e->pct)) return false;
     options(p, e);
@@ -174,12 +236,30 @@ std::string describe(const Effect& e) {
         case ACT_BUFF: return amount(e) + " " + stat_label(e.stat) + " for " + num(e.dur) + "s";
         case ACT_AMMO: return "Refills " + num(e.value * 100) + "% of your reserve ammo";
         case ACT_GRENADE: return "Explodes for " + num(e.value) + " damage around your target";
+        case ACT_INFLICT:
+            if (e.trig != TR_ALWAYS) break;
+            return std::string("Applies ") + status_label(e.status) + (e.value > 0 ? " (" + num(e.value) + " damage over " + num(e.dur) + "s)" : " for " + num(e.dur) + "s") +
+                   (e.radius > 0 ? " within " + num(e.radius) + "m" + (e.atTarget ? " of your target" : "") : " to your target");
+        case ACT_IMBUE:
+            return "For " + num(e.span) + "s, hits apply " + status_label(e.status) + " (" + num(e.value) + " damage over " + num(e.dur) + "s)";
+        case ACT_AOE:
+            return "Deals " + num(e.value) + " damage and staggers within " + num(e.radius) + "m" + (e.atTarget ? " of your target" : "");
+        case ACT_MARK: return "Marks enemies within " + num(e.radius) + "m for " + num(e.dur) + "s (+10% Critical Chance against them)";
+        case ACT_ERUPTION: return "Each status on enemies within " + num(e.radius) + "m erupts for " + num(e.value) + " damage";
+        case ACT_CURE: return std::string("Removes ") + status_label(e.status);
         default: break;
     }
     if (e.trig != TR_ALWAYS) {
         char t[64];
         snprintf(t, sizeof(t), kTrigLabels[e.trig], (int)e.trigArg);
         s = std::string(t) + ": ";
+    }
+    if (e.act == ACT_INFLICT) {
+        s += std::string("apply ") + status_label(e.status);
+        if (e.value > 0) s += " (" + num(e.value) + " damage over " + num(e.dur) + "s)";
+        else s += " for " + num(e.dur) + "s";
+        if (e.chance < 0.999f) s += ", " + num(e.chance * 100) + "% chance";
+        return s;
     }
     if (e.stat == ST_PROC) {
         s += "deal " + num(e.value) + " damage";
@@ -248,6 +328,25 @@ void EffectState::fire(Trig trig, double now, float* procDamage) {
                 continue;
             }
             buff(e.stat, e.value * src.scale, now + (e.dur > 0 ? e.dur : 10.0), &e, e.stacks);
+        }
+    }
+}
+
+void EffectState::inflicts(Trig trig, double now, std::vector<std::pair<const Effect*, float>>* out) {
+    for (const Src& src : sources) {
+        if (src.tag && src.tag != inHand) continue;
+        for (const Effect& e : effects_of(src.dsl)) {
+            if (e.act != ACT_INFLICT || e.trig != trig) continue;
+            Cd* cd = nullptr;
+            for (Cd& c : cds)
+                if (c.key == &e) cd = &c;
+            if (cd && now < cd->ready) continue;
+            if (e.chance < 0.999f && (float)rand() / (float)RAND_MAX > e.chance) continue;
+            if (e.cd > 0) {
+                if (cd) cd->ready = now + e.cd;
+                else cds.push_back({&e, now + e.cd});
+            }
+            out->push_back({&e, src.scale});
         }
     }
 }

@@ -76,7 +76,15 @@ struct Boss {
     Frame fr;
 };
 
-struct Proj { bool live = false; Vec3 p{}, v{}; float dmg = 0, radius = 0; double until = 0; uint32_t color = 0; };
+struct Proj {
+    bool live = false;
+    Vec3 p{}, v{};
+    float dmg = 0, radius = 0;
+    double until = 0;
+    uint32_t color = 0;
+    int status = 0;
+    float statusTotal = 0;
+};
 
 Boss g_boss[kMax];
 uint8_t g_token[kMax];  // the bosses' pseudo uEnemy pointers: never dereferenced, only compared
@@ -100,11 +108,12 @@ struct DrawBoss {
     float world[16];
 };
 struct Number { Vec3 at; int amount; bool crit, weak; double t; };
-struct HudBoss { int row; float hp, maxHp; bool show, dead; double deadAt; int rank; bool staggered; };
+struct HudBoss { int row; float hp, maxHp; bool show, dead; double deadAt; int rank; bool staggered; uint32_t status; };
 // Remnant-style bars for everything else: MHW's monsters, and Remnant creatures below boss tier.
 // tier 0 = small creature (thin, no name), 1 = large monster / elite (name over it).
-struct Bar { const void* key; int tier; std::string name; float hp, maxHp; Vec3 anchor; };
-struct Docked { const void* key; std::string name; float hp, maxHp; };
+struct Bar { const void* key; int tier; std::string name; float hp, maxHp; Vec3 anchor; uint32_t status; };
+struct Docked { const void* key; std::string name; float hp, maxHp; uint32_t status; };
+struct Aff { Vec3 c; float r; uint32_t bits; };  // afflicted monsters, for the status visuals
 struct Mark { Vec3 pos; int row; bool aggro; };  // Remnant creatures for the tracker
 struct Glow { Vec3 p; float radius; uint32_t color; };       // projectiles
 struct Ring { Vec3 c; float radius, k; uint32_t color; };     // area attacks winding up
@@ -113,6 +122,9 @@ std::vector<DrawBoss> g_draw;
 std::vector<HudBoss> g_hud;
 std::vector<Bar> g_bars, g_creatureBars;
 std::vector<Mark> g_marks;
+std::vector<Aff> g_affs;
+uint32_t g_meBits = 0;
+bool g_spaceWas = false;
 std::vector<Glow> g_glows;
 std::vector<Ring> g_rings;
 Docked g_focus{};
@@ -423,14 +435,26 @@ bool window(const char* hits, int i, float* s, float* e) {
 }
 
 // Damage to the hunter from a boss (dodging through it is Remnant's evade).
-int hurt_hunter(const GameSnapshot& g, float dmg, double t) {
+float status_dur(int st) { return st == SS_BURNING ? 6.0f : 10.0f; }
+int hurt_hunter(Live& l, float dmg, int status, float statusTotal, double t) {
+    const GameSnapshot& g = l.snap;
     if (t - g_dodgeAt < 0.45) return BOSS_EV_EVADE;
+    if (status > 0) inflict_player(l, (Status)status, statusTotal, status_dur(status), t);
+    reactions_note_own_damage(t);
     if (g.playerHealth && add_hp(g.playerHealth, -dmg)) {
+        if (l.maxHp > 0) reactions_flinch(dmg / l.maxHp, t);  // MHW's own flinch / knock-back for the hit
         std::lock_guard<std::mutex> lk(g_lock);
         g_hurtAt = t;
         return BOSS_EV_HURT;
     }
     return 0;
+}
+
+// What a boss's status costs the hunter: a share of a hunter's health, more in higher ranks.
+float status_total(const Boss& b) {
+    float hp = 150.0f;
+    if (g_snap && g_snap->playerHealth && mem_readable(g_snap->playerHealth + 0x60, 4)) hp = *(float*)(g_snap->playerHealth + 0x60);
+    return hp * tune(TUNING_BOSS_STATUS_FRAC) * sqrtf(std::max(1.0f, b.dmgMult));
 }
 
 void fire_projectile(const Boss& b, const Boss_attacks& a, Vec3 target, double t) {
@@ -446,11 +470,14 @@ void fire_projectile(const Boss& b, const Boss_attacks& a, Vec3 target, double t
         p.radius = 150.0f;
         p.until = t + std::min(5.0, (a.max_m * 100.0 + 800.0) / tune(TUNING_BOSS_PROJ_SPEED));
         p.color = parse_color(B(b).fx_color);
+        p.status = a.inflict;
+        p.statusTotal = status_total(b);
         return;
     }
 }
 
-int projectiles(const GameSnapshot& g, double t, float dt) {
+int projectiles(Live& l, double t, float dt) {
+    const GameSnapshot& g = l.snap;
     int ev = 0;
     Vec3 chest = add(g.pos, {0, 110, 0});
     for (Proj& p : g_proj) {
@@ -460,7 +487,7 @@ int projectiles(const GameSnapshot& g, double t, float dt) {
         if (t > p.until || world_ray(p.p, next, &hit)) { p.live = false; continue; }
         p.p = next;
         if (len3(sub(p.p, chest)) < p.radius) {
-            ev |= hurt_hunter(g, p.dmg, t);
+            ev |= hurt_hunter(l, p.dmg, p.status, p.statusTotal, t);
             p.live = false;
         }
     }
@@ -613,7 +640,8 @@ int think(Boss& b, Live& l, double t, float dt) {
                     if ((b.windowsDone & (1 << w)) || frac < ws || frac > we) continue;
                     if (!in_reach(b, a, hunter)) continue;
                     b.windowsDone |= 1 << w;
-                    ev |= hurt_hunter(g, a.damage * b.dmgMult, t);
+                    ev |= hurt_hunter(l, a.damage * b.dmgMult, frand() < (a.kind == BOSS_ATTACKS_KIND_AOE ? 0.8f : 0.4f) ? a.inflict : 0,
+                                      status_total(b), t);
                 }
             }
             if (b.at >= len) {
@@ -783,7 +811,7 @@ void mhw_bars(const Live& l, double t) {
         }
     }
     if (f) {
-        focus = {f->em, mhw_name(f->kind), f->hp, f->maxHp};
+        focus = {f->em, mhw_name(f->kind), f->hp, f->maxHp, status_bits(f->em)};
         hasFocus = true;
     }
     if (g_los.size() > 96) g_los.clear();
@@ -808,7 +836,8 @@ void mhw_bars(const Live& l, double t) {
             s.at = t;
         }
         if (!s.vis) continue;
-        bars.push_back({m.em, m.large ? 1 : 0, m.large ? mhw_name(m.kind) : std::string(), m.hp, m.maxHp, anchor});
+        bars.push_back({m.em, m.large ? 1 : 0, m.large ? mhw_name(m.kind) : std::string(), m.hp, m.maxHp, anchor,
+                        status_bits(m.em)});
     }
     std::lock_guard<std::mutex> lk(g_lock);
     g_bars.swap(bars);
@@ -873,6 +902,14 @@ void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stag
 
 bool is_boss(const uint8_t* em) { return em >= g_token && em < g_token + kMax; }
 
+bool boss_hit_ex(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak, float stagger) {
+    if (!is_boss(em)) return false;
+    hit_boss(boss_index(em), dmg, at, crit, weak, stagger);
+    return true;
+}
+
+float boss_time_scale(const uint8_t* em) { return (status_bits(em) & (1u << SS_SLOWED)) ? 0.7f : 1.0f; }
+
 bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak) {
     if (!is_boss(em)) return false;
     hit_boss(boss_index(em), dmg, at, crit, weak, 1.0f);
@@ -905,6 +942,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         g_marks.clear();
         g_glows.clear();
         g_rings.clear();
+        g_affs.clear();
         return 0;
     }
     float largest = 0;
@@ -953,10 +991,13 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         }
     }
     g_keyWas = key;
-    if (key_down(VK_SPACE)) g_dodgeAt = t;
+    bool space = key_down(VK_SPACE);
+    if (space) g_dodgeAt = t;
+    if (space && !g_spaceWas) status_player_dodge(t);
+    g_spaceWas = space;
 
     mhw_weapons(l, t);
-    ev |= projectiles(g, t, dt);
+    ev |= projectiles(l, t, dt);
 
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];
@@ -986,8 +1027,9 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
                 (b.fr.cMax - b.fr.cMin) / 100, (b.fr.zMax - b.fr.zMin) / 100);
         }
         // Animation clocks.
-        b.at += dt;
-        b.pt += dt;
+        float bdt = dt * boss_time_scale(&g_token[i]);  // SLOWED
+        b.at += bdt;
+        b.pt += bdt;
         b.fade = std::max(0.0f, b.fade - dt / 0.22f);
         if (b.st == ST_DEAD) {
             if (!b.looted) {
@@ -1001,7 +1043,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             if (b.sink > height_of(b) + 300) b = Boss();
             continue;
         }
-        ev |= think(b, l, t, dt);
+        ev |= think(b, l, t, bdt);
         float y;
         if (ground(b.pos, &y) && fabsf(y - b.pos.y) < 400) b.pos.y += (y - b.pos.y) * std::min(1.0f, dt * 12);
     }
@@ -1039,6 +1081,10 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     g_rings.clear();
     for (const Proj& p : g_proj)
         if (p.live) g_glows.push_back({p.p, p.radius, p.color});
+    g_affs.clear();
+    for (const Monster& m : g.monsters)
+        if (uint32_t bits = status_bits(m.em)) g_affs.push_back({m.center, std::max(m.half.x, std::max(m.half.y, m.half.z)), bits});
+    g_meBits = status_bits(nullptr);
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];
         if (!b.used || b.st == ST_LOADING) continue;
@@ -1068,12 +1114,12 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         if (b.st != ST_DEAD) g_marks.push_back({b.pos, b.row, b.aggro});
         if (B(b).tier == BOSSES_TIER_BOSS) {
             g_hud.push_back({b.row, b.hp, b.maxHp, b.aggro || (b.st == ST_DEAD && dist < 8000), b.st == ST_DEAD, b.stT0,
-                             b.rank, b.st == ST_STUN});
+                             b.rank, b.st == ST_STUN, status_bits(&g_token[i])});
         } else if (b.st != ST_DEAD && dist < 6000) {
             std::string nm = display_name(b.row);
             g_creatureBars.push_back({&g_token[i], B(b).tier == BOSSES_TIER_ELITE ? 1 : 0,
                                       B(b).tier == BOSSES_TIER_ELITE ? nm : std::string(), b.hp, b.maxHp,
-                                      {b.pos.x, b.pos.y + b.fr.zMax + 60, b.pos.z}});
+                                      {b.pos.x, b.pos.y + b.fr.zMax + 60, b.pos.z}, status_bits(&g_token[i])});
         }
     }
     return ev;
@@ -1130,10 +1176,41 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
     render3d_frame(dev, ctx, rtv, w, h, v.view, v.proj, items);
 }
 
+// Remnant II's own status icons, and a colour for each status's visuals.
+struct StatusArt { const char* icon; ImU32 color; };
+const StatusArt kArt[SS_COUNT] = {
+    {nullptr, 0},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Bleed.uasset", IM_COL32(210, 30, 30, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Fire.uasset", IM_COL32(255, 140, 30, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Corrosive.uasset", IM_COL32(130, 210, 60, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Shock.uasset", IM_COL32(90, 170, 255, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Exposed.uasset", IM_COL32(240, 220, 90, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Slow.uasset", IM_COL32(150, 150, 230, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Omen_Bad.uasset", IM_COL32(255, 80, 80, 255)},
+};
+
+// A row of status icons from x (to the right), centred on y; returns the row's width.
+float status_icons(ImDrawList* dl, uint32_t bits, float x, float y, float size) {
+    float x0 = x;
+    for (int st = 1; st < SS_COUNT; st++) {
+        if (!(bits & (1u << st))) continue;
+        int w = 0, h = 0;
+        void* tex = texture_for(kArt[st].icon, 64, &w, &h);
+        ImVec2 a = {x, y - size / 2}, b = {x + size, y + size / 2};
+        dl->AddRectFilled(a, b, IM_COL32(10, 8, 8, 170), size * 0.2f);
+        if (tex) dl->AddImage((ImTextureID)(uintptr_t)tex, a, b, {0, 0}, {1, 1}, kArt[st].color);
+        else dl->AddCircleFilled({x + size / 2, y}, size * 0.32f, kArt[st].color, 12);
+        x += size + 2;
+    }
+    return x - x0;
+}
+
 void bosses_hud() {
     std::vector<HudBoss> hud;
     std::vector<Bar> bars;
     std::vector<Mark> marks;
+    std::vector<Aff> affs;
+    uint32_t meBits = 0;
     std::vector<Glow> glows;
     std::vector<Ring> rings;
     Docked focus;
@@ -1148,6 +1225,8 @@ void bosses_hud() {
         focus = g_focus;
         hasFocus = g_hasFocus;
         marks = g_marks;
+        affs = g_affs;
+        meBits = g_meBits;
         glows = g_glows;
         rings = g_rings;
         memcpy(nums, g_numbers, sizeof(nums));
@@ -1282,7 +1361,8 @@ void bosses_hud() {
             float r = 5 * sc;
             dl->AddQuadFilled({c.x, c.y - r}, {c.x + r, c.y}, {c.x, c.y + r}, {c.x - r, c.y}, IM_COL32(196, 160, 90, 230));
         }
-        y = by + bh + 22 * sc;
+        if (h.status && !h.dead) status_icons(dl, h.status, x0, by + bh + 13 * sc, 18 * sc);
+        y = by + bh + (h.status ? 30 : 22) * sc;
     }
     if (g_barTrail.size() > 128) g_barTrail.clear();
     auto trail_of = [&](const void* key, float frac) {
@@ -1315,6 +1395,10 @@ void bosses_hud() {
             y += fs + 3 * sc;
         }
         bar(x0, y, w, bh, frac, trail_of(focus.key, frac), IM_COL32(176, 146, 84, 170), 1.0f * sc);
+        if (focus.status) {
+            status_icons(dl, focus.status, x0, y + bh + 12 * sc, 16 * sc);
+            y += 18 * sc;
+        }
         y += bh + 18 * sc;
     }
     if (!viewOk) return;
@@ -1334,8 +1418,53 @@ void bosses_hud() {
             dl->AddText(f, fs, {p.x - ts.x / 2 + 1, p.y - bh - ts.y - 2 * sc + 1}, IM_COL32(0, 0, 0, 190), b.name.c_str());
             dl->AddText(f, fs, {p.x - ts.x / 2, p.y - bh - ts.y - 2 * sc}, IM_COL32(236, 228, 214, 240), b.name.c_str());
         }
+        if (b.status) status_icons(dl, b.status, x0, p.y + 9 * sc, (b.tier == 1 ? 14 : 11) * sc);
         bar(x0, p.y - bh, w, bh, frac, trail_of(b.key, frac), b.tier == 1 ? IM_COL32(176, 146, 84, 150) : IM_COL32(0, 0, 0, 160),
             1.0f * sc);
+    }
+    // Statuses on monsters: embers, blood, acid, sparks rising around them in the status's colour.
+    {
+        ImDrawList* bg = ImGui::GetBackgroundDrawList();
+        for (const Aff& a : affs) {
+            ImVec2 c;
+            if (!project(v, a.c, vp->Pos, vp->Size, &c)) continue;
+            float d = std::max(300.0f, len3(sub(a.c, v.camPos)));
+            float rad = std::min(260.0f, a.r * 1000.0f / d) * sc;
+            int k = 0;
+            for (int st = SS_BLEEDING; st <= SS_EXPOSED; st++) {
+                if (!(a.bits & (1u << st))) continue;
+                for (int n = 0; n < 7; n++, k++) {
+                    float ph = fmodf((float)t * (st == SS_OVERLOADED ? 2.2f : 0.9f) + k * 0.137f, 1.0f);
+                    float ang = k * 2.39996f;
+                    float rr = rad * (0.35f + 0.6f * fmodf(k * 0.618f, 1.0f));
+                    ImVec2 q = {c.x + cosf(ang) * rr, c.y + sinf(ang) * rr * 0.5f + (st == SS_BLEEDING ? ph : -ph) * rad * 0.6f};
+                    int al = (int)(220 * (1.0f - ph));
+                    ImU32 col = (kArt[st].color & 0x00FFFFFF) | ((ImU32)al << 24);
+                    float sz = (st == SS_OVERLOADED ? 2.0f : 3.0f + 3.0f * (1.0f - ph)) * sc;
+                    if (st == SS_OVERLOADED)
+                        bg->AddLine(q, {q.x + 8 * sc * cosf(ang * 3), q.y + 8 * sc * sinf(ang * 3)}, col, 2.0f * sc);
+                    else
+                        bg->AddCircleFilled(q, sz, col, 8);
+                }
+            }
+        }
+    }
+    // The hunter's own statuses: Remnant's icons under MHW's health bar, and the screen edge in their colour.
+    if (meBits) {
+        float x = vp->Pos.x + 34 * sc, y0 = vp->Pos.y + 150 * sc;
+        status_icons(dl, meBits, x, y0, 30 * sc);
+        int st = SS_BLEEDING;
+        while (st < SS_COUNT && !(meBits & (1u << st))) st++;
+        if (st <= SS_OVERLOADED) {
+            int al = (int)(55 + 35 * sinf((float)t * 5.0f));
+            ImU32 col = (kArt[st].color & 0x00FFFFFF) | ((ImU32)al << 24), none = kArt[st].color & 0x00FFFFFF;
+            float e = 90 * sc;
+            ImVec2 p0 = vp->Pos, p1 = {vp->Pos.x + vp->Size.x, vp->Pos.y + vp->Size.y};
+            ImDrawList* bg = ImGui::GetBackgroundDrawList();
+            bg->AddRectFilledMultiColor({p0.x, p1.y - e}, p1, none, none, col, col);
+            bg->AddRectFilledMultiColor(p0, {p0.x + e, p1.y}, col, none, none, col);
+            bg->AddRectFilledMultiColor({p1.x - e, p0.y}, p1, none, col, col, none);
+        }
     }
     // Damage numbers at the hit.
     for (const Number& n : nums) {

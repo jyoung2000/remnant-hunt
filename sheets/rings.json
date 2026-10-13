@@ -279,7 +279,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_AtonementFold_Icon"
    },
-   "effects": "crit+5%",
+   "effects": "crit+5%;on_hit:inflict:bleeding 0 10s",
    "fidelity": "exact",
    "tier": 4,
    "menu": "melder",
@@ -2596,7 +2596,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_FeedbackLoop_Icon"
    },
-   "effects": "on_evade:proc+105 cd1s",
+   "effects": "on_evade:proc+105 cd1s;on_evade:inflict:overloaded 110 10s",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -5100,7 +5100,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_SingedRing_Icon"
    },
-   "effects": "dmg+12%",
+   "effects": "vs_burning+12%",
    "fidelity": "exact",
    "tier": 3,
    "menu": "melder",
@@ -6194,7 +6194,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_WiredInhibitor_Icon"
    },
-   "effects": "dmg+3%",
+   "effects": "dmg+3%;on_hit:inflict:slowed 0 1s",
    "fidelity": "fallback",
    "tier": 5,
    "menu": "melder",
