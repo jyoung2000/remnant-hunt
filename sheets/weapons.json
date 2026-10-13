@@ -1,0 +1,242 @@
+{
+ "sheet": "weapons",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "slot": "enum:long|hand",
+  "name": "r2text",
+  "desc": "r2text",
+  "icon": "r2tex",
+  "damage": "num",
+  "rpm": "num",
+  "mag": "num",
+  "reserve": "num",
+  "reload_s": "num",
+  "weakspot_mult": "num",
+  "range_m": "num",
+  "spread_deg": "num",
+  "pellets": "num",
+  "mod": "ref:mods|none",
+  "price_scrap": "num",
+  "sold_by": "ref:npcs"
+ },
+ "rows": [
+  {
+   "id": "service_pistol",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Weapon_ServicePistol.uasset",
+     "key": "C8CDF03E4EF6E5E783675D98109BF6D3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Weapon_ServicePistol.uasset",
+     "key": "1C3020324E30768D2F267E85B0484E5E"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_ServicePistol_Icon_NEW"
+   },
+   "damage": 24,
+   "rpm": 400,
+   "mag": 10,
+   "reserve": 150,
+   "reload_s": 1.5,
+   "weakspot_mult": 2.0,
+   "range_m": 45,
+   "spread_deg": 1.0,
+   "pellets": 1,
+   "mod": "none",
+   "price_scrap": 0,
+   "sold_by": "brabus"
+  },
+  {
+   "id": "western_classic",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Weapon_Revolver.uasset",
+     "key": "CA3932C44038BB748E80B599B2D8D6CB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Weapon_Revolver.uasset",
+     "key": "4A35C91C420B280D7A9D30B051F16C74"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weaponl_WesternClassic_Icon"
+   },
+   "damage": 50,
+   "rpm": 240,
+   "mag": 6,
+   "reserve": 90,
+   "reload_s": 2.2,
+   "weakspot_mult": 2.0,
+   "range_m": 50,
+   "spread_deg": 0.8,
+   "pellets": 1,
+   "mod": "none",
+   "price_scrap": 250,
+   "sold_by": "brabus"
+  },
+  {
+   "id": "tech_22",
+   "slot": "hand",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Weapon_MachinePistol.uasset",
+     "key": "57510857473DEEE718F362BFE8399102"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Weapon_MachinePistol.uasset",
+     "key": "75F646994EF49F6C1F396495CC16ED24"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_MachinePistol_Icon"
+   },
+   "damage": 12,
+   "rpm": 900,
+   "mag": 30,
+   "reserve": 240,
+   "reload_s": 1.8,
+   "weakspot_mult": 1.6,
+   "range_m": 35,
+   "spread_deg": 2.5,
+   "pellets": 1,
+   "mod": "none",
+   "price_scrap": 300,
+   "sold_by": "brabus"
+  },
+  {
+   "id": "blackmaw_ar47",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Weapon_AssaultRifle.uasset",
+     "key": "CA084D5F4002D7358B471C9DF9139E19"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Weapon_AssaultRifle.uasset",
+     "key": "512AF0B54ECB8C1B4191C9B2B3CA7C6A"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_AssaultRifle_Icon"
+   },
+   "damage": 22,
+   "rpm": 600,
+   "mag": 30,
+   "reserve": 240,
+   "reload_s": 2.4,
+   "weakspot_mult": 1.8,
+   "range_m": 60,
+   "spread_deg": 1.5,
+   "pellets": 1,
+   "mod": "hot_shot",
+   "price_scrap": 400,
+   "sold_by": "brabus"
+  },
+  {
+   "id": "coach_gun",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Weapon_CoachGun.uasset",
+     "key": "2B99EB274865D7A7397A24B7050B0438"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Weapon_CoachGun.uasset",
+     "key": "6EE315EA4D6C5F8FD3565E9B3E021684"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_CoachGun_Icon"
+   },
+   "damage": 16,
+   "rpm": 120,
+   "mag": 2,
+   "reserve": 40,
+   "reload_s": 2.0,
+   "weakspot_mult": 1.5,
+   "range_m": 20,
+   "spread_deg": 6.0,
+   "pellets": 8,
+   "mod": "concussive_shot",
+   "price_scrap": 400,
+   "sold_by": "brabus"
+  },
+  {
+   "id": "huntmaster_m1",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Weapon_Huntmaster.uasset",
+     "key": "FB754E13470D2A90705BB387C736506E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Weapon_Huntmaster.uasset",
+     "key": "51E9F89B46357826637C6FBB14C80FC8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_HuntMaster_Icon"
+   },
+   "damage": 85,
+   "rpm": 75,
+   "mag": 6,
+   "reserve": 60,
+   "reload_s": 2.6,
+   "weakspot_mult": 2.25,
+   "range_m": 120,
+   "spread_deg": 0.3,
+   "pellets": 1,
+   "mod": "corrosive_rounds",
+   "price_scrap": 450,
+   "sold_by": "brabus"
+  },
+  {
+   "id": "widowmaker",
+   "slot": "long",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Weapon_SniperRifle.uasset",
+     "key": "902B13FB40F386384A898D9D53167505"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Weapon_SniperRifle.uasset",
+     "key": "3F00EE4046D72E9B5B437787BF883473"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Weapons/UI_Icons_Gear_Weapons_Standard/T_UI_Weapon_SniperRifle_Icon"
+   },
+   "damage": 140,
+   "rpm": 50,
+   "mag": 4,
+   "reserve": 40,
+   "reload_s": 3.0,
+   "weakspot_mult": 2.5,
+   "range_m": 150,
+   "spread_deg": 0.1,
+   "pellets": 1,
+   "mod": "healing_shot",
+   "price_scrap": 600,
+   "sold_by": "brabus"
+  }
+ ]
+}

@@ -1,0 +1,360 @@
+{
+ "sheet": "systems",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "summary": "str",
+  "trigger": "str",
+  "reads": "list:ref:hooks",
+  "writes": "list:ref:hooks",
+  "driven_by": "list:sheet",
+  "test": "str"
+ },
+ "rows": [
+  {
+   "id": "boot",
+   "summary": "loader loads core; core waits for decrypted .text, checks every hook signature, disables features whose hooks fail",
+   "trigger": "dinput8 DllMain thread",
+   "reads": [
+    "s_player",
+    "s_enemy",
+    "s_mh_camera",
+    "add_hp",
+    "show_damage",
+    "create_shell",
+    "find_master_player"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "hooks"
+   ],
+   "test": "log: 'hook ok <id>' for every hook"
+  },
+  {
+   "id": "overlay",
+   "summary": "ImGui on the game's D3D11 swapchain; Remnant theme for Remnant screens, MHW theme for HUD",
+   "trigger": "dxgi Present",
+   "reads": [
+    "dxgi_present",
+    "game_window"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "ui"
+   ],
+   "test": "screenshot shows the intro over MHW title/hub"
+  },
+  {
+   "id": "game_tick",
+   "summary": "per-frame game-thread work via sMhCamera object vptr swapped to a copied vtable (no code patch)",
+   "trigger": "sMhCamera move slot",
+   "reads": [
+    "s_mh_camera",
+    "cam_move_slot"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "hooks"
+   ],
+   "test": "log: tick rate ~60/s in hunt"
+  },
+  {
+   "id": "r2_content",
+   "summary": "r2read helper reads Remnant II text/icons from the player's install on demand, cached in memory only",
+   "trigger": "UI needs a cell",
+   "reads": [
+    "none"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "archetypes",
+    "skills",
+    "weapons",
+    "mods",
+    "relics",
+    "npcs",
+    "ui"
+   ],
+   "test": "log: every r2 cell in sheets resolved"
+  },
+  {
+   "id": "zone_watch",
+   "summary": "knows base (Astera/Seliana/hubs) vs hunt from the zone id",
+   "trigger": "tick",
+   "reads": [
+    "s_player",
+    "player_zone"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "ui"
+   ],
+   "test": "log: zone changes on travel"
+  },
+  {
+   "id": "solo_gate",
+   "summary": "Remnant combat runs only when the hunter is alone in the quest (v0.1); co-op later",
+   "trigger": "tick",
+   "reads": [
+    "party_count"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "coop"
+   ],
+   "test": "log: solo=1 in a solo quest"
+  },
+  {
+   "id": "gun_mode",
+   "summary": "toggle Remnant gun mode; sheathes nothing itself, blocks MHW attack inputs while active",
+   "trigger": "hotkey G",
+   "reads": [
+    "game_window"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "weapons",
+    "ui"
+   ],
+   "test": "G toggles hud_gun; MHW attack does not fire while active"
+  },
+  {
+   "id": "fire",
+   "summary": "hitscan from camera along view; first monster OBB hit takes damage (weakspot = upper third of box), monster notices via a slinger shell, damage number shown",
+   "trigger": "LMB in gun mode",
+   "reads": [
+    "s_mh_camera",
+    "s_enemy",
+    "enemy_obb",
+    "enemy_health_mgr",
+    "enemy_dead_flag",
+    "player_pos"
+   ],
+   "writes": [
+    "add_hp",
+    "create_shell",
+    "show_damage"
+   ],
+   "driven_by": [
+    "weapons",
+    "archetypes",
+    "upgrades",
+    "skills",
+    "mods"
+   ],
+   "test": "monster HP drops by sheet damage x mults; damage number appears"
+  },
+  {
+   "id": "reload",
+   "summary": "R or empty mag refills from reserve over reload_s x archetype reload_mult",
+   "trigger": "R / empty",
+   "reads": [
+    "none"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "weapons",
+    "archetypes"
+   ],
+   "test": "ammo counter refills after reload_s"
+  },
+  {
+   "id": "swap_gun",
+   "summary": "mouse wheel / X swaps long gun and hand gun",
+   "trigger": "wheel or X",
+   "reads": [
+    "none"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "weapons"
+   ],
+   "test": "hud shows other gun icon"
+  },
+  {
+   "id": "mod_charge",
+   "summary": "damage dealt fills the long gun's mod meter; F activates the mod",
+   "trigger": "fire hits / F",
+   "reads": [
+    "s_enemy",
+    "enemy_health_mgr",
+    "player_health_mgr"
+   ],
+   "writes": [
+    "add_hp",
+    "show_damage"
+   ],
+   "driven_by": [
+    "mods"
+   ],
+   "test": "meter fills at charge_damage; effect applies"
+  },
+  {
+   "id": "skill",
+   "summary": "T activates the archetype skill: monster damage mult / heal over time / damage reduction / infinite ammo",
+   "trigger": "hotkey T",
+   "reads": [
+    "player_health_mgr",
+    "s_enemy",
+    "enemy_health_mgr"
+   ],
+   "writes": [
+    "add_hp"
+   ],
+   "driven_by": [
+    "skills",
+    "archetypes"
+   ],
+   "test": "each effect measurable in HP log"
+  },
+  {
+   "id": "damage_watch",
+   "summary": "turns MHW-weapon hits and monster hits into Remnant effects by watching HP deltas each tick (no damage hook)",
+   "trigger": "tick",
+   "reads": [
+    "player_health_mgr",
+    "enemy_health_mgr"
+   ],
+   "writes": [
+    "add_hp"
+   ],
+   "driven_by": [
+    "skills",
+    "archetypes",
+    "mods"
+   ],
+   "test": "Juggernaut refunds part of damage taken"
+  },
+  {
+   "id": "relic",
+   "summary": "V uses a Dragon Heart charge: heals heal_pct of max HP over heal_over_s",
+   "trigger": "hotkey V",
+   "reads": [
+    "player_health_mgr"
+   ],
+   "writes": [
+    "add_hp"
+   ],
+   "driven_by": [
+    "relics",
+    "archetypes"
+   ],
+   "test": "HP rises, charge count drops"
+  },
+  {
+   "id": "relic_refill",
+   "summary": "charges refill on entering a base or camp zone",
+   "trigger": "zone change",
+   "reads": [
+    "player_zone"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "relics"
+   ],
+   "test": "charges full after returning to Astera"
+  },
+  {
+   "id": "scrap",
+   "summary": "Remnant currency: earned from damage dealt to large monsters and quest completion",
+   "trigger": "monster HP drop",
+   "reads": [
+    "s_enemy",
+    "enemy_health_mgr"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "weapons",
+    "upgrades"
+   ],
+   "test": "scrap rises during a hunt"
+  },
+  {
+   "id": "vendor",
+   "summary": "Brabus sells guns for scrap; McCabe upgrades the equipped long gun",
+   "trigger": "terminal",
+   "reads": [
+    "none"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "npcs",
+    "weapons",
+    "upgrades"
+   ],
+   "test": "buy updates inventory; upgrade raises damage"
+  },
+  {
+   "id": "save",
+   "summary": "mod state (archetype, guns owned, upgrades, scrap, relic) saved per Steam user in %LOCALAPPDATA%/RemnantHunt/save.json",
+   "trigger": "change + quit",
+   "reads": [
+    "none"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "archetypes",
+    "weapons",
+    "upgrades"
+   ],
+   "test": "state survives a restart"
+  },
+  {
+   "id": "intro_flow",
+   "summary": "first launch shows intro then archetype select; can be reopened from the terminal",
+   "trigger": "first in-game frame",
+   "reads": [
+    "s_player"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "ui",
+    "archetypes"
+   ],
+   "test": "fresh save shows intro once"
+  },
+  {
+   "id": "melty_test",
+   "summary": "test mode writes Melty checks to melty.log (hooks ok, r2 content ok, a shot landed)",
+   "trigger": "MELTY test env",
+   "reads": [
+    "none"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "systems"
+   ],
+   "test": "melty.log has the checks"
+  }
+ ]
+}

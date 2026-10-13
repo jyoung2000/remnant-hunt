@@ -1,0 +1,152 @@
+{
+ "sheet": "ui",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "theme": "enum:remnant|mhw",
+  "opens": "enum:first_launch|after:intro|hotkey_in_base|in_hunt|event",
+  "hotkey": "str",
+  "art": "r2tex|none",
+  "title": "str",
+  "shows": "list",
+  "closes": "enum:choice|esc_or_leave|never|timer"
+ },
+ "rows": [
+  {
+   "id": "intro",
+   "theme": "remnant",
+   "opens": "first_launch",
+   "hotkey": "none",
+   "art": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Core/T_UI_Core_HUD_Icon_WorldStone"
+   },
+   "title": "design:A worldstone hums. The Root is gone, but this world is not yours.",
+   "shows": [
+    "worldstone art",
+    "3 lines of mod text",
+    "continue prompt"
+   ],
+   "closes": "choice"
+  },
+  {
+   "id": "archetype_select",
+   "theme": "remnant",
+   "opens": "after:intro",
+   "hotkey": "none",
+   "art": "none",
+   "title": "design:Choose your archetype",
+   "shows": [
+    "archetypes.emblem",
+    "archetypes.name",
+    "archetypes.desc",
+    "archetypes.prime",
+    "skills.name",
+    "skills.icon",
+    "weapons.icon"
+   ],
+   "closes": "choice"
+  },
+  {
+   "id": "ward13_terminal",
+   "theme": "remnant",
+   "opens": "hotkey_in_base",
+   "hotkey": "H",
+   "art": {
+    "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
+   },
+   "title": "design:Ward 13 terminal",
+   "shows": [
+    "npcs.name",
+    "npcs.greet_1",
+    "archetype",
+    "scrap",
+    "loadout"
+   ],
+   "closes": "esc_or_leave"
+  },
+  {
+   "id": "vendor_brabus",
+   "theme": "remnant",
+   "opens": "event",
+   "hotkey": "none",
+   "art": {
+    "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
+   },
+   "title": "design:npcs.brabus.name",
+   "shows": [
+    "npcs.shop_line",
+    "weapons.icon",
+    "weapons.name",
+    "weapons.desc",
+    "weapons.price_scrap",
+    "npcs.done_line"
+   ],
+   "closes": "esc_or_leave"
+  },
+  {
+   "id": "workbench_mccabe",
+   "theme": "remnant",
+   "opens": "event",
+   "hotkey": "none",
+   "art": {
+    "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
+   },
+   "title": "design:npcs.mccabe.name",
+   "shows": [
+    "npcs.shop_line",
+    "upgrades.level",
+    "upgrades.cost_scrap",
+    "mods.icon",
+    "mods.name",
+    "mods.desc",
+    "npcs.done_line"
+   ],
+   "closes": "esc_or_leave"
+  },
+  {
+   "id": "hud_gun",
+   "theme": "mhw",
+   "opens": "in_hunt",
+   "hotkey": "G",
+   "art": "none",
+   "title": "design:(none)",
+   "shows": [
+    "weapons.icon",
+    "ammo mag/reserve",
+    "mod charge",
+    "crosshair",
+    "hit markers"
+   ],
+   "closes": "never"
+  },
+  {
+   "id": "hud_archetype",
+   "theme": "mhw",
+   "opens": "in_hunt",
+   "hotkey": "none",
+   "art": "none",
+   "title": "design:(none)",
+   "shows": [
+    "skills.icon",
+    "skill cooldown",
+    "relics.icon",
+    "relic charges"
+   ],
+   "closes": "never"
+  },
+  {
+   "id": "toast",
+   "theme": "mhw",
+   "opens": "event",
+   "hotkey": "none",
+   "art": "none",
+   "title": "design:(none)",
+   "shows": [
+    "scrap gained",
+    "mod ready",
+    "skill ready"
+   ],
+   "closes": "timer"
+  }
+ ]
+}

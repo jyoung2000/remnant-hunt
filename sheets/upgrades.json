@@ -1,0 +1,48 @@
+{
+ "sheet": "upgrades",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "level": "num",
+  "cost_scrap": "num",
+  "damage_mult": "num",
+  "done_by": "ref:npcs"
+ },
+ "rows": [
+  {
+   "id": "plus_1",
+   "level": 1,
+   "cost_scrap": 150,
+   "damage_mult": 1.1,
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_2",
+   "level": 2,
+   "cost_scrap": 300,
+   "damage_mult": 1.2,
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_3",
+   "level": 3,
+   "cost_scrap": 500,
+   "damage_mult": 1.32,
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_4",
+   "level": 4,
+   "cost_scrap": 800,
+   "damage_mult": 1.45,
+   "done_by": "mccabe"
+  },
+  {
+   "id": "plus_5",
+   "level": 5,
+   "cost_scrap": 1200,
+   "damage_mult": 1.6,
+   "done_by": "mccabe"
+  }
+ ]
+}

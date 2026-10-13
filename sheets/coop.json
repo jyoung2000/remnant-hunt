@@ -1,0 +1,36 @@
+{
+ "sheet": "coop",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "what": "str",
+  "channel": "str",
+  "owner": "str"
+ },
+ "rows": [
+  {
+   "id": "session",
+   "what": "players join through MHW's own session/SOS; all hunters run the mashup",
+   "channel": "MHW online",
+   "owner": "MHW"
+  },
+  {
+   "id": "remnant_damage",
+   "what": "Remnant gun damage applied by the shooter's client; monster HP sync rides on MHW",
+   "channel": "MHW",
+   "owner": "shooter"
+  },
+  {
+   "id": "archetype_buffs",
+   "what": "Medic heals and Hunter's Mark affect allies: broadcast small mod packets",
+   "channel": "to decide (lobby relay)",
+   "owner": "caster"
+  },
+  {
+   "id": "maxPlayers",
+   "what": "4 hunters per quest (MHW limit)",
+   "channel": "-",
+   "owner": "-"
+  }
+ ]
+}

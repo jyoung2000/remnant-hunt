@@ -1,0 +1,84 @@
+{
+ "sheet": "skills",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "icon": "r2tex",
+  "effect": "enum:monster_damage_mult|heal_over_time|damage_reduction|infinite_ammo",
+  "magnitude": "num",
+  "magnitude2": "num",
+  "duration_s": "num",
+  "cooldown_s": "num"
+ },
+ "rows": [
+  {
+   "id": "hunters_mark",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Skills/HuntersMark/Skill_HuntersMark.uasset",
+     "key": "A21B723A42C8CBF9CE78999B3E4E0BE0"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Hunter/T_UI_Icon_Skill_Hunter_HuntersMark"
+   },
+   "effect": "monster_damage_mult",
+   "magnitude": 1.15,
+   "magnitude2": 0.0,
+   "duration_s": 25,
+   "cooldown_s": 60
+  },
+  {
+   "id": "wellspring",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Skills/Wellspring/Skill_Wellspring.uasset",
+     "key": "E4D7DBAF4B3D14DA8EB4DBA0D991FEDA"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Medic/T_UI_Icon_Skill_Medic_Wellspring"
+   },
+   "effect": "heal_over_time",
+   "magnitude": 3.0,
+   "magnitude2": 0.0,
+   "duration_s": 15,
+   "cooldown_s": 70
+  },
+  {
+   "id": "juggernaut",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Skills/Battlecry_Juggernaut/Skill_Battlecry_Juggernaut.uasset",
+     "key": "9DE21DB04F419AEE24740FA721FF11B4"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Challenger/T_UI_Icon_Skill_Challenger_Juggernaut"
+   },
+   "effect": "damage_reduction",
+   "magnitude": 0.6,
+   "magnitude2": 1.25,
+   "duration_s": 20,
+   "cooldown_s": 90
+  },
+  {
+   "id": "bulletstorm",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Skills/Bulletstorm/Skill_BulletStorm.uasset",
+     "key": "3A10CB5D4215216156C655B8F879A7EF"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Gunslinger/T_UI_Icon_Skill_Gunslinger_Bulletstorm"
+   },
+   "effect": "infinite_ammo",
+   "magnitude": 1.25,
+   "magnitude2": 0.0,
+   "duration_s": 20,
+   "cooldown_s": 90
+  }
+ ]
+}

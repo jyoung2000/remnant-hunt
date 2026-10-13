@@ -1,0 +1,149 @@
+{
+ "sheet": "archetypes",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "prime": "r2text",
+  "desc": "r2text",
+  "emblem": "r2tex",
+  "skill": "ref:skills",
+  "long_gun": "ref:weapons",
+  "hand_gun": "ref:weapons",
+  "ranged_mult": "num",
+  "hp_bonus": "num",
+  "damage_taken_mult": "num",
+  "reload_mult": "num",
+  "relic_heal_mult": "num"
+ },
+ "rows": [
+  {
+   "id": "hunter",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
+     "key": "ADD75F0146AFDCD9E43BD8B39361742D"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
+     "key": "2379165D4AD1B0E0ACE4DE81D830CDD0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Archetype_Hunter_UI.uasset",
+     "key": "F7A487964BB813B9112EFAB965777DEA"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Sharpshooter"
+   },
+   "skill": "hunters_mark",
+   "long_gun": "huntmaster_m1",
+   "hand_gun": "service_pistol",
+   "ranged_mult": 1.1,
+   "hp_bonus": 0,
+   "damage_taken_mult": 1.0,
+   "reload_mult": 1.0,
+   "relic_heal_mult": 1.0
+  },
+  {
+   "id": "medic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
+     "key": "5FBCAEEC41C6A32E9428279C813C1C79"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
+     "key": "C49D0A3A4F93738D478CE4947F35FD5C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Archetype_Medic_UI.uasset",
+     "key": "8B47471E42FD9F8C07714D90205F348D"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Medic"
+   },
+   "skill": "wellspring",
+   "long_gun": "blackmaw_ar47",
+   "hand_gun": "service_pistol",
+   "ranged_mult": 1.0,
+   "hp_bonus": 15,
+   "damage_taken_mult": 1.0,
+   "reload_mult": 1.0,
+   "relic_heal_mult": 1.25
+  },
+  {
+   "id": "challenger",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Archetype_Challenger_UI.uasset",
+     "key": "AF63CCC4418791E2F5D45B9DE883106F"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Archetype_Challenger_UI.uasset",
+     "key": "A10F01E643D791AD745BEF9AAB6D73DF"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Archetype_Challenger_UI.uasset",
+     "key": "1A642BD14BDAEFAE47EFE9AEC21274DE"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Defender"
+   },
+   "skill": "juggernaut",
+   "long_gun": "coach_gun",
+   "hand_gun": "western_classic",
+   "ranged_mult": 1.0,
+   "hp_bonus": 25,
+   "damage_taken_mult": 0.9,
+   "reload_mult": 1.0,
+   "relic_heal_mult": 1.0
+  },
+  {
+   "id": "gunslinger",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Archetype_Gunslinger_UI.uasset",
+     "key": "AFA1C1C84B999FC5BBDFF2AC2502C707"
+    }
+   },
+   "prime": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Archetype_Gunslinger_UI.uasset",
+     "key": "BA9CE7154A2CCAFB892E9A9099D10334"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Archetype_Gunslinger_UI.uasset",
+     "key": "33BFCDC4400E284FF6E684B657DAB921"
+    }
+   },
+   "emblem": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Archetype/T_UI_Icon_Archetype_Gunslinger"
+   },
+   "skill": "bulletstorm",
+   "long_gun": "blackmaw_ar47",
+   "hand_gun": "western_classic",
+   "ranged_mult": 1.05,
+   "hp_bonus": 0,
+   "damage_taken_mult": 1.0,
+   "reload_mult": 0.75,
+   "relic_heal_mult": 1.0
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "sheet": "relics",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "desc": "r2text",
+  "icon": "r2tex",
+  "charges": "num",
+  "heal_pct_max_hp": "num",
+  "heal_over_s": "num",
+  "use_time_s": "num",
+  "refill_on": "enum:base_or_camp"
+ },
+ "rows": [
+  {
+   "id": "dragon_heart",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Items/Common/Consumable_DragonHeart.uasset",
+     "key": "89C817C04A6542E83E4BE79624C1F5FD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Items/Common/Consumable_DragonHeart.uasset",
+     "key": "B562DBBC458A19F52F50BCBDED1EBD19"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_DragonHeart_Icon"
+   },
+   "charges": 3,
+   "heal_pct_max_hp": 60,
+   "heal_over_s": 1.5,
+   "use_time_s": 0.8,
+   "refill_on": "base_or_camp"
+  }
+ ]
+}

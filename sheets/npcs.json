@@ -1,0 +1,129 @@
+{
+ "sheet": "npcs",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "name": "r2name",
+  "role": "enum:guns|upgrades",
+  "greet_1": "r2text",
+  "greet_2": "r2text",
+  "greet_3": "r2text",
+  "open_option": "r2text",
+  "leave_option": "r2text",
+  "shop_line": "r2text",
+  "done_line": "r2text",
+  "banner": "r2tex"
+ },
+ "rows": [
+  {
+   "id": "brabus",
+   "name": {
+    "r2name": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/Quest_Ward13.uasset",
+     "pattern": "^(Brabus)$"
+    }
+   },
+   "role": "guns",
+   "greet_1": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Brabus_PlayerBase.uasset",
+     "key": "77B6235F493C4AFFEEE775A5297D324A"
+    }
+   },
+   "greet_2": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Brabus_PlayerBase.uasset",
+     "key": "D12B2A1A4988D3D79BE24F9BB0DA73B6"
+    }
+   },
+   "greet_3": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Brabus_PlayerBase.uasset",
+     "key": "5ED0BF744FE0BDFD421E9383113554A7"
+    }
+   },
+   "open_option": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Brabus_PlayerBase.uasset",
+     "key": "B370F1274E86E36D7655A783A67F1FDF"
+    }
+   },
+   "leave_option": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "DDBF3BD34A04C2B88411EFB928093427"
+    }
+   },
+   "shop_line": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Brabus_PlayerBase.uasset",
+     "key": "1D01907E4949E65B0FE28EB274CA6312"
+    }
+   },
+   "done_line": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_Brabus_PlayerBase.uasset",
+     "key": "20B7BAFB4BC7866EAF24AF9029D6FD07"
+    }
+   },
+   "banner": {
+    "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
+   }
+  },
+  {
+   "id": "mccabe",
+   "name": {
+    "r2name": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/Quest_Ward13.uasset",
+     "pattern": "^EventTree_Ava(McCabe)_PlayerBase$"
+    }
+   },
+   "role": "upgrades",
+   "greet_1": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "221ED03141C60B4EB1D45AA50AD8B2C2"
+    }
+   },
+   "greet_2": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "F224016442A07F078BC69FA870FE82D6"
+    }
+   },
+   "greet_3": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "E3FF9D2844E4A7F7F15BC283CD6B58F7"
+    }
+   },
+   "open_option": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "CD8D5C154D4F457D7F188F94AF0F3AA3"
+    }
+   },
+   "leave_option": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "DDBF3BD34A04C2B88411EFB928093427"
+    }
+   },
+   "shop_line": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "06491D8F40D246377DA7DF93F25A877E"
+    }
+   },
+   "done_line": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Quests/Quest_Ward13/EventTree_AvaMcCabe_PlayerBase.uasset",
+     "key": "8095C75247CB01A3CB77BCBD98BBBC7A"
+    }
+   },
+   "banner": {
+    "r2tex": "Remnant2/Content/UI2/UI_Core/UI_Textures/UI_Textures_Travel/UI_Textures_Travel_Banners/UI_Textures_Travel_Banners_Waypoints_MainCampaign/Ward13_Waypoint_Town"
+   }
+  }
+ ]
+}

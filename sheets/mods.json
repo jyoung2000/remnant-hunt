@@ -1,0 +1,104 @@
+{
+ "sheet": "mods",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "desc": "r2text",
+  "icon": "r2tex",
+  "effect": "enum:burn|heal_burst|blast|corrode",
+  "charge_damage": "num",
+  "magnitude": "num",
+  "duration_s": "num"
+ },
+ "rows": [
+  {
+   "id": "hot_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HotShot/Mod_Hotshot.uasset",
+     "key": "6A9A38984C6D576D1F4BD6B25A8DC3BB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HotShot/Mod_Hotshot.uasset",
+     "key": "9412DF0F4F7789A1F2002C87FE60F1C2"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_Hotshot"
+   },
+   "effect": "burn",
+   "charge_damage": 600,
+   "magnitude": 8,
+   "duration_s": 15
+  },
+  {
+   "id": "healing_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HealingShot/Mod_HealingShot.uasset",
+     "key": "62DC585F48A805DF56FBC18D942DFF8F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/HealingShot/Mod_HealingShot.uasset",
+     "key": "1CE6B7554884798986157698ED6DC0D8"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_HealingShot"
+   },
+   "effect": "heal_burst",
+   "charge_damage": 700,
+   "magnitude": 40,
+   "duration_s": 0
+  },
+  {
+   "id": "concussive_shot",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/ConcussiveShot/Mod_ConcussiveShot.uasset",
+     "key": "CF0EC955449BD10476B2EEBCF338918D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/ConcussiveShot/Mod_ConcussiveShot.uasset",
+     "key": "EB994F7B417C5B7560D6BF902944945F"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_ConcussiveShot"
+   },
+   "effect": "blast",
+   "charge_damage": 650,
+   "magnitude": 180,
+   "duration_s": 0
+  },
+  {
+   "id": "corrosive_rounds",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/CorrosiveRounds/Mod_CorrosiveRounds.uasset",
+     "key": "A59B4DA84E7D1045974527A138239D4A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Mods/CorrosiveRounds/Mod_CorrosiveRounds.uasset",
+     "key": "9B0E474B468C92F573947B8167DB2433"
+    }
+   },
+   "icon": {
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Mods/T_UI_Mod_CorrosiveRounds"
+   },
+   "effect": "corrode",
+   "charge_damage": 650,
+   "magnitude": 1.1,
+   "duration_s": 20
+  }
+ ]
+}

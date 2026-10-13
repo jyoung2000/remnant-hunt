@@ -1,0 +1,166 @@
+{
+ "sheet": "hooks",
+ "phase": "v0.1",
+ "columns": {
+  "id": "id",
+  "kind": "enum:static_ptr|func|offset|vtable_slot|dxgi|win32",
+  "value": "str",
+  "base": "str",
+  "check": "str",
+  "source": "str"
+ },
+ "rows": [
+  {
+   "id": "s_player",
+   "kind": "static_ptr",
+   "value": "0x14500ECA0",
+   "base": "image",
+   "check": "vt:0x1433FE5B0",
+   "source": "crossover-bridge game.cpp"
+  },
+  {
+   "id": "find_master_player",
+   "kind": "func",
+   "value": "0x141B42010",
+   "base": "image",
+   "check": "sig:45 33 C9 4C 8D 41 50",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "player_zone",
+   "kind": "offset",
+   "value": "0xAED0",
+   "base": "s_player object",
+   "check": "range:0..1000",
+   "source": "HunterPie ZoneOffsets 421810"
+  },
+  {
+   "id": "player_pos",
+   "kind": "offset",
+   "value": "0x160",
+   "base": "player (FindMasterPlayer)",
+   "check": "finite floats",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "player_health_mgr",
+   "kind": "offset",
+   "value": "0x7630",
+   "base": "player",
+   "check": "vt:0x143240EA0; +0x60 max, +0x64 cur",
+   "source": "crossover-bridge, HunterPie"
+  },
+  {
+   "id": "player_slinger_shll",
+   "kind": "offset",
+   "value": "0x56E8",
+   "base": "player",
+   "check": "ptr readable, +0xB0 count>0",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "add_hp",
+   "kind": "func",
+   "value": "0x141216880",
+   "base": "image",
+   "check": "sig:F3 0F 58 49 64 0F 2F 0D ?? ?? ?? ?? 73 12 F3 0F 10 41 60",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "create_shell",
+   "kind": "func",
+   "value": "0x141AA74A0",
+   "base": "image",
+   "check": "sig:48 8B C4 57 48 81 EC 90 01 00 00 48 89 58 08",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "show_damage",
+   "kind": "func",
+   "value": "0x141CC5F80",
+   "base": "image",
+   "check": "sig:48 83 EC 68 83 B9 80 22 01 00 0F 75 59",
+   "source": "crossover-bridge, HunterPie FUN_DEAL_DAMAGE"
+  },
+  {
+   "id": "s_enemy",
+   "kind": "static_ptr",
+   "value": "0x14500CF40",
+   "base": "image",
+   "check": "slots +0x38 x128; ai +0x138 -> uEnemy",
+   "source": "crossover-bridge, HunterPie MONSTER_LIST"
+  },
+  {
+   "id": "enemy_health_mgr",
+   "kind": "offset",
+   "value": "0x7670",
+   "base": "uEnemy",
+   "check": "vt:0x143240EA0",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "enemy_obb",
+   "kind": "offset",
+   "value": "0x3A0",
+   "base": "uEnemy",
+   "check": "rot +0x3A0, center +0x3D0, half +0x3E0 (cm)",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "enemy_dead_flag",
+   "kind": "offset",
+   "value": "0x14780",
+   "base": "AI data (uEnemy+0x12278)",
+   "check": "bit 2",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "enemy_path",
+   "kind": "offset",
+   "value": "0x2A0",
+   "base": "uEnemy",
+   "check": "'em' path string at res+0x0C",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "s_mh_camera",
+   "kind": "static_ptr",
+   "value": "0x1451C4400",
+   "base": "image",
+   "check": "vt:0x1433F82A8; vp0 +0x50, cam +0x58, view +0xA0, proj +0xE0",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "cam_move_slot",
+   "kind": "vtable_slot",
+   "value": "6",
+   "base": "sMhCamera vtable 0x1433F82A8",
+   "check": "slot -> 0x141AC42F0 (sig 48 8B C4 48 89 58 20 55)",
+   "source": "crossover-bridge"
+  },
+  {
+   "id": "party_count",
+   "kind": "offset",
+   "value": "0x1AB0",
+   "base": "0x145013530",
+   "check": "runtime: 1 in solo quest",
+   "source": "HunterPie PARTY 421810 (unverified meaning)"
+  },
+  {
+   "id": "dxgi_present",
+   "kind": "dxgi",
+   "value": "IDXGISwapChain vtable 8 / ResizeBuffers 13",
+   "base": "dxgi.dll",
+   "check": "D3D11 device from swapchain",
+   "source": "own"
+  },
+  {
+   "id": "game_window",
+   "kind": "win32",
+   "value": "MonsterHunterWorld.exe main window",
+   "base": "process",
+   "check": "IsWindowVisible, class name logged",
+   "source": "own"
+  }
+ ]
+}
