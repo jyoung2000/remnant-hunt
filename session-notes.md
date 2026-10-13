@@ -15,3 +15,14 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
 - MHW was still running the 10:34 build all morning (r2read.exe/dinput8.dll locked): Jalon must close it fully.
 - Pending from the diagnostic: NPC spots (menus.json), material ids (materials.json), item_name_stride, item box check,
   item bar field, action/animation ids.
+
+## 2026-10-13 afternoon: bosses, bars, tracker (commit 7cfd4bc)
+- Remnant II bosses: sheets/bosses.json + boss_attacks.json, src/core/bosses.cpp (AI, hits, loot), model.cpp (pose),
+  render3d.cpp (D3D11 draw at Present), overlay.cpp (ClearDepthStencilView hook picks MHW's scene depth; ini
+  [bosses] scene_depth=0 turns it off). Debug key F9 ([keys] boss=). Ravager mesh faces +Y, right = -X, 13 m long.
+- Hit windows measured by tools/attack_timing.py (limb speeds). MHW melee on bosses = attack press + reach (approx).
+- Bars: Remnant boss bar (top), docked bar for the MHW monster being fought, bars over others; names from
+  sheets/mhw_monsters.json by model id (logged as "monsters: met emXXX_YY").
+- Map: Jalon chose "compass now, minimap later". Tracker strip done; minimap markers need the minimap's zoom and
+  rotation from memory (diagnostic research).
+- Untested in game. Next: Jalon tests F9 in the Training Area; check log for render3d/model/anim/scene depth lines.
