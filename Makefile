@@ -10,7 +10,8 @@ VERSION ?= 0.1.0
 B       := build/win
 O       := build/obj
 
-CXXFLAGS := -O2 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -DNOMINMAX \
+CXXFLAGS := -O2 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -DNOMINMAX -DNDEBUG \
+            -DIMGUI_USER_CONFIG='"rh_imconfig.h"' \
             -Ithird_party/minhook/include -Ithird_party/imgui -Ithird_party/imgui/backends -Isrc/core
 CFLAGS   := -O2 -Ithird_party/minhook/include
 LDFLAGS  := -shared -static -s -Wl,--no-insert-timestamp
@@ -53,7 +54,7 @@ $(B)/remnant_hunt.dll: $(call obj,$(CORE) $(IMGUI) $(MINHOOK))
 
 $(O)/ooz/%.o: third_party/ooz/%
 	@mkdir -p $(dir $@)
-	$(CXX) -O2 -std=c++17 -DOODLE_ENABLE_AVX2 -include immintrin.h -Wno-everything -Ithird_party/ooz -c $< -o $@
+	$(CXX) -O2 -std=c++17 -DNDEBUG -DOODLE_ENABLE_AVX2 -include immintrin.h -Wno-everything -Ithird_party/ooz -c $< -o $@
 
 $(O)/r2read/%.o: src/r2read/%
 	@mkdir -p $(dir $@)

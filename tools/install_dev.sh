@@ -9,6 +9,6 @@ cp build/win/remnant_hunt.dll build/win/r2read.exe "$M/"
 cp assets/fonts/*.ttf assets/fonts/OFL-*.txt "$M/fonts/"
 cp LICENSE* NOTICE* "$M/licenses/" 2>/dev/null || true
 cp third_party/ooz/COPYING "$M/licenses/r2read-GPL-3.0.txt"
-touch "$M/dev_reload"
+[ -e "$M/dev_reload" ] && mv -f "$M/dev_reload" "$M/dev_reload.off" || true  # no hot reload by default
 echo "installed into $G"
 ls -la "$G/dinput8.dll" "$M"

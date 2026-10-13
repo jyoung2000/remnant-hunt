@@ -41,6 +41,9 @@ void ui_init_fonts() {
     if (!g_bold) g_bold = g_body;
     if (!g_title) g_title = g_body;
     io.FontDefault = g_body;
+    io.ConfigErrorRecovery = true;
+    io.ConfigErrorRecoveryEnableAssert = false;
+    io.ConfigErrorRecoveryEnableTooltip = false;
     ImGuiStyle& st = ImGui::GetStyle();
     st.WindowRounding = 0;
     st.FrameRounding = 0;
@@ -184,7 +187,9 @@ static void screen_intro() {
         ImGui::Spacing();
     }
     ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 70);
-    if (t > 3.0 && (remnant_button("CONTINUE", ImVec2(200, 40)) || ImGui::IsKeyPressed(ImGuiKey_Enter))) open(SCR_ARCHETYPE);
+    bool ready = t > 3.0;  // the button is always submitted (ImGui needs an item after SetCursorPos)
+    if ((remnant_button("CONTINUE", ImVec2(200, 40), ready) || (ready && ImGui::IsKeyPressed(ImGuiKey_Enter))))
+        open(SCR_ARCHETYPE);
     end_screen();
 }
 
@@ -572,11 +577,26 @@ void mod_frame() {
     AcquireSRWLockShared(&sh.lock);
     SaveData s = sh.save;
     bool inGame = sh.live.snap.inGame, inBase = sh.live.snap.inBase, combat = sh.live.combatAllowed;
+    Vec3 pos = sh.live.snap.pos;
+    bool viewValid = sh.live.snap.view.valid;
     bool gunMode = sh.live.gunMode;
     ReleaseSRWLockShared(&sh.lock);
 
     const Keys& k = keys();
-    if (g_screen == SCR_NONE && inGame && inBase && !s.introDone && r2_ready()) open(SCR_INTRO);
+    // First visit: wait until the hunter is really in town (zone settled and the hunter has moved), not while the
+    // loading screen still shows.
+    static double baseSince = 0;
+    static Vec3 basePos{};
+    static bool moved = false;
+    if (inGame && inBase) {
+        if (baseSince == 0) { baseSince = now_s(); basePos = pos; moved = false; }
+        float dx = pos.x - basePos.x, dz = pos.z - basePos.z;
+        if (dx * dx + dz * dz > 50.0f * 50.0f) moved = true;
+    } else {
+        baseSince = 0;
+    }
+    bool settled = baseSince > 0 && now_s() - baseSince > 4.0 && viewValid && (moved || now_s() - baseSince > 90.0);
+    if (g_screen == SCR_NONE && settled && !s.introDone && r2_ready()) open(SCR_INTRO);
     if (g_screen != SCR_NONE) {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen != SCR_INTRO && (g_screen != SCR_ARCHETYPE || s.archetype >= 0))
             open(g_screen == SCR_VENDOR || g_screen == SCR_WORKBENCH ? SCR_TERMINAL : SCR_NONE);

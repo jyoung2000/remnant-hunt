@@ -52,3 +52,13 @@ void melty_log(const char* fmt, ...) {
 }
 
 }  // namespace rh
+
+// Called by IM_ASSERT (src/core/rh_imconfig.h). Logs each failing check once.
+void rh_imgui_assert(const char* expr, const char* file, int line) {
+    static const char* seen[64];
+    static int n = 0;
+    for (int i = 0; i < n; i++)
+        if (seen[i] == expr) return;
+    if (n < 64) seen[n++] = expr;
+    rh::log("imgui check failed (ignored): %s at %s:%d", expr, file, line);
+}

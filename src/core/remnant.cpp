@@ -425,6 +425,7 @@ void mod_game_tick() {
         g_lastSave = t;
     }
     ReleaseSRWLockExclusive(&sh.lock);
+    devconsole_tick(t);
 }
 
 // ---------------------------------------------------------------- save file
