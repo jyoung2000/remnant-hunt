@@ -227,7 +227,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Explorer/T_UI_Icon_Skill_Explorer_Plainswalker"
    },
-   "effects": "use:buff stamina+20% 15s",
+   "effects": "use:buff stamina_cost-80% 15s",
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 30.0,
@@ -295,7 +295,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Gunslinger/T_UI_Icon_Skill_Gunslinger_03"
    },
-   "effects": "use:buff stamina+50% 15s",
+   "effects": "use:buff stamina_cost-20% 15s",
    "fidelity": "approx",
    "cooldown_s": 50.0,
    "duration_s": 60.0,
@@ -465,7 +465,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Skills/UI_Icons_Skills_Invader/T_UI_Icon_Skill_Invader_Reboot"
    },
-   "effects": "use:buff stamina+15% 15s",
+   "effects": "use:buff stamina_cost-15% 15s",
    "fidelity": "approx",
    "cooldown_s": 55.0,
    "duration_s": 3.0,
@@ -482,7 +482,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Skills/Invoker/T_UI_Icon_Skill_Invoker_02"
    },
-   "effects": "use:buff stamina-10% 15s",
+   "effects": "use:buff stamina_cost+5% 15s",
    "fidelity": "approx",
    "cooldown_s": 120.0,
    "duration_s": 15.0,

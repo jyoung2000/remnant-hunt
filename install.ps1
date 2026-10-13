@@ -3,7 +3,7 @@
 #   One line, in PowerShell:
 #     irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 | iex
 #   From a release zip you downloaded:
-#     .\install.ps1 -Zip .\remnant_hunt-0.3.0.zip
+#     .\install.ps1 -Zip .\remnant_hunt-0.4.0.zip
 #   Options: -GameDir "D:\Games\Monster Hunter World"   -Force (replace another mod loader's dinput8.dll, kept as .bak)
 #   Uninstall: .\install.ps1 -Uninstall
 #

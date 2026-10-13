@@ -210,7 +210,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_13_Active"
    },
-   "effects": "on_evade:stamina+10% 10s",
+   "effects": "on_evade:stamina_cost-10% 10s",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -578,7 +578,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Yellow_14_Active"
    },
-   "effects": "stamina+10%",
+   "effects": "stamina_cost-5%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -900,7 +900,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_11_Active"
    },
-   "effects": "stamina+15%",
+   "effects": "stamina_cost-15%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -923,7 +923,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Fragments/New/T_UI_Icon_Fragment_Blue_05_Active"
    },
-   "effects": "stamina+15",
+   "effects": "stamina_max+15",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",

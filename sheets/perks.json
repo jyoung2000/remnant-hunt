@@ -189,7 +189,7 @@
     }
    },
    "icon": "none",
-   "effects": "stamina+50%",
+   "effects": "stamina_cost-50%",
    "fidelity": "exact"
   },
   {
@@ -254,7 +254,7 @@
     }
    },
    "icon": "none",
-   "effects": "stamina+35%;on_evade:stamina+35% 10s",
+   "effects": "stamina_cost-17.5%;on_evade:stamina_cost-17.5% 10s",
    "fidelity": "exact"
   },
   {
@@ -423,7 +423,7 @@
     }
    },
    "icon": "none",
-   "effects": "stamina+10%",
+   "effects": "stamina_cost-15%",
    "fidelity": "exact"
   },
   {
@@ -631,7 +631,7 @@
     }
    },
    "icon": "none",
-   "effects": "stamina+5%",
+   "effects": "stamina_cost-2.5%",
    "fidelity": "exact"
   },
   {
@@ -826,7 +826,7 @@
     }
    },
    "icon": "none",
-   "effects": "lifesteal+3%;stamina+15%",
+   "effects": "lifesteal+3%;stamina_cost-7.5%",
    "fidelity": "exact"
   },
   {

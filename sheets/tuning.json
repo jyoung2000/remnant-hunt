@@ -166,6 +166,41 @@
    "id": "boss_status_frac",
    "value": 0.15,
    "why": "a Remnant boss status (BLEEDING, BURNING ...) costs the hunter this share of their max health over its duration, more in higher ranks"
+  },
+  {
+   "id": "turf_mhw_chance",
+   "value": 0.5,
+   "why": "chance that two large MHW monsters meeting near the hunter stage a turf war (pairs MHW has its own turf war for are left to MHW)"
+  },
+  {
+   "id": "turf_boss_chance",
+   "value": 0.6,
+   "why": "chance that a Remnant boss meeting a large MHW monster fights it"
+  },
+  {
+   "id": "turf_hit_frac",
+   "value": 0.045,
+   "why": "a turf-war blow takes this share of the max health of the one hit (heavier attacks and bigger monsters more)"
+  },
+  {
+   "id": "turf_turn_dps",
+   "value": 120,
+   "why": "how fast an MHW monster in a turf war turns to face its opponent, degrees per second"
+  },
+  {
+   "id": "turf_war_s",
+   "value": 40,
+   "why": "how long a Remnant boss's turf war with an MHW monster lasts at most, seconds"
+  },
+  {
+   "id": "turf_cooldown_s",
+   "value": 150,
+   "why": "after a meeting or a turf war, the same monsters are left alone this long, seconds"
+  },
+  {
+   "id": "turf_range_m",
+   "value": 9,
+   "why": "how close two large MHW monsters must come for a turf war, metres between their bodies (their blows reach about that far)"
   }
  ]
 }

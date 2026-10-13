@@ -307,7 +307,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BandBand_Icon"
    },
-   "effects": "max_hp+100%;stamina+100%",
+   "effects": "max_hp+100%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -390,7 +390,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_BerserkerCrest_Icon"
    },
-   "effects": "fire_rate+10%;stamina+30%",
+   "effects": "fire_rate+10%;stamina_cost-30%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -474,7 +474,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Extra/T_UI_Ring_BlackCatBand_Icon"
    },
-   "effects": "stamina+5%",
+   "effects": "stamina_cost-2.5%",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "melder",
@@ -807,7 +807,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_BreachAccelerator_Icon"
    },
-   "effects": "stamina+5%;dmg+5%",
+   "effects": "stamina_cost-2.5%;dmg+5%",
    "fidelity": "exact",
    "tier": 5,
    "menu": "melder",
@@ -1731,7 +1731,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Ward13/T_UI_Ring_DeceiversBand_Icon"
    },
-   "effects": "on_evade:stamina+10% 12s",
+   "effects": "on_evade:stamina_cost-5% 12s",
    "fidelity": "exact",
    "tier": 1,
    "menu": "melder",
@@ -2010,7 +2010,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_DrakestonePearl_Icon"
    },
-   "effects": "stamina+10%",
+   "effects": "stamina_cost-10%",
    "fidelity": "fallback",
    "tier": 3,
    "menu": "melder",
@@ -2038,7 +2038,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_DranMemento_Icon"
    },
-   "effects": "stamina+20",
+   "effects": "stamina_max+20;stamina_cost-2.5%",
    "fidelity": "exact",
    "tier": 3,
    "menu": "melder",
@@ -2428,7 +2428,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Fae/T_UI_Ring_FaeProtectorSignet_Icon"
    },
-   "effects": "max_hp+10;stamina+10",
+   "effects": "max_hp+10;stamina_max+10;stamina_cost-2.5%",
    "fidelity": "exact",
    "tier": 3,
    "menu": "melder",
@@ -2792,7 +2792,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_FrivolousBand_Icon"
    },
-   "effects": "on_evade:stamina+10% 10s;on_evade:fire_rate+10% 7s",
+   "effects": "on_evade:stamina_cost-10% 10s;on_evade:fire_rate+10% 7s",
    "fidelity": "exact",
    "tier": 3,
    "menu": "melder",
@@ -3099,7 +3099,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_HeartoftheWolf_Icon"
    },
-   "effects": "stamina+25",
+   "effects": "stamina_max+25",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -3463,7 +3463,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_MatriarchsRing_Icon"
    },
-   "effects": "on_evade:stamina+100% 7s",
+   "effects": "on_evade:stamina_cost-100% 7s",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -3491,7 +3491,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/RootEarth/T_UI_Ring_MechanicCog_Icon"
    },
-   "effects": "stamina+5%",
+   "effects": "stamina_cost-2.5%",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "melder",
@@ -3600,7 +3600,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_MomentumDriver_Icon"
    },
-   "effects": "stamina+15% 1.5s",
+   "effects": "stamina_cost-7.5% 1.5s",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -3819,7 +3819,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_PanWarBand_Icon"
    },
-   "effects": "stamina+3%;reload+3%",
+   "effects": "stamina_cost-1.5%;reload+3%",
    "fidelity": "exact",
    "tier": 4,
    "menu": "melder",
@@ -3986,7 +3986,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Nerud/T_UI_Ring_PropulsionLoop_Icon"
    },
-   "effects": "on_kill:stamina+5% 10s",
+   "effects": "on_kill:stamina_cost-2.5% 10s",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -4707,7 +4707,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_RingOfTheVain_Icon"
    },
-   "effects": "stamina+35%",
+   "effects": "stamina_cost-17.5%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -4902,7 +4902,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_SealOfTheEmpress_Icon"
    },
-   "effects": "max_hp+20;stamina-5",
+   "effects": "max_hp+20;stamina_max-5",
    "fidelity": "exact",
    "tier": 3,
    "menu": "melder",
@@ -5830,7 +5830,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Rings/T_UI_Ring_ThalosEyelet_Icon"
    },
-   "effects": "stamina+10%",
+   "effects": "stamina_regen+6.1%",
    "fidelity": "fallback",
    "tier": 2,
    "menu": "melder",
@@ -5970,7 +5970,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Rings/Pan/T_UI_Ring_TombDwellersRing_Icon"
    },
-   "effects": "stamina+10% 15s x3;dmg-50%",
+   "effects": "stamina_cost-5% 15s x3;dmg-50%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",

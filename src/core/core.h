@@ -73,6 +73,8 @@ void show_damage(uint8_t* em, int amount, const Vec3& pos, bool crit);
 bool fire_slinger(const Vec3& origin, const Vec3& target);
 bool world_ray(const Vec3& from, const Vec3& to, Vec3* hit);  // true = blocked by level geometry
 void set_camera_fov(float fovY);                  // aim zoom; 0 = leave the game's own value
+void set_first_person(bool on);                  // aiming down sights: the camera moves to the hunter's head
+float first_person_amount();                     // 0 third person .. 1 first person (blends in and out)
 bool camera_view(GameView* out);                  // any thread: MHW's camera right now (read-only)
 int player_weapon_type();                         // game thread: 0 great sword .. 13 light bowgun, -1 unknown
 bool zone_is_base(int zone);

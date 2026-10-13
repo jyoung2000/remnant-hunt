@@ -127,6 +127,12 @@ void status_player_dodge(double t);   // a dodge roll: burning goes out faster
 // The hunter's hit reactions (reactions.cpp), learned from MHW's own hits. Game thread.
 void reactions_tick(const Live& l, double t);
 void reactions_note_own_damage(double t);   // the mod is about to damage the hunter itself
+// MHW's stamina bar with Remnant's stamina bonuses (stamina.cpp). Game thread.
+void stamina_tick(Live& l, double t);
+bool stamina_known();
+double stamina_dodge_at();  // when MHW last spent a dodge's worth of stamina at once
+double reactions_own_damage_at();               // when the mod last damaged the hunter itself
+bool mhw_do_action(uint8_t* unit, int set, int id);  // ActionController::DoAction on the hunter or a monster
 bool reactions_flinch(float share, double t);  // a Remnant hit worth this share of max health: MHW's reaction  // research.cpp: read-only findings for the diagnostic run
 
 // Commands from the screens (render thread) to the game thread.

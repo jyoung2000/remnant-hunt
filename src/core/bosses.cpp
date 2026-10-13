@@ -74,6 +74,10 @@ struct Boss {
     float turnFrom = 0, turnBy = 0;
     float sink = 0;
     Frame fr;
+    // A turf war with an MHW monster: it takes the hunter's place as the target.
+    uint8_t* foe = nullptr;
+    double foeUntil = 0, foeNext = 0, foeHitAt = 0, foeCheck = 0, lastHunterHit = -100;
+    float foeReach = 0, foeLost = 0, bossLost = 0, hunterDmg = 0;  // shares of max health lost in it
 };
 
 struct Proj {
@@ -84,6 +88,9 @@ struct Proj {
     uint32_t color = 0;
     int status = 0;
     float statusTotal = 0;
+    uint8_t* foe = nullptr;  // aimed at an MHW monster in a turf war
+    int boss = -1;
+    float attackDmg = 0;
 };
 
 Boss g_boss[kMax];
@@ -98,6 +105,7 @@ bool g_keyWas = false, g_lmbWas = false, g_rmbWas = false;
 double g_swingAt = 0, g_dodgeAt = -10;
 int g_swingWeapon = -1;
 const GameSnapshot* g_snap = nullptr;
+std::map<const uint8_t*, double> g_foeCd;  // MHW monster -> no new turf war with a boss before
 
 // Shared with the render thread.
 struct DrawBoss {
@@ -457,7 +465,33 @@ float status_total(const Boss& b) {
     return hp * tune(TUNING_BOSS_STATUS_FRAC) * sqrtf(std::max(1.0f, b.dmgMult));
 }
 
-void fire_projectile(const Boss& b, const Boss_attacks& a, Vec3 target, double t) {
+// ---------------------------------------------------------------- turf wars with MHW monsters (turf.cpp has the
+// MHW monster's side)
+const Monster* find_mon(const GameSnapshot& g, const uint8_t* em) {
+    for (const Monster& m : g.monsters)
+        if (m.em == em) return &m;
+    return nullptr;
+}
+Vec3 body_center(const Boss& b) {
+    return add(add(b.pos, mul(fwd_of(b.yaw), (b.fr.aMin + b.fr.aMax) * 0.5f)),
+               mul(right_of(b.yaw), (b.fr.cMin + b.fr.cMax) * 0.5f));
+}
+float avg_attack(int row) {
+    float sum = 0;
+    int n = 0;
+    for (int k : attacks_of(row)) { sum += kBoss_attacks[k].damage; n++; }
+    return n ? sum / n : 1.0f;
+}
+// A boss's blow on the MHW monster it fights: a share of the monster's health, more for its heavier attacks.
+void hurt_foe(Boss& b, const Monster& m, float attackDmg) {
+    float k = std::max(0.5f, std::min(2.0f, attackDmg / std::max(1.0f, avg_attack(b.row))));
+    float share = tune(TUNING_TURF_HIT_FRAC) * k * (0.85f + 0.3f * frand());
+    turf_hurt(m, share * m.maxHp);
+    b.foeLost += share;
+    if (k >= 0.9f || frand() < 0.4f) turf_flinch(m);
+}
+
+void fire_projectile(const Boss& b, const Boss_attacks& a, Vec3 target, double t, const Monster* foe = nullptr) {
     for (Proj& p : g_proj) {
         if (p.live) continue;
         Vec3 o = add(add(b.pos, mul(fwd_of(b.yaw), std::max(80.0f, b.fr.aMax * 0.5f))), {0, height_of(b) * 0.62f, 0});
@@ -472,6 +506,9 @@ void fire_projectile(const Boss& b, const Boss_attacks& a, Vec3 target, double t
         p.color = parse_color(B(b).fx_color);
         p.status = a.inflict;
         p.statusTotal = status_total(b);
+        p.foe = foe ? foe->em : nullptr;
+        p.boss = (int)(&b - g_boss);
+        p.attackDmg = a.damage;
         return;
     }
 }
@@ -486,6 +523,14 @@ int projectiles(Live& l, double t, float dt) {
         Vec3 hit;
         if (t > p.until || world_ray(p.p, next, &hit)) { p.live = false; continue; }
         p.p = next;
+        if (p.foe && g_snap && p.boss >= 0 && g_boss[p.boss].used) {
+            const Monster* m = find_mon(*g_snap, p.foe);
+            if (m && len3(sub(p.p, turf_closest(*m, p.p))) < p.radius + 60) {
+                hurt_foe(g_boss[p.boss], *m, p.attackDmg);
+                p.live = false;
+                continue;
+            }
+        }
         if (len3(sub(p.p, chest)) < p.radius) {
             ev |= hurt_hunter(l, p.dmg, p.status, p.statusTotal, t);
             p.live = false;
@@ -499,13 +544,14 @@ int think(Boss& b, Live& l, double t, float dt) {
     const GameSnapshot& g = l.snap;
     const Bosses& r = B(b);
     int ev = 0;
-    Vec3 hunter = g.pos;
+    const Monster* foe = b.foe ? find_mon(g, b.foe) : nullptr;  // a turf war: the MHW monster is the target
+    Vec3 hunter = foe ? turf_closest(*foe, head_point(b)) : g.pos;
     float dist = hlen(sub(hunter, head_point(b)));
     float toHunter = yaw_to(b.pos, hunter);
     float off = wrap(toHunter - b.yaw);
     bool mobile = r.walk_mps > 0.05f && has(r.anim_walk);
-    bool sees = false;
-    if (dist < r.aggro_m * 100.0f) {
+    bool sees = foe != nullptr;
+    if (!foe && dist < r.aggro_m * 100.0f) {
         Vec3 hit, eye = add(head_point(b), {0, std::min(300.0f, height_of(b) * 0.6f), 0});
         sees = !world_ray(eye, add(hunter, {0, 120, 0}), &hit);
     }
@@ -631,17 +677,22 @@ int think(Boss& b, Live& l, double t, float dt) {
             if (a.kind == BOSS_ATTACKS_KIND_RANGED) {
                 if (!b.fired && frac >= first) {
                     b.fired = true;
-                    fire_projectile(b, a, add(hunter, {0, 110, 0}), t);
+                    fire_projectile(b, a, add(hunter, {0, foe ? 60.0f : 110.0f, 0}), t, foe);
                 }
             } else {
                 for (int w = 0; w < 8; w++) {
                     float ws, we;
                     if (!window(a.hits, w, &ws, &we)) break;
                     if ((b.windowsDone & (1 << w)) || frac < ws || frac > we) continue;
-                    if (!in_reach(b, a, hunter)) continue;
+                    // the hunter standing in a blow meant for a monster is hit too
+                    bool onFoe = foe && in_reach(b, a, hunter), onHunter = in_reach(b, a, g.pos);
+                    if (!onFoe && !onHunter) continue;
                     b.windowsDone |= 1 << w;
-                    ev |= hurt_hunter(l, a.damage * b.dmgMult, frand() < (a.kind == BOSS_ATTACKS_KIND_AOE ? 0.8f : 0.4f) ? a.inflict : 0,
-                                      status_total(b), t);
+                    if (onFoe) hurt_foe(b, *foe, a.damage);
+                    if (onHunter)
+                        ev |= hurt_hunter(l, a.damage * b.dmgMult,
+                                          frand() < (a.kind == BOSS_ATTACKS_KIND_AOE ? 0.8f : 0.4f) ? a.inflict : 0,
+                                          status_total(b), t);
                 }
             }
             if (b.at >= len) {
@@ -655,7 +706,7 @@ int think(Boss& b, Live& l, double t, float dt) {
         case ST_STUN: {
             if (b.at >= state_len(b, b.st == ST_STUN ? 2.5f : 0.8f)) {
                 b.nextAttack = t + (b.st == ST_STUN ? 0.8 : 0.3);
-                go(b, ST_CHASE, t);
+                go(b, b.aggro ? ST_CHASE : ST_IDLE, t);
             }
             break;
         }
@@ -683,7 +734,7 @@ float gap_to(const Boss& b, Vec3 p, Vec3* closest) {
 }
 
 int boss_index(const uint8_t* em) { return (int)(em - g_token); }
-void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger);
+void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger, bool hunter = true);
 
 // MHW's weapon damage per hit, relative to an average hit (motion values, roughly), and how much it staggers.
 struct WeaponFeel { float dmg, stagger; };
@@ -857,17 +908,19 @@ bool project(const GameView& v, const Vec3& p, ImVec2 vpPos, ImVec2 vpSize, ImVe
 }
 
 
-void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger) {
+void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger, bool hunter) {
     if (i < 0 || i >= kMax) return;
     Boss& b = g_boss[i];
     if (!b.used || b.st == ST_LOADING || b.st == ST_DEAD || dmg <= 0) return;
     double t = now_s();
     b.hp -= dmg;
     b.aggro = true;
-    b.lastSeen = t;
     b.flinchAcc += dmg;
     b.staggerAcc += dmg * stagger * (weak ? 2.0f : 1.0f);
-    {
+    if (hunter) {  // a monster's blow in a turf war shows no number and does not draw the boss to the hunter
+        b.lastSeen = t;
+        b.lastHunterHit = t;
+        if (b.foe) b.hunterDmg += dmg;
         std::lock_guard<std::mutex> lk(g_lock);
         g_numbers[g_nextNumber++ % 32] = {at, (int)lroundf(dmg), crit, weak, t};
     }
@@ -896,6 +949,97 @@ void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stag
         b.attack = -1;
         go(b, ST_FLINCH, t);
     }
+}
+
+void end_turf(Boss& b, const Monster* foe, const char* why, double t) {
+    log("bosses: %s's turf war with %s ends (%s): boss -%.0f%%, monster -%.0f%%", B(b).id, foe ? foe->kind : "?", why,
+        b.bossLost * 100, b.foeLost * 100);
+    bool decided = foe && b.st != ST_DEAD && (!strcmp(why, "beaten") || !strcmp(why, "time"));
+    if (decided) {  // the one hurt worse goes down
+        if (b.bossLost > b.foeLost) {
+            b.attack = -1;
+            go(b, ST_STUN, t);
+        } else {
+            turf_flinch(*foe);
+        }
+    }
+    turf_claim(b.foe, false);
+    g_foeCd[b.foe] = t + tune(TUNING_TURF_COOLDOWN_S);
+    b.foe = nullptr;
+    b.foeHitAt = 0;
+    b.nextAttack = t + 1.0;
+    if (g_snap && hlen(sub(g_snap->pos, b.pos)) > B(b).aggro_m * 100.0f) {  // the hunter is not around: back to roaming
+        b.aggro = b.roared = false;
+        b.home = b.pos;
+        if (b.st != ST_STUN && b.st != ST_DEAD) go(b, ST_IDLE, t);
+    }
+}
+
+// A boss meeting a large MHW monster may fight it (MHW's turf wars, with a Remnant side). The boss's blows come from
+// think(); the monster's are played here through turf.cpp.
+void boss_turf(Boss& b, int i, Live& l, double t, float dt) {
+    const GameSnapshot& g = l.snap;
+    const Bosses& r = B(b);
+    if (b.foe) {
+        const Monster* foe = find_mon(g, b.foe);
+        const char* why = !foe                                        ? "the monster left"
+                          : t > b.foeUntil                            ? "time"
+                          : b.foeLost >= 0.25f || b.bossLost >= 0.25f ? "beaten"
+                          : b.hunterDmg >= 0.10f * b.maxHp            ? "the hunter joined in"
+                          : hlen(sub(foe->center, b.pos)) > 7000      ? "apart"
+                                                                      : nullptr;
+        if (why) return end_turf(b, foe, why, t);
+        Vec3 me = body_center(b);
+        if (b.foeHitAt > 0) {
+            if (t < b.foeHitAt) return;
+            b.foeHitAt = 0;
+            b.foeNext = t + 1.4 + frand() * 1.8;
+            Vec3 c = turf_closest(*foe, me);
+            if (gap_to(b, c, nullptr) > b.foeReach + 150 || b.st == ST_DEAD) return;
+            float size = std::max(0.75f, std::min(1.3f, powf(foe->maxHp / std::max(1.0f, rank_hp(b.rank)), 0.3f)));
+            float dmg = b.maxHp * tune(TUNING_TURF_HIT_FRAC) * size * (0.8f + 0.45f * frand());
+            b.bossLost += dmg / b.maxHp;
+            hit_boss(i, dmg, add(c, {0, height_of(b) * 0.4f, 0}), false, false, 1.2f, false);
+            return;
+        }
+        turf_face(*foe, me, dt);
+        if (t < b.foeNext) return;
+        float gap = gap_to(b, turf_closest(*foe, me), nullptr);
+        if (gap > 1500) { b.foeNext = t + 0.5; return; }  // out of its reach: the boss closes in
+        b.foeHitAt = t + turf_attack(*foe, gap, &b.foeReach);
+        return;
+    }
+    if (!turf_enabled() || t < b.foeCheck || g.inBase) return;
+    b.foeCheck = t + 1.0;
+    if (b.st != ST_IDLE && b.st != ST_WALK && b.st != ST_CHASE) return;
+    if ((b.aggro && hlen(sub(g.pos, b.pos)) < 1500) || t - b.lastHunterHit < 10) return;  // busy with the hunter
+    const Monster* best = nullptr;
+    float bestD = std::max(2500.0f, r.aggro_m * 120.0f);
+    for (const Monster& m : g.monsters) {
+        if (!m.large || !m.health || !m.obbOk || is_boss(m.em) || turf_busy(m.em)) continue;
+        bool taken = false;
+        for (const Boss& o : g_boss) taken |= o.used && o.foe == m.em;
+        auto cd = g_foeCd.find(m.em);
+        if (taken || (cd != g_foeCd.end() && t < cd->second)) continue;
+        float d = hlen(sub(turf_closest(m, b.pos), b.pos));
+        if (d < bestD) { bestD = d; best = &m; }
+    }
+    if (!best) return;
+    g_foeCd[best->em] = t + tune(TUNING_TURF_COOLDOWN_S);  // one roll per meeting
+    if (frand() > tune(TUNING_TURF_BOSS_CHANCE)) return;
+    b.foe = best->em;
+    b.foeUntil = t + tune(TUNING_TURF_WAR_S) * (0.8f + 0.4f * frand());
+    b.foeNext = t + 2.5;
+    b.foeHitAt = 0;
+    b.foeLost = b.bossLost = b.hunterDmg = 0;
+    b.aggro = true;
+    b.roared = false;
+    b.attack = -1;
+    go(b, ST_IDLE, t);
+    turf_claim(best->em, true);
+    std::string them = mhw_name(best->kind);
+    toast(l, "Turf war: %s vs %s", display_name(b.row).c_str(), them.empty() ? "a monster" : them.c_str());
+    log("bosses: %s starts a turf war with %s", r.id, best->kind);
 }
 
 }  // namespace
@@ -991,9 +1135,19 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         }
     }
     g_keyWas = key;
+    // Remnant's evade: once MHW's stamina bar is known, a real dodge is one that spent stamina (keyboard or pad);
+    // until then, the dodge key.
     bool space = key_down(VK_SPACE);
-    if (space) g_dodgeAt = t;
-    if (space && !g_spaceWas) status_player_dodge(t);
+    if (stamina_known()) {
+        double at = stamina_dodge_at();
+        if (at > g_dodgeAt && t - at < 0.1) {
+            g_dodgeAt = at;
+            status_player_dodge(t);
+        }
+    } else {
+        if (space) g_dodgeAt = t;
+        if (space && !g_spaceWas) status_player_dodge(t);
+    }
     g_spaceWas = space;
 
     mhw_weapons(l, t);
@@ -1031,6 +1185,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         b.at += bdt;
         b.pt += bdt;
         b.fade = std::max(0.0f, b.fade - dt / 0.22f);
+        if (b.st == ST_DEAD && b.foe) end_turf(b, find_mon(g, b.foe), "the boss fell", t);
         if (b.st == ST_DEAD) {
             if (!b.looted) {
                 b.looted = true;
@@ -1043,6 +1198,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             if (b.sink > height_of(b) + 300) b = Boss();
             continue;
         }
+        boss_turf(b, i, l, t, bdt);
         ev |= think(b, l, t, bdt);
         float y;
         if (ground(b.pos, &y) && fabsf(y - b.pos.y) < 400) b.pos.y += (y - b.pos.y) * std::min(1.0f, dt * 12);

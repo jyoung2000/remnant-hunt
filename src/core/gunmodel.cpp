@@ -98,6 +98,16 @@ void gunmodel_tick(const SaveData& s, const Live& l) {
             if (!l.aiming) fwd = unit(add(mul(fwd, 0.6f), mul(upW, -0.35f)));  // held low when not aiming
             Vec3 r = unit(sub(right, mul(fwd, dot(right, fwd))));
             Vec3 up = unit(sub(upW, add(mul(fwd, dot(upW, fwd)), mul(r, dot(upW, r)))));
+            float fp = first_person_amount();
+            if (fp > 0.5f) {
+                // Aiming down sights in first person: the gun in front of the eye, its top just under the line of
+                // sight and its barrel along it, as Remnant II shows it.
+                fwd = look;
+                r = unit(sub(right, mul(fwd, dot(right, fwd))));
+                up = unit(sub(upW, add(mul(fwd, dot(upW, fwd)), mul(r, dot(upW, r)))));
+                float sight = std::max(2.0f, std::min(25.0f, m->boundsMax[2] + 0.5f));
+                hand = add(add(g.view.camPos, mul(fwd, 26.0f + 6.0f * (1.0f - fp))), add(mul(up, -sight), mul(r, 1.5f)));
+            }
             float f[2], rr[2];
             axes(kWeapons[gun].mesh_fwd, f, rr);
             Vec3 ix = add(mul(fwd, f[0]), mul(r, rr[0])), iy = add(mul(fwd, f[1]), mul(r, rr[1]));

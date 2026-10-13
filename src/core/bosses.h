@@ -22,6 +22,18 @@ bool is_boss(const uint8_t* em);
 bool boss_hit_ex(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak, float stagger);
 float boss_time_scale(const uint8_t* em);  // SLOWED bosses move and act slower
 
+// Turf wars (turf.cpp): staged fights between MHW monsters, and the MHW monster's side of a Remnant boss's fight.
+void turf_tick(Live& l, double t, float dt);                  // game thread, after bosses_tick
+bool turf_enabled();
+void turf_note_mod_damage(const uint8_t* em, double t);      // the mod is damaging this MHW monster itself
+void turf_hurt(const Monster& m, float dmg);                  // damage from a turf war (MHW's own add_hp)
+bool turf_face(const Monster& m, Vec3 at, float dt);          // turns it towards at; true once it faces it
+float turf_attack(const Monster& m, float gap, float* reach); // one of its learned blows; seconds until it lands
+void turf_flinch(const Monster& m);                           // its learned flinch, if known
+bool turf_busy(const uint8_t* em);                            // in a staged MHW-vs-MHW turf war
+void turf_claim(const uint8_t* em, bool on);                  // in a turf war with a Remnant boss
+Vec3 turf_closest(const Monster& m, Vec3 p);                  // the closest point of its hitbox to p
+
 // Render thread: draws the bosses into rtv (before the overlay), and their health bar and damage numbers.
 void bosses_render(void* device, void* context, void* rtv, int width, int height);
 void bosses_hud();

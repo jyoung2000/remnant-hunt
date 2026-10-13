@@ -14,8 +14,8 @@ namespace rh {
 static const char* kStatNames[ST_COUNT] = {
     "proc", "dmg", "dmg_ranged", "dmg_melee", "dmg_mod", "dmg_skill", "dmg_elem", "dmg_status", "dmg_explosive",
     "weakspot", "crit", "crit_dmg", "fire_rate", "reload", "mag", "ammo", "accuracy", "mod_gen", "mod_dur", "cdr",
-    "skill_dur", "relic_speed", "relic_heal", "relic_charges", "heal", "lifesteal", "dr", "max_hp", "regen", "stamina",
-    "shield", "res_bleed", "res_fire", "res_shock", "res_acid", "vs_bleeding", "vs_burning", "vs_corroded",
+    "skill_dur", "relic_speed", "relic_heal", "relic_charges", "heal", "lifesteal", "dr", "max_hp", "regen", "stamina_max",
+    "stamina_regen", "stamina_cost", "shield", "res_bleed", "res_fire", "res_shock", "res_acid", "vs_bleeding", "vs_burning", "vs_corroded",
     "vs_overloaded", "vs_exposed", "vs_status", "status_dur"};
 static const char* kStatusKeys[SS_COUNT] = {"", "bleeding", "burning", "corroded", "overloaded", "exposed", "slowed", "marked"};
 static const char* kStatusLabels[SS_COUNT] = {"", "BLEEDING", "BURNING", "CORRODED", "OVERLOADED", "EXPOSED", "SLOWED", "MARKED"};
@@ -26,7 +26,8 @@ static const char* kStatLabels[ST_COUNT] = {
     "Status Damage", "Explosive Damage", "Weakspot Damage", "Critical Chance", "Critical Damage", "Fire Rate",
     "Reload Speed", "Magazine Size", "Ammo Reserves", "Accuracy", "Mod Power Generation", "Mod Duration",
     "Skill Cooldown Reduction", "Skill Duration", "Relic Use Speed", "Relic Healing", "Relic Charges", "Healing",
-    "Lifesteal", "Damage Reduction", "Max Health", "Health Regeneration", "Stamina", "Shield", "Bleed Resistance",
+    "Lifesteal", "Damage Reduction", "Max Health", "Health Regeneration", "Max Stamina", "Stamina Regeneration",
+    "Stamina Cost", "Shield", "Bleed Resistance",
     "Fire Resistance", "Shock Resistance", "Acid Resistance", "Damage to BLEEDING targets", "Damage to BURNING targets",
     "Damage to CORRODED targets", "Damage to OVERLOADED targets", "Damage to EXPOSED targets",
     "Damage to targets with a status", "Status Duration"};

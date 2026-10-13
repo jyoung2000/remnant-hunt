@@ -66,7 +66,7 @@
     }
    },
    "icon": "none",
-   "effects": "stamina+15%",
+   "effects": "stamina_cost-7.5%",
    "fidelity": "exact"
   },
   {

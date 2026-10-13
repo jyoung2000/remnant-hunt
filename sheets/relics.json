@@ -174,7 +174,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Relics/T_UI_Relic_CrystalHeart_Icon"
    },
-   "effects": "use:buff stamina-50% 15s;use:buff dr+25% 15s",
+   "effects": "use:buff stamina_cost+20% 15s;use:buff dr+25% 15s",
    "fidelity": "approx",
    "tier": 3,
    "menu": "melder",

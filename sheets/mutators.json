@@ -602,7 +602,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Mutators/T_UI_Icon_Gear_Meta_DLC3_01"
    },
-   "effects": "stamina-65%;dmg_melee+37.5%",
+   "effects": "stamina_cost+65%;dmg_melee+37.5%",
    "fidelity": "exact",
    "tier": 5,
    "menu": "smithy",
@@ -964,7 +964,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Metas/T_UI_Icon_Gear_Meta_01"
    },
-   "effects": "stamina+37.5%",
+   "effects": "stamina_cost-37.5%",
    "fidelity": "exact",
    "tier": 3,
    "menu": "smithy",

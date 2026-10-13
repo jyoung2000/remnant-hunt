@@ -383,7 +383,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_GulSerum_Icon"
    },
-   "effects": "use:buff stamina-50% 15s",
+   "effects": "use:buff stamina_cost-50% 15s",
    "fidelity": "approx",
    "tier": 1,
    "menu": "provisions",
@@ -702,7 +702,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ProcessedKoaraPellet_Icon"
    },
-   "effects": "use:buff stamina-75% 15s",
+   "effects": "use:buff stamina_regen+30% 15s;use:buff stamina_regen+20% 15s",
    "fidelity": "approx",
    "tier": 1,
    "menu": "provisions",
@@ -999,7 +999,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_ChilledSteam_Icon"
    },
-   "effects": "use:buff stamina+10% 15s",
+   "effects": "use:buff stamina_cost-5% 15s",
    "fidelity": "approx",
    "tier": 1,
    "menu": "provisions",
@@ -1183,7 +1183,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_MudtoothsStew_Icon"
    },
-   "effects": "use:buff stamina+20 15s",
+   "effects": "use:buff stamina_max+20 15s",
    "fidelity": "approx",
    "tier": 1,
    "menu": "provisions",
@@ -1399,7 +1399,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Consumables/T_UI_Consumable_VerdantTea_Icon"
    },
-   "effects": "use:buff stamina+20 15s",
+   "effects": "use:buff stamina_regen+60.6% 15s;use:buff stamina_regen+20% 15s",
    "fidelity": "approx",
    "tier": 1,
    "menu": "provisions",

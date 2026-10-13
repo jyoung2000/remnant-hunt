@@ -336,7 +336,10 @@ static void deal(Live& l, const Monster& m, float dmg, Vec3 at, bool crit) {
     if (dmg <= 0) return;
     dmg *= status_mult(l, m, now_s());
     bool boss = boss_hit(m.em, dmg, at, crit, false);  // a Remnant II boss: the mod keeps its health
-    if (!boss) add_hp(m.health, -dmg);
+    if (!boss) {
+        turf_note_mod_damage(m.em, now_s());
+        add_hp(m.health, -dmg);
+    }
     Live::Track& tr = l.track[m.em];
     if (tr.max <= 0) { tr.hp = m.hp; tr.max = m.maxHp; tr.large = m.large; }
     tr.hp -= dmg;
@@ -691,6 +694,9 @@ void mod_game_tick() {
     Live& l = sh.live;
     snapshot(&l.snap);
     int bossEv = bosses_tick(s, l, t, dt);  // Remnant II bosses join the monsters here
+    turf_tick(l, t, dt);                    // turf wars between monsters (and the MHW side of the bosses')
+    set_first_person(l.gunMode && l.aiming && l.snap.inGame);  // aiming down sights is first person
+    stamina_tick(l, t);                     // Remnant's stamina bonuses on MHW's stamina bar
     research_tick(l, t);
     reactions_tick(l, t);
     gunmodel_tick(s, l);
@@ -846,7 +852,10 @@ void mod_game_tick() {
                 float ext = it->second.hp - m.hp;
                 if (ext > 0.5f && ext < 100000.0f) {
                     float bonus = ext * meleeBonus;
-                    if (bonus > 0.5f && !boss_hit(m.em, bonus, m.center, false, false)) add_hp(m.health, -bonus);
+                    if (bonus > 0.5f && !boss_hit(m.em, bonus, m.center, false, false)) {
+                        turf_note_mod_damage(m.em, t);
+                        add_hp(m.health, -bonus);
+                    }
                     lifesteal(l, ext + bonus, t);
                     if (curMod >= 0 && t >= l.modUntil)
                         l.modCharge = std::min(kMods[curMod].charge_damage, l.modCharge + ext * (1.0f + stat(l, ST_MOD_GEN, t)));

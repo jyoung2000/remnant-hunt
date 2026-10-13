@@ -86,7 +86,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Amulets/T_UI_Amulet_BeadsoftheValorous_Icon"
    },
-   "effects": "dr+1%;stamina+1%;low_hp(50):max_hp+50%",
+   "effects": "dr+1%;stamina_cost-0.5%;low_hp(50):max_hp+50%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",
@@ -199,7 +199,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Amulets/RootEarth/T_UI_Amulet_BrokenPocketWatch_Icon"
    },
-   "effects": "stamina+25",
+   "effects": "stamina_regen+75.8%;stamina_cost-50%",
    "fidelity": "exact",
    "tier": 1,
    "menu": "melder",
@@ -281,7 +281,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Amulets/T_UI_Amulet_CervineKeepsake_Icon2"
    },
-   "effects": "on_relic:stamina+4% 10s",
+   "effects": "on_relic:stamina_cost-2% 10s",
    "fidelity": "exact",
    "tier": 4,
    "menu": "melder",
@@ -507,7 +507,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Amulets/Extra/T_UI_Amulet_DaredevilsCharm_Icon"
    },
-   "effects": "stamina+3.75%",
+   "effects": "stamina_cost-1.9%",
    "fidelity": "exact",
    "tier": 1,
    "menu": "melder",
@@ -1065,7 +1065,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Amulets/T_UI_Amulet_GiftOfTheUnbound_Icon"
    },
-   "effects": "stamina+5%",
+   "effects": "stamina_cost-2.5%",
    "fidelity": "exact",
    "tier": 4,
    "menu": "melder",
@@ -1541,7 +1541,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Amulets/Ward13/T_UI_Amulet_LetosAmulet_Icon_2"
    },
-   "effects": "stamina+10%",
+   "effects": "stamina_cost-20%;stamina_cost-35%",
    "fidelity": "fallback",
    "tier": 1,
    "menu": "melder",
@@ -1652,7 +1652,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Amulets/Nerud/T_UI_Amulet_NavigatorPendant_Icon"
    },
-   "effects": "stamina+10%",
+   "effects": "stamina_cost-10%",
    "fidelity": "fallback",
    "tier": 3,
    "menu": "melder",
@@ -1847,7 +1847,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Amulets/Fae/T_UI_Amulet_OneEyedJokerIdol_Icon"
    },
-   "effects": "crit+25% 5s;stamina+15%",
+   "effects": "crit+25% 5s;stamina_cost+15%",
    "fidelity": "exact",
    "tier": 3,
    "menu": "melder",
@@ -2772,7 +2772,7 @@
    "icon": {
     "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Gear/UI_Icons_Gear_Trinkets/UI_Icons_Gear_Trinkets_Amulets/Fae/T_UI_Amulet_WightlessWeight_Icon"
    },
-   "effects": "stamina+0.75%",
+   "effects": "stamina_cost-0.8%",
    "fidelity": "exact",
    "tier": 2,
    "menu": "melder",

@@ -4,11 +4,12 @@
 #   make package    out/remnant_hunt-<version>.zip, the release Melty installs into the game folder
 #   make installer  out/RemnantHuntSetup-<version>.exe, the same files in a one-file Windows installer with a window
 #   make test       Linux build of r2read cross-checked against the dev tools (needs Remnant II installed)
+#   make test-logic turf wars and stamina on fake game data (needs Wine)
 TC      ?= $(HOME)/tc/llvm-mingw-20261006-ucrt-ubuntu-22.04-x86_64/bin
 CXX     := $(TC)/x86_64-w64-mingw32-clang++
 CC      := $(TC)/x86_64-w64-mingw32-clang
 WINDRES := $(TC)/x86_64-w64-mingw32-windres
-VERSION ?= 0.3.0
+VERSION ?= 0.4.0
 B       := build/win
 O       := build/obj
 
@@ -101,6 +102,13 @@ test: linux
 package: all
 	python3 tools/package.py $(VERSION)
 
+# Host test of the turf wars and the stamina bar on fake game data (a Windows build, run under Wine).
+test-logic: src/core/gen/sheets.gen.h
+	@mkdir -p build
+	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core tests/test_turf_stamina.cpp \
+	    src/core/turf.cpp src/core/stamina.cpp src/core/effects.cpp src/core/mem.cpp -static -o build/test_logic.exe
+	wine build/test_logic.exe
+
 installer: all
 	python3 tools/make_installer.py $(VERSION)
 	$(WINDRES) build/installer/setup.rc -O coff -o build/installer/setup.res.o
@@ -109,4 +117,4 @@ installer: all
 	    -Ibuild/installer src/installer/setup.cpp build/installer/setup.res.o \
 	    -lcomctl32 -lole32 -lshell32 -luxtheme -luuid -o out/RemnantHuntSetup-$(VERSION).exe
 
-.PHONY: all gen test package installer linux
+.PHONY: all gen test test-logic package installer linux

@@ -336,6 +336,67 @@ bool camera_view(GameView* v) {
 
 void set_camera_fov(float fovY) { g_fovOverride = fovY; }
 
+// ---------------------------------------------------------------- first person while aiming down sights
+// remnant.cpp turns it on while the hunter aims a Remnant gun. The eye moves to the hunter's head and the game's own
+// look direction is kept, so the mouse aims as usual. It is written after the camera's own move: to the camera (what
+// the game's systems and the mod read) and to the viewport's view matrix (its rotation kept, its eye moved), so the
+// frame is drawn from the head whichever of the two the game builds the picture from. [visuals] first_person=0 in
+// remnant_hunt.ini turns it off; fp_eye_height (cm) moves the eye.
+double now_s();
+static float g_fpWant = 0, g_fpK = 0, g_fpEye = -1;
+static double g_fpLast = 0;
+static int g_fpCfg = -1;
+static bool g_fpChecked = false;
+
+void set_first_person(bool on) { g_fpWant = on ? 1.0f : 0.0f; }
+float first_person_amount() { return g_fpK; }
+
+static void apply_first_person(void* self) {
+    if (g_fpCfg < 0) {
+        char ini[MAX_PATH];
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
+        g_fpCfg = GetPrivateProfileIntA("visuals", "first_person", 1, ini);
+        g_fpEye = (float)GetPrivateProfileIntA("visuals", "fp_eye_height", 155, ini);
+    }
+    double now = now_s();
+    float dt = g_fpLast > 0 ? (float)std::min(0.1, now - g_fpLast) : 0.016f;
+    g_fpLast = now;
+    float want = g_fpCfg ? g_fpWant : 0.0f;
+    g_fpK = want > g_fpK ? std::min(want, g_fpK + dt / 0.16f) : std::max(want, g_fpK - dt / 0.16f);
+    if (g_fpK <= 0.001f || !g_player || !hook_ok(HOOKS_PLAYER_POS)) return;
+    uint8_t* mgr = (uint8_t*)self;
+    uint8_t* cam = rd_ptr((uintptr_t)mgr + kVp0Camera);
+    float* view = (float*)(mgr + kViewport0 + kVpView);
+    if (!cam || !mem_readable(cam + kCamFov, 0x40) || !mem_readable(view, 64) || !mem_readable(g_player + HOOKV_PLAYER_POS, 12))
+        return;
+    Vec3 pos, cp, ct;
+    memcpy(&pos, g_player + HOOKV_PLAYER_POS, 12);
+    memcpy(&cp, cam + kCamPos, 12);
+    memcpy(&ct, cam + kCamTarget, 12);
+    Vec3 d = {ct.x - cp.x, ct.y - cp.y, ct.z - cp.z};
+    float dl = sqrtf(d.x * d.x + d.y * d.y + d.z * d.z), fl = sqrtf(d.x * d.x + d.z * d.z);
+    if (!(dl > 1.0f) || !(fl > 1e-3f) || !std::isfinite(pos.x)) return;
+    if (!g_fpChecked) {  // is the view matrix the camera's own? (its eye against the camera position)
+        g_fpChecked = true;
+        Vec3 e;
+        float* t = view + 12;
+        e.x = -(t[0] * view[0] + t[1] * view[1] + t[2] * view[2]);
+        e.y = -(t[0] * view[4] + t[1] * view[5] + t[2] * view[6]);
+        e.z = -(t[0] * view[8] + t[1] * view[9] + t[2] * view[10]);
+        float off = sqrtf((e.x - cp.x) * (e.x - cp.x) + (e.y - cp.y) * (e.y - cp.y) + (e.z - cp.z) * (e.z - cp.z));
+        log("first person: the view matrix's eye is %.0f cm from the camera position after its move", off);
+    }
+    // the eye: above the hunter's feet, a little ahead of the face so the head stays behind the near plane
+    float fwd = 22.0f;
+    Vec3 eye = {pos.x + d.x / fl * fwd, pos.y + g_fpEye, pos.z + d.z / fl * fwd};
+    float k = g_fpK * g_fpK * (3 - 2 * g_fpK);
+    Vec3 np = {cp.x + (eye.x - cp.x) * k, cp.y + (eye.y - cp.y) * k, cp.z + (eye.z - cp.z) * k};
+    Vec3 nt = {np.x + d.x, np.y + d.y, np.z + d.z};
+    memcpy(cam + kCamPos, &np, 12);
+    memcpy(cam + kCamTarget, &nt, 12);
+    for (int j = 0; j < 3; j++) view[12 + j] = -(np.x * view[j] + np.y * view[4 + j] + np.z * view[8 + j]);
+}
+
 // ---------------------------------------------------------------- game-thread tick (vtable copy, no code patch)
 
 typedef void(__fastcall* Move_t)(void* self);
@@ -364,6 +425,7 @@ static void __fastcall tick_move(void* self) {
     apply_fov();
     g_origMove(self);
     apply_fov();
+    apply_first_person(self);
     mod_game_tick();
     InterlockedDecrement(&g_inTick);
 }

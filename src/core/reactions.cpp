@@ -97,6 +97,15 @@ const Seen* best(int weapon, int heavy) {
 }  // namespace
 
 void reactions_note_own_damage(double t) { g_ownHurtAt = t; }
+double reactions_own_damage_at() { return g_ownHurtAt; }
+
+// Plays an action through the unit's own ActionController (the hunter's, or a monster's: the turf wars).
+bool mhw_do_action(uint8_t* unit, int set, int id) {
+    if (!g_searched) find_do_action();
+    if (!g_doAction || !unit || !mem_readable(unit + kActionController + kCurrentAction, 8)) return false;
+    int action[2] = {set, id};
+    return g_doAction(unit + kActionController, action);
+}
 
 // Game thread: watch MHW's own hits on the hunter and learn the reactions they start.
 static void learn(int weapon, int heavy, int set, int id) {

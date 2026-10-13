@@ -62,7 +62,7 @@ KEEP = sys.argv[sys.argv.index("--keep-ids") + 1] if "--keep-ids" in sys.argv el
 STATS = ["proc", "dmg", "dmg_ranged", "dmg_melee", "dmg_mod", "dmg_skill", "dmg_elem", "dmg_status", "dmg_explosive",
          "weakspot", "crit", "crit_dmg", "fire_rate", "reload", "mag", "ammo", "accuracy", "mod_gen", "mod_dur", "cdr",
          "skill_dur", "relic_speed", "relic_heal", "relic_charges", "heal", "lifesteal", "dr", "max_hp", "regen",
-         "stamina", "shield"]
+         "stamina_max", "stamina_regen", "stamina_cost", "shield"]
 TRIGGERS = ["on_kill", "on_crit", "on_weakspot", "on_hit", "on_evade", "on_relic", "on_skill", "on_mod", "on_reload",
             "on_hurt", "low_hp", "high_hp"]
 
@@ -98,7 +98,9 @@ PHRASES = [
     (r"lifesteal", "lifesteal"),
     (r"max(?:imum)? health|health", "max_hp"),
     (r"health regen(?:eration)?", "regen"),
-    (r"stamina(?: cost)?|evade (?:cost|speed)|movement speed|move speed", "stamina"),
+    (r"max(?:imum)? stamina", "stamina_max"),
+    (r"stamina (?:regen(?:eration)?|recovery)", "stamina_regen"),
+    (r"stamina (?:cost|consumption)|evade cost|encumbrance", "stamina_cost"),
     (r"shield(?: amount)?", "shield"),
     (r"armor(?: effectiveness)?", "dr"),
 ]
@@ -126,8 +128,8 @@ TAG_FALLBACK = [
     ("Skill Damage", "dmg_skill+10%"), ("Skill Duration", "skill_dur+10%"), ("Summon", "dmg_skill+10%"),
     ("Heal", "heal+10%"), ("Healing", "heal+10%"), ("Grey Health", "regen+1"), ("Health", "max_hp+10"),
     ("Status Effect", "dmg_status+10%"), ("Status Duration", "dmg_status+5%"), ("Ammo Reserves", "ammo+20%"),
-    ("Relic Speed", "relic_speed+10%"), ("Relic Efficacy", "relic_heal+10%"), ("Stamina", "stamina+10%"),
-    ("Movement Speed", "stamina+5%"), ("Perfect Dodge", "on_evade:dmg+10% 10s"), ("Explosive Damage", "dmg_explosive+10%"),
+    ("Relic Speed", "relic_speed+10%"), ("Relic Efficacy", "relic_heal+10%"), ("Stamina", "stamina_regen+10%"),
+    ("Movement Speed", "stamina_cost-5%"), ("Perfect Dodge", "on_evade:dmg+10% 10s"), ("Explosive Damage", "dmg_explosive+10%"),
     ("Elemental Damage", "dmg_elem+10%"), ("Shield", "shield+10"),
 ]
 NUM = r"(\d+(?:\.\d+)?)"
@@ -193,7 +195,7 @@ def parse_passive(desc):
             for rx, stat in PHRASES:
                 if re.search(rx, m.group(1)):
                     sign = -1 if m.group(2) != "increased" else 1
-                    if INVERTED.search(m.group(1)):
+                    if INVERTED.search(m.group(1)) and stat != "stamina_cost":  # stamina_cost: the change itself, - is cheaper
                         sign = -sign
                     out.append((tr, stat, sign * float(m.group(3)), m.group(4), dur, stacks))
                     break
@@ -214,7 +216,7 @@ def parse_passive(desc):
                 for rx, stat in PHRASES:
                     if re.search(rx, part):
                         sign = -1 if verb.startswith(("reduc", "decreas")) else 1
-                        if INVERTED.search(part):
+                        if INVERTED.search(part) and stat != "stamina_cost":  # stamina_cost: the change itself, - is cheaper
                             sign = -sign
                         out.append((tr, stat, sign * val, pct, dur, stacks))
                         break
@@ -229,7 +231,7 @@ def parse_passive(desc):
                 for rx, stat in PHRASES:
                     if re.fullmatch(r"(?:" + rx + r")", what):
                         sign = -1 if m.group(1).startswith("reduc") else 1
-                        if INVERTED.search(what):
+                        if INVERTED.search(what) and stat != "stamina_cost":  # stamina_cost: the change itself, - is cheaper
                             sign = -sign
                         out.append((tr, stat, sign * float(part.group(2)), "%", dur, stacks))
                         break
@@ -505,7 +507,7 @@ def main():
             continue
         piece = {"helm": "head", "torso": "body", "gloves": "gloves", "legs": "legs"}.get(x.get("category"), "body")
         row = {"id": snake(base.removeprefix("armor_")), "piece": piece, "name": name, "desc": desc, "icon": icon_of(it),
-               "effects": f"dr+{fmt(round(float(x.get('armor', 10)) / 5.0, 1))}%;stamina-{fmt(round(float(x.get('weight', 5)) / 2.0, 1))}%",
+               "effects": f"dr+{fmt(round(float(x.get('armor', 10)) / 5.0, 1))}%;stamina_cost+{fmt(round(float(x.get('weight', 5)) / 2.0, 1))}%",
                "fidelity": "approx"}
         commerce(row, tier_of(x, "armor"), "smithy", 0.5, 0.5)
         arm.append(row)

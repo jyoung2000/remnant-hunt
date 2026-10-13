@@ -34,6 +34,22 @@ irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 |
   your own copy while you play. Nothing from either game is included in this download.
 - Windows 10 or 11. DirectX 11 and DirectX 12 mode both work.
 
+## New in v0.4
+- **Turf wars.** A Remnant boss that meets a large MHW monster may fight it: it roars, closes in and attacks with its
+  own moves, and the MHW monster turns to face it and fights back with its own. Two large MHW monsters that meet near
+  you may stage a turf war too, even pairs MHW never gave one. The one hurt worse goes down. Pairs that already have
+  a turf war of MHW's own are left to MHW.
+  MHW doesn't say which of a monster's moves are attacks, so the mod learns them from the monster's fights with you.
+  Until it has seen a monster's moves, that monster's blows in a turf war land without an animation of their own.
+- **First person when aiming down sights.** Hold right-click with a Remnant gun and the view moves to the hunter's
+  eyes, with the gun's own model in front of you. Firing from the hip stays third person.
+- **Remnant's stamina effects use MHW's stamina bar.** Gear and buffs for max stamina, stamina regeneration and
+  stamina cost act on MHW's own stamina. Heavier Remnant armor makes stamina costs higher. A Remnant evade is a real
+  dodge that spent stamina, so it now works on a gamepad too. The mod finds where MHW keeps your stamina during your
+  first dodges in a hunt.
+- Settings in `remnant_hunt.ini`: `[turf] enabled`, `mhw_vs_mhw`, `facing`; `[visuals] first_person`,
+  `fp_eye_height`; `[stamina] enabled`.
+
 ## New in v0.3
 - **Remnant II's bosses roam MHW's hunting zones** as creatures of their own, drawn with Remnant II's own models,
   textures, animations and sounds: 29 of them, from the Corrupted Ravager and the Nightweaver to Annihilation, the One
