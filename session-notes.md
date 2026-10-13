@@ -54,3 +54,27 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
 - research.cpp now on by default ([research] enabled=0 to stop): dev_research.txt.
 - Still blocked on data from play: armor visuals on the hunter and gun in the hand (joint matrices, hunter facing),
   MHW monsters flinching from Remnant damage (flinch counters), Remnant player arm animations (retarget).
+
+## 2026-10-13 15:31 request: GitHub repo + GUI installer
+- Repo: https://github.com/jyoung2000/remnant-hunt (public), pushed from the container clone /home/claude/remnant-hunt
+  (the device has no GitHub credentials; device commits travel as git bundles).
+- GUI installer: src/installer/setup.cpp + tools/make_installer.py, `make installer` ->
+  out/RemnantHuntSetup-<ver>.exe (payload = package.py files() as RCDATA, game-data check). Tested under Wine.
+- GitHub releases are blocked for Claude sessions (403): Jalon uploads the exe + zip + release notes by hand.
+
+## 2026-10-13 16:58-17:11 requests: turf wars; MHW stamina bar; first person when aiming
+- Jalon chose: staged turf wars with learned moves (fallback: blows without animation), and allowed facing writes.
+- turf.cpp: learns MHW monster attacks (action at the hunter hit, hit time, reach) and flinches (action right after a
+  heavy non-mod hit) per emXXX_YY into learned_turf.txt; detects MHW's own turf-war pairs (both hurt >=2% within
+  1.5 s) and leaves them alone; self-checks (action plausibility, quaternion unit, forward from movement, DoAction
+  takes, writes stick) gate every write/call. MHW-vs-MHW: square off 1.6 s, 3-5 blows, loser flinches twice.
+  bosses.cpp: Boss.foe = an MHW monster takes the hunter's place in think(); boss_turf() runs the MHW side.
+  Tuning turf_*; ini [turf] enabled/mhw_vs_mhw/facing. Never finishes a monster (keeps 5%).
+- First person (mhw.cpp apply_first_person after the camera move): eye = hunter pos + fp_eye_height, 22 cm ahead;
+  writes camera pos/target and the view matrix translation (rotation kept). gunmodel.cpp: viewmodel when fp > 0.5.
+  Logs whether the view matrix eye matched the camera (first in-game check to read).
+- Stamina: stats stamina_max / stamina_regen / stamina_cost (re-authored by tools/author_stamina.py); stamina.cpp
+  finds MHW's stamina in the hunter object (drop 8-50 then monotonic refill, rests at peak, max float within 0x40)
+  -> learned_stamina.txt; applies bonuses relative to MHW's own changes; Remnant evade = stamina spend >= 12.
+- Tests: make test-logic (Wine) passes; test_effects 846 parse; preflight clean. Version 0.4.0, commit 9a8b2ca.
+- Next: in-game logs to read: "turf:", "first person:", "stamina:" lines in remnant_hunt.log; learned_turf.txt.
