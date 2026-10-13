@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core: Remnant II content from the player's own install. MIT License (see LICENSE).
+// Remnant x MHW mashup core: Remnant II content from the player's own install. GPL-3.0-or-later (see LICENSE).
 //
 // The mod never ships Remnant II files. It starts r2read.exe (a separate GPL-3.0 program in the mod folder) with
 // the path of the player's Remnant II install; r2read decodes the requested text and icons in memory and returns

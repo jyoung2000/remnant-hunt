@@ -27,8 +27,8 @@ def files():
     for f in sorted(os.listdir(os.path.join(ROOT, "assets", "fonts"))):
         if f.endswith(".ttf"):
             yield os.path.join(ROOT, "assets", "fonts", f), "remnant_hunt/fonts/" + f
-    lic = [("LICENSE", "LICENSE.txt"), ("NOTICE.md", "NOTICE.txt"),
-           ("third_party/ooz/COPYING", "r2read-and-ooz-GPL-3.0.txt"),
+    lic = [("LICENSE", "LICENSE-GPL-3.0.txt"), ("NOTICE.md", "NOTICE.txt"),
+           ("third_party/ooz/UPSTREAM.txt", "ooz-source.txt"),
            ("third_party/minhook/LICENSE.txt", "MinHook-BSD-2-Clause.txt"),
            ("third_party/imgui/LICENSE.txt", "DearImGui-MIT.txt"),
            ("assets/fonts/OFL-Montserrat.txt", "Montserrat-OFL.txt"),

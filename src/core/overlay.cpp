@@ -1,5 +1,5 @@
 // Remnant x MHW mashup core: overlay (Dear ImGui on D3D11, or on D3D12 through D3D11On12) and input routing.
-// MIT License (see LICENSE).
+// GPL-3.0-or-later (see LICENSE).
 //
 // Everything hooked here lives in Windows' own DLLs, never in MHW's code:
 //   dxgi.dll   IDXGISwapChain::Present / Present1 / ResizeBuffers   draw the mod's screens on the game's frame

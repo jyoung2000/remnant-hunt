@@ -1,4 +1,4 @@
-// Remnant x MHW mashup: dinput8.dll loader for Monster Hunter: World. MIT License (see LICENSE).
+// Remnant x MHW mashup: dinput8.dll loader for Monster Hunter: World. GPL-3.0-or-later (see LICENSE).
 // Adapted from justbustin/minecraft-crossover-bridge (MIT): forwards DirectInput to the system DLL and loads the
 // mod's core once the game window exists. It touches no game code.
 #include <cctype>

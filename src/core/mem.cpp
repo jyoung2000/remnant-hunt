@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core. MIT License (see LICENSE).
+// Remnant x MHW mashup core. GPL-3.0-or-later (see LICENSE).
 #include <cstdlib>
 
 #include "core.h"

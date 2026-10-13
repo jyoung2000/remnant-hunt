@@ -1,4 +1,4 @@
-// Remnant x MHW mashup. MIT License (see LICENSE).
+// Remnant x MHW mashup. GPL-3.0-or-later (see LICENSE).
 #pragma once
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

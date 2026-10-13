@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core: Monster Hunter: World 15.23.00 (build 421810) game layer. MIT License (see LICENSE).
+// Remnant x MHW mashup core: Monster Hunter: World 15.23.00 (build 421810) game layer. GPL-3.0-or-later (see LICENSE).
 //
 // Addresses come from the hooks sheet (sheets/hooks.json -> gen/sheets.gen.h), which credits where each was found
 // (justbustin/minecraft-crossover-bridge, MIT; HunterPie, Apache-2.0). Nothing here patches MHW's code: the mod

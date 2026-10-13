@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core: screens and HUD. MIT License (see LICENSE).
+// Remnant x MHW mashup core: screens and HUD. GPL-3.0-or-later (see LICENSE).
 //
 // Remnant-styled screens for Remnant tasks (the worldstone intro, archetypes, the Ward 13 terminal, Brabus and
 // McCabe); a small HUD in MHW's colours for the guns, skill and relic. Names, descriptions, lines and icons are read

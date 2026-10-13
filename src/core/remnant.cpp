@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core: Remnant II's rules running on top of Monster Hunter: World. MIT License (see LICENSE).
+// Remnant x MHW mashup core: Remnant II's rules running on top of Monster Hunter: World. GPL-3.0-or-later (see LICENSE).
 //
 // Every number comes from the design sheets (gen/sheets.gen.h). The game-thread tick reads MHW's state, fires
 // Remnant guns as hitscan shots against the monsters' boxes, and turns HP changes into archetype, skill, mod and

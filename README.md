@@ -41,11 +41,11 @@ who all have the mod is planned, with joining through MHW's own sessions and SOS
 - A small `dinput8.dll` loader starts the mod when MHW opens.
 - The mod draws its screens on top of the game and runs Remnant II's rules on MHW's monsters by calling the game's
   own functions. It never patches MHW's code.
-- `r2read.exe` is a separate GPL-3.0 program that reads Remnant II's packages from your install, in memory, using the
+- `r2read.exe` is a separate helper that reads Remnant II's packages from your install, in memory, using the
   open-source ooz decoder. It never writes game files anywhere.
 
 ## Uninstall
 Delete `dinput8.dll` and the `remnant_hunt` folder from the Monster Hunter: World folder.
 
-## Credits
-See `licenses/NOTICE.txt`. Built with Claude (Anthropic) for Jalon.
+## License and credits
+GPL-3.0-or-later; remixes are welcome under the same license. Credits are in `licenses/NOTICE.txt`. Built with Claude (Anthropic) for Jalon.

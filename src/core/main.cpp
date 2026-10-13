@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core: start-up, settings and the Melty test checks. MIT License (see LICENSE).
+// Remnant x MHW mashup core: start-up, settings and the Melty test checks. GPL-3.0-or-later (see LICENSE).
 #include <cstdio>
 #include <cstring>
 

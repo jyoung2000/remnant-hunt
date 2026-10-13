@@ -1,4 +1,4 @@
-// Remnant x MHW mashup core: the Remnant side's state. MIT License (see LICENSE).
+// Remnant x MHW mashup core: the Remnant side's state. GPL-3.0-or-later (see LICENSE).
 #pragma once
 #include <map>
 
