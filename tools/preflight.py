@@ -33,7 +33,8 @@ def empty(v):
 
 
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    argv = sys.argv[1:]
+    args = [a for i, a in enumerate(argv) if not a.startswith("--") and (i == 0 or argv[i - 1] != "--phase")]
     d = args[0] if args else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sheets")
     phase = sys.argv[sys.argv.index("--phase") + 1] if "--phase" in sys.argv else "v0.1"
     sheets, ver = load(d)
