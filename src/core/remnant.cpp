@@ -10,6 +10,7 @@
 #include <cstdio>
 #include <cstring>
 
+#include "bosses.h"
 #include "state.h"
 
 namespace rh {
@@ -260,12 +261,13 @@ static float rank_mult(const Monster& m) {
 
 static void deal(Live& l, const Monster& m, float dmg, Vec3 at, bool crit) {
     if (dmg <= 0) return;
-    add_hp(m.health, -dmg);
+    bool boss = boss_hit(m.em, dmg, at, crit, false);  // a Remnant II boss: the mod keeps its health
+    if (!boss) add_hp(m.health, -dmg);
     Live::Track& tr = l.track[m.em];
     if (tr.max <= 0) { tr.hp = m.hp; tr.max = m.maxHp; tr.large = m.large; }
     tr.hp -= dmg;
     tr.fought = true;
-    show_damage(m.em, (int)lroundf(dmg), at, crit);
+    if (!boss) show_damage(m.em, (int)lroundf(dmg), at, crit);
     l.totalDamage += dmg;
 }
 
@@ -405,7 +407,7 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
         l.tracers[l.nextTracer++ % 16] = {acc[k].at, t + 0.09, true};
         if (mod >= 0 && t >= l.modUntil)
             l.modCharge = std::min(kMods[mod].charge_damage, l.modCharge + acc[k].dmg * (1.0f + stat(l, ST_MOD_GEN, t)));
-        if (tune(TUNING_AGGRO_SHELLS) > 0 && t - l.lastSlinger > tune(TUNING_SLINGER_INTERVAL_S)) {
+        if (tune(TUNING_AGGRO_SHELLS) > 0 && t - l.lastSlinger > tune(TUNING_SLINGER_INTERVAL_S) && !is_boss(acc[k].m->em)) {
             Vec3 back = norm(sub(v.camPos, acc[k].at));
             fire_slinger(add(acc[k].at, mul(back, 150.0f)), acc[k].m->center);
             l.lastSlinger = t;
@@ -512,6 +514,7 @@ void mod_game_tick() {
     SaveData& s = sh.save;
     Live& l = sh.live;
     snapshot(&l.snap);
+    int bossEv = bosses_tick(s, l, t, dt);  // Remnant II bosses join the monsters here
     const GameSnapshot& g = l.snap;
     const Archetypes* a = archetype();
     if (l.loadoutChanged) {
@@ -615,6 +618,7 @@ void mod_game_tick() {
         l.actives.erase(std::remove_if(l.actives.begin(), l.actives.end(), [&](const Active& x) { return t >= x.until; }),
                         l.actives.end());
         l.lastPlayerHp = g.playerHealth ? hpNow : -1;
+        if (bossEv & BOSS_EV_EVADE) trigger(l, TR_ON_EVADE, t);  // dodged through a boss's hit
 
         // ---- relic
         if (has(CMD_RELIC) && s.relic >= 0) {
@@ -660,7 +664,7 @@ void mod_game_tick() {
                 float ext = it->second.hp - m.hp;
                 if (ext > 0.5f && ext < 100000.0f) {
                     float bonus = ext * meleeBonus;
-                    if (bonus > 0.5f) add_hp(m.health, -bonus);
+                    if (bonus > 0.5f && !boss_hit(m.em, bonus, m.center, false, false)) add_hp(m.health, -bonus);
                     lifesteal(l, ext + bonus, t);
                     if (curMod >= 0 && t >= l.modUntil)
                         l.modCharge = std::min(kMods[curMod].charge_damage, l.modCharge + ext * (1.0f + stat(l, ST_MOD_GEN, t)));

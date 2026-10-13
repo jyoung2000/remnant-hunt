@@ -1,0 +1,1 @@
+acl 3ee568542eca4428e1041908b4a644b98e7885bd (MIT), rtm c7fd05b2db19b535c8647a804f9cb5340795550f (MIT): header-only; used by r2read to decode Remnant II's ACL-compressed animations.

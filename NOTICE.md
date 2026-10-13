@@ -18,6 +18,8 @@ the player's own installed copies at run time.
 | EB Garamond | The EB Garamond Project Authors | SIL Open Font License 1.1 | titles |
 | ww2ogg 0.24 (with its packed aoTuV 6.03 codebooks) | Adam Gashlin (hcs), Xiph.org Foundation | BSD-3-Clause | `r2read.exe` turns Remnant II's Wwise Vorbis sounds into standard Ogg Vorbis, in memory |
 | stb_vorbis | Sean Barrett and contributors | public domain (or MIT) | `r2read.exe` decodes those sounds |
+| Animation Compression Library (acl) | Nicholas Frechette and contributors | MIT | `r2read.exe` decodes Remnant II's ACL-compressed animations |
+| Realtime Math (rtm) | Nicholas Frechette and contributors | MIT | math used by acl |
 
 ## Research credits
 - Monster Hunter: World 15.23.00 addresses and structures: justbustin/minecraft-crossover-bridge (MIT) and
@@ -29,3 +31,5 @@ the player's own installed copies at run time.
   and contributors (GPL-3.0, github.com/joshpayette/remnant2-toolkit). They are re-expressed in this mod's own effect
   language and wording (tools/author_arsenal.py); no text from it is shipped. Names, descriptions and icons always come
   from the player's own Remnant II install.
+- Remnant II (Unreal Engine 5.2) skeletal mesh, skeleton and animation layouts: CUE4Parse by FabianFG and
+  contributors (Apache-2.0), read as a format reference; r2read's readers are this mod's own code.

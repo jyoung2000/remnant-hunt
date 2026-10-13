@@ -42,6 +42,7 @@ struct Monster {
     float rot[3][4];      // OBB rows (world)
     Vec3 center, half;    // cm
     bool obbOk;
+    char kind[16];        // MHW's model id, "em101_00" (names: sheets/mhw_monsters.json)
 };
 struct GameView {
     bool valid = false;
@@ -72,6 +73,7 @@ void show_damage(uint8_t* em, int amount, const Vec3& pos, bool crit);
 bool fire_slinger(const Vec3& origin, const Vec3& target);
 bool world_ray(const Vec3& from, const Vec3& to, Vec3* hit);  // true = blocked by level geometry
 void set_camera_fov(float fovY);                  // aim zoom; 0 = leave the game's own value
+bool camera_view(GameView* out);                  // any thread: MHW's camera right now (read-only)
 bool zone_is_base(int zone);
 
 // ---------------------------------------------------------------- Remnant II content (r2client.cpp)
@@ -88,6 +90,10 @@ int r2_cells_checked(int* failed);  // test mode: resolves every Remnant II cell
 // A play of a Remnant II sound event (one variation of each layer), stereo 16-bit; nullptr until decoded.
 struct R2Sound { int rate = 0; std::vector<int16_t> pcm; bool failed = false; };
 const R2Sound* r2_sound(const char* event, int variant);
+
+// Binary replies of r2read (MESH, SKEL, ANIM): raw bytes, decoded in model.cpp; nullptr until read.
+struct R2Blob { std::vector<uint8_t> data; bool failed = false; };
+const R2Blob* r2_blob(const char* kind, const char* asset);
 
 // Remnant II sounds through the mod's own audio (audio.cpp, XAudio2). Any thread.
 void audio_play(const char* event, float volume = 1.0f);
@@ -128,7 +134,7 @@ void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3&
 
 // Settings (remnant_hunt.ini in the mod folder).
 // Defaults avoid MHW's own default PC bindings (B, G, V, T, P are free or unused in solo play).
-struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', skill2 = 'H', relic = 'T', terminal = 'P'; };
+struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', skill2 = 'H', relic = 'T', terminal = 'P', boss = VK_F9; };
 const Keys& keys();
 bool test_mode();  // MELTY_TEST=1 or test=1 in the ini
 

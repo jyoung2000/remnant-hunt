@@ -1,0 +1,295 @@
+{
+ "sheet": "mhw_monsters",
+ "phase": "v0.2",
+ "about": "Names for the Remnant-style health bars of MHW's large monsters, by MHW's internal model id (the folder of the monster's model, e.g. em101_00). A monster missing here gets a bar without a name. To check in game: the diagnostic run logs the ids it meets.",
+ "columns": {
+  "id": "id",
+  "name": "str"
+ },
+ "rows": [
+  {
+   "id": "em001_00",
+   "name": "Rathian"
+  },
+  {
+   "id": "em001_01",
+   "name": "Pink Rathian"
+  },
+  {
+   "id": "em001_02",
+   "name": "Gold Rathian"
+  },
+  {
+   "id": "em002_00",
+   "name": "Rathalos"
+  },
+  {
+   "id": "em002_01",
+   "name": "Azure Rathalos"
+  },
+  {
+   "id": "em002_02",
+   "name": "Silver Rathalos"
+  },
+  {
+   "id": "em007_00",
+   "name": "Diablos"
+  },
+  {
+   "id": "em007_01",
+   "name": "Black Diablos"
+  },
+  {
+   "id": "em011_00",
+   "name": "Kirin"
+  },
+  {
+   "id": "em013_00",
+   "name": "Fatalis"
+  },
+  {
+   "id": "em018_00",
+   "name": "Yian Garuga"
+  },
+  {
+   "id": "em018_05",
+   "name": "Scarred Yian Garuga"
+  },
+  {
+   "id": "em023_00",
+   "name": "Rajang"
+  },
+  {
+   "id": "em023_05",
+   "name": "Furious Rajang"
+  },
+  {
+   "id": "em024_00",
+   "name": "Kushala Daora"
+  },
+  {
+   "id": "em026_00",
+   "name": "Lunastra"
+  },
+  {
+   "id": "em027_00",
+   "name": "Teostra"
+  },
+  {
+   "id": "em032_00",
+   "name": "Tigrex"
+  },
+  {
+   "id": "em032_01",
+   "name": "Brute Tigrex"
+  },
+  {
+   "id": "em036_00",
+   "name": "Lavasioth"
+  },
+  {
+   "id": "em037_00",
+   "name": "Nargacuga"
+  },
+  {
+   "id": "em042_00",
+   "name": "Barioth"
+  },
+  {
+   "id": "em042_05",
+   "name": "Frostfang Barioth"
+  },
+  {
+   "id": "em043_00",
+   "name": "Deviljho"
+  },
+  {
+   "id": "em043_05",
+   "name": "Savage Deviljho"
+  },
+  {
+   "id": "em044_00",
+   "name": "Barroth"
+  },
+  {
+   "id": "em045_00",
+   "name": "Uragaan"
+  },
+  {
+   "id": "em050_00",
+   "name": "Alatreon"
+  },
+  {
+   "id": "em057_00",
+   "name": "Zinogre"
+  },
+  {
+   "id": "em057_01",
+   "name": "Stygian Zinogre"
+  },
+  {
+   "id": "em063_00",
+   "name": "Brachydios"
+  },
+  {
+   "id": "em063_05",
+   "name": "Raging Brachydios"
+  },
+  {
+   "id": "em080_00",
+   "name": "Glavenus"
+  },
+  {
+   "id": "em080_01",
+   "name": "Acidic Glavenus"
+  },
+  {
+   "id": "em100_00",
+   "name": "Anjanath"
+  },
+  {
+   "id": "em100_01",
+   "name": "Fulgur Anjanath"
+  },
+  {
+   "id": "em101_00",
+   "name": "Great Jagras"
+  },
+  {
+   "id": "em102_00",
+   "name": "Pukei-Pukei"
+  },
+  {
+   "id": "em102_01",
+   "name": "Coral Pukei-Pukei"
+  },
+  {
+   "id": "em103_00",
+   "name": "Nergigante"
+  },
+  {
+   "id": "em103_05",
+   "name": "Ruiner Nergigante"
+  },
+  {
+   "id": "em104_00",
+   "name": "Safi'jiiva"
+  },
+  {
+   "id": "em105_00",
+   "name": "Xeno'jiiva"
+  },
+  {
+   "id": "em106_00",
+   "name": "Zorah Magdaros"
+  },
+  {
+   "id": "em107_00",
+   "name": "Kulu-Ya-Ku"
+  },
+  {
+   "id": "em108_00",
+   "name": "Jyuratodus"
+  },
+  {
+   "id": "em109_00",
+   "name": "Tobi-Kadachi"
+  },
+  {
+   "id": "em109_01",
+   "name": "Viper Tobi-Kadachi"
+  },
+  {
+   "id": "em110_00",
+   "name": "Paolumu"
+  },
+  {
+   "id": "em110_01",
+   "name": "Nightshade Paolumu"
+  },
+  {
+   "id": "em111_00",
+   "name": "Legiana"
+  },
+  {
+   "id": "em111_05",
+   "name": "Shrieking Legiana"
+  },
+  {
+   "id": "em112_00",
+   "name": "Great Girros"
+  },
+  {
+   "id": "em113_00",
+   "name": "Odogaron"
+  },
+  {
+   "id": "em113_01",
+   "name": "Ebony Odogaron"
+  },
+  {
+   "id": "em114_00",
+   "name": "Radobaan"
+  },
+  {
+   "id": "em115_00",
+   "name": "Vaal Hazak"
+  },
+  {
+   "id": "em115_05",
+   "name": "Blackveil Vaal Hazak"
+  },
+  {
+   "id": "em116_00",
+   "name": "Dodogama"
+  },
+  {
+   "id": "em117_00",
+   "name": "Kulve Taroth"
+  },
+  {
+   "id": "em118_00",
+   "name": "Bazelgeuse"
+  },
+  {
+   "id": "em118_05",
+   "name": "Seething Bazelgeuse"
+  },
+  {
+   "id": "em120_00",
+   "name": "Tzitzi-Ya-Ku"
+  },
+  {
+   "id": "em121_00",
+   "name": "Behemoth"
+  },
+  {
+   "id": "em122_00",
+   "name": "Beotodus"
+  },
+  {
+   "id": "em123_00",
+   "name": "Banbaro"
+  },
+  {
+   "id": "em124_00",
+   "name": "Velkhana"
+  },
+  {
+   "id": "em125_00",
+   "name": "Namielle"
+  },
+  {
+   "id": "em126_00",
+   "name": "Shara Ishvalda"
+  },
+  {
+   "id": "em127_00",
+   "name": "Leshen"
+  },
+  {
+   "id": "em127_01",
+   "name": "Ancient Leshen"
+  }
+ ]
+}

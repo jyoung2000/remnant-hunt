@@ -15,5 +15,7 @@ cp assets/fonts/*.ttf assets/fonts/OFL-*.txt "$M/fonts/"
 cp LICENSE* NOTICE* "$M/licenses/" 2>/dev/null || true
 cp third_party/ooz/COPYING "$M/licenses/r2read-GPL-3.0.txt"
 cp third_party/ww2ogg/COPYING "$M/licenses/ww2ogg-BSD-3-Clause.txt"
+cp third_party/acl/LICENSE "$M/licenses/acl-MIT.txt"
+cp third_party/rtm/LICENSE "$M/licenses/rtm-MIT.txt"
 [ -e "$M/dev_reload" ] && mv -f "$M/dev_reload" "$M/dev_reload.off" || true  # no hot reload by default
 echo "installed into $G"

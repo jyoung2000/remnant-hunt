@@ -141,6 +141,7 @@ static std::mutex g_cacheLock;
 static std::map<std::string, std::string> g_text;   // "asset\tkey" -> text
 static std::map<std::string, R2Image> g_img;        // "asset|max" -> image
 static std::map<std::string, R2Sound> g_snd;        // "event|variant" -> decoded sound
+static std::map<std::string, R2Blob> g_blob;        // "KIND\tasset" -> reply bytes
 static const std::string kEmpty;
 
 static std::string strip_markup(const std::string& s) {
@@ -211,6 +212,36 @@ static void fetch_image(const std::string& asset, int maxSide) {
 
 static std::vector<std::pair<std::string, std::string>> g_textQueue;  // (asset, key) asked for, not yet read
 static std::vector<std::pair<std::string, int>> g_sndQueue;           // (event, variant) asked for
+static std::vector<std::string> g_blobQueue;                          // "KIND\tasset" asked for
+
+const R2Blob* r2_blob(const char* kind, const char* asset) {
+    if (!kind || !asset || !*asset) return nullptr;
+    std::string k = std::string(kind) + "\t" + asset;
+    {
+        std::lock_guard<std::mutex> l(g_cacheLock);
+        auto it = g_blob.find(k);
+        if (it != g_blob.end()) return &it->second;
+    }
+    std::lock_guard<std::mutex> q(g_queueLock);
+    for (auto& e : g_blobQueue)
+        if (e == k) return nullptr;
+    g_blobQueue.push_back(k);
+    if (g_wake) SetEvent(g_wake);
+    return nullptr;
+}
+
+static void fetch_blob(const std::string& k) {
+    std::string head;
+    std::vector<uint8_t> body;
+    R2Blob b;
+    if (ask(k, &head, &body)) b.data = std::move(body);
+    else {
+        b.failed = true;
+        log("r2: %s unavailable (%s)", k.c_str(), head.c_str());
+    }
+    std::lock_guard<std::mutex> l(g_cacheLock);
+    g_blob[k] = std::move(b);
+}
 
 const R2Sound* r2_sound(const char* event, int variant) {
     if (!event || !*event) return nullptr;
@@ -400,6 +431,17 @@ static DWORD WINAPI worker(LPVOID) {
             fetch_text(tj.first, tj.second);
             std::lock_guard<std::mutex> q(g_queueLock);
             g_textQueue.erase(g_textQueue.begin());
+        }
+        for (;;) {
+            std::string bj;
+            {
+                std::lock_guard<std::mutex> q(g_queueLock);
+                if (g_blobQueue.empty()) break;
+                bj = g_blobQueue.front();
+            }
+            fetch_blob(bj);
+            std::lock_guard<std::mutex> q(g_queueLock);
+            g_blobQueue.erase(g_blobQueue.begin());
         }
         for (;;) {
             std::pair<std::string, int> sj;

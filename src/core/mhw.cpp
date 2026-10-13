@@ -194,6 +194,18 @@ void snapshot(GameSnapshot* s) {
             const char* p = (const char*)res + 0x0C;
             const char* b = strchr(p, '\\');
             m.large = !(b && strncmp(b + 1, "ems", 3) == 0);
+            // "em\\em101\\00\\..." -> "em101_00"
+            if (b) {
+                const char* e = strchr(b + 1, '\\');
+                size_t n = e ? (size_t)(e - b - 1) : 0;
+                if (n > 0 && n < 8 && mem_readable((uint8_t*)e, 4) && e[1] >= '0' && e[1] <= '9' && e[2] >= '0' && e[2] <= '9') {
+                    memcpy(m.kind, b + 1, n);
+                    m.kind[n] = '_';
+                    m.kind[n + 1] = e[1];
+                    m.kind[n + 2] = e[2];
+                    m.kind[n + 3] = 0;
+                }
+            }
             used_ok(HOOKS_ENEMY_PATH, "model path");
         }
         if (mem_readable(em + kObbRot, 0x50)) {
@@ -268,6 +280,20 @@ bool world_ray(const Vec3& from, const Vec3& to, Vec3* hit) {
 }
 
 static float g_fovOverride = 0.0f;
+bool camera_view(GameView* v) {
+    uint8_t* mgr = rd_ptr(HOOKV_S_MH_CAMERA);
+    if (!mgr || !mem_readable(mgr + kViewport0 + kVpProj, 64)) return false;
+    uint8_t* cam = rd_ptr((uintptr_t)mgr + kVp0Camera);
+    if (!cam || !mem_readable(cam + kCamFov, 0x40)) return false;
+    memcpy(&v->camPos, cam + kCamPos, 12);
+    memcpy(&v->camTarget, cam + kCamTarget, 12);
+    v->fovY = *(float*)(cam + kCamFov);
+    memcpy(v->view, mgr + kViewport0 + kVpView, 64);
+    memcpy(v->proj, mgr + kViewport0 + kVpProj, 64);
+    v->valid = std::isfinite(v->camPos.x) && v->fovY > 1 && v->fovY < 170;
+    return v->valid;
+}
+
 void set_camera_fov(float fovY) { g_fovOverride = fovY; }
 
 // ---------------------------------------------------------------- game-thread tick (vtable copy, no code patch)

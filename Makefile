@@ -64,7 +64,7 @@ build/gen/codebooks.inc: third_party/ww2ogg/packed_codebooks_aoTuV_603.bin
 
 $(O)/r2read/%.o: src/r2read/% build/gen/codebooks.inc
 	@mkdir -p $(dir $@)
-	$(CXX) -O2 -std=c++17 -Wall -Wno-unused-function -Ithird_party/ww2ogg -Ibuild/gen -c $< -o $@
+	$(CXX) -O2 -std=c++17 -Wall -Wno-unused-function -Ithird_party/ww2ogg -Ibuild/gen -Ithird_party/acl/includes -Ithird_party/rtm/includes -c $< -o $@
 
 $(O)/ww2ogg/%.o: third_party/ww2ogg/%
 	@mkdir -p $(dir $@)
@@ -78,7 +78,7 @@ $(O)/stb/stb_vorbis.c.o: third_party/stb/stb_vorbis.c
 	@mkdir -p $(dir $@)
 	$(CC) -O2 -Wno-everything -DSTB_VORBIS_NO_STDIO -c $< -o $@
 
-R2READ_OBJ := $(O)/r2read/main.cpp.o $(O)/r2read/r2pak.cpp.o $(O)/r2read/wwise.cpp.o \
+R2READ_OBJ := $(O)/r2read/main.cpp.o $(O)/r2read/r2pak.cpp.o $(O)/r2read/wwise.cpp.o $(O)/r2read/r2mesh.cpp.o \
               $(patsubst third_party/ww2ogg/%,$(O)/ww2ogg/%.o,$(WW2OGG)) $(O)/ww2ogg/crc.c.o $(O)/stb/stb_vorbis.c.o
 
 $(B)/r2read.exe: $(R2READ_OBJ) $(patsubst third_party/ooz/%,$(O)/ooz/%.o,$(OOZ))

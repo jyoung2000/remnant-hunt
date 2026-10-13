@@ -12,12 +12,15 @@
 #include <dinput.h>
 #include <dxgi1_4.h>
 
+#include <cmath>
 #include <cstdio>
 #include <map>
 #include <string>
 
 #include "MinHook.h"
+#include "bosses.h"
 #include "core.h"
+#include "render3d.h"
 #include "imgui.h"
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
@@ -347,6 +350,121 @@ void* texture_for(const char* asset, int maxSide, int* w, int* h) {
 
 // ---------------------------------------------------------------- render targets
 
+// ---------------------------------------------------------------- MHW's scene depth (Direct3D 11), for the bosses
+// Read-only: the depth buffer MHW clears each frame is recognised from its ClearDepthStencilView calls (a hook in
+// d3d11.dll, like the Present hook), and a shader view of it lets render3d hide the Remnant bosses behind MHW's
+// world. [bosses] scene_depth=0 in remnant_hunt.ini turns this off.
+
+typedef void(STDMETHODCALLTYPE* ClearDSV_t)(ID3D11DeviceContext*, ID3D11DepthStencilView*, UINT, FLOAT, UINT8);
+static ClearDSV_t oClearDSV = nullptr;
+static thread_local bool t_ownDraw = false;
+static UINT g_bbW = 0, g_bbH = 0;
+struct DepthSeen { ID3D11Resource* res; UINT w, h; DXGI_FORMAT fmt; float clear; int clears, lastFrame; };
+static SRWLOCK g_depthLock = SRWLOCK_INIT;
+static DepthSeen g_depthSeen[8];
+static int g_depthCount = 0, g_frame = 0, g_depthMode = 1;
+static ID3D11Resource* g_depthRes = nullptr;
+static ID3D11ShaderResourceView* g_depthSrv = nullptr;
+static bool g_depthLogged = false;
+
+static DXGI_FORMAT depth_srv_format(DXGI_FORMAT f) {
+    switch (f) {
+        case DXGI_FORMAT_R24G8_TYPELESS: return DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+        case DXGI_FORMAT_R32_TYPELESS: return DXGI_FORMAT_R32_FLOAT;
+        case DXGI_FORMAT_R32G8X24_TYPELESS: return DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS;
+        case DXGI_FORMAT_R16_TYPELESS: return DXGI_FORMAT_R16_UNORM;
+        default: return DXGI_FORMAT_UNKNOWN;
+    }
+}
+
+static void STDMETHODCALLTYPE hkClearDSV(ID3D11DeviceContext* c, ID3D11DepthStencilView* dsv, UINT flags, FLOAT depth,
+                                         UINT8 stencil) {
+    if (dsv && (flags & D3D11_CLEAR_DEPTH) && !t_ownDraw) {
+        ID3D11Resource* r = nullptr;
+        dsv->GetResource(&r);
+        if (r) {
+            AcquireSRWLockExclusive(&g_depthLock);
+            int i = 0;
+            while (i < g_depthCount && g_depthSeen[i].res != r) i++;
+            if (i == g_depthCount && g_depthCount < 8) {
+                ID3D11Texture2D* tex = nullptr;
+                D3D11_TEXTURE2D_DESC td = {};
+                if (SUCCEEDED(r->QueryInterface(IID_ID3D11Texture2D, (void**)&tex)) && tex) {
+                    tex->GetDesc(&td);
+                    tex->Release();
+                    // Only depth MHW can also read (deferred lighting does), single-sampled, one slice.
+                    if ((td.BindFlags & D3D11_BIND_SHADER_RESOURCE) && td.SampleDesc.Count == 1 && td.ArraySize == 1 &&
+                        depth_srv_format(td.Format) != DXGI_FORMAT_UNKNOWN) {
+                        r->AddRef();
+                        g_depthSeen[g_depthCount++] = {r, td.Width, td.Height, td.Format, depth, 0, -1};
+                    }
+                }
+            }
+            if (i < g_depthCount) {
+                g_depthSeen[i].clear = depth;
+                g_depthSeen[i].clears++;
+                g_depthSeen[i].lastFrame = g_frame;
+            }
+            ReleaseSRWLockExclusive(&g_depthLock);
+            r->Release();
+        }
+    }
+    oClearDSV(c, dsv, flags, depth, stencil);
+}
+
+static void release_depth() {
+    AcquireSRWLockExclusive(&g_depthLock);
+    render3d_set_game_depth(nullptr, false, 0, 0);
+    if (g_depthSrv) { g_depthSrv->Release(); g_depthSrv = nullptr; }
+    g_depthRes = nullptr;
+    for (int i = 0; i < g_depthCount; i++) g_depthSeen[i].res->Release();
+    g_depthCount = 0;
+    ReleaseSRWLockExclusive(&g_depthLock);
+}
+
+// Render thread, at Present: the scene depth is the full-frame one MHW clears most.
+static void pick_depth() {
+    if (!g_depthMode || !oClearDSV || !g_bbW || !g_bbH) return;
+    AcquireSRWLockExclusive(&g_depthLock);
+    int best = -1;
+    float aspect = (float)g_bbW / (float)g_bbH;
+    for (int i = 0; i < g_depthCount; i++) {
+        const DepthSeen& d = g_depthSeen[i];
+        if (g_frame - d.lastFrame > 2 || !d.h || d.w * 2 < g_bbW) continue;
+        if (fabsf((float)d.w / (float)d.h - aspect) > 0.03f) continue;
+        if (best < 0 || d.clears > g_depthSeen[best].clears) best = i;
+    }
+    ID3D11Resource* res = best >= 0 ? g_depthSeen[best].res : nullptr;
+    if (res != g_depthRes) {
+        if (g_depthSrv) { g_depthSrv->Release(); g_depthSrv = nullptr; }
+        g_depthRes = res;
+        if (res) {
+            D3D11_SHADER_RESOURCE_VIEW_DESC sd = {};
+            sd.Format = depth_srv_format(g_depthSeen[best].fmt);
+            sd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+            sd.Texture2D.MipLevels = 1;
+            HRESULT hr = g_dev->CreateShaderResourceView(res, &sd, &g_depthSrv);
+            log("overlay: scene depth %ux%u format %d, cleared to %.0f: %s", g_depthSeen[best].w, g_depthSeen[best].h,
+                (int)g_depthSeen[best].fmt, g_depthSeen[best].clear, SUCCEEDED(hr) ? "in use" : "no shader view");
+        }
+    }
+    if (g_depthSrv)
+        render3d_set_game_depth(g_depthSrv, g_depthSeen[best].clear < 0.5f, (int)g_depthSeen[best].w, (int)g_depthSeen[best].h);
+    else
+        render3d_set_game_depth(nullptr, false, 0, 0);
+    if (!g_depthLogged && g_frame > 900) {
+        g_depthLogged = true;
+        for (int i = 0; i < g_depthCount; i++)
+            log("overlay: depth candidate %d: %ux%u format %d, clear %.1f, %d clears%s", i, g_depthSeen[i].w, g_depthSeen[i].h,
+                (int)g_depthSeen[i].fmt, g_depthSeen[i].clear, g_depthSeen[i].clears, i == best ? " (chosen)" : "");
+        if (!g_depthCount) log("overlay: no readable scene depth seen; Remnant bosses draw without MHW's occlusion");
+    }
+    g_frame++;
+    ReleaseSRWLockExclusive(&g_depthLock);
+}
+
+static bool hook(void* target, void* detour, void** orig, const char* what);
+
 static void release_targets() {
     if (g_rtv) { g_rtv->Release(); g_rtv = nullptr; }
     for (int i = 0; i < kMaxBuffers; i++) {
@@ -355,9 +473,12 @@ static void release_targets() {
     }
     if (g_ctx) g_ctx->Flush();
     g_bufferCount = 0;
+    release_depth();
 }
 
 static bool make_targets(IDXGISwapChain* sc) {
+    DXGI_SWAP_CHAIN_DESC bd;
+    if (SUCCEEDED(sc->GetDesc(&bd))) { g_bbW = bd.BufferDesc.Width; g_bbH = bd.BufferDesc.Height; }
     if (!g_dx12) {
         ID3D11Texture2D* back = nullptr;
         if (FAILED(sc->GetBuffer(0, IID_ID3D11Texture2D, (void**)&back)) || !back) return false;
@@ -406,6 +527,10 @@ static bool init_imgui(IDXGISwapChain* sc) {
         g_dev = d11;
         g_dev->GetImmediateContext(&g_ctx);
         g_dx12 = false;
+        char ini[MAX_PATH];
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
+        g_depthMode = GetPrivateProfileIntA("bosses", "scene_depth", 1, ini);
+        if (g_depthMode) hook((*(void***)g_ctx)[53], (void*)hkClearDSV, (void**)&oClearDSV, "ClearDepthStencilView");
     } else if (SUCCEEDED(sc->GetDevice(IID_ID3D12Device, (void**)&d12)) && d12) {
         if (!g_queue) { d12->Release(); return false; }  // wait for the game to submit work
         IUnknown* queues[] = {(IUnknown*)g_queue};
@@ -456,6 +581,11 @@ static void render(IDXGISwapChain* sc) {
     mod_frame();
     ImGui::Render();
     if (!g_dx12) {
+        // Remnant II bosses into the frame, under the overlay.
+        pick_depth();
+        t_ownDraw = true;
+        bosses_render(g_dev, g_ctx, g_rtv, (int)g_bbW, (int)g_bbH);
+        t_ownDraw = false;
         g_ctx->OMSetRenderTargets(1, &g_rtv, nullptr);
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
     } else {
@@ -467,6 +597,7 @@ static void render(IDXGISwapChain* sc) {
         }
         if (idx < g_bufferCount && g_wrapped[idx]) {
             g_on12->AcquireWrappedResources(&g_wrapped[idx], 1);
+            bosses_render(g_dev, g_ctx, g_wrappedRtv[idx], (int)g_bbW, (int)g_bbH);
             g_ctx->OMSetRenderTargets(1, &g_wrappedRtv[idx], nullptr);
             ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
             g_on12->ReleaseWrappedResources(&g_wrapped[idx], 1);

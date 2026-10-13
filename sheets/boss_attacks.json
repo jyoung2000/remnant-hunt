@@ -1,0 +1,160 @@
+{
+ "sheet": "boss_attacks",
+ "phase": "v0.2",
+ "about": "Attacks of the bosses. min_m/max_m: distance to the hunter at which the attack is chosen. hits: windows (fractions of the animation) in which it can hit, measured from the animations' limb speeds (tools/attack_timing.py). reach_m: from the creature's head end; arc_deg: 360 = all around. damage: low-rank hunter damage, scaled with the zone's monsters. track: how much the creature keeps turning to the hunter before the first hit (0..1).",
+ "columns": {
+  "id": "id",
+  "boss": "ref:bosses",
+  "anim": "str",
+  "min_m": "num",
+  "max_m": "num",
+  "hits": "list",
+  "reach_m": "num",
+  "arc_deg": "num",
+  "damage": "num",
+  "weight": "num",
+  "cooldown_s": "num",
+  "track": "num",
+  "snd": "r2snd|none"
+ },
+ "rows": [
+  {
+   "id": "ravager_swipe_r",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Atk_Swipe_R",
+   "min_m": 0,
+   "max_m": 10,
+   "hits": [
+    "0.37-0.47"
+   ],
+   "reach_m": 5,
+   "arc_deg": 110,
+   "damage": 18,
+   "weight": 3,
+   "cooldown_s": 3,
+   "track": 0.8,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe.uasset"
+  },
+  {
+   "id": "ravager_swipe_l",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Atk_Swipe_L",
+   "min_m": 0,
+   "max_m": 10,
+   "hits": [
+    "0.37-0.47"
+   ],
+   "reach_m": 5,
+   "arc_deg": 110,
+   "damage": 18,
+   "weight": 3,
+   "cooldown_s": 3,
+   "track": 0.8,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe.uasset"
+  },
+  {
+   "id": "ravager_bite_double",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Atk_Bite_Double",
+   "min_m": 0,
+   "max_m": 12,
+   "hits": [
+    "0.28-0.36",
+    "0.52-0.60"
+   ],
+   "reach_m": 4,
+   "arc_deg": 60,
+   "damage": 15,
+   "weight": 2,
+   "cooldown_s": 6,
+   "track": 0.9,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Bite_Quick.uasset"
+  },
+  {
+   "id": "ravager_bite",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Atk_Bite_Single",
+   "min_m": 0,
+   "max_m": 8,
+   "hits": [
+    "0.36-0.45"
+   ],
+   "reach_m": 4.5,
+   "arc_deg": 60,
+   "damage": 22,
+   "weight": 2,
+   "cooldown_s": 5,
+   "track": 0.9,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Bite_Quick.uasset"
+  },
+  {
+   "id": "ravager_shockwave",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Atk_Shockwave",
+   "min_m": 0,
+   "max_m": 13,
+   "hits": [
+    "0.28-0.34",
+    "0.50-0.56"
+   ],
+   "reach_m": 9,
+   "arc_deg": 360,
+   "damage": 24,
+   "weight": 1.5,
+   "cooldown_s": 12,
+   "track": 0.3,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Shockwave.uasset"
+  },
+  {
+   "id": "ravager_flash_kick",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Atk_FlashKick",
+   "min_m": 3,
+   "max_m": 12,
+   "hits": [
+    "0.27-0.34"
+   ],
+   "reach_m": 5,
+   "arc_deg": 120,
+   "damage": 20,
+   "weight": 1,
+   "cooldown_s": 9,
+   "track": 0.6,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Atk_Swipe_High.uasset"
+  },
+  {
+   "id": "ravager_charge_bite",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Charge_Atk_Bite",
+   "min_m": 12,
+   "max_m": 32,
+   "hits": [
+    "0.02-0.25"
+   ],
+   "reach_m": 4,
+   "arc_deg": 70,
+   "damage": 24,
+   "weight": 2,
+   "cooldown_s": 8,
+   "track": 0.5,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Attack_Long.uasset"
+  },
+  {
+   "id": "ravager_leap",
+   "boss": "corrupted_ravager",
+   "anim": "Pan_Wolf_Leap_Slide",
+   "min_m": 15,
+   "max_m": 36,
+   "hits": [
+    "0.05-0.32"
+   ],
+   "reach_m": 5,
+   "arc_deg": 90,
+   "damage": 28,
+   "weight": 1.5,
+   "cooldown_s": 10,
+   "track": 0.4,
+   "snd": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Pan_Wolf_Jump_Retreat.uasset"
+  }
+ ]
+}

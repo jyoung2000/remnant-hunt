@@ -37,6 +37,7 @@ static void load_settings() {
                   "[keys]\r\n; gun mode, reload, swap guns, weapon mod, archetype skill, second archetype's skill, relic,\r\n"
                   "; Ward 13 terminal and the Remnant menus at MHW's NPCs\r\n"
                   "gun=B\r\nreload=R\r\nswap=X\r\nmod=V\r\nskill=G\r\nskill2=H\r\nrelic=T\r\nterminal=P\r\n"
+                  "; brings a Remnant II boss 30 m in front of you (hunting zones and the Training Area)\r\nboss=F9\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);
@@ -50,6 +51,7 @@ static void load_settings() {
     g_keys.skill2 = read_key(ini, "skill2", 'H');
     g_keys.relic = read_key(ini, "relic", 'T');
     g_keys.terminal = read_key(ini, "terminal", 'P');
+    g_keys.boss = read_key(ini, "boss", VK_F9);
     char env[8];
     g_test = (GetEnvironmentVariableA("MELTY_TEST", env, sizeof(env)) && env[0] == '1') ||
              GetPrivateProfileIntA("test", "enabled", 0, ini) == 1;

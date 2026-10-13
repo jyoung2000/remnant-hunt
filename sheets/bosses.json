@@ -1,0 +1,97 @@
+{
+ "sheet": "bosses",
+ "phase": "v0.2",
+ "about": "Remnant II bosses that roam MHW's field zones as creatures of their own. Assets are read from the player's Remnant II install at run time; nothing of Remnant II is shipped. Animation names are relative to anim_dir. Distances in metres, speeds in m/s, hp in MHW units. tier: boss = Remnant II's large boss bar at the top of the screen; elite / creature = a bar over the creature.",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "tier": "enum:boss|elite|creature",
+  "mesh": "str",
+  "skeleton": "str",
+  "textures": "list",
+  "anim_dir": "str",
+  "anim_idle": "str",
+  "anim_walk": "str",
+  "anim_run": "str",
+  "anim_turn_l": "str",
+  "anim_turn_r": "str",
+  "anim_roar": "str",
+  "anim_flinch": "str",
+  "anim_stun": "str",
+  "anim_death": "str",
+  "scale": "num",
+  "hp_base": "num",
+  "hp_vs_zone": "num",
+  "walk_mps": "num",
+  "run_mps": "num",
+  "turn_dps": "num",
+  "aggro_m": "num",
+  "leash_m": "num",
+  "flinch_frac": "num",
+  "stun_at": "num",
+  "melee_hits": "num",
+  "snd_roar": "r2snd",
+  "snd_pain": "r2snd",
+  "snd_death": "r2snd",
+  "snd_step": "r2snd",
+  "zones": "list",
+  "spawn_chance": "num",
+  "loot": "list"
+ },
+ "rows": [
+  {
+   "id": "corrupted_ravager",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Characters/Pan_Wolf/Blueprints/Character_Pan_Wolf.uasset",
+     "key": "CC8E9EEC47F0439BEDED4786CB0CB475"
+    }
+   },
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Mesh/Corrupted_Ravager.uasset",
+   "skeleton": "Remnant2/Content/World_Jungle/Characters/Pan_Wolf/Mesh/Pan_Wolf_Skeleton.uasset",
+   "textures": [
+    "fur=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/ravager_fur.uasset",
+    "A01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/T_corrupted_ravager_A01_Diff.uasset",
+    "B01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/T_corrupted_ravager_B01_Diff.uasset",
+    "C01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/T_corrupted_ravager_C01_Diff.uasset",
+    "D01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/t_corrupted_ravager_eye_diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Jungle/Characters/Pan_Wolf/Animations/",
+   "anim_idle": "Pan_Wolf_Idle",
+   "anim_walk": "Pan_Wolf_Walk_F",
+   "anim_run": "Pan_Wolf_Charge_F",
+   "anim_turn_l": "Pan_Wolf_TurnL_90",
+   "anim_turn_r": "Pan_Wolf_TurnR_90",
+   "anim_roar": "Pan_Wolf_Atk_Howl",
+   "anim_flinch": "Pan_Wolf_Impact_Flinch_Head_01",
+   "anim_stun": "Pan_Wolf_Impact_Stun",
+   "anim_death": "Pan_Wolf_Impact_Death",
+   "scale": 1.0,
+   "hp_base": 9000,
+   "hp_vs_zone": 1.2,
+   "walk_mps": 3.2,
+   "run_mps": 10.5,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.09,
+   "stun_at": 0.5,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Howl.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Foley_Wolf_Heavy_Short.uasset",
+   "zones": [
+    "any"
+   ],
+   "spawn_chance": 0.5,
+   "loot": [
+    "amulets.ravagers_mark",
+    "weapons.feraljudgment",
+    "weapons.merciless",
+    "weapons.reddoestaff"
+   ]
+  }
+ ]
+}

@@ -14,6 +14,9 @@
 //   NAME <asset> <regex with one group>    OK <bytes>\n<utf-8>
 //   TEX <asset without ext> <max side>     OK <BC7|BC3|BC1|BC5|BC4|BGRA8> <w> <h> <bytes>\n<pixels>
 //   SND <event asset> <seed>               OK <rate> <frames> <bytes>\n<stereo 16-bit PCM>
+//   MESH <skeletal mesh asset>             OK <bytes>\n<RMSH: bones, material slots, sections, vertices, indices>
+//   SKEL <skeleton asset>                  OK <bytes>\n<RSKL: bones>
+//   ANIM <anim sequence asset>             OK <bytes>\n<RANM: tracks, samples, rate, track->bone, samples>
 //   QUIT
 // Errors: ERR <message>
 #include <algorithm>
@@ -26,6 +29,7 @@
 
 #include "r2pak.h"
 #include "wwise.h"
+#include "r2mesh.h"
 
 #ifdef _WIN32
 #include <fcntl.h>
@@ -66,6 +70,23 @@ static std::string fmtName(const std::string& pf) {
     auto it = m.find(pf);
     return it == m.end() ? pf : it->second;
 }
+
+// Little binary writer for the MESH / SKEL / ANIM replies.
+struct Out {
+    std::string b;
+    template <class T> void put(const T& v) { b.append((const char*)&v, sizeof(T)); }
+    void str(const std::string& s) { put((uint16_t)s.size()); b += s; }
+    void bones(const std::vector<Bone>& bs) {
+        put((uint32_t)bs.size());
+        for (const Bone& x : bs) {
+            str(x.name);
+            put(x.parent);
+            b.append((const char*)x.rot, 16);
+            b.append((const char*)x.pos, 12);
+            b.append((const char*)x.scale, 12);
+        }
+    }
+};
 
 static void handle(const std::string& line) {
     std::vector<std::string> f;
@@ -123,6 +144,39 @@ static void handle(const std::string& line) {
         char head[96];
         snprintf(head, sizeof(head), "OK %d %zu %zu", rate, pcm.size() / 2, pcm.size() * 2);
         reply(head, pcm.data(), pcm.size() * 2);
+    } else if ((f[0] == "MESH" || f[0] == "SKEL" || f[0] == "ANIM") && f.size() == 2) {
+        const Bytes* p = package(f[1], &err);
+        if (!p) return reply("ERR " + err);
+        Out o;
+        if (f[0] == "MESH") {
+            Mesh m;
+            if (!readMesh(*p, &m, &err)) return reply("ERR " + err);
+            o.b = "RMSH";
+            o.bones(m.bones);
+            o.put((uint32_t)m.materials.size());
+            for (const std::string& s : m.materials) o.str(s);
+            o.put((uint32_t)m.sections.size());
+            for (const Section& s : m.sections) o.put(s);
+            o.put((uint32_t)m.vertices.size());
+            o.b.append((const char*)m.vertices.data(), m.vertices.size() * sizeof(Vertex));
+            o.put((uint32_t)m.indices.size());
+            o.b.append((const char*)m.indices.data(), m.indices.size() * 4);
+        } else if (f[0] == "SKEL") {
+            std::vector<Bone> bs;
+            if (!readSkeletonAsset(*p, &bs, &err)) return reply("ERR " + err);
+            o.b = "RSKL";
+            o.bones(bs);
+        } else {
+            Animation a;
+            if (!readAnimation(*p, &a, &err)) return reply("ERR " + err);
+            o.b = "RANM";
+            o.put(a.numTracks);
+            o.put(a.numSamples);
+            o.put(a.rate);
+            o.b.append((const char*)a.trackToBone.data(), a.trackToBone.size() * 4);
+            o.b.append((const char*)a.samples.data(), a.samples.size() * 4);
+        }
+        replyText(o.b);
     } else {
         reply("ERR bad request");
     }

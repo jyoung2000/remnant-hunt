@@ -10,6 +10,7 @@
 #include <cstring>
 
 #include "imgui.h"
+#include "bosses.h"
 #include "state.h"
 
 namespace rh {
@@ -27,6 +28,7 @@ constexpr ImU32 mhwText = IM_COL32(242, 232, 207, 255), red = IM_COL32(214, 58, 
 static ImFont* g_body = nullptr;   // Montserrat Medium
 static ImFont* g_bold = nullptr;   // Montserrat Bold
 static ImFont* g_title = nullptr;  // EB Garamond Bold
+ImFont* ui_font(int which) { return which == 2 ? g_title : which == 1 ? g_bold : g_body; }
 
 void ui_init_fonts() {
     ImGuiIO& io = ImGui::GetIO();
@@ -915,6 +917,7 @@ void mod_frame() {
         Live l = sh.live;
         ReleaseSRWLockShared(&sh.lock);
         hud(s, l);
+        bosses_hud();
         return;
     }
     AcquireSRWLockShared(&sh.lock);
