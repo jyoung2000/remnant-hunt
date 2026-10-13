@@ -31,3 +31,30 @@
 ## Gotchas
 1. device_commit_files can deliver a stale copy when the same staged path is re-committed: stage under a new name.
 2. ooz-x needs -mavx2 -DOODLE_ENABLE_AVX2 and lzna.cpp for LZNA_InitLookup.
+
+## Build state (2026-10-13 ~00:40 CT)
+- Built: build/win/{dinput8.dll, remnant_hunt.dll, r2read.exe}; dev-installed into the MHW folder
+  (dinput8.dll + remnant_hunt/). `make`, `make test R2=<Remnant2 dir>`, `make package VERSION=x`.
+- r2read (Windows SSE2 build of ooz + our IoStore reader) cross-checked on Linux against the Python tools:
+  82/82 sheet cells match (texts, names, BC7/BC1 icons).
+- Overlay: DX11 direct, DX12 via D3D11On12 (queue found by hooking ExecuteCommandLists in d3d12.dll).
+- Input: DirectInput, raw input, GetAsyncKeyState, SetCursorPos/ClipCursor filtered in Windows DLLs only.
+  The log reports which input paths MHW actually uses ~20 s after the first frame.
+- Game tick: sMhCamera object pointed at a copied vtable (slot 6 -> mod tick). No MHW code patched.
+- Keys moved off MHW defaults: B gun mode, R reload, X swap (gun mode), V mod, G skill, T relic, P terminal.
+
+## Not yet verified in game (needs the PC usable)
+- Every hooks.* row and systems.* row (preflight lists them as UNVERIFIED until the log shows them).
+- Aim zoom (FOV write before/after camera move), solo detection (party offset meaning), weakspot band, damage scale.
+- Computer use: screenshots came back fully masked and steam://rungameid/582010 failed to open (PC asleep/locked?).
+
+## Waiting on Jalon
+- License + remix choice (MIT recommended). r2read stays GPL-3.0 because ooz is.
+- Permission to use the Melty token (session safety check blocked sending it).
+
+## Next steps
+1. Launch MHW (Steam), read remnant_hunt/remnant_hunt.log, fix hook failures, go to Training Area (zone 504),
+   press B, shoot the dummy, check damage numbers / HP log; screenshot the intro + HUD.
+2. Melty: game_info both games, search_mashups, inspect_package, validate_recipe (dinput8.dll -> {game},
+   remnant_hunt/ -> {game}/remnant_hunt, env REMNANTHUNT_R2={game:<remnant slug>}), one_click_check, create_mod,
+   upload, test_release, screenshot, publish on approval.
