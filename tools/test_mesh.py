@@ -119,8 +119,9 @@ def pose(frame):
 
 def draw(P, N, img, x0, W, H, ax=(1, 2)):
     x, y = P[:, ax[0]], P[:, ax[1]]
-    s = 0.85 * min(W / 1500.0, H / 1100.0)
-    sx = x * s + x0 + W / 2; sy = H * 0.9 - y * s
+    span = max(np.ptp(P0[:, ax[0]]), np.ptp(P0[:, ax[1]]), 100.0)
+    s = 0.85 * min(W, H) / span
+    sx = (x - P0[:, ax[0]].mean()) * s + x0 + W / 2; sy = H * 0.92 - (y - P0[:, ax[1]].min()) * s
     depth = P[:, 0]
     light = np.array([0.3, -0.4, 0.85]); light /= np.linalg.norm(light)
     nn = N / (np.linalg.norm(N, axis=1)[:, None] + 1e-9)

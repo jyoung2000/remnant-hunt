@@ -136,12 +136,18 @@ const Model* model_get(const char* asset, bool* failed) {
         else memcpy(&global[i * 12], local, sizeof(local));
         inverse(&global[i * 12], &m->invBind[i * 12]);
     }
-    for (int k = 0; k < 3; k++) { m->boundsMin[k] = 1e30f; m->boundsMax[k] = -1e30f; }
-    for (const ModelVertex& v : m->vertices)
+    // The body's extent without stray far vertices (effect planes, detached bits): 1st and 99th percentiles.
+    {
+        std::vector<float> axis(m->vertices.size());
         for (int k = 0; k < 3; k++) {
-            m->boundsMin[k] = std::min(m->boundsMin[k], v.pos[k]);
-            m->boundsMax[k] = std::max(m->boundsMax[k], v.pos[k]);
+            for (size_t i = 0; i < axis.size(); i++) axis[i] = m->vertices[i].pos[k];
+            size_t lo = axis.size() / 100, hi = axis.size() - 1 - axis.size() / 100;
+            std::nth_element(axis.begin(), axis.begin() + lo, axis.end());
+            m->boundsMin[k] = axis[lo];
+            std::nth_element(axis.begin(), axis.begin() + hi, axis.end());
+            m->boundsMax[k] = axis[hi];
         }
+    }
     log("model: %s: %zu bones, %zu vertices, %zu triangles, %zu materials", asset, n, m->vertices.size(),
         m->indices.size() / 3, m->materials.size());
     const Model* r = m.get();

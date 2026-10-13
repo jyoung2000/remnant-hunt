@@ -26,3 +26,17 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
 - Map: Jalon chose "compass now, minimap later". Tracker strip done; minimap markers need the minimap's zoom and
   rotation from memory (diagnostic research).
 - Untested in game. Next: Jalon tests F9 in the Training Area; check log for render3d/model/anim/scene depth lines.
+
+## 2026-10-13 13:08 request: all bosses, rank scaling, stagger, cross-game damage, guns
+- tools/author_bosses.py + tools/boss_roster.json author sheets/bosses.json and boss_attacks.json from the install
+  (29 bosses, 317 attacks; cache in .check/bosses/, `--write` merges). Not ported: Many Faces and the Red Prince
+  (their animations use UE's own codec, not ACL), Labyrinth Sentinel (static meshes), Spriggan (no body mesh).
+- r2mesh.cpp: cloth mapping entries are 64 bytes (cloth meshes failed before). `make linux` builds the Linux r2read.
+- Rank: zone 108/109 = MR, else largest MHW monster HP vs tuning rank_hp_hr / rank_hp_mr. Boss min_rank from threat
+  (1-2 LR, 3 HR, 4-5 MR); HP = tuning boss_hp_<rank> x hp_mult; damage x boss_dmg_<rank>.
+- Stagger: meter (weak spots x2, heavy MHW weapons more), thresholds grow x1.45, forced at 2/3 and 1/3 HP.
+- MHW ranged weapons hit bosses along the camera line; weapon type read via SPL's GetWeaponType pattern (mhw.cpp,
+  logged "mhw: weapon type ..."). MHW monsters flinching from Remnant guns: research.cpp (dev_research.txt) first.
+- research.cpp (diagnostic only): hunter joint matrices, monster flinch counters, save-slot rank ints.
+- Guns: weapons.json mesh / mesh_fwd / mesh_tex (tools/author_gun_meshes.py, 95/112). gunmodel.cpp draws the gun at
+  an estimated right hand until the hand joint is known; Remnant muzzle flare texture on shots.

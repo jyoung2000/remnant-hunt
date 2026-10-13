@@ -1,0 +1,366 @@
+{
+ "about": "Remnant II's bosses (its Quest_Boss_* and Quest_Miniboss_* quests) for tools/author_bosses.py. folder: the creature's Characters folder; mesh: extra folders to look for the boss's own mesh (quest meshes first); mesh_hint / bp_hint: words preferred in the mesh and name-blueprint file names; snd: the WwiseAudio/Events/Creature folder; threat 1-5 sets the rank it needs (1-2 low rank and up, 3 high rank and up, 4-5 master rank) and its strength; world picks the MHW zones; loot_dungeons: toolkit dungeons whose items it drops (else its world's drops). exclude: mesh names to leave out (weapons, props, parts); tex_hint: preferred word in texture names; name_re: the display text to look for; title: shown when Remnant II has no text for it. Not ported: the Labyrinth Sentinel (static meshes only) and the Spriggan (no body mesh of its own).",
+ "bosses": [
+  {
+   "id": "corrupted_ravager",
+   "keep": true,
+   "threat": 3,
+   "world": "yaesha",
+   "loot_dungeons": [
+    "Ravager's Lair"
+   ]
+  },
+  {
+   "id": "nightweaver",
+   "folder": "World_Fae/Characters/Nightweaver",
+   "mesh": [
+    "World_Fae/Quests/Quest_Boss_NightWeaver/Mesh"
+   ],
+   "bp_hint": "Char_Nightweaver",
+   "snd": "Creature_Fae/Nightweaver",
+   "threat": 3,
+   "world": "losomn",
+   "mesh_hint": "Nightweaver",
+   "exclude": "Minion"
+  },
+  {
+   "id": "faerin",
+   "folder": "World_Fae/Characters/Faelin_Faerin",
+   "mesh_hint": "Faelin_Faerin",
+   "bp_hint": "Faerin",
+   "snd": "Creature_Fae/Faelin_Faerin",
+   "threat": 3,
+   "world": "losomn",
+   "loot_dungeons": [
+    "Malefic Palace",
+    "Malefic Gallery"
+   ],
+   "exclude": "Sword|Shard",
+   "tex_hint": "Steel",
+   "name_re": "^Faerin"
+  },
+  {
+   "id": "faelin",
+   "folder": "World_Fae/Characters/Faelin_Faerin",
+   "mesh_hint": "Faelin_Faerin",
+   "bp_hint": "Faelin",
+   "snd": "Creature_Fae/Faelin_Faerin",
+   "threat": 3,
+   "world": "losomn",
+   "loot_dungeons": [
+    "Beatific Palace",
+    "Beatific Gallery"
+   ],
+   "exclude": "Sword|Shard",
+   "tex_hint": "Golden",
+   "name_re": "^Faelin"
+  },
+  {
+   "id": "many_faces",
+   "folder": "World_Jungle/Characters/Root_ManyFaces",
+   "bp_hint": "Character_Root_ManyFaces",
+   "snd": "Creature_Jungle/Root_ManyFaces",
+   "threat": 2,
+   "world": "yaesha",
+   "mesh_hint": "Root_ManyFaces",
+   "exclude": "Hand|Arm"
+  },
+  {
+   "id": "shahala",
+   "folder": "World_Nerud/Characters/Nerud_Guardian",
+   "bp_hint": "Char_Nerud_Guardian",
+   "snd": "Creature_Nerud/Nerud_Guardian",
+   "threat": 3,
+   "world": "nerud",
+   "loot_dungeons": [
+    "Spectrum Nexus"
+   ],
+   "mesh_hint": "Nerud_Guardian"
+  },
+  {
+   "id": "tal_ratha",
+   "folder": "World_Nerud/Characters/Nerud_TalRatha",
+   "mesh": [
+    "World_Nerud/Quests/Quest_Boss_TalRatha/Mesh"
+   ],
+   "bp_hint": "Char_Nerud_TalRatha",
+   "snd": "Creature_Nerud/TalRatha",
+   "threat": 4,
+   "world": "nerud",
+   "mesh_hint": "Nerud_TalRatha"
+  },
+  {
+   "id": "one_true_king",
+   "folder": "World_DLC1/Characters/True_Fae_King",
+   "bp_hint": "Char_Fae_True_King",
+   "snd": "Creature_DLC1/Fae_WorldBoss_OTK",
+   "threat": 5,
+   "world": "losomn",
+   "mesh_hint": "Fae_True_King_DLC",
+   "exclude": "Weapon|Chain|Skirt"
+  },
+  {
+   "id": "lydusa",
+   "folder": "World_DLC2/Characters/LS_Lydusa",
+   "bp_hint": "Char_LS_Lydusa",
+   "snd": "Creature_DLC2/LS_Lydusa",
+   "threat": 5,
+   "world": "yaesha",
+   "mesh_hint": "Lydusa_Boss",
+   "exclude": "Boulder|Tears|Crystal|Tetris"
+  },
+  {
+   "id": "alepsis_taura",
+   "folder": "World_DLC3/Characters/Nerud_Alepsis_Taura",
+   "bp_hint": "Char_Nerud_Alepsis_Taura",
+   "snd": "Creature_DLC3/DLC3_AlepsisTaura",
+   "threat": 5,
+   "world": "nerud",
+   "loot_dungeons": [
+    "Alepsis-Taura"
+   ]
+  },
+  {
+   "id": "annihilation",
+   "folder": "World_Root/Characters/Root_WorldBoss",
+   "bp_hint": "Char_Root_WorldBoss",
+   "snd": "Creature_Root/Root_FinalBoss",
+   "threat": 5,
+   "world": "root",
+   "loot_dungeons": [
+    "Blackened Citadel"
+   ]
+  },
+  {
+   "id": "abomination",
+   "folder": "World_Nerud/Characters/Nerud_Abomination",
+   "bp_hint": "Abomination",
+   "snd": "Creature_Nerud/Abomination",
+   "threat": 3,
+   "world": "nerud",
+   "mesh_hint": "Nerud_Abomination",
+   "exclude": "Plating|Surface|Socket"
+  },
+  {
+   "id": "amalgam",
+   "folder": "World_DLC3/Characters/Nerud_Amalgam",
+   "bp_hint": "Amalgam",
+   "snd": "Creature_DLC3/DLC3_Amalgam_MB",
+   "threat": 4,
+   "world": "nerud",
+   "mesh_hint": "Boss"
+  },
+  {
+   "id": "bloat_king",
+   "folder": "World_Fae/Characters/Fae_Bloat",
+   "mesh_hint": "Fae_Bloat_Boss",
+   "bp_hint": "BloatKing",
+   "snd": "Creature_Fae/Fae_BloatKing",
+   "threat": 2,
+   "world": "losomn",
+   "loot_dungeons": [
+    "The Great Sewers"
+   ],
+   "exclude": "Orb|Ring|Floor|Tentacle"
+  },
+  {
+   "id": "custodians_eye",
+   "folder": "World_Nerud/Characters/Nerud_CustodianEye",
+   "bp_hint": "CustodianEye",
+   "snd": "Creature_Nerud/CustodianEye",
+   "threat": 2,
+   "world": "nerud",
+   "mesh_hint": "Miniboss"
+  },
+  {
+   "id": "fae_archon",
+   "folder": "World_Fae/Characters/Fae_Archon",
+   "bp_hint": "Archon",
+   "snd": "Creature_Fae/Fae_Archon",
+   "threat": 2,
+   "world": "losomn",
+   "mesh_hint": "Fae_Archon_MiniBoss",
+   "exclude": "NoLantern|staff|Lantern"
+  },
+  {
+   "id": "harvester",
+   "folder": "World_DLC3/Characters/Nerud_Harvester",
+   "bp_hint": "Harvester",
+   "snd": "Creature_DLC3/DLC3_Harvester",
+   "threat": 4,
+   "world": "nerud",
+   "mesh_hint": "Mini_Boss"
+  },
+  {
+   "id": "hatchery",
+   "folder": "World_Nerud/Characters/Nerud_Barnacle_Hatchery",
+   "bp_hint": "Hatchery",
+   "snd": "Creature_Nerud/Barnacle_Hatchery",
+   "threat": 2,
+   "world": "nerud",
+   "loot_dungeons": [
+    "The Hatchery"
+   ],
+   "mesh_hint": "Barnacle_Hatchery",
+   "exclude": "RigidBody"
+  },
+  {
+   "id": "impaler",
+   "folder": "World_DLC1/Characters/Fae_Impaler",
+   "bp_hint": "Impaler",
+   "snd": "Creature_DLC1/Fae_Impaler",
+   "threat": 4,
+   "world": "losomn",
+   "mesh_hint": "Fae_Impaler_Miniboss",
+   "exclude": "Chest|Weapon|Weakspot"
+  },
+  {
+   "id": "kiln",
+   "folder": "World_DLC2/Characters/Pan_Living_Stone_Kiln",
+   "mesh": [
+    "World_DLC2/Characters/Pan_Living_Stone_Kiln_MiniBoss"
+   ],
+   "bp_hint": "Kiln",
+   "snd": "Creature_DLC2/LS_Kiln_MB",
+   "threat": 4,
+   "world": "yaesha",
+   "mesh_hint": "Pan_Kiln_MiniBoss",
+   "exclude": "Crystal|Tenticle|Base|Ring|Perched|Emerge|Suction"
+  },
+  {
+   "id": "phantom",
+   "folder": "World_Nerud/Characters/Nerud_Phantom",
+   "bp_hint": "Phantom",
+   "snd": "Creature_Nerud/Phantom",
+   "threat": 3,
+   "world": "nerud",
+   "loot_dungeons": [
+    "Void Vessel Facility"
+   ],
+   "mesh_hint": "Nerud_Phantom"
+  },
+  {
+   "id": "red_prince",
+   "folder": "World_Fae/Characters/Fae_Knight",
+   "bp_hint": "RedPrince",
+   "snd": "Creature_Fae/Fae_Knight_RedPrince",
+   "threat": 4,
+   "world": "losomn",
+   "mesh_hint": "RedPrince",
+   "title": "The Red Prince",
+   "name_re": "Red Prince"
+  },
+  {
+   "id": "root_horror",
+   "folder": "World_Jungle/Characters/Root_Horror",
+   "mesh": [
+    "World_Jungle/Quests/Quest_Miniboss_RootHorror/Mesh"
+   ],
+   "bp_hint": "Horror",
+   "snd": "Creature_Jungle/Root_Horror",
+   "threat": 2,
+   "world": "yaesha",
+   "loot_dungeons": [
+    "Kaeula's Rest"
+   ],
+   "mesh_hint": "Root_Horror",
+   "exclude": "Ziggurat|Roots|Kraken|Wall|Axe|Projectile|Heart"
+  },
+  {
+   "id": "shifting_soldier",
+   "folder": "World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier",
+   "bp_hint": "ShiftingSoldier",
+   "snd": "Creature_DLC2/DLC2_SS_MB",
+   "threat": 4,
+   "world": "yaesha",
+   "mesh_hint": "SS_Complete_Miniboss",
+   "exclude": "Statue|Wall|Corpse|Shield|Pickaxe|Proxy|Parts"
+  },
+  {
+   "id": "shrewd",
+   "folder": "World_Jungle/Characters/Root_Wraith",
+   "bp_hint": "Miniboss",
+   "snd": "Creature_Jungle/Root_Wraith",
+   "threat": 2,
+   "world": "yaesha",
+   "loot_dungeons": [
+    "The Nameless Nest"
+   ],
+   "mesh_hint": "Root_Wraith_MiniBoss",
+   "exclude": "Bow|Arrow|Tree|Mountain"
+  },
+  {
+   "id": "sunken_witch",
+   "folder": "World_DLC1/Characters/Dran_Sunken_Witch",
+   "bp_hint": "Witch",
+   "snd": "Creature_DLC1/Dran_Sunken_Witch",
+   "threat": 4,
+   "world": "losomn",
+   "loot_dungeons": [
+    "Sunken Haunt"
+   ],
+   "mesh_hint": "Dran_Sunken_Witch_Miniboss",
+   "exclude": "Anchor|Hat"
+  },
+  {
+   "id": "mother_mind",
+   "folder": "World_Jungle/Characters/Root_Flyer",
+   "mesh_hint": "Mother_Mind",
+   "bp_hint": "Mothermind",
+   "snd": "Creature_Jungle/Root_Flyer_Mothermind",
+   "threat": 2,
+   "world": "yaesha",
+   "exclude": "Platform|Tentacle"
+  },
+  {
+   "id": "legion",
+   "folder": "World_Jungle/Characters/Pan_Priest",
+   "mesh_hint": "Legion",
+   "bp_hint": "Legion",
+   "snd": "Creature_Jungle/Root_Cultist_Legion",
+   "threat": 2,
+   "world": "yaesha"
+  },
+  {
+   "id": "gwendil",
+   "folder": "World_Fae/Characters/Dran_Female",
+   "mesh": [
+    "World_Fae/Quests/Quest_Miniboss_DranGrenadier/Mesh",
+    "World_Fae/Characters/Dran_Female_Gernadier"
+   ],
+   "bp_hint": "Miniboss",
+   "snd": "Creature_Fae/Dran_Bomber",
+   "threat": 2,
+   "world": "losomn",
+   "mesh_hint": "Gren",
+   "title": "Gwendil: The Unburnt",
+   "name_re": "Gwendil"
+  },
+  {
+   "id": "root_mantis",
+   "folder": "World_Root/Characters/Root_MiniBoss",
+   "bp_hint": "Char_Root_MiniBoss",
+   "snd": "Creature_Root/Root_Mantis",
+   "threat": 4,
+   "world": "root",
+   "mesh_hint": "Root_Intro_Miniboss",
+   "name_re": "Root Mantis",
+   "loot_dungeons": [
+    "Ashen Wasteland"
+   ]
+  },
+  {
+   "id": "venom",
+   "folder": "World_Root/Characters/Root_Knight",
+   "bp_hint": "Char_Root_Knight",
+   "name_re": "Venom",
+   "snd": "Creature_Root/Root_Knight",
+   "threat": 4,
+   "world": "root",
+   "exclude": "Sword|Weapon",
+   "loot_dungeons": [
+    "Corrupted Harbor"
+   ]
+  }
+ ]
+}

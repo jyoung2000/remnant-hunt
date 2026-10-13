@@ -117,6 +117,7 @@ Shared& S();
 
 double now_s();
 void toast(Live& l, const char* fmt, ...);
+void research_tick(const Live& l, double now);  // research.cpp: read-only findings for the diagnostic run
 
 // Commands from the screens (render thread) to the game thread.
 enum Cmd : int { CMD_NONE, CMD_RELOAD, CMD_SWAP, CMD_SKILL, CMD_SKILL2, CMD_RELIC, CMD_MOD };

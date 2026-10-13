@@ -85,14 +85,18 @@ $(B)/r2read.exe: $(R2READ_OBJ) $(patsubst third_party/ooz/%,$(O)/ooz/%.o,$(OOZ))
 	@mkdir -p $(B)
 	$(CXX) -static -s -O2 -o $@ $^
 
-test:
+# r2read for Linux (dev tools: tools/test_mesh.py, tools/author_bosses.py, tools/attack_timing.py)
+linux:
 	@mkdir -p build/linux
 	g++ -O2 -std=c++17 -DOODLE_ENABLE_AVX2 -include immintrin.h -Ithird_party/ooz -Ithird_party/ww2ogg -Ibuild/gen \
-	    -o build/linux/r2read src/r2read/main.cpp src/r2read/r2pak.cpp src/r2read/wwise.cpp $(WW2OGG) \
-	    -x c third_party/ww2ogg/crc.c third_party/stb/stb_vorbis.c -x none $(OOZ) -w
+	    -Ithird_party/acl/includes -Ithird_party/rtm/includes \
+	    -o build/linux/r2read src/r2read/main.cpp src/r2read/r2pak.cpp src/r2read/wwise.cpp src/r2read/r2mesh.cpp \
+	    $(WW2OGG) -x c third_party/ww2ogg/crc.c third_party/stb/stb_vorbis.c -x none $(OOZ) -w
+
+test: linux
 	python3 tools/test_r2read.py build/linux/r2read "$(R2)"
 
 package: all
 	python3 tools/package.py $(VERSION)
 
-.PHONY: all gen test package
+.PHONY: all gen test package linux

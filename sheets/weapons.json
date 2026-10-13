@@ -25,7 +25,10 @@
   "zenny": "num",
   "recipe": "recipe",
   "snd_fire": "r2snd|none",
-  "snd_reload": "r2snd|none"
+  "snd_reload": "r2snd|none",
+  "mesh": "str",
+  "mesh_fwd": "enum:py|ny|px|nx",
+  "mesh_tex": "list"
  },
  "rows": [
   {
@@ -68,7 +71,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/AbyssalHook/Mesh/Player_AbyssalHook.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/AbyssalHook/Textures/T_Weapon_Abyssal_Hook_01a_Diff.uasset"
+   ]
   },
   {
    "id": "alphaomega",
@@ -105,7 +113,15 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/AlphaOmega/AlphaOmega_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/AlphaOmega/AlphaOmega_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/AlphaOmega/AlphaOmega_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Mesh/Player_AlphaOmega.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Boss_LongGuns_AlphaOmega_02=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_02_Diff.uasset",
+    "M_Boss_LongGuns_AlphaOmega_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_03_Diff.uasset",
+    "M_Boss_LongGuns_AlphaOmega_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_01_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_01_Diff.uasset"
+   ]
   },
   {
    "id": "anguish",
@@ -147,7 +163,13 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Mesh/Player_Anguish.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "m_Anguish=Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Textures/T_Anguish_Diff.uasset",
+    "*=Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Textures/T_Anguish_Diff.uasset"
+   ]
   },
   {
    "id": "aphelion",
@@ -189,7 +211,15 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Aphelion/Aphelion_Mod_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Aphelion/Aphelion_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Aphelion/Aphelion_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Mesh/Player_Aphelion.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Aphelion_N_erud_Boss_Weapon_04=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
+    "Aphelion_N_erud_Boss_Weapon_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
+    "Aphelion_N_erud_Boss_Weapon_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset"
+   ]
   },
   {
    "id": "assassinsdagger",
@@ -231,7 +261,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "blackmaw_ar47",
@@ -272,7 +307,12 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/AssaultRifle/AssaultRifle_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/AssaultRifle/AssaultRifle_Foley_Clip_Load.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/AssaultRifle/AssaultRifle_Foley_Clip_Load.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Mesh/Player_AssaultRifle.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Textures/T_AssaultRifle_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "atomsmasher",
@@ -314,7 +354,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Mesh/Player_AtomSmasher.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_AtomSmasher=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Textures/T_Weapon_AtomSmasher_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Textures/T_Weapon_AtomSmasher_Diff.uasset"
+   ]
   },
   {
    "id": "atomsplitter",
@@ -356,7 +402,12 @@
     "crystal_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "autoshotgun",
@@ -397,7 +448,12 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/AutoShotgun/AutoShotgun_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Mesh/Player_Bulldog.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Textures/T_LongGuns_Shotgun_Bulldog_Diff.uasset"
+   ]
   },
   {
    "id": "basicshovel",
@@ -438,7 +494,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "blackgreatsword",
@@ -479,7 +540,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/BlackGreatsword/Mesh/Player_Black_Greatsword.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/BlackGreatsword/Textures/T_Weapon_Black_Greatsword_Diff.uasset"
+   ]
   },
   {
    "id": "bladeofgul",
@@ -520,7 +586,13 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Mesh/Player_BladeOfGul.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_BladeOfGul=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Textures/T_Player_Weapons_Melee_BladeOfGul_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Textures/T_Player_Weapons_Melee_BladeOfGul_Diff.uasset"
+   ]
   },
   {
    "id": "boltdriver",
@@ -557,7 +629,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/BoltDriver/BoltDriver_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Mesh/Player_RepeaterCrossbow.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Repeater_Crossbow=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Textures/T_HandGuns_SMG_RepeaterCrossbow_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Textures/T_HandGuns_SMG_RepeaterCrossbow_Diff.uasset"
+   ]
   },
   {
    "id": "bonechopper",
@@ -599,7 +677,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/BoneChopper/Meshes/Player_BoneChopper.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/BoneChopper/Textures/T_Weapon_BoneChopper_Diff.uasset"
+   ]
   },
   {
    "id": "bow",
@@ -641,7 +724,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Bow/Bow_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Bow/Bow_Foley_Arrow_Load.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Bow/Bow_Foley_Arrow_Load.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mesh/Player_FaeHunting.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "M_LongGuns_Bow_Fae_Hunting=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mods/Pan/Textures/T_LongGuns_Bow_FaeHunting_Mods_Pan_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mods/Pan/Textures/T_LongGuns_Bow_FaeHunting_Mods_Pan_Diff.uasset"
+   ]
   },
   {
    "id": "claws",
@@ -682,7 +771,13 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Mesh/Player_RustedClaws.uasset",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "M_RustedClaws=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Textures/T_Weapon_Rusted_Claw_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Textures/T_Weapon_Rusted_Claw_Diff.uasset"
+   ]
   },
   {
    "id": "coach_gun",
@@ -723,7 +818,12 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Coachgun/Coachgun_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Coachgun/CoachGun_Foley_Pump_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Coachgun/CoachGun_Foley_Pump_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mesh/Player_CoachGun.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mods/Nerud/Textures/T_LongGuns_Rifle_CoachGun_Mod_Nerud_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedaphelion",
@@ -766,7 +866,15 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedAphelion/Corrupted_Aphelion_Mod_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedAphelion/Corrupted_Aphelion_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedAphelion/Corrupted_Aphelion_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Mesh/Player_Aphelion.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Aphelion_N_erud_Boss_Weapon_04=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
+    "Aphelion_N_erud_Boss_Weapon_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
+    "Aphelion_N_erud_Boss_Weapon_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedcubegun",
@@ -809,7 +917,12 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedCubeGun/CorruptedCubeGun_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedCubeGun/CorruptedCubeGun_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedCubeGun/CorruptedCubeGun_Foley_Reload.uasset",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "corrupteddeceit",
@@ -852,7 +965,13 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedDeceit/CorruptedDeceit_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedDeceit/CorruptedDeceit_Foley_ReloadGlitch.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedDeceit/CorruptedDeceit_Foley_ReloadGlitch.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Mesh/Player_Special_Deceit.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Boss_LongGuns_Decipet=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedmerciless",
@@ -895,7 +1014,15 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedMerciless/CorruptedMerciless_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedMerciless/CorruptedMerciless_ReloadGlitch.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedMerciless/CorruptedMerciless_ReloadGlitch.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Mesh/Player_Merciless.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Heartbreaker_back=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
+    "Heartbreaker_front=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_front_Diff.uasset",
+    "Heartbreaker_Eyes=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedmeridian",
@@ -938,7 +1065,12 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedMeridian/CorruptedMeridian_Mortar_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "corruptednebula",
@@ -981,7 +1113,13 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedNebula/CorruptedNebula_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedNebula/CorruptedNebula_Reload_Glitch.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedNebula/CorruptedNebula_Reload_Glitch.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CorruptedNebula/Mesh/Player_Special_Nebula_Corrupted.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Nebula_Nerud_02=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedrunepistol",
@@ -1024,7 +1162,12 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedRunePistol/CorruptedRunePistol_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedRunePistol/CorruptedRunePistol_Reload_End.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedRunePistol/CorruptedRunePistol_Reload_End.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Mesh/Player_RunePistol.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Textures/T_Handguns_Pistol_RunePistol_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedsavior",
@@ -1067,7 +1210,14 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSavior/CorruptedSavior_Mod_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSavior/CorruptedSavior_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSavior/CorruptedSavior_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedSavior/Mesh/Player_Savior_Corrupted.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Special_LongGuns_Savior=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
+    "M_Special_LongGuns_Savior_Gem=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedsorrow",
@@ -1110,7 +1260,14 @@
     "gem_master*1"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSorrow/CorruptedSorrow_Mod_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSorrow/CorruptedSorrow_Foley_Reload_End_Sweet.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CorruptedSorrow/CorruptedSorrow_Foley_Reload_End_Sweet.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Corrupted_Sorrow/Mesh/Player_Sorrow_Corrupted.uasset",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "Sorrow_Gun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
+    "Sorrow_Flowers=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset"
+   ]
   },
   {
    "id": "corruptedtwistedarbalest",
@@ -1153,7 +1310,12 @@
     "gem_master*1"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "crescentmoon",
@@ -1195,7 +1357,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CrescentMoon/CrescentMoon_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CrescentMoon/CrescentMoon_Foley_Arrow_Load.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/CrescentMoon/CrescentMoon_Foley_Arrow_Load.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Mesh/Player_CrescentMoon.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "M_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Textures/T_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Textures/T_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon_Diff.uasset"
+   ]
   },
   {
    "id": "crossbow",
@@ -1237,7 +1405,12 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Crossbow/Crossbow_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Crossbow/Crossbow_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Crossbow/Crossbow_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Mesh/Player_Crossbow.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Textures/T_Crossbow_Base_A_01_Diff.uasset"
+   ]
   },
   {
    "id": "crystalstaff",
@@ -1279,7 +1452,14 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/CrystalStaff/Mesh/Player_CrystalStaff.uasset",
+   "mesh_fwd": "nx",
+   "mesh_tex": [
+    "Melee_Crystal_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
+    "Melee_Crystal_Staff_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff.uasset"
+   ]
   },
   {
    "id": "cubegun",
@@ -1321,7 +1501,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/CubeGun/CubeGun_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/CubeGun/CubeGun_Projectile_Ammo_Return_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/CubeGun/CubeGun_Projectile_Ammo_Return_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Mesh/Player_Special_CubeGun.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Boss_HandGuns_CubeGun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Textures/Boss_HandGuns_CubeGun_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Textures/Boss_HandGuns_CubeGun_Diff.uasset"
+   ]
   },
   {
    "id": "darkmattergauntlets",
@@ -1364,7 +1550,18 @@
     "gem_master*1"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Mesh/Player_DarkMatter_Gauntlets.uasset",
+   "mesh_fwd": "nx",
+   "mesh_tex": [
+    "M_Dark_Matter_Gauntlets_Glass=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
+    "M_Dark_Matter_Gauntlets=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
+    "M_Dark_Matter_Gauntlets_Black_Hole=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
+    "Weapon_Dark_Matter_Gauntlets_Black_Hole_Inverted=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
+    "Gauntlets_Filler_Mat1=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
+    "Gauntlets_Filler_Mat2=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset"
+   ]
   },
   {
    "id": "decayedclaws",
@@ -1406,7 +1603,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "deceit",
@@ -1448,7 +1650,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Deceit/Deceit_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Deceit/Deceit_Foley_Reload_End.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Deceit/Deceit_Foley_Reload_End.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Mesh/Player_Special_Deceit.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Boss_LongGuns_Decipet=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset"
+   ]
   },
   {
    "id": "dreamcatcher",
@@ -1490,7 +1698,14 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Mesh/Player_DreamcatcherStaff.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "M_Melee_Dreamcatcher_Staff_Base=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff.uasset",
+    "M_Melee_Dreamcatcher_Staff_Dyn=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff.uasset"
+   ]
   },
   {
    "id": "edgeoftheforest",
@@ -1532,7 +1747,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/EdgeOfTheForest/Mesh/Player_EdgeOfTheForest.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/EdgeOfTheForest/Textures/T_Melee_EdgeOfTheForest_Diff.uasset"
+   ]
   },
   {
    "id": "enigma",
@@ -1574,7 +1794,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Enigma/Enigma_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Enigma/Foley_Enigma_Reload_Electricity.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Enigma/Foley_Enigma_Reload_Electricity.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Mesh/Player_Special_Enigma.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Labyrinth - Power Coil - Enigma=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Textures/T_Boss_HandGuns_Enigma_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Textures/T_Boss_HandGuns_Enigma_Diff.uasset"
+   ]
   },
   {
    "id": "feraljudgment",
@@ -1616,7 +1842,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Mesh/Player_JungleScar.uasset",
+   "mesh_fwd": "nx",
+   "mesh_tex": [
+    "M_Player_Pan_ScaroftheJungleGod=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Textures/T_Player_JungleScar_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Textures/T_Player_JungleScar_Diff.uasset"
+   ]
   },
   {
    "id": "flail",
@@ -1657,7 +1889,13 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Mesh/Player_Flail_Steel.uasset",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "M_melee_flail_base=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Textures/T_Melee_Flail_Steel_Base_A_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Textures/T_Melee_Flail_Steel_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "genesis",
@@ -1700,7 +1938,15 @@
     "gem_master*1"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Mesh/Player_Genesis.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Player_LongGuns_Genesis=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset",
+    "Player_LongGuns_Genesis_String=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset",
+    "Genesis_Bow_Charge=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset"
+   ]
   },
   {
    "id": "godsplitter",
@@ -1742,7 +1988,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Mesh/Player_GodSplitter.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "M_Melee_Godsplitter=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Textures/T_Melee_Godsplitter_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Textures/T_Melee_Godsplitter_Diff.uasset"
+   ]
   },
   {
    "id": "greatsword",
@@ -1783,7 +2035,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/IronGreatsword/Mesh/Player_Iron_GreatSword.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/IronGreatsword/Textures/T_Iron_Great_Sword_Diff.uasset"
+   ]
   },
   {
    "id": "hammer",
@@ -1824,7 +2081,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Mesh/Player_TalRatha_Hammer.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Textures/T_Melee_Special_Boss_Tal_Ratha_Hammer_1001_Diff.uasset"
+   ]
   },
   {
    "id": "harvesterscythe",
@@ -1867,7 +2129,14 @@
     "gem_master*1"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Mesh/Player_Scythe_Harvester.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Weapon_Harvester_Scythe=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset",
+    "Weapon_Harvester_Scythe_Blade=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset"
+   ]
   },
   {
    "id": "hatchet",
@@ -1908,7 +2177,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/Hatchet/Mesh/Player_Hatchet.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/Hatchet/Textures/Melee_Hatchet_Diff.uasset"
+   ]
   },
   {
    "id": "hellfire",
@@ -1950,7 +2224,15 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Hellfire/Hellfire_Shoot_Loop.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Hellfire/Hellfire_Foley_Load_Clip.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Hellfire/Hellfire_Foley_Load_Clip.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Mesh/Player_Hellfire.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Upres_Hellfire_Root=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Root_Diff.uasset",
+    "Upres_Hellfire=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff.uasset",
+    "pistol_smg_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff.uasset"
+   ]
   },
   {
    "id": "herossword",
@@ -1991,7 +2273,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "huntingpistol",
@@ -2032,7 +2319,13 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/HuntingPistol/HuntingPistol_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/HuntingPistol/HuntingPistol_Foley_Ammo_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/HuntingPistol/HuntingPistol_Foley_Ammo_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Mesh/Player_HuntingPistol.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "pistol_hunting_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Textures/T_HuntingPistol_Base_A_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Textures/T_HuntingPistol_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "huntmaster_m1",
@@ -2073,7 +2366,15 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Huntmaster/Huntmaster_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Huntmaster/Huntmaster_Foley_Mag_In.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Huntmaster/Huntmaster_Foley_Mag_In.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Mesh/Player_Huntmaster_Fae.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "HuntMaster_FaeMod_Material=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Mods/Root/Textures/T_LongGuns_Rifle_Sniper_HuntMaster_Mod_Root_Diff.uasset",
+    "M_Player_Rifle_Huntsmaster_Ammo=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset",
+    "Huntmaster=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset"
+   ]
   },
   {
    "id": "huntressspear",
@@ -2115,7 +2416,13 @@
     "crystal_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/HuntressSpear/Mesh/Player_Fae_Huntress_Spear.uasset",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "01_-_Default=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/Spear/Textures/Graveyard/T_Player_Spear_Pan_01_Diff.uasset",
+    "*=Remnant2/Content/World_DLC1/Items/Weapons/Buster/Textures/T_DranShotgun_FaeMod_Diff.uasset"
+   ]
   },
   {
    "id": "katana",
@@ -2156,7 +2463,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/Katana/Mesh/Player_SteelKatana.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/Katana/Textures/T_SteelKatana_Diff.uasset"
+   ]
   },
   {
    "id": "knuckledusters",
@@ -2197,7 +2509,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "krellaxe",
@@ -2239,7 +2556,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/KrellAxe/Mesh/Player_KrellAxe.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Krell_Axe/Textures/T_Melee_Krell_Axe_Diff.uasset"
+   ]
   },
   {
    "id": "labyrinthstaff",
@@ -2281,7 +2603,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Mesh/Player_LabyrinthStaff.uasset",
+   "mesh_fwd": "nx",
+   "mesh_tex": [
+    "M_Melee_Labyrinth_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Textures/T_Melee_Labyrinth_Staff_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Textures/T_Melee_Labyrinth_Staff_Diff.uasset"
+   ]
   },
   {
    "id": "leveraction",
@@ -2322,7 +2650,13 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Foley_Ammo_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Foley_Ammo_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mesh/Player_LeverAction.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Human_Rifle_LeverAction=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mods/Nerud/Textures/T_LongGuns_Rifle_WranglerLeverAction_Mods_Nerud_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Textures/T_LeverAction_Earth_Diff.uasset"
+   ]
   },
   {
    "id": "leveraction_rusty",
@@ -2363,7 +2697,13 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Foley_Ammo_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LeverAction/LeverAction_Foley_Ammo_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mesh/Player_LeverAction.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Human_Rifle_LeverAction=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mods/Nerud/Textures/T_LongGuns_Rifle_WranglerLeverAction_Mods_Nerud_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Textures/T_LeverAction_Earth_Diff.uasset"
+   ]
   },
   {
    "id": "lmg",
@@ -2404,7 +2744,13 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/LMG/LMG_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Mesh/Player_BoneSaw.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_LongGun_HeavyMG_Bonesaw=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Textures/T_LongGun_HeavyMG_Bonesaw_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Textures/T_LongGun_HeavyMG_Bonesaw_Diff.uasset"
+   ]
   },
   {
    "id": "tech_22",
@@ -2445,7 +2791,13 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/MachinePistol/MachinePistol_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/MachinePistol/MachinePistol_Foley_Clip_Load.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/MachinePistol/MachinePistol_Foley_Clip_Load.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Mesh/Player_MachinePistol.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "pistol_machine_base_mat1=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Textures/T_MachinePistol_Base_A_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Textures/T_MachinePistol_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "magnum",
@@ -2486,7 +2838,13 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Magnum/Magnum_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Magnum/Magnum_Foley_Ammo_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Magnum/Magnum_Foley_Ammo_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Mesh/Player_Magnum.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Pistol_Magnum_Mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Textures/T_Magnum_Base_A_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Textures/T_Magnum_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "merciless",
@@ -2528,7 +2886,15 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Merciless/Merciless_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Merciless/Merciless_Foley_Reload_End.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Merciless/Merciless_Foley_Reload_End.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Mesh/Player_Merciless.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Heartbreaker_back=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
+    "Heartbreaker_front=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_front_Diff.uasset",
+    "Heartbreaker_Eyes=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset"
+   ]
   },
   {
    "id": "meridian",
@@ -2570,7 +2936,12 @@
     "crystal_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Meridian/Meridian_Grenade_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Meridian/Meridian_Reload_Clip_In.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Meridian/Meridian_Reload_Clip_In.uasset",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "mirage",
@@ -2612,7 +2983,15 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/Flail_Mirage/Mesh/Player_Flail_Mirage.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "Flail_Mirage=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset",
+    "MI_Mirage_Flail_Sandstorm2=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset",
+    "MI_Mirage_Flail_Sandstorm1=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset"
+   ]
   },
   {
    "id": "monarch",
@@ -2654,7 +3033,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "monolith",
@@ -2696,7 +3080,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/Monolith/Mesh/Player_Special_Monolith.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+   ]
   },
   {
    "id": "monorail",
@@ -2739,7 +3128,15 @@
     "gem_master*1"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Mesh/Player_Monorail.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Player_LongGuns_Monorail=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset",
+    "M_Player_LongGuns_Monorail_Charge=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset",
+    "M_Player_LongGuns_Monorail_Ammo=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset"
+   ]
   },
   {
    "id": "nebula",
@@ -2781,7 +3178,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nebula/Mod_NanoSwarm_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nebula/Nebula_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nebula/Nebula_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Mesh/Player_Special_Nebula.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Nebula_Nerud_02=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset"
+   ]
   },
   {
    "id": "nightfall",
@@ -2823,7 +3226,15 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nightfall/Nightfall_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nightfall/Nightfall_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Nightfall/Nightfall_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Mesh/Player_Nightfall.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "T_Boss_LongGuns_Nightfall_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_01_Diff.uasset",
+    "T_Boss_LongGuns_Nightfall_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_03_Diff.uasset",
+    "T_Boss_LongGuns_Nightfall_02=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_02_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_01_Diff.uasset"
+   ]
   },
   {
    "id": "nightshade",
@@ -2865,7 +3276,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "ornateblade",
@@ -2907,7 +3323,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Mesh/Player_Fae_Blade.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "Fae_Blade=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Textures/T_Fae_Blade_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Textures/T_Fae_Blade_Diff.uasset"
+   ]
   },
   {
    "id": "ornateflail",
@@ -2949,7 +3371,12 @@
     "crystal_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "plasmacutter",
@@ -2991,7 +3418,13 @@
     "crystal_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/PlasmaCutter/PlasmaCutter_Shoot_Start.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/PlasmaCutter/PlasmaCutter_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/PlasmaCutter/PlasmaCutter_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Mesh/Player_PlasmaCutter.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_PlasmaCutter=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Textures/T_PlasmaCutter_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Textures/T_PlasmaCutter_Diff.uasset"
+   ]
   },
   {
    "id": "polygun",
@@ -3028,7 +3461,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/Polygun/Mesh/Player_Rifle_Lab.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_LongGun_PolyGun_Stone=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mods/Nerud/Textures/T_LongGuns_Rifle_CoachGun_Mod_Nerud_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset"
+   ]
   },
   {
    "id": "pulserifle",
@@ -3070,7 +3509,14 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/PulseRifle/PulseRifle_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/PulseRifle/PulseRifle_Foley_Reload_Clip_Eject.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/PulseRifle/PulseRifle_Foley_Reload_Clip_Eject.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Mesh/Player_BAR.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_LongGuns_AssaultRifle_BAR=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Diff.uasset",
+    "M_LongGuns_AssaultRifle_BAR_Ammo=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Ammo_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Diff.uasset"
+   ]
   },
   {
    "id": "rebellionspear",
@@ -3112,7 +3558,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Mesh/Player_RebellionSpear.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_RebellionSpear=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Textures/T_Melee_RebellionSpear_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Textures/T_Melee_RebellionSpear_Diff.uasset"
+   ]
   },
   {
    "id": "reddoestaff",
@@ -3154,7 +3606,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Mesh/Player_RedDoeStaff.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff.uasset"
+   ]
   },
   {
    "id": "redeemer",
@@ -3197,7 +3654,12 @@
     "gem_master*1"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/Redeemer/Mesh/Player_Special_Redeemer.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+   ]
   },
   {
    "id": "repairtool",
@@ -3240,7 +3702,13 @@
     "gem_master*1"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Mesh/Player_RepairTool.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Player_Handguns_Repair_Tool=Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Textures/T_Player_Handguns_Repair_Tool_Diff.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Textures/T_Player_Handguns_Repair_Tool_Diff.uasset"
+   ]
   },
   {
    "id": "repeater",
@@ -3281,7 +3749,12 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Foley_Clip_Load.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Foley_Clip_Load.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Mesh/Player_Repeater.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Textures/T_Repeater_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "repeater_rusty",
@@ -3322,7 +3795,12 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Foley_Clip_Load.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Repeater/Repeater_Foley_Clip_Load.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Mesh/Player_Repeater.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Textures/T_Repeater_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "repulsor",
@@ -3363,7 +3841,14 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Repulsor/Repulsor_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Mesh/Player_Repulsor.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Upres_Repulsor_Head=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Head_Diff.uasset",
+    "M_Upres_Repulsor_Body=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Diff.uasset"
+   ]
   },
   {
    "id": "western_classic",
@@ -3404,7 +3889,14 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/Revolver/Revolver_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Mesh/Player_WesternClassic_Fae.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "WesternClassic_FaeMod1=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff.uasset",
+    "Western_Classic=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff.uasset"
+   ]
   },
   {
    "id": "ritualistscythe",
@@ -3446,7 +3938,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "royalbroadsword",
@@ -3488,7 +3985,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "runepistol",
@@ -3530,7 +4032,12 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/RunePistol/RunePistol_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/RunePistol/Rune_Pistol_Reload_End.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/RunePistol/Rune_Pistol_Reload_End.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Mesh/Player_RunePistol.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Textures/T_Handguns_Pistol_RunePistol_Diff.uasset"
+   ]
   },
   {
    "id": "rupturecannon",
@@ -3572,7 +4079,12 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/RuptureCannon/RuptureCannon_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/RuptureCannon/RuptureCannon_Foley_Reload_Close.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/RuptureCannon/RuptureCannon_Foley_Reload_Close.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/RuptureCannon/Mesh/Player_RuptureCannon.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/RuptureCannon/Textures/T_RuptureCannon_Diff.uasset"
+   ]
   },
   {
    "id": "sagittarius",
@@ -3614,7 +4126,14 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sagittarius/Sagittarius_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sagittarius/Sagittarius_Foley_Arrow_Load.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sagittarius/Sagittarius_Foley_Arrow_Load.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Mesh/Player_Sagittarius.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Special_LongGuns_Sagittarius=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Diff.uasset",
+    "Special_LongGuns_Sagittarius_Glass=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Glass_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Diff.uasset"
+   ]
   },
   {
    "id": "savior",
@@ -3655,7 +4174,14 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Savior/Savior_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Savior/Savior_Foley_Reload_Crystal_Spin.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Savior/Savior_Foley_Reload_Crystal_Spin.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Mesh/Player_Savior.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Special_LongGuns_Savior=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
+    "M_Special_LongGuns_Savior_Gem=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+   ]
   },
   {
    "id": "scythe",
@@ -3696,7 +4222,13 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Scythe/Mesh/Player_Scythe_Scrap.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "Melee_Scrap_Scythe=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff.uasset"
+   ]
   },
   {
    "id": "service_pistol",
@@ -3737,7 +4269,13 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/ServicePistol/ServicePistol_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Mesh/Player_ServicePistol.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Service_Pistol=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Textures/T_AutoPistol_Service_Pistol_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Textures/T_AutoPistol_Service_Pistol_Diff.uasset"
+   ]
   },
   {
    "id": "shortbarrel",
@@ -3779,7 +4317,14 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mesh/Player_SawedOff_Dran_Fae.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Basic_Sawed_off_Shotgun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Pan/Textures/T_HandGuns_Shotgun_SawOff_Mods_Pan_Diff.uasset",
+    "Sawed_off_shotgun_-_Fae_Mod=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Fae/Textures/T_HandGuns_Shotguns_SawOff_Mod_Fae_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Fae/Textures/T_HandGuns_Shotguns_SawOff_Mod_Fae_Diff.uasset"
+   ]
   },
   {
    "id": "shotgun",
@@ -3821,7 +4366,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Shotgun/Shotgun_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Shotgun/Shotgun_Foley_Pump_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/Shotgun/Shotgun_Foley_Pump_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Mesh/Player_Shotgun.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Rifle_Shotgun_mat=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Textures/Base/T_Shotgun_Base_A_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Textures/Base/T_Shotgun_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "smg",
@@ -3863,7 +4414,13 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/SMG/SMG_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/SMG/SMG_Foley_Load_Clip.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Handgun/SMG/SMG_Foley_Load_Clip.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Mesh/Player_SMG.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "pistol_smg_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Textures/T_SMG_Base_A_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Textures/T_SMG_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "smolder",
@@ -3904,7 +4461,13 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Mesh/Player_Smolder.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "M_Melee_Smoulder_Upres=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Textures/T_Melee_Smolder_Upres_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Textures/T_Melee_Smolder_Upres_Diff.uasset"
+   ]
   },
   {
    "id": "widowmaker",
@@ -3945,7 +4508,15 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/SniperRifle/SniperRifle_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/SniperRifle/SniperRifle_Foley_Ammo_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/SniperRifle/SniperRifle_Foley_Ammo_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mesh/Player_SniperRifle_Fae.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Rifle_Shotgun_mat=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff.uasset",
+    "Widow Maker - Fae Mod=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff.uasset",
+    "M_LongGuns_Rifle_Sniper_Mods_Pan=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Pan/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Pan_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff.uasset"
+   ]
   },
   {
    "id": "sorrow",
@@ -3987,7 +4558,14 @@
     "crystal_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sorrow/Sorrow_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sorrow/Sorrow_Foley_Reload_End.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/Sorrow/Sorrow_Foley_Reload_End.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Mesh/Player_Sorrow.uasset",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "Sorrow_Gun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
+    "Sorrow_Flowers=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset"
+   ]
   },
   {
    "id": "sparkfire",
@@ -4029,7 +4607,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "spear",
@@ -4070,7 +4653,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/SteelSpear/Mesh/Player_SteelSpear.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/SteelSpear/Textures/T_Weapon_StealSpear_Diff.uasset"
+   ]
   },
   {
    "id": "spectralblade",
@@ -4112,7 +4700,14 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Mesh/Player_SpectralBlade.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "M_Special_Melee_Boss_Spectral_Blade=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff.uasset",
+    "M_Special_Melee_Boss_Spectral_Blade_Eyes=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff.uasset"
+   ]
   },
   {
    "id": "sporebloom",
@@ -4153,7 +4748,12 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/SporeBloom/SporeBloom_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/SporeBloom/SporeBloom_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/SporeBloom/SporeBloom_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Mesh/Player_Sporebloom.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Textures/T_Special_LongGun_Upres_Sporebloom_Diff.uasset"
+   ]
   },
   {
    "id": "staff",
@@ -4194,7 +4794,14 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/CrystalStaff/Mesh/Player_CrystalStaff.uasset",
+   "mesh_fwd": "nx",
+   "mesh_tex": [
+    "Melee_Crystal_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
+    "Melee_Crystal_Staff_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff.uasset"
+   ]
   },
   {
    "id": "starkiller",
@@ -4235,7 +4842,12 @@
     "bone_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Starkiller/Starkiller_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Starkiller/Starkiller_Foley_Reload_End.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/Starkiller/Starkiller_Foley_Reload_End.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Mesh/Player_Starkiller.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Textures/T_LongGuns_AssaultRifle_Particle_Accelerator_Diff.uasset"
+   ]
   },
   {
    "id": "starshot",
@@ -4277,7 +4889,12 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/StarShot/StarShot_Mod_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/StarShot/Start_Shot_Reload_End.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Special/StarShot/Start_Shot_Reload_End.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Mesh/Player_Pistol_StarShot.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Textures/T_HandGuns_Special_StarShot_Diff.uasset"
+   ]
   },
   {
    "id": "stonebreaker",
@@ -4319,7 +4936,13 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Mesh/Player_StoneBreaker.uasset",
+   "mesh_fwd": "py",
+   "mesh_tex": [
+    "M_Stonebreaker=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Textures/T_Melee_Stonebreaker_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Textures/T_Melee_Stonebreaker_Diff.uasset"
+   ]
   },
   {
    "id": "sword",
@@ -4360,7 +4983,13 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Mesh/Player_Sword.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Melee_Sword=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff.uasset"
+   ]
   },
   {
    "id": "talratha_hammer",
@@ -4402,7 +5031,12 @@
     "part_high*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Mesh/Player_TalRatha_Hammer.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Textures/T_Melee_Special_Boss_Tal_Ratha_Hammer_1001_Diff.uasset"
+   ]
   },
   {
    "id": "thorn",
@@ -4444,7 +5078,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/Thorn/Mesh/Player_Thorn.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "tommygun",
@@ -4486,7 +5125,12 @@
     "crystal_low*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_LongGun/TommyGun/TommyGun_Shoot.uasset",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Mesh/Player_TommyGun.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Textures/T_TommyGun_Base_A_Diff.uasset"
+   ]
   },
   {
    "id": "trinitycrossbow",
@@ -4528,7 +5172,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/TrinityCrossbow/Mesh/Player_Trinity.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "twistedarbalest",
@@ -4570,7 +5219,14 @@
     "part_high*2"
    ],
    "snd_fire": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/TwistedArbalest/TwistedArbalest_Shoot.uasset",
-   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/TwistedArbalest/TwistedArbalest_Foley_Reload.uasset"
+   "snd_reload": "Remnant2/Content/WwiseAudio/Events/Weapons/Weapon_Ranged/Weapon_Boss/TwistedArbalest/TwistedArbalest_Foley_Reload.uasset",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Mesh/Player_Arbalest.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "Arbalest=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Arbalest_Diff.uasset",
+    "Arbalest_Magazine=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Magazine/T_Arbalest_Magazine_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Arbalest_Diff.uasset"
+   ]
   },
   {
    "id": "vicegrips",
@@ -4611,7 +5267,12 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "none",
+   "mesh_fwd": "px",
+   "mesh_tex": [
+    "none"
+   ]
   },
   {
    "id": "worldsedge",
@@ -4652,7 +5313,14 @@
     "bone_low*2"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Mesh/Player_WorldsEdge.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "world_s_edge_upres_low1=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff.uasset",
+    "world_s_edge_upres_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff.uasset",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff.uasset"
+   ]
   },
   {
    "id": "wrathbringer",
@@ -4694,7 +5362,12 @@
     "part_high2*3"
    ],
    "snd_fire": "none",
-   "snd_reload": "none"
+   "snd_reload": "none",
+   "mesh": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/Wrathbringer/Mesh/Player_Wrathbringer.uasset",
+   "mesh_fwd": "ny",
+   "mesh_tex": [
+    "none"
+   ]
   }
  ]
 }

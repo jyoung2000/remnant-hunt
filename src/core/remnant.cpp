@@ -515,6 +515,8 @@ void mod_game_tick() {
     Live& l = sh.live;
     snapshot(&l.snap);
     int bossEv = bosses_tick(s, l, t, dt);  // Remnant II bosses join the monsters here
+    research_tick(l, t);
+    gunmodel_tick(s, l);
     const GameSnapshot& g = l.snap;
     const Archetypes* a = archetype();
     if (l.loadoutChanged) {

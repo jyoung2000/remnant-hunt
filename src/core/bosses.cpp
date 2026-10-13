@@ -1,13 +1,16 @@
 // Remnant x MHW mashup core: Remnant II bosses roaming MHW's field zones. GPL-3.0-or-later (see LICENSE).
 //
-// Each boss is a row of sheets/bosses.json with its attacks in sheets/boss_attacks.json. The mod moves it on MHW's
-// ground (world_ray), runs a small Remnant-style AI (roam, roar, chase, attack, flinch, stagger, die), deals damage
-// to the hunter in its attacks' hit windows (taken from the animations' limb speeds), and takes damage from the
-// Remnant guns and skills (as a pseudo monster) and from MHW's melee weapons (attack input + reach, approximate).
-// Drawing is render3d.cpp with Remnant II's own model and textures; the bar and numbers are drawn with ImGui.
+// Each boss is a row of sheets/bosses.json with its attacks in sheets/boss_attacks.json, both written by
+// tools/author_bosses.py from the player's own Remnant II install. The mod moves the boss on MHW's ground
+// (world_ray), runs a Remnant-style AI (roam, roar, chase, melee / area / ranged attacks with hit windows measured
+// from the animations, flinch, stagger, death), scales it to the zone's rank (low / high / master, read from the
+// zone and its MHW monsters) and keeps the strongest bosses out of low-rank zones. It takes damage from the Remnant
+// guns and skills (as a pseudo monster) and from MHW's weapons (melee: attack input + reach; bows and bowguns: the
+// shot's line), and both build its stagger. Drawing is render3d.cpp with Remnant II's own model and textures.
 #include "bosses.h"
 
 #include <algorithm>
+#include <atomic>
 #include <cctype>
 #include <cfloat>
 #include <cmath>
@@ -31,8 +34,18 @@ namespace {
 
 constexpr float kPi = 3.14159265f;
 constexpr int kMax = 4;
+constexpr int kProj = 24;
 
 enum St { ST_LOADING, ST_IDLE, ST_WALK, ST_ROAR, ST_CHASE, ST_TURN, ST_ATTACK, ST_FLINCH, ST_STUN, ST_DEAD };
+enum Rank { RANK_LR, RANK_HR, RANK_MR };
+const char* const kRankName[] = {"LOW RANK", "HIGH RANK", "MASTER RANK"};
+
+// A boss's model in its own frame: forward / right (model xy) and its extent along, across and up (cm, scaled).
+struct Frame {
+    bool ok = false;
+    float f[2] = {0, 1}, r[2] = {-1, 0};
+    float aMin = -200, aMax = 200, cMin = -100, cMax = 100, zMin = 0, zMax = 300;
+};
 
 struct Boss {
     bool used = false;
@@ -40,7 +53,8 @@ struct Boss {
     St st = ST_LOADING;
     Vec3 pos{}, home{};
     float yaw = 0;
-    float hp = 0, maxHp = 0, rankK = 1;
+    float hp = 0, maxHp = 0, dmgMult = 1, meleeHit = 100;
+    int rank = RANK_LR;
     double stT0 = 0;
     std::string anim, prev;  // full asset paths
     float at = 0, pt = 0, fade = 0;
@@ -48,26 +62,33 @@ struct Boss {
     float root[3] = {};
     int attack = -1;     // boss_attacks row
     int windowsDone = 0; // bits
+    bool fired = false;  // ranged attack released
     double nextAttack = 0;
-    double cd[64] = {};  // per boss_attacks row
+    std::map<int, double> cd;  // boss_attacks row -> ready again
     Vec3 goal{};
     double goalUntil = 0;
-    float flinchAcc = 0;
-    bool stunned = false, aggro = false, roared = false, looted = false;
+    float flinchAcc = 0, staggerAcc = 0, staggerNeed = 0;
+    int staggers = 0, phases = 0;
+    bool aggro = false, roared = false, looted = false;
     double lastSeen = 0, lastStep = 0, lastWallCheck = 0;
     float turnFrom = 0, turnBy = 0;
     float sink = 0;
+    Frame fr;
 };
+
+struct Proj { bool live = false; Vec3 p{}, v{}; float dmg = 0, radius = 0; double until = 0; uint32_t color = 0; };
 
 Boss g_boss[kMax];
 uint8_t g_token[kMax];  // the bosses' pseudo uEnemy pointers: never dereferenced, only compared
+Proj g_proj[kProj];
 bool g_rh = false;       // MHW's world is right-handed (from its projection)
-int g_zone = -1;
+int g_zone = -1, g_zoneRank = RANK_LR;
 double g_rollAt = 0;
-int g_rollTries = 0;
+int g_rolls = 0;
 int g_nextDebugRow = 0;
 bool g_keyWas = false, g_lmbWas = false, g_rmbWas = false;
 double g_swingAt = 0, g_dodgeAt = -10;
+int g_swingWeapon = -1;
 const GameSnapshot* g_snap = nullptr;
 
 // Shared with the render thread.
@@ -79,17 +100,21 @@ struct DrawBoss {
     float world[16];
 };
 struct Number { Vec3 at; int amount; bool crit, weak; double t; };
-struct HudBoss { int row; float hp, maxHp; bool show, dead; double deadAt; };
+struct HudBoss { int row; float hp, maxHp; bool show, dead; double deadAt; int rank; bool staggered; };
 // Remnant-style bars for everything else: MHW's monsters, and Remnant creatures below boss tier.
 // tier 0 = small creature (thin, no name), 1 = large monster / elite (name over it).
 struct Bar { const void* key; int tier; std::string name; float hp, maxHp; Vec3 anchor; };
 struct Docked { const void* key; std::string name; float hp, maxHp; };
 struct Mark { Vec3 pos; int row; bool aggro; };  // Remnant creatures for the tracker
+struct Glow { Vec3 p; float radius; uint32_t color; };       // projectiles
+struct Ring { Vec3 c; float radius, k; uint32_t color; };     // area attacks winding up
 std::mutex g_lock;
 std::vector<DrawBoss> g_draw;
 std::vector<HudBoss> g_hud;
 std::vector<Bar> g_bars, g_creatureBars;
 std::vector<Mark> g_marks;
+std::vector<Glow> g_glows;
+std::vector<Ring> g_rings;
 Docked g_focus{};
 bool g_hasFocus = false;
 std::map<const void*, float> g_barTrail;  // render thread
@@ -111,14 +136,28 @@ Vec3 add(Vec3 a, Vec3 b) { return {a.x + b.x, a.y + b.y, a.z + b.z}; }
 Vec3 sub(Vec3 a, Vec3 b) { return {a.x - b.x, a.y - b.y, a.z - b.z}; }
 Vec3 mul(Vec3 a, float k) { return {a.x * k, a.y * k, a.z * k}; }
 float hlen(Vec3 a) { return sqrtf(a.x * a.x + a.z * a.z); }
+float len3(Vec3 a) { return sqrtf(a.x * a.x + a.y * a.y + a.z * a.z); }
 Vec3 fwd_of(float yaw) { return {sinf(yaw), 0, cosf(yaw)}; }
 Vec3 right_of(float yaw) { return g_rh ? Vec3{-cosf(yaw), 0, sinf(yaw)} : Vec3{cosf(yaw), 0, -sinf(yaw)}; }
 float yaw_to(Vec3 from, Vec3 to) { return atan2f(to.x - from.x, to.z - from.z); }
+bool has(const char* s) { return s && *s && strcmp(s, "none") != 0; }
+uint32_t parse_color(const char* hex) {
+    unsigned v = 0xFFD27A;
+    if (hex && hex[0] == '#') sscanf(hex + 1, "%x", &v);
+    return IM_COL32((v >> 16) & 255, (v >> 8) & 255, v & 255, 255);
+}
 
 const Bosses& B(const Boss& b) { return kBosses[b.row]; }
-std::string anim_path(int row, const char* name) { return std::string(kBosses[row].anim_dir) + name + ".uasset"; }
+std::string display_name(int row) {
+    const std::string& n = r2_text(kBosses[row].name);
+    return n.empty() ? std::string(kBosses[row].title) : n;
+}
+std::string anim_path(int row, const char* name) {
+    return has(name) ? std::string(kBosses[row].anim_dir) + name + ".uasset" : std::string();
+}
 const Model* model_of(int row, bool* failed = nullptr) { return model_get(kBosses[row].mesh, failed); }
 const Anim* anim_of(int row, const std::string& path, bool* failed = nullptr) {
+    if (path.empty()) return nullptr;
     const Model* m = model_of(row);
     return m ? anim_get(path.c_str(), kBosses[row].skeleton, m, failed) : nullptr;
 }
@@ -127,36 +166,42 @@ float anim_len(const Boss& b, const std::string& path) {
     return a ? a->length() : 0.0f;
 }
 
-// The model's extent (Remnant II units, cm): x across (right is -x), y along (head at +y), z up.
-void extent(const Boss& b, float mn[3], float mx[3]) {
+// The boss's frame from its model and the sheet's facing.
+void make_frame(Boss& b) {
     const Model* m = model_of(b.row);
-    for (int k = 0; k < 3; k++) {
-        mn[k] = m ? m->boundsMin[k] * B(b).scale : -200;
-        mx[k] = m ? m->boundsMax[k] * B(b).scale : 200;
+    if (!m) return;
+    Frame& f = b.fr;
+    switch (B(b).forward) {
+        case BOSSES_FORWARD_NY: f.f[0] = 0; f.f[1] = -1; f.r[0] = 1; f.r[1] = 0; break;
+        case BOSSES_FORWARD_PX: f.f[0] = 1; f.f[1] = 0; f.r[0] = 0; f.r[1] = 1; break;
+        case BOSSES_FORWARD_NX: f.f[0] = -1; f.f[1] = 0; f.r[0] = 0; f.r[1] = -1; break;
+        default: f.f[0] = 0; f.f[1] = 1; f.r[0] = -1; f.r[1] = 0; break;  // +y, like most Remnant creatures
     }
+    float s = B(b).scale;
+    f.aMin = f.cMin = 1e30f;
+    f.aMax = f.cMax = -1e30f;
+    for (float x : {m->boundsMin[0], m->boundsMax[0]})
+        for (float y : {m->boundsMin[1], m->boundsMax[1]}) {
+            float a = (x * f.f[0] + y * f.f[1]) * s, c = (x * f.r[0] + y * f.r[1]) * s;
+            f.aMin = std::min(f.aMin, a); f.aMax = std::max(f.aMax, a);
+            f.cMin = std::min(f.cMin, c); f.cMax = std::max(f.cMax, c);
+        }
+    f.zMin = m->boundsMin[2] * s;
+    f.zMax = m->boundsMax[2] * s;
+    f.ok = true;
 }
-Vec3 head_point(const Boss& b) {
-    float mn[3], mx[3];
-    extent(b, mn, mx);
-    return add(b.pos, mul(fwd_of(b.yaw), mx[1] * 0.8f));
-}
-
-std::vector<int> attacks_of(int row) {
-    std::vector<int> v;
-    for (int i = 0; i < kBoss_attacksCount; i++)
-        if (kBoss_attacks[i].boss == row) v.push_back(i);
-    return v;
-}
+Vec3 head_point(const Boss& b) { return add(b.pos, mul(fwd_of(b.yaw), std::max(100.0f, b.fr.aMax * 0.8f))); }
+float height_of(const Boss& b) { return std::max(150.0f, b.fr.zMax - std::max(0.0f, b.fr.zMin)); }
 
 void play(const char* event, Vec3 at, float loud) {
-    if (!event || !g_snap) return;
+    if (!has(event) || !g_snap) return;
     float d = hlen(sub(at, g_snap->pos));
     float v = std::max(0.0f, std::min(1.0f, loud * (1.25f - d / 6000.0f)));
     if (v > 0.03f) audio_play(event, v);
 }
 
 void set_anim(Boss& b, const std::string& path, bool loop) {
-    if (path == b.anim) { b.loop = loop; return; }
+    if (path.empty() || path == b.anim) { b.loop = loop; return; }
     b.prev = b.anim;
     b.pt = b.at;
     b.ploop = b.loop;
@@ -174,13 +219,21 @@ void go(Boss& b, St st, double t) {
     const Bosses& r = B(b);
     switch (st) {
         case ST_IDLE: set_anim(b, anim_path(b.row, r.anim_idle), true); break;
-        case ST_WALK: set_anim(b, anim_path(b.row, r.anim_walk), true); break;
+        case ST_WALK: set_anim(b, anim_path(b.row, has(r.anim_walk) ? r.anim_walk : r.anim_idle), true); break;
         case ST_ROAR: set_anim(b, anim_path(b.row, r.anim_roar), false); play(r.snd_roar, b.pos, 1.2f); break;
         case ST_FLINCH: set_anim(b, anim_path(b.row, r.anim_flinch), false); play(r.snd_pain, b.pos, 1.0f); break;
-        case ST_STUN: set_anim(b, anim_path(b.row, r.anim_stun), false); play(r.snd_pain, b.pos, 1.1f); break;
+        case ST_STUN:
+            set_anim(b, anim_path(b.row, has(r.anim_stun) ? r.anim_stun : r.anim_flinch), false);
+            play(r.snd_pain, b.pos, 1.15f);
+            break;
         case ST_DEAD: set_anim(b, anim_path(b.row, r.anim_death), false); play(r.snd_death, b.pos, 1.2f); break;
         default: break;
     }
+}
+// How long a state's animation runs (a state without one holds briefly).
+float state_len(const Boss& b, float fallback) {
+    float l = anim_len(b, b.anim);
+    return l > 0.05f ? l : fallback;
 }
 
 bool ground(Vec3 p, float* y) {
@@ -196,10 +249,8 @@ bool move(Boss& b, Vec3 d, double t) {
     if (t - b.lastWallCheck > 0.15) {
         b.lastWallCheck = t;
         Vec3 dir = mul(d, 1.0f / hlen(d));
-        float mn[3], mx[3];
-        extent(b, mn, mx);
-        Vec3 from = {b.pos.x, b.pos.y + 300, b.pos.z};
-        Vec3 ahead = add(from, mul(dir, std::max(250.0f, mx[1] * 0.6f)));
+        Vec3 from = {b.pos.x, b.pos.y + std::min(300.0f, height_of(b) * 0.5f), b.pos.z};
+        Vec3 ahead = add(from, mul(dir, std::max(250.0f, b.fr.aMax * 0.6f)));
         Vec3 hit;
         if (world_ray(from, ahead, &hit)) return false;
     }
@@ -217,6 +268,42 @@ void turn_towards(Boss& b, float target, float dps, float dt) {
     b.yaw = wrap(b.yaw + std::max(-step, std::min(step, d)));
 }
 
+// ---------------------------------------------------------------- rank
+
+// The zone's rank: Hoarfrost Reach and the Guiding Lands are master rank; elsewhere the HP of the zone's largest
+// MHW monster tells (MHW scales its monsters' HP with the quest's rank).
+int area_rank(const GameSnapshot& g, float* largest) {
+    float big = 0;
+    for (const Monster& m : g.monsters)
+        if (m.large && !is_boss(m.em)) big = std::max(big, m.maxHp);
+    if (largest) *largest = big;
+    if (g.zone == 108 || g.zone == 109) return RANK_MR;
+    if (big >= tune(TUNING_RANK_HP_MR)) return RANK_MR;
+    if (big >= tune(TUNING_RANK_HP_HR)) return RANK_HR;
+    return RANK_LR;
+}
+float rank_hp(int rank) {
+    return tune(rank == RANK_MR ? TUNING_BOSS_HP_MR : rank == RANK_HR ? TUNING_BOSS_HP_HR : TUNING_BOSS_HP_LR);
+}
+float rank_dmg(int rank) {
+    return tune(rank == RANK_MR ? TUNING_BOSS_DMG_MR : rank == RANK_HR ? TUNING_BOSS_DMG_HR : TUNING_BOSS_DMG_LR);
+}
+int min_rank(int row) {
+    int m = kBosses[row].min_rank;
+    return m == BOSSES_MIN_RANK_MR ? RANK_MR : m == BOSSES_MIN_RANK_HR ? RANK_HR : RANK_LR;
+}
+
+std::vector<int> attacks_of(int row) {
+    static std::map<int, std::vector<int>> cache;
+    auto it = cache.find(row);
+    if (it != cache.end()) return it->second;
+    std::vector<int> v;
+    for (int i = 0; i < kBoss_attacksCount; i++)
+        if (kBoss_attacks[i].boss == row) v.push_back(i);
+    cache[row] = v;
+    return v;
+}
+
 void spawn(Live& l, int row, Vec3 at, float yaw, double t) {
     int slot = -1;
     for (int i = 0; i < kMax; i++)
@@ -229,11 +316,12 @@ void spawn(Live& l, int row, Vec3 at, float yaw, double t) {
     b.pos = b.home = at;
     b.yaw = yaw;
     float largest = 0;
-    for (const Monster& m : l.snap.monsters)
-        if (m.large && !is_boss(m.em)) largest = std::max(largest, m.maxHp);
+    b.rank = area_rank(l.snap, &largest);
     const Bosses& r = kBosses[row];
-    b.maxHp = b.hp = std::max(r.hp_base, r.hp_vs_zone * largest);
-    b.rankK = std::max(1.0f, std::min(tune(TUNING_RANK_SCALE_MAX), b.maxHp / std::max(1.0f, tune(TUNING_RANK_SCALE_HP))));
+    b.maxHp = b.hp = std::max(rank_hp(b.rank) * r.hp_mult, 0.9f * largest);
+    b.dmgMult = rank_dmg(b.rank) * (0.85f + 0.06f * r.threat);
+    b.meleeHit = rank_hp(b.rank) / std::max(20.0f, r.melee_hits);
+    b.staggerNeed = r.stagger_frac * b.maxHp;
     b.st = ST_LOADING;
     b.stT0 = t;
     // Ask r2read for everything now, so the first attack does not wait.
@@ -243,11 +331,13 @@ void spawn(Live& l, int row, Vec3 at, float yaw, double t) {
         anim_of(row, anim_path(row, a));
     for (int k : attacks_of(row)) {
         anim_of(row, anim_path(row, kBoss_attacks[k].anim));
-        if (kBoss_attacks[k].snd) audio_prefetch(kBoss_attacks[k].snd);
+        if (has(kBoss_attacks[k].snd)) audio_prefetch(kBoss_attacks[k].snd);
     }
-    for (const char* s : {r.snd_roar, r.snd_pain, r.snd_death, r.snd_step}) audio_prefetch(s);
+    for (const char* s : {r.snd_roar, r.snd_pain, r.snd_death, r.snd_step})
+        if (has(s)) audio_prefetch(s);
     r2_text(r.name);  // resolved now, so the bar never waits for it
-    log("bosses: %s spawning at (%.0f, %.0f, %.0f), %.0f hp", r.id, at.x, at.y, at.z, b.maxHp);
+    log("bosses: %s spawning at (%.0f, %.0f, %.0f), %s, %.0f hp, damage x%.2f", r.id, at.x, at.y, at.z,
+        kRankName[b.rank], b.maxHp, b.dmgMult);
 }
 
 // A place on the ground at a distance from the hunter, in a direction; false when there is none.
@@ -298,9 +388,9 @@ void loot(SaveData& s, Live& l, const Boss& b) {
                 }
         i = j + 1;
     }
-    const std::string& name = r2_text(B(b).name);
+    std::string name = display_name(b.row);
     if (pool.empty()) {
-        toast(l, "%s defeated", name.empty() ? B(b).id : name.c_str());
+        toast(l, "%s defeated", name.c_str());
         return;
     }
     auto pick = pool[rand() % pool.size()];
@@ -308,21 +398,19 @@ void loot(SaveData& s, Live& l, const Boss& b) {
     l.dirty = true;
     ItemView v = item(pick.first, pick.second);
     const std::string& got = v.name ? r2_text(*v.name) : std::string();
-    toast(l, "%s defeated: %s added to your Remnant gear", name.empty() ? B(b).id : name.c_str(),
-          got.empty() ? v.id : got.c_str());
+    toast(l, "%s defeated: %s added to your Remnant gear", name.c_str(), got.empty() ? v.id : got.c_str());
     log("bosses: %s defeated, loot %s", B(b).id, v.id);
 }
 
 // The hunter is inside an attack's reach and arc.
 bool in_reach(const Boss& b, const Boss_attacks& a, Vec3 hunter) {
-    if (fabsf(hunter.y - b.pos.y) > 700 * B(b).scale) return false;
+    if (fabsf(hunter.y - b.pos.y) > std::max(500.0f, height_of(b))) return false;
     float reach = a.reach_m * 100.0f * B(b).scale + 80.0f;
-    Vec3 from = a.arc_deg >= 359 ? b.pos : head_point(b);
-    Vec3 d = sub(hunter, from);
+    Vec3 d = sub(hunter, b.pos);
     if (hlen(d) > reach) return false;
     if (a.arc_deg >= 359) return true;
     float ang = fabsf(wrap(yaw_to(b.pos, hunter) - b.yaw)) * 180.0f / kPi;
-    return ang <= a.arc_deg * 0.5f || hlen(sub(hunter, b.pos)) < 250.0f * B(b).scale;
+    return ang <= a.arc_deg * 0.5f || hlen(d) < 250.0f * B(b).scale;
 }
 
 bool window(const char* hits, int i, float* s, float* e) {
@@ -334,9 +422,53 @@ bool window(const char* hits, int i, float* s, float* e) {
     return p && sscanf(p, "%f-%f", s, e) == 2;
 }
 
+// Damage to the hunter from a boss (dodging through it is Remnant's evade).
+int hurt_hunter(const GameSnapshot& g, float dmg, double t) {
+    if (t - g_dodgeAt < 0.45) return BOSS_EV_EVADE;
+    if (g.playerHealth && add_hp(g.playerHealth, -dmg)) {
+        std::lock_guard<std::mutex> lk(g_lock);
+        g_hurtAt = t;
+        return BOSS_EV_HURT;
+    }
+    return 0;
+}
+
+void fire_projectile(const Boss& b, const Boss_attacks& a, Vec3 target, double t) {
+    for (Proj& p : g_proj) {
+        if (p.live) continue;
+        Vec3 o = add(add(b.pos, mul(fwd_of(b.yaw), std::max(80.0f, b.fr.aMax * 0.5f))), {0, height_of(b) * 0.62f, 0});
+        Vec3 d = sub(target, o);
+        float n = std::max(1.0f, len3(d));
+        p.live = true;
+        p.p = o;
+        p.v = mul(d, tune(TUNING_BOSS_PROJ_SPEED) / n);
+        p.dmg = a.damage * b.dmgMult;
+        p.radius = 150.0f;
+        p.until = t + std::min(5.0, (a.max_m * 100.0 + 800.0) / tune(TUNING_BOSS_PROJ_SPEED));
+        p.color = parse_color(B(b).fx_color);
+        return;
+    }
+}
+
+int projectiles(const GameSnapshot& g, double t, float dt) {
+    int ev = 0;
+    Vec3 chest = add(g.pos, {0, 110, 0});
+    for (Proj& p : g_proj) {
+        if (!p.live) continue;
+        Vec3 next = add(p.p, mul(p.v, dt));
+        Vec3 hit;
+        if (t > p.until || world_ray(p.p, next, &hit)) { p.live = false; continue; }
+        p.p = next;
+        if (len3(sub(p.p, chest)) < p.radius) {
+            ev |= hurt_hunter(g, p.dmg, t);
+            p.live = false;
+        }
+    }
+    return ev;
+}
+
 // One tick of a living boss.
-int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
-    (void)s;
+int think(Boss& b, Live& l, double t, float dt) {
     const GameSnapshot& g = l.snap;
     const Bosses& r = B(b);
     int ev = 0;
@@ -344,9 +476,10 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
     float dist = hlen(sub(hunter, head_point(b)));
     float toHunter = yaw_to(b.pos, hunter);
     float off = wrap(toHunter - b.yaw);
+    bool mobile = r.walk_mps > 0.05f && has(r.anim_walk);
     bool sees = false;
     if (dist < r.aggro_m * 100.0f) {
-        Vec3 hit, eye = add(head_point(b), {0, 300, 0});
+        Vec3 hit, eye = add(head_point(b), {0, std::min(300.0f, height_of(b) * 0.6f), 0});
         sees = !world_ray(eye, add(hunter, {0, 120, 0}), &hit);
     }
     if (sees) b.lastSeen = t;
@@ -356,16 +489,18 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
         b.home = b.pos;
         go(b, ST_IDLE, t);
     }
+    b.staggerAcc = std::max(0.0f, b.staggerAcc - b.staggerNeed * 0.02f * dt);
 
     switch (b.st) {
         case ST_IDLE:
         case ST_WALK: {
             if (b.aggro) {
-                b.roared ? go(b, ST_CHASE, t) : go(b, ST_ROAR, t);
+                if (!b.roared && has(r.anim_roar)) go(b, ST_ROAR, t);
+                else { b.roared = true; go(b, ST_CHASE, t); }
                 break;
             }
             if (t > b.goalUntil) {
-                if (b.st == ST_IDLE) {
+                if (b.st == ST_IDLE && mobile) {
                     float a = frand() * 2 * kPi, d = 800 + frand() * 2200;
                     b.goal = add(b.home, mul(fwd_of(a), d));
                     b.goalUntil = t + 12;
@@ -378,7 +513,7 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
             if (b.st == ST_WALK) {
                 turn_towards(b, yaw_to(b.pos, b.goal), r.turn_dps * 0.6f, dt);
                 if (fabsf(wrap(yaw_to(b.pos, b.goal) - b.yaw)) < 0.6f &&
-                    !move(b, mul(fwd_of(b.yaw), r.walk_mps * 100.0f * dt), t))
+                    !move(b, mul(fwd_of(b.yaw), r.walk_mps * 100.0f * B(b).scale * dt), t))
                     b.goalUntil = 0;  // a wall: pick somewhere else
                 if (hlen(sub(b.goal, b.pos)) < 300) b.goalUntil = 0;
             }
@@ -386,8 +521,7 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
         }
         case ST_ROAR: {
             turn_towards(b, toHunter, r.turn_dps, dt);
-            float len = anim_len(b, b.anim);
-            if (b.at >= len) {
+            if (b.at >= state_len(b, 1.5f)) {
                 b.roared = true;
                 b.nextAttack = t + 0.4;
                 go(b, ST_CHASE, t);
@@ -395,7 +529,8 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
             break;
         }
         case ST_CHASE: {
-            if (fabsf(off) > 1.75f && dist < 2000) {
+            bool turnAnims = has(r.anim_turn_l) && has(r.anim_turn_r);
+            if (fabsf(off) > 1.75f && dist < 2000 && turnAnims) {
                 b.turnFrom = b.yaw;
                 b.turnBy = off > 0 ? std::min(off, kPi / 2) : std::max(off, -kPi / 2);
                 bool toRight = (off > 0) != g_rh;  // positive yaw turns towards +x
@@ -411,7 +546,9 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
                 for (int k : attacks_of(b.row)) {
                     const Boss_attacks& a = kBoss_attacks[k];
                     bool facing = a.arc_deg >= 359 || fabsf(off) < 0.6f || a.min_m > 10;
-                    if (t < b.cd[k] || !facing || dist < a.min_m * 100.0f || dist > a.max_m * 100.0f) continue;
+                    float range = dist / 100.0f / std::max(0.3f, B(b).scale);
+                    auto cd = b.cd.find(k);
+                    if ((cd != b.cd.end() && t < cd->second) || !facing || range < a.min_m || range > a.max_m) continue;
                     if (!anim_of(b.row, anim_path(b.row, a.anim))) continue;
                     total += a.weight;
                     if (frand() * total <= a.weight) pick = k;
@@ -420,6 +557,7 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
                     const Boss_attacks& a = kBoss_attacks[pick];
                     b.attack = pick;
                     b.windowsDone = 0;
+                    b.fired = false;
                     b.st = ST_ATTACK;
                     b.stT0 = t;
                     set_anim(b, anim_path(b.row, a.anim), false);
@@ -428,9 +566,14 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
                     break;
                 }
             }
-            bool distant = dist > 1400;
+            if (!mobile) {
+                set_anim(b, anim_path(b.row, r.anim_idle), true);
+                break;
+            }
+            bool distant = dist > 1400 && has(r.anim_run);
             set_anim(b, anim_path(b.row, distant ? r.anim_run : r.anim_walk), true);
-            if (dist > 350 && fabsf(off) < 1.0f) move(b, mul(fwd_of(b.yaw), (distant ? r.run_mps : r.walk_mps) * 100.0f * dt), t);
+            if (dist > 350 && fabsf(off) < 1.0f)
+                move(b, mul(fwd_of(b.yaw), (distant ? r.run_mps : r.walk_mps) * 100.0f * B(b).scale * dt), t);
             break;
         }
         case ST_TURN: {
@@ -448,30 +591,29 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
             float first = 1, firstEnd = 1;
             window(a.hits, 0, &first, &firstEnd);
             if (frac < first) turn_towards(b, toHunter, r.turn_dps * a.track, dt);
-            // The animation's own forward motion moves the creature (lunges, leaps, charges).
+            // The animation's own motion moves the creature (lunges, leaps, charges).
             if (an) {
                 float rt[3];
                 anim_root(*an, std::min(b.at, len), false, rt);
-                float dx = (rt[0] - b.root[0]) * r.scale, dy = (rt[1] - b.root[1]) * r.scale;
+                float dx = rt[0] - b.root[0], dy = rt[1] - b.root[1];
                 memcpy(b.root, rt, sizeof(rt));
-                Vec3 d = add(mul(right_of(b.yaw), -dx), mul(fwd_of(b.yaw), dy));
-                move(b, d, t);
+                float along = (dx * b.fr.f[0] + dy * b.fr.f[1]) * B(b).scale;
+                float across = (dx * b.fr.r[0] + dy * b.fr.r[1]) * B(b).scale;
+                if (mobile || fabsf(along) + fabsf(across) < 400) move(b, add(mul(fwd_of(b.yaw), along), mul(right_of(b.yaw), across)), t);
             }
-            for (int w = 0; w < 8; w++) {
-                float ws, we;
-                if (!window(a.hits, w, &ws, &we)) break;
-                if ((b.windowsDone & (1 << w)) || frac < ws || frac > we) continue;
-                if (!in_reach(b, a, hunter)) continue;
-                b.windowsDone |= 1 << w;
-                if (t - g_dodgeAt < 0.45) {  // a dodge through the hit: Remnant's evade
-                    ev |= BOSS_EV_EVADE;
-                    continue;
+            if (a.kind == BOSS_ATTACKS_KIND_RANGED) {
+                if (!b.fired && frac >= first) {
+                    b.fired = true;
+                    fire_projectile(b, a, add(hunter, {0, 110, 0}), t);
                 }
-                float dmg = a.damage * sqrtf(b.rankK);
-                if (g.playerHealth && add_hp(g.playerHealth, -dmg)) {
-                    ev |= BOSS_EV_HURT;
-                    std::lock_guard<std::mutex> lk(g_lock);
-                    g_hurtAt = t;
+            } else {
+                for (int w = 0; w < 8; w++) {
+                    float ws, we;
+                    if (!window(a.hits, w, &ws, &we)) break;
+                    if ((b.windowsDone & (1 << w)) || frac < ws || frac > we) continue;
+                    if (!in_reach(b, a, hunter)) continue;
+                    b.windowsDone |= 1 << w;
+                    ev |= hurt_hunter(g, a.damage * b.dmgMult, t);
                 }
             }
             if (b.at >= len) {
@@ -483,8 +625,8 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
         }
         case ST_FLINCH:
         case ST_STUN: {
-            if (b.at >= anim_len(b, b.anim)) {
-                b.nextAttack = t + 0.3;
+            if (b.at >= state_len(b, b.st == ST_STUN ? 2.5f : 0.8f)) {
+                b.nextAttack = t + (b.st == ST_STUN ? 0.8 : 0.3);
                 go(b, ST_CHASE, t);
             }
             break;
@@ -492,7 +634,7 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
         default: break;
     }
     // Footsteps while moving.
-    if ((b.st == ST_WALK || b.st == ST_CHASE) && r.snd_step) {
+    if ((b.st == ST_WALK || (b.st == ST_CHASE && mobile)) && has(r.snd_step)) {
         bool running = b.anim == anim_path(b.row, r.anim_run);
         if (t - b.lastStep > (running ? 0.32 : 0.55)) {
             b.lastStep = t;
@@ -502,38 +644,118 @@ int think(Boss& b, SaveData& s, Live& l, double t, float dt) {
     return ev;
 }
 
-// MHW's melee weapons: an attack press near the boss lands a hit a moment later (approximate: MHW's own hitboxes
-// only know MHW's monsters).
-void melee(Live& l, double t) {
+// The hunter's distance to a boss's body, and the closest point of it.
+float gap_to(const Boss& b, Vec3 p, Vec3* closest) {
+    Vec3 d = sub(p, b.pos);
+    Vec3 f = fwd_of(b.yaw), rt = right_of(b.yaw);
+    float along = d.x * f.x + d.z * f.z, across = d.x * rt.x + d.z * rt.z;
+    float ca = std::max(b.fr.aMin, std::min(b.fr.aMax, along)), cx = std::max(b.fr.cMin, std::min(b.fr.cMax, across));
+    if (closest) *closest = add(b.pos, add(mul(f, ca), mul(rt, cx)));
+    return sqrtf((along - ca) * (along - ca) + (across - cx) * (across - cx));
+}
+
+int boss_index(const uint8_t* em) { return (int)(em - g_token); }
+void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger);
+
+// MHW's weapon damage per hit, relative to an average hit (motion values, roughly), and how much it staggers.
+struct WeaponFeel { float dmg, stagger; };
+WeaponFeel weapon_feel(int type) {
+    switch (type) {
+        case 0: return {2.4f, 1.5f};   // great sword
+        case 1: return {0.6f, 1.0f};   // sword and shield
+        case 2: return {0.45f, 0.8f};  // dual blades
+        case 3: return {1.0f, 1.0f};   // long sword
+        case 4: return {1.5f, 1.9f};   // hammer
+        case 5: return {1.3f, 1.8f};   // hunting horn
+        case 6: return {0.9f, 1.0f};   // lance
+        case 7: return {1.0f, 1.1f};   // gunlance
+        case 8: return {1.1f, 1.2f};   // switch axe
+        case 9: return {1.2f, 1.6f};   // charge blade
+        case 10: return {0.8f, 0.9f};  // insect glaive
+        case 11: return {0.8f, 0.7f};  // bow
+        case 12: return {1.1f, 1.0f};  // heavy bowgun
+        case 13: return {0.7f, 0.7f};  // light bowgun
+        default: return {1.0f, 1.0f};
+    }
+}
+
+// MHW's weapons against the bosses: an attack press lands a moment later where MHW's own hitboxes cannot (they only
+// know MHW's monsters). Melee weapons: within reach of the body. Bows and bowguns: the shot's line from the camera.
+void mhw_weapons(Live& l, double t) {
     bool lmb = key_down(VK_LBUTTON), rmb = key_down(VK_RBUTTON);
-    bool press = (lmb && !g_lmbWas) || (rmb && !g_rmbWas);
+    bool press = (lmb && !g_lmbWas) || (rmb && !g_rmbWas && player_weapon_type() < 11);
     g_lmbWas = lmb;
     g_rmbWas = rmb;
-    if (press && !l.gunMode && g_swingAt == 0) g_swingAt = t + 0.28;
+    if (press && !l.gunMode && g_swingAt == 0) {
+        g_swingWeapon = player_weapon_type();
+        g_swingAt = t + (g_swingWeapon >= 11 ? 0.08 : g_swingWeapon == 0 ? 0.55 : 0.28);
+    }
     if (g_swingAt == 0 || t < g_swingAt) return;
     g_swingAt = 0;
     const GameSnapshot& g = l.snap;
+    WeaponFeel wf = weapon_feel(g_swingWeapon);
     Vec3 look = g.view.valid ? sub(g.view.camTarget, g.view.camPos) : Vec3{0, 0, 1};
+    if (g_swingWeapon >= 11 && g.view.valid) {  // a shot along the camera's line
+        Vec3 dir = mul(look, 1.0f / std::max(1.0f, len3(look)));
+        float best = 7000;
+        int bi = -1;
+        for (const Monster& m : g.monsters) {
+            if (!is_boss(m.em)) continue;
+            Vec3 rel = sub(g.view.camPos, m.center);
+            float t0 = 0, t1 = 1e9f;
+            bool ok = true;
+            float h[3] = {m.half.x, m.half.y, m.half.z};
+            for (int k = 0; k < 3 && ok; k++) {
+                Vec3 ax = {m.rot[k][0], m.rot[k][1], m.rot[k][2]};
+                float o = rel.x * ax.x + rel.y * ax.y + rel.z * ax.z, dd = dir.x * ax.x + dir.y * ax.y + dir.z * ax.z;
+                if (fabsf(dd) < 1e-6f) { ok = fabsf(o) <= h[k]; continue; }
+                float a = (-h[k] - o) / dd, c = (h[k] - o) / dd;
+                if (a > c) std::swap(a, c);
+                t0 = std::max(t0, a);
+                t1 = std::min(t1, c);
+                ok = t0 <= t1;
+            }
+            if (ok && t0 < best) { best = t0; bi = boss_index(m.em); }
+        }
+        if (bi >= 0) {
+            Vec3 at = add(g.view.camPos, mul(dir, best));
+            Vec3 wall;
+            if (!(world_ray(g.view.camPos, at, &wall) && len3(sub(wall, g.view.camPos)) + 50 < best))
+                hit_boss(bi, g_boss[bi].meleeHit * wf.dmg * (0.85f + 0.3f * frand()), at, false, false, wf.stagger);
+        }
+        return;
+    }
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];
         if (!b.used || b.st == ST_LOADING || b.st == ST_DEAD) continue;
-        float mn[3], mx[3];
-        extent(b, mn, mx);
-        // The hunter's distance to the boss's box, in the boss's frame.
-        Vec3 d = sub(g.pos, b.pos);
-        Vec3 f = fwd_of(b.yaw), rt = right_of(b.yaw);
-        float along = d.x * f.x + d.z * f.z, across = d.x * rt.x + d.z * rt.z;
-        float ca = std::max(mn[1], std::min(mx[1], along)), cx = std::max(-mx[0], std::min(-mn[0], across));
-        float gap = sqrtf((along - ca) * (along - ca) + (across - cx) * (across - cx));
-        if (gap > 380 || d.y < -250 || d.y > mx[2] + 200) continue;
-        Vec3 to = add(b.pos, add(mul(f, ca), mul(rt, cx)));
+        Vec3 to;
+        float gap = gap_to(b, g.pos, &to);
+        float dy = g.pos.y - b.pos.y;
+        if (gap > 380 || dy < -250 || dy > b.fr.zMax + 200) continue;
         Vec3 dir = sub(to, g.pos);
         float facing = (dir.x * look.x + dir.z * look.z) / std::max(1.0f, hlen(dir) * hlen(look));
         if (gap > 120 && facing < 0.1f) continue;
-        float dmg = b.maxHp / std::max(20.0f, B(b).melee_hits) * (0.85f + 0.3f * frand());
-        boss_hit(&g_token[i], dmg, {to.x, g.pos.y + 120, to.z}, false, false);
+        // a hit high on the body counts as a weak spot when it lands at the head end
+        Vec3 f = fwd_of(b.yaw);
+        float along = (to.x - b.pos.x) * f.x + (to.z - b.pos.z) * f.z;
+        bool weak = along > b.fr.aMax * 0.6f;
+        hit_boss(i, b.meleeHit * wf.dmg * (weak ? 1.3f : 1.0f) * (0.85f + 0.3f * frand()),
+                 {to.x, g.pos.y + 120, to.z}, false, weak, wf.stagger);
         break;
     }
+}
+
+void world_matrix(const Boss& b, float w[16]) {
+    float s = B(b).scale;
+    Vec3 f = fwd_of(b.yaw), r = right_of(b.yaw);
+    const Frame& fr = b.fr;
+    // model x and y go to forward / right by the boss's facing; model z is up
+    Vec3 ix = add(mul(f, fr.f[0]), mul(r, fr.r[0])), iy = add(mul(f, fr.f[1]), mul(r, fr.r[1]));
+    float rows[4][4] = {{ix.x * s, ix.y * s, ix.z * s, 0},
+                        {iy.x * s, iy.y * s, iy.z * s, 0},
+                        {0, s, 0, 0},
+                        {b.pos.x, b.pos.y - b.sink, b.pos.z, 1}};
+    memcpy(w, rows, 64);
 }
 
 std::string mhw_name(const char* kind) {
@@ -594,16 +816,6 @@ void mhw_bars(const Live& l, double t) {
     g_hasFocus = hasFocus;
 }
 
-void world_matrix(const Boss& b, float w[16]) {
-    float s = B(b).scale;
-    Vec3 f = fwd_of(b.yaw), r = right_of(b.yaw);
-    // model x = -right, model y = forward, model z = up (Remnant II's creatures face +y)
-    float rows[4][4] = {{-r.x * s, -r.y * s, -r.z * s, 0},
-                        {f.x * s, f.y * s, f.z * s, 0},
-                        {0, s, 0, 0},
-                        {b.pos.x, b.pos.y - b.sink, b.pos.z, 1}};
-    memcpy(w, rows, 64);
-}
 
 bool project(const GameView& v, const Vec3& p, ImVec2 vpPos, ImVec2 vpSize, ImVec2* out) {
     float in[4] = {p.x, p.y, p.z, 1}, a[4], c[4];
@@ -615,19 +827,17 @@ bool project(const GameView& v, const Vec3& p, ImVec2 vpPos, ImVec2 vpSize, ImVe
     return true;
 }
 
-}  // namespace
 
-bool is_boss(const uint8_t* em) { return em >= g_token && em < g_token + kMax; }
-
-bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak) {
-    if (!is_boss(em)) return false;
-    Boss& b = g_boss[em - g_token];
-    if (!b.used || b.st == ST_LOADING || b.st == ST_DEAD || dmg <= 0) return true;
+void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger) {
+    if (i < 0 || i >= kMax) return;
+    Boss& b = g_boss[i];
+    if (!b.used || b.st == ST_LOADING || b.st == ST_DEAD || dmg <= 0) return;
     double t = now_s();
     b.hp -= dmg;
     b.aggro = true;
     b.lastSeen = t;
     b.flinchAcc += dmg;
+    b.staggerAcc += dmg * stagger * (weak ? 2.0f : 1.0f);
     {
         std::lock_guard<std::mutex> lk(g_lock);
         g_numbers[g_nextNumber++ % 32] = {at, (int)lroundf(dmg), crit, weak, t};
@@ -636,17 +846,36 @@ bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak) {
     if (b.hp <= 0) {
         b.hp = 0;
         go(b, ST_DEAD, t);
-        return true;
+        return;
     }
-    if (b.st == ST_ROAR || b.st == ST_STUN) return true;
-    if (!b.stunned && r.stun_at > 0 && b.hp < r.stun_at * b.maxHp) {
-        b.stunned = true;
+    if (b.st == ST_ROAR || b.st == ST_STUN) return;
+    // Stagger: the meter (weak spots and heavy weapons fill it faster) or a third of its health gone; each stagger
+    // makes the next one harder, as Remnant's and MHW's bosses both do.
+    int phase = b.hp < b.maxHp / 3 ? 2 : b.hp < 2 * b.maxHp / 3 ? 1 : 0;
+    bool phaseBreak = phase > 0 && !(b.phases & (1 << phase));
+    if (b.staggerAcc >= b.staggerNeed || phaseBreak) {
+        if (phaseBreak) b.phases |= 1 << phase;
+        b.staggerAcc = 0;
         b.flinchAcc = 0;
+        b.staggers++;
+        b.staggerNeed *= 1.45f;
+        b.attack = -1;
         go(b, ST_STUN, t);
-    } else if (b.flinchAcc >= r.flinch_frac * b.maxHp) {
+        log("bosses: %s staggered (%d)", r.id, b.staggers);
+    } else if (b.flinchAcc >= r.flinch_frac * b.maxHp && has(r.anim_flinch)) {
         b.flinchAcc = 0;
+        b.attack = -1;
         go(b, ST_FLINCH, t);
     }
+}
+
+}  // namespace
+
+bool is_boss(const uint8_t* em) { return em >= g_token && em < g_token + kMax; }
+
+bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak) {
+    if (!is_boss(em)) return false;
+    hit_boss(boss_index(em), dmg, at, crit, weak, 1.0f);
     return true;
 }
 
@@ -661,9 +890,12 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         for (Boss& b : g_boss)
             if (b.used) log("bosses: %s leaves (zone change)", B(b).id);
         for (Boss& b : g_boss) b = Boss();
+        for (Proj& p : g_proj) p.live = false;
+        if (g.zone != g_zone) {
+            g_rollAt = t + 40 + frand() * 50;
+            g_rolls = 0;
+        }
         g_zone = g.zone;
-        g_rollAt = t + 40 + frand() * 50;
-        g_rollTries = 0;
     }
     if (!allowed) {
         std::lock_guard<std::mutex> lk(g_lock);
@@ -671,32 +903,51 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         g_hud.clear();
         g_creatureBars.clear();
         g_marks.clear();
+        g_glows.clear();
+        g_rings.clear();
         return 0;
     }
+    float largest = 0;
+    int rank = area_rank(g, &largest);
+    if (rank != g_zoneRank) {
+        log("bosses: zone %d reads as %s (largest MHW monster %.0f hp)", g.zone, kRankName[rank], largest);
+        g_zoneRank = rank;
+    }
 
-    // Roaming: a roll for each zone visit (fields only).
-    if (!g.inBase && g_rollAt > 0 && t >= g_rollAt && g_rollTries < 6) {
-        g_rollTries++;
-        g_rollAt = 0;
-        for (int row = 0; row < kBossesCount; row++) {
-            if (!zone_listed(kBosses[row], g.zone) || frand() >= kBosses[row].spawn_chance) continue;
+    // Roaming: a roll per zone visit (fields only), and again a while after a boss is gone. Only bosses whose rank
+    // fits the zone (the strongest stay out of low-rank zones).
+    bool anyUsed = false;
+    for (Boss& b : g_boss) anyUsed |= b.used;
+    if (!g.inBase && g_rollAt > 0 && t >= g_rollAt && !anyUsed && g_rolls < 3) {
+        g_rolls++;
+        g_rollAt = t + 360 + frand() * 240;
+        if (frand() < tune(TUNING_BOSS_ZONE_CHANCE)) {
+            float total = 0;
+            int pick = -1;
+            for (int row = 0; row < kBossesCount; row++) {
+                const Bosses& r = kBosses[row];
+                if (!zone_listed(r, g.zone) || min_rank(row) > rank || r.spawn_weight <= 0) continue;
+                total += r.spawn_weight;
+                if (frand() * total <= r.spawn_weight) pick = row;
+            }
             Vec3 p;
             bool placed = false;
-            for (int k = 0; k < 10 && !placed; k++) placed = place_near(g, frand() * 2 * kPi, 6000 + frand() * 5000, &p);
-            if (placed) spawn(l, row, p, frand() * 2 * kPi, t);
-            else g_rollAt = t + 20;  // try again from another spot
-            break;
+            for (int k = 0; k < 10 && pick >= 0 && !placed; k++)
+                placed = place_near(g, frand() * 2 * kPi, 6000 + frand() * 5000, &p);
+            if (placed) spawn(l, pick, p, frand() * 2 * kPi, t);
+            else if (pick >= 0) g_rollAt = t + 20;  // try again from another spot
         }
     }
-    // Debug / training: the boss key brings the next boss 30 m in front of the hunter.
+    // Debug / training: the boss key brings the next boss 30 m in front of the hunter (any rank, to try them all).
     bool key = key_down(keys().boss);
     if (key && !g_keyWas && kBossesCount > 0 && g.view.valid) {
         Vec3 f = sub(g.view.camTarget, g.view.camPos);
         float yaw = atan2f(f.x, f.z);
         Vec3 p;
         if (place_near(g, yaw, 3000, &p) || place_near(g, yaw, 1500, &p)) {
-            spawn(l, g_nextDebugRow % kBossesCount, p, wrap(yaw + kPi), t);
-            g_nextDebugRow++;
+            int row = g_nextDebugRow++ % kBossesCount;
+            spawn(l, row, p, wrap(yaw + kPi), t);
+            toast(l, "%s approaches (%s)", display_name(row).c_str(), kRankName[rank]);
         } else {
             toast(l, "No ground there for a Remnant boss");
         }
@@ -704,7 +955,8 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     g_keyWas = key;
     if (key_down(VK_SPACE)) g_dodgeAt = t;
 
-    melee(l, t);
+    mhw_weapons(l, t);
+    ev |= projectiles(g, t, dt);
 
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];
@@ -716,20 +968,22 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             bool af = false;
             const Anim* idle = m ? anim_of(b.row, anim_path(b.row, r.anim_idle), &af) : nullptr;
             if (failed || af) {
-                toast(l, "Remnant II's %s could not be read", r.id);
+                toast(l, "Remnant II's %s could not be read", display_name(b.row).c_str());
                 log("bosses: %s: model or idle animation unreadable, removed", r.id);
                 b = Boss();
                 continue;
             }
             if (!idle) {
-                if (t - b.stT0 > 90) { log("bosses: %s: still loading after 90 s, removed", r.id); b = Boss(); }
+                if (t - b.stT0 > 120) { log("bosses: %s: still loading after 120 s, removed", r.id); b = Boss(); }
                 continue;
             }
+            make_frame(b);
             float y;
             if (ground(b.pos, &y)) b.pos.y = y;
             go(b, ST_IDLE, t);
             b.goalUntil = t + 2;
-            log("bosses: %s is out (%.0f hp)", r.id, b.maxHp);
+            log("bosses: %s is out (%.0f hp, %.1f x %.1f x %.1f m)", r.id, b.maxHp, (b.fr.aMax - b.fr.aMin) / 100,
+                (b.fr.cMax - b.fr.cMin) / 100, (b.fr.zMax - b.fr.zMin) / 100);
         }
         // Animation clocks.
         b.at += dt;
@@ -740,12 +994,14 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
                 b.looted = true;
                 ev |= BOSS_EV_KILL;
                 loot(s, l, b);
+                g_rollAt = t + 360 + frand() * 240;
             }
-            if (t - b.stT0 > 14) b.sink += dt * 120.0f;
-            if (b.sink > 900) b = Boss();
+            float hold = has(r.anim_death) ? 14.0f : 1.0f;
+            if (t - b.stT0 > hold) b.sink += dt * std::max(120.0f, height_of(b) * 0.4f);
+            if (b.sink > height_of(b) + 300) b = Boss();
             continue;
         }
-        ev |= think(b, s, l, t, dt);
+        ev |= think(b, l, t, dt);
         float y;
         if (ground(b.pos, &y) && fabsf(y - b.pos.y) < 400) b.pos.y += (y - b.pos.y) * std::min(1.0f, dt * 12);
     }
@@ -754,8 +1010,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];
         if (!b.used || b.st == ST_LOADING || b.st == ST_DEAD) continue;
-        float mn[3], mx[3];
-        extent(b, mn, mx);
+        const Frame& fr = b.fr;
         Vec3 f = fwd_of(b.yaw), r = right_of(b.yaw), up = {0, 1, 0};
         Monster m{};
         m.em = &g_token[i];
@@ -767,9 +1022,10 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         for (int k = 0; k < 3; k++) {
             m.rot[k][0] = axes[k].x; m.rot[k][1] = axes[k].y; m.rot[k][2] = axes[k].z; m.rot[k][3] = 0;
         }
-        m.center = add(b.pos, add(mul(f, (mn[1] + mx[1]) / 2), add(mul(up, (mn[2] + mx[2]) / 2), mul(r, -(mn[0] + mx[0]) / 2))));
-        m.half = {(mx[0] - mn[0]) * 0.45f, (mx[2] - mn[2]) * 0.45f, (mx[1] - mn[1]) * 0.45f};
+        m.center = add(b.pos, add(mul(f, (fr.aMin + fr.aMax) / 2), add(mul(up, (fr.zMin + fr.zMax) / 2), mul(r, (fr.cMin + fr.cMax) / 2))));
+        m.half = {(fr.cMax - fr.cMin) * 0.45f, (fr.zMax - fr.zMin) * 0.45f, (fr.aMax - fr.aMin) * 0.45f};
         m.obbOk = true;
+        snprintf(m.kind, sizeof(m.kind), "r2boss");
         l.snap.monsters.push_back(m);
     }
 
@@ -779,6 +1035,10 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     g_hud.clear();
     g_creatureBars.clear();
     g_marks.clear();
+    g_glows.clear();
+    g_rings.clear();
+    for (const Proj& p : g_proj)
+        if (p.live) g_glows.push_back({p.p, p.radius, p.color});
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];
         if (!b.used || b.st == ST_LOADING) continue;
@@ -794,17 +1054,26 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         d.blend = b.fade;
         world_matrix(b, d.world);
         g_draw.push_back(d);
+        // area attacks winding up: their reach on the ground
+        if (b.st == ST_ATTACK && b.attack >= 0 && kBoss_attacks[b.attack].kind == BOSS_ATTACKS_KIND_AOE) {
+            const Boss_attacks& a = kBoss_attacks[b.attack];
+            float first = 1, firstEnd = 1, len = std::max(0.1f, anim_len(b, b.anim));
+            window(a.hits, 0, &first, &firstEnd);
+            float frac = b.at / len;
+            if (frac < firstEnd)
+                g_rings.push_back({b.pos, a.reach_m * 100.0f * B(b).scale, std::min(1.0f, frac / std::max(0.05f, first)),
+                                   parse_color(B(b).fx_color)});
+        }
         float dist = hlen(sub(g.pos, b.pos));
         if (b.st != ST_DEAD) g_marks.push_back({b.pos, b.row, b.aggro});
         if (B(b).tier == BOSSES_TIER_BOSS) {
-            g_hud.push_back({b.row, b.hp, b.maxHp, b.aggro || (b.st == ST_DEAD && dist < 8000), b.st == ST_DEAD, b.stT0});
+            g_hud.push_back({b.row, b.hp, b.maxHp, b.aggro || (b.st == ST_DEAD && dist < 8000), b.st == ST_DEAD, b.stT0,
+                             b.rank, b.st == ST_STUN});
         } else if (b.st != ST_DEAD && dist < 6000) {
-            float mn[3], mx[3];
-            extent(b, mn, mx);
-            const std::string& nm = r2_text(B(b).name);
+            std::string nm = display_name(b.row);
             g_creatureBars.push_back({&g_token[i], B(b).tier == BOSSES_TIER_ELITE ? 1 : 0,
                                       B(b).tier == BOSSES_TIER_ELITE ? nm : std::string(), b.hp, b.maxHp,
-                                      {b.pos.x, b.pos.y + mx[2] + 60, b.pos.z}});
+                                      {b.pos.x, b.pos.y + b.fr.zMax + 60, b.pos.z}});
         }
     }
     return ev;
@@ -816,11 +1085,11 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
         std::lock_guard<std::mutex> lk(g_lock);
         list = g_draw;
     }
-    if (list.empty()) return;
     GameView v;
     if (!camera_view(&v)) return;
     std::vector<DrawItem> items;
-    items.reserve(list.size());
+    items.reserve(list.size() + 1);
+    static std::set<std::string> keep;  // stable storage for the texture asset strings
     for (const DrawBoss& d : list) {
         if (!d.m) continue;
         const Bosses& r = kBosses[d.row];
@@ -831,9 +1100,11 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
         const Anim* b = d.b.empty() ? nullptr : anim_get(d.b.c_str(), r.skeleton, d.m);
         // A one-shot animation's time is held at its end by the game thread; looping ones wrap here.
         pose(*d.m, a, d.at, true, b, d.bt, b ? d.blend : 0.0f, &it.palette);
-        // Textures per material slot: "slot=asset" entries, matched by slot name.
-        static std::set<std::string> keep;  // stable storage for the asset strings
-        it.diffuse.assign(d.m->materials.size(), nullptr);
+        // Textures per material slot: "slot=asset" entries matched by slot name; "*=asset" for every other slot.
+        size_t slots = d.m->materials.size();
+        for (const ModelSection& s : d.m->sections) slots = std::max(slots, (size_t)std::max<int16_t>(0, s.material) + 1);
+        it.diffuse.assign(slots, nullptr);
+        const char* fallback = nullptr;
         std::string all = r.textures;
         size_t i = 0;
         while (i < all.size()) {
@@ -843,16 +1114,19 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
             size_t eq = e.find('=');
             if (eq != std::string::npos) {
                 std::string slot = e.substr(0, eq), asset = e.substr(eq + 1);
-                for (size_t k = 0; k < d.m->materials.size(); k++) {
-                    std::string mat = d.m->materials[k];
-                    if (it.diffuse[k] || mat.find(slot) == std::string::npos) continue;
-                    it.diffuse[k] = keep.insert(asset).first->c_str();
-                }
+                const char* kept = keep.insert(asset).first->c_str();
+                if (slot == "*") fallback = kept;
+                for (size_t k = 0; k < d.m->materials.size() && slot != "*"; k++)
+                    if (!it.diffuse[k] && d.m->materials[k].find(slot) != std::string::npos) it.diffuse[k] = kept;
             }
             i = j + 1;
         }
+        for (auto& tx : it.diffuse)
+            if (!tx) tx = fallback;
         items.push_back(std::move(it));
     }
+    gunmodel_append(&items);
+    if (items.empty()) return;
     render3d_frame(dev, ctx, rtv, w, h, v.view, v.proj, items);
 }
 
@@ -860,6 +1134,8 @@ void bosses_hud() {
     std::vector<HudBoss> hud;
     std::vector<Bar> bars;
     std::vector<Mark> marks;
+    std::vector<Glow> glows;
+    std::vector<Ring> rings;
     Docked focus;
     bool hasFocus;
     Number nums[32];
@@ -872,9 +1148,12 @@ void bosses_hud() {
         focus = g_focus;
         hasFocus = g_hasFocus;
         marks = g_marks;
+        glows = g_glows;
+        rings = g_rings;
         memcpy(nums, g_numbers, sizeof(nums));
         hurtAt = g_hurtAt;
     }
+    gunmodel_hud();
     double t = now_s();
     ImGuiViewport* vp = ImGui::GetMainViewport();
     ImDrawList* dl = ImGui::GetForegroundDrawList();
@@ -892,6 +1171,32 @@ void bosses_hud() {
     }
     GameView v;
     bool viewOk = camera_view(&v);
+    // Area attacks winding up: a ring on the ground at their reach. Projectiles: a glow in the boss's colour.
+    if (viewOk) {
+        ImDrawList* bg = ImGui::GetBackgroundDrawList();
+        for (const Ring& r : rings) {
+            ImVec2 pts[40];
+            int n = 0;
+            for (int k = 0; k < 40; k++) {
+                float a = k * 2 * kPi / 40;
+                Vec3 p = {r.c.x + r.radius * cosf(a), r.c.y + 30, r.c.z + r.radius * sinf(a)};
+                if (project(v, p, vp->Pos, vp->Size, &pts[n])) n++;
+            }
+            ImU32 c = (r.color & 0x00FFFFFF) | ((ImU32)(90 + 140 * r.k) << 24);
+            if (n > 2) bg->AddPolyline(pts, n, c, n == 40 ? ImDrawFlags_Closed : 0, (2.0f + 3.0f * r.k) * sc);
+        }
+        for (const Glow& gl : glows) {
+            ImVec2 p;
+            if (!project(v, gl.p, vp->Pos, vp->Size, &p)) continue;
+            float d = std::max(100.0f, len3(sub(gl.p, v.camPos)));
+            float rad = std::max(4.0f, std::min(70.0f, gl.radius * 900.0f / d)) * sc;
+            ImU32 core = IM_COL32(255, 255, 255, 230), mid = (gl.color & 0x00FFFFFF) | (200u << 24),
+                  halo = (gl.color & 0x00FFFFFF) | (60u << 24);
+            bg->AddCircleFilled(p, rad * 2.2f, halo, 24);
+            bg->AddCircleFilled(p, rad, mid, 20);
+            bg->AddCircleFilled(p, rad * 0.45f, core, 12);
+        }
+    }
     // Tracker: where the Remnant creatures in this zone are, relative to the camera (until MHW's own minimap can
     // carry them). A strip at the top of the screen, half a turn wide.
     float y = vp->Pos.y + 38 * sc;
@@ -945,14 +1250,18 @@ void bosses_hud() {
         shown++;
         float w = std::min(760.0f * sc, vp->Size.x * 0.5f), bh = 11 * sc;
         float x0 = vp->Pos.x + (vp->Size.x - w) / 2;
-        const std::string& nm = r2_text(kBosses[h.row].name);
-        std::string name = nm.empty() ? kBosses[h.row].id : nm;
+        std::string name = display_name(h.row);
         for (char& c : name) c = (char)toupper((unsigned char)c);
         ImFont* title = ui_font(2);
         float fs = 26 * sc;
         ImVec2 ts = title->CalcTextSizeA(fs, FLT_MAX, 0, name.c_str());
         dl->AddText(title, fs, {x0 + 1, y + 1}, IM_COL32(0, 0, 0, 200), name.c_str());
         dl->AddText(title, fs, {x0, y}, IM_COL32(236, 228, 214, 255), name.c_str());
+        if (!h.dead) {  // the zone's rank, MHW style
+            const char* rk = kRankName[std::max(0, std::min(2, h.rank))];
+            ImVec2 rs = ui_font(1)->CalcTextSizeA(14 * sc, FLT_MAX, 0, rk);
+            dl->AddText(ui_font(1), 14 * sc, {x0 + w - rs.x, y + fs - rs.y - 2}, IM_COL32(214, 180, 96, 230), rk);
+        }
         if (h.dead) {
             const char* sl = "SLAIN";
             ImVec2 ss = ui_font(1)->CalcTextSizeA(16 * sc, FLT_MAX, 0, sl);
@@ -1046,5 +1355,6 @@ void bosses_hud() {
         dl->AddText(f, fs, at, col, txt);
     }
 }
+
 
 }  // namespace rh

@@ -140,7 +140,7 @@ bool readMesh(const Bytes& d, Mesh* out, std::string* err) {
                 r.b();                  // bVisibleInRayTracing
                 secs[s].baseVertex = r.get<uint32_t>();
                 int32_t nCloth = r.count(4, 64);
-                for (int c = 0; c < nCloth; c++) { int32_t m = r.count(36); r.skip((size_t)m * 36); }
+                for (int c = 0; c < nCloth; c++) { int32_t m = r.count(64); r.skip((size_t)m * 64); }  // FMeshToMeshVertData
                 int32_t nMap = r.count(2, 65536);
                 boneMaps[s].resize(nMap);
                 for (int k = 0; k < nMap; k++) boneMaps[s][k] = r.get<uint16_t>();

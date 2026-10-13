@@ -1,13 +1,15 @@
 {
  "sheet": "bosses",
  "phase": "v0.2",
- "about": "Remnant II bosses that roam MHW's field zones as creatures of their own. Assets are read from the player's Remnant II install at run time; nothing of Remnant II is shipped. Animation names are relative to anim_dir. Distances in metres, speeds in m/s, hp in MHW units. tier: boss = Remnant II's large boss bar at the top of the screen; elite / creature = a bar over the creature.",
+ "about": "Remnant II's bosses roaming MHW's field zones as creatures of their own, written by tools/author_bosses.py from the player's install (asset paths and text keys only). tier: boss = Remnant II's large bar at the top of the screen; elite / creature = a bar over it. forward: the axis the model faces (py = +y, nx = -x ...). threat 1-5: strength, and min_rank, the lowest MHW rank whose zones it roams (lr / hr / mr). hp_mult: times the rank's boss HP (tuning). flinch_frac / stagger_frac: share of max HP that makes it flinch / stagger (stagger grows each time). melee_hits: MHW melee hits to kill it at an average weapon. zones: MHW stage ids. fx_color: its projectiles. Animation names are relative to anim_dir; none = it has no such animation.",
  "columns": {
   "id": "id",
-  "name": "r2text",
+  "name": "r2text|none",
+  "title": "str",
   "tier": "enum:boss|elite|creature",
   "mesh": "str",
   "skeleton": "str",
+  "forward": "enum:py|ny|px|nx",
   "textures": "list",
   "anim_dir": "str",
   "anim_idle": "str",
@@ -20,23 +22,25 @@
   "anim_stun": "str",
   "anim_death": "str",
   "scale": "num",
-  "hp_base": "num",
-  "hp_vs_zone": "num",
+  "threat": "num",
+  "min_rank": "enum:lr|hr|mr",
+  "hp_mult": "num",
   "walk_mps": "num",
   "run_mps": "num",
   "turn_dps": "num",
   "aggro_m": "num",
   "leash_m": "num",
   "flinch_frac": "num",
-  "stun_at": "num",
+  "stagger_frac": "num",
   "melee_hits": "num",
-  "snd_roar": "r2snd",
-  "snd_pain": "r2snd",
-  "snd_death": "r2snd",
-  "snd_step": "r2snd",
+  "snd_roar": "r2snd|none",
+  "snd_pain": "r2snd|none",
+  "snd_death": "r2snd|none",
+  "snd_step": "r2snd|none",
   "zones": "list",
-  "spawn_chance": "num",
-  "loot": "list"
+  "spawn_weight": "num",
+  "loot": "list",
+  "fx_color": "str"
  },
  "rows": [
   {
@@ -47,9 +51,11 @@
      "key": "CC8E9EEC47F0439BEDED4786CB0CB475"
     }
    },
+   "title": "Corrupted Ravager",
    "tier": "boss",
    "mesh": "Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Mesh/Corrupted_Ravager.uasset",
    "skeleton": "Remnant2/Content/World_Jungle/Characters/Pan_Wolf/Mesh/Pan_Wolf_Skeleton.uasset",
+   "forward": "py",
    "textures": [
     "fur=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/ravager_fur.uasset",
     "A01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/T_corrupted_ravager_A01_Diff.uasset",
@@ -68,30 +74,1652 @@
    "anim_stun": "Pan_Wolf_Impact_Stun",
    "anim_death": "Pan_Wolf_Impact_Death",
    "scale": 1.0,
-   "hp_base": 9000,
-   "hp_vs_zone": 1.2,
+   "threat": 3,
+   "min_rank": "hr",
+   "hp_mult": 1.15,
    "walk_mps": 3.2,
    "run_mps": 10.5,
    "turn_dps": 120,
    "aggro_m": 40,
    "leash_m": 160,
-   "flinch_frac": 0.09,
-   "stun_at": 0.5,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
    "melee_hits": 140,
    "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Howl.uasset",
    "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Pain_Heavy.uasset",
    "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Voc_Pan_Wolf_Death.uasset",
    "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Pan_Wolf/Foley_Wolf_Heavy_Short.uasset",
    "zones": [
-    "any"
+    "101",
+    "109"
    ],
-   "spawn_chance": 0.5,
+   "spawn_weight": 1.0,
    "loot": [
     "amulets.ravagers_mark",
     "weapons.feraljudgment",
     "weapons.merciless",
     "weapons.reddoestaff"
-   ]
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "nightweaver",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Characters/Nightweaver/Blueprints/Char_Nightweaver.uasset",
+     "key": "0DF0945F41174AA0D02CF5AEE82F34F0"
+    }
+   },
+   "title": "The Nightweaver",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Fae/Characters/Nightweaver/Mesh/Nightweaver.uasset",
+   "skeleton": "Remnant2/Content/World_Fae/Characters/Nightweaver/Mesh/Nightweaver_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_Fae/Characters/Nightweaver/Textures/T_Nightweaver_Arms_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Fae/Characters/Nightweaver/",
+   "anim_idle": "Animations/Nightweaver_Crawl_Idle",
+   "anim_walk": "Animations/Minion/Nightweaver_Minion_Walk_F",
+   "anim_run": "Animations/Minion/Nightweaver_Minion_Run_F",
+   "anim_turn_l": "Animations/Nightweaver_Crawl_Turn90_L",
+   "anim_turn_r": "Animations/Nightweaver_Crawl_Turn90_R",
+   "anim_roar": "Animations/Nightweaver_Atk_Dash_Roar",
+   "anim_flinch": "Animations/Minion/Nightweaver_Minion_Flinch_F",
+   "anim_stun": "Animations/Nightweaver_Ceiling_Knockdown_Fall",
+   "anim_death": "Animations/Nightweaver_Death",
+   "scale": 1.0,
+   "threat": 3,
+   "min_rank": "hr",
+   "hp_mult": 1.15,
+   "walk_mps": 1.8,
+   "run_mps": 4.68,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Voc/Voc_NightWeaver_Laugh.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Voc/Voc_NightWeaver_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Voc/Voc_NightWeaver_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Nightweaver/Boss/Boss_NW_Foley_FS_Floor_Heavy.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.fae_hunter_ring",
+    "amulets.birthright_of_the_lost",
+    "rings.leaking_gemstone",
+    "amulets.magnifying_glass",
+    "rings.booster_ring",
+    "rings.ring_of_the_vain"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "faerin",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Blueprints/Char_Fae_King_Ranged.uasset",
+     "key": "852E8FDD44974B213816CAAFEBC19E96"
+    }
+   },
+   "title": "Faerin",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin.uasset",
+   "skeleton": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Skeleton.uasset",
+   "forward": "px",
+   "textures": [
+    "*=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Steel_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/",
+   "anim_idle": "Animations/Faelin_Faerin_Idle",
+   "anim_walk": "Animations/Faelin_Faerin_Walk_F",
+   "anim_run": "none",
+   "anim_turn_l": "none",
+   "anim_turn_r": "none",
+   "anim_roar": "none",
+   "anim_flinch": "Animations/Faelin_Faerin_Shield_Layer_Break_Impact",
+   "anim_stun": "Animations/Faelin_Faerin_Shield_Break_Stagger",
+   "anim_death": "Animations/Faelin_Faerin_Death",
+   "scale": 1.0,
+   "threat": 3,
+   "min_rank": "hr",
+   "hp_mult": 1.15,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Voc_Faelin_Faerin_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Voc_Faelin_Faerin_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Voc_Faelin_Faerin_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Foley_Heavy_Long.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.faelins_sigil",
+    "rings.faerins_sigil",
+    "weapons.godsplitter",
+    "amulets.shade_bloom_crystal",
+    "amulets.one_eyed_joker_idol",
+    "mutators.misfortune"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "faelin",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Blueprints/Char_Fae_King.uasset",
+     "key": "994D3C864E4635EB904938A7883294F8"
+    }
+   },
+   "title": "Faelin",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin.uasset",
+   "skeleton": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Skeleton.uasset",
+   "forward": "px",
+   "textures": [
+    "*=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Golden_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/",
+   "anim_idle": "Animations/Faelin_Faerin_Idle",
+   "anim_walk": "Animations/Faelin_Faerin_Walk_F",
+   "anim_run": "none",
+   "anim_turn_l": "none",
+   "anim_turn_r": "none",
+   "anim_roar": "none",
+   "anim_flinch": "Animations/Faelin_Faerin_Shield_Layer_Break_Impact",
+   "anim_stun": "Animations/Faelin_Faerin_Shield_Break_Stagger",
+   "anim_death": "Animations/Faelin_Faerin_Death",
+   "scale": 1.0,
+   "threat": 3,
+   "min_rank": "hr",
+   "hp_mult": 1.15,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Voc_Faelin_Faerin_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Voc_Faelin_Faerin_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Voc_Faelin_Faerin_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Faelin_Faerin/Faelin_Faerin_Foley_Heavy_Long.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.faerins_sigil",
+    "weapons.deceit",
+    "amulets.jesters_bell",
+    "relics.unsullied_heart",
+    "rings.faelins_sigil",
+    "rings.catalogers_jewel"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "shahala",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Blueprints/Phantom/Char_Nerud_Guardian_Phantom.uasset",
+     "key": "935F18974D0E980515DC09BDEBFDBB19"
+    }
+   },
+   "title": "Sha’Hala : Spectral Guardian of N’Erud ",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Mesh/Nerud_Guardian_4Arms.uasset",
+   "skeleton": "Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Mesh/Nerud_Guardian_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "Nerud_Guardian_Metal=Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Textures/T_Nerud_Guardian_Diff.uasset",
+    "Nerud_Guardian=Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Textures/T_Nerud_Guardian_Diff.uasset",
+    "Nerud_Guardian_eyes=Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Textures/T_Nerud_Guardian_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/",
+   "anim_idle": "Animations/Nerud_Guardian_Idle",
+   "anim_walk": "none",
+   "anim_run": "none",
+   "anim_turn_l": "none",
+   "anim_turn_r": "none",
+   "anim_roar": "Animations/Nerud_Guardian_Intro_01",
+   "anim_flinch": "none",
+   "anim_stun": "none",
+   "anim_death": "Animations/Nerud_Guardian_Death",
+   "scale": 0.36,
+   "threat": 3,
+   "min_rank": "hr",
+   "hp_mult": 1.15,
+   "walk_mps": 0,
+   "run_mps": 0,
+   "turn_dps": 80,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Voc_Guardian_Scream_A.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Voc_Guardian_Pain_A.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Voc_Guardian_Death_A.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Nerud_Guardian/Guardian_Shared_Foley_Blackhole_Start.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "mods.prismatic_driver"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "tal_ratha",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Blueprints/Char_Nerud_TalRatha.uasset",
+     "key": "8BB4CCD5446726EE860E87B2F310CD46"
+    }
+   },
+   "title": "Tal'Ratha",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Mesh/Nerud_TalRatha.uasset",
+   "skeleton": "Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Mesh/Nerud_TalRatha_Skeleton.uasset",
+   "forward": "ny",
+   "textures": [
+    "M_Tongue=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Tongue_Diff.uasset",
+    "M_Tubes=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Tubes_Diff.uasset",
+    "M_FaceMask=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_FaceMask_Diff.uasset",
+    "M_Plugs=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Plugs_Diff.uasset",
+    "M_Eye=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Eye_Diff.uasset",
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Body_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/",
+   "anim_idle": "Animation/Nerud_TalRatha_Idle",
+   "anim_walk": "Animation/Nerud_TalRatha_Walk_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animation/Nerud_TalRatha_Turn_L_90",
+   "anim_turn_r": "Animation/Nerud_TalRatha_Turn_R_90",
+   "anim_roar": "Animation/Nerud_TalRatha_Taunt_Roar",
+   "anim_flinch": "Animation/Nerud_TalRatha_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animation/Nerud_TalRatha_Impact_Death_01",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 3.49,
+   "run_mps": 3.49,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/Voc_TalRathaC_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/Voc_TalRathaC_Pain_Heavy.uasset",
+   "snd_death": "none",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/TalRatha/TalRatha_Foley_Heavy_Short.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "amulets.inert_overcharger",
+    "rings.impact_augment",
+    "amulets.legacy_protocol",
+    "consumables.light_extract",
+    "amulets.zero_divide",
+    "rings.defensive_action_loop"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "one_true_king",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Characters/True_Fae_King/Blueprints/Char_Fae_True_King.uasset",
+     "key": "4FF44D784C12EEA054ED07814532C545"
+    }
+   },
+   "title": "The One True King",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC1/Characters/True_Fae_King/Mesh/Fae_True_King_DLC.uasset",
+   "skeleton": "Remnant2/Content/World_DLC1/Characters/True_Fae_King/Mesh/Fae_True_King_DLC_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Quests/Quest_Boss_OneTrueKing/Textures/T_Quest_Boss_OneTrueKing_BodyPile_A_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC1/Characters/True_Fae_King/",
+   "anim_idle": "Animations/Fae_True_King_Idle",
+   "anim_walk": "Animations/Fae_True_King_Move_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Fae_True_King_Turn_90_L",
+   "anim_turn_r": "Animations/Fae_True_King_Turn_90_R",
+   "anim_roar": "none",
+   "anim_flinch": "Animations/Fae_True_King_Impact_Death",
+   "anim_stun": "none",
+   "anim_death": "Animations/Fae_True_King_Impact_Death",
+   "scale": 1.0,
+   "threat": 5,
+   "min_rank": "mr",
+   "hp_mult": 1.45,
+   "walk_mps": 2.31,
+   "run_mps": 2.31,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/Voc_DLC1_Fae_OTK_Laugh.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/Voc_DLC1_Fae_OTK_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/Voc_DLC1_Fae_OTK_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_WorldBoss_OTK/OTK_Foley_Heavy_Long.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.fae_warrior_ring",
+    "rings.ring_of_the_robust",
+    "amulets.hangmans_noose",
+    "rings.fae_bruiser_ring",
+    "rings.booster_ring",
+    "rings.black_spinel"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "lydusa",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Characters/LS_Lydusa/Blueprints/Char_LS_Lydusa.uasset",
+     "key": "1FE6453847CE45480370DF9F28E8C168"
+    }
+   },
+   "title": "Lydusa",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC2/Characters/LS_Lydusa/Mesh/Lydusa_Boss.uasset",
+   "skeleton": "Remnant2/Content/World_DLC2/Characters/LS_Lydusa/Mesh/Lydusa_Boss_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Characters/LS_Lydusa/Textures/Lydusa_Boss/T_Lydusa_Boss_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC2/Characters/LS_Lydusa/",
+   "anim_idle": "Animations/Lydusa_Boss_Idle",
+   "anim_walk": "Animations/Lydusa_Boss_Move_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Lydusa_Boss_Turn90_L",
+   "anim_turn_r": "Animations/Lydusa_Boss_Turn90_R",
+   "anim_roar": "Animations/Lydusa_Boss_Atk_Gemstone_Scream",
+   "anim_flinch": "Animations/Lydusa_Boss_Impact_Flinch_Head_LD",
+   "anim_stun": "none",
+   "anim_death": "Animations/Lydusa_Boss_Death",
+   "scale": 1.0,
+   "threat": 5,
+   "min_rank": "mr",
+   "hp_mult": 1.45,
+   "walk_mps": 2.23,
+   "run_mps": 2.23,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/Voc_Lydusa_AbbyTrott_Laugh.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/Voc_Lydusa_AbbyTrott_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/Voc_Lydusa_AbbyTrott_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Lydusa/LS_Lydusa_Foley_Body_Move_Long.uasset",
+   "zones": [
+    "101",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.kolket_eyelet",
+    "rings.sagestone",
+    "rings.stone_of_balance",
+    "rings.celerity_stone",
+    "amulets.canine_keepsake",
+    "amulets.sinister_totem"
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "alepsis_taura",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Characters/Nerud_Alepsis_Taura/Blueprints/Boss/Char_Nerud_Alepsis_Taura.uasset",
+     "key": "5CC7605E46EACD0D6E15EEB26DC0B141"
+    }
+   },
+   "title": "Alepsis-Taura",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC3/Characters/Nerud_Alepsis_Taura/Mesh/Alepsis_Taura_Octohedron_Lite.uasset",
+   "skeleton": "Remnant2/Content/World_DLC3/Characters/Nerud_Alepsis_Taura/Mesh/Alepsis_Taura_Skeleton.uasset",
+   "forward": "nx",
+   "textures": [
+    "*=Remnant2/Content/World_DLC3/Characters/Nerud_Alepsis_Taura/Textures/T_Alepsis_Taura_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC3/Characters/Nerud_Alepsis_Taura/",
+   "anim_idle": "Animations/Alepsis_Taura_Idle",
+   "anim_walk": "none",
+   "anim_run": "none",
+   "anim_turn_l": "none",
+   "anim_turn_r": "none",
+   "anim_roar": "none",
+   "anim_flinch": "Animations/Alepsis_Taura_Atk_Box_Launch_Impact",
+   "anim_stun": "none",
+   "anim_death": "Animations/Alepsis_Taura_Fake_Death",
+   "scale": 1.0,
+   "threat": 5,
+   "min_rank": "mr",
+   "hp_mult": 1.45,
+   "walk_mps": 0,
+   "run_mps": 0,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/Voc_Nerud_Alepsis_Taura_Laugh.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/Voc_Nerud_Alepsis_Taura_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/Voc_Nerud_Alepsis_Taura_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_AlepsisTaura/DLC3_AlepsisTaura_ST/DLC3_AT_Foley_Heavy_Long.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "relics.void_heart"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "annihilation",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Characters/Root_WorldBoss/Blueprints/Char_Root_WorldBoss.uasset",
+     "key": "1E01F4C04DA071F3859A0C83C12CC223"
+    }
+   },
+   "title": "Annihilation",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Root/Characters/Root_WorldBoss/Mesh/Root_WorldBoss.uasset",
+   "skeleton": "Remnant2/Content/World_Root/Characters/Root_WorldBoss/Mesh/Root_WorldBoss_Skeleton.uasset",
+   "forward": "nx",
+   "textures": [
+    "M_root_worldboss_dreamer_bottom=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Diff.uasset",
+    "Root_WorldBoss_WingFlap=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_WorldBoss_WingFlap_Diff.uasset",
+    "Root_WorldBoss01=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_WorldBoss_Diff.uasset",
+    "M_root_worldboss_dreamer_rarm=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Diff.uasset",
+    "M_root_worldboss_dreamer_larm=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Diff.uasset",
+    "Root_Wings=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_WorldBoss_Diff.uasset",
+    "M_root_worldboss_dreamer_body=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Diff.uasset",
+    "*=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_WorldBoss_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Root/Characters/Root_WorldBoss/",
+   "anim_idle": "Animations/Root_WorldBoss_Hover_Idle",
+   "anim_walk": "Animations/Root_WorldBoss_Hover_Move_F",
+   "anim_run": "none",
+   "anim_turn_l": "none",
+   "anim_turn_r": "none",
+   "anim_roar": "Animations/WorldBoss_Tentacle/Root_WorldBoss_Tentacle_Alert_01_Glitch",
+   "anim_flinch": "Animations/Root_WorldBoss_Dreamer_Flinch_01",
+   "anim_stun": "Animations/Root_WorldBoss_Dreamer_Stagger_Flinch_01",
+   "anim_death": "Animations/Root_WorldBoss_Death_01",
+   "scale": 1.0,
+   "threat": 5,
+   "min_rank": "mr",
+   "hp_mult": 1.45,
+   "walk_mps": 2.84,
+   "run_mps": 2.84,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_VOC/Voc_Root_FinalBoss_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_VOC/Voc_Root_FinalBoss_Pain.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_VOC/Voc_Root_FinalBoss_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_FinalBoss/Root_FinalBoss_Foley/Root_FinalBoss_Footstep_Sweetener.uasset",
+   "zones": [
+    "104",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "weapons.alphaomega"
+   ],
+   "fx_color": "#FF4A2A"
+  },
+  {
+   "id": "abomination",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Blueprints/Miniboss/Char_Nerud_Abomination_Miniboss.uasset",
+     "key": "213935514269733F231E9E8BE666B28F"
+    }
+   },
+   "title": "Abomination",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Mesh/Nerud_Abomination.uasset",
+   "skeleton": "Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Mesh/Nerud_Abomination_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "M_Abomination_04=Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Textures/T_Nerud_Abomination_01_Diff.uasset",
+    "M_Abomination_01=Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Textures/T_Nerud_Abomination_01_Diff.uasset",
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Textures/T_Nerud_Abomination_01_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/",
+   "anim_idle": "Animation/Nerud_Abomination_Idle",
+   "anim_walk": "Animation/Nerud_Abomination_Walk_F",
+   "anim_run": "Animation/Nerud_Abomination_Run_F",
+   "anim_turn_l": "Animation/Nerud_Abomination_Turn_90_L",
+   "anim_turn_r": "Animation/Nerud_Abomination_Turn_90_R",
+   "anim_roar": "Animation/Nerud_Abomination_Alert_01",
+   "anim_flinch": "Animation/Nerud_Abomination_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animation/Nerud_Abomination_Impact_Death_B_01",
+   "scale": 1.0,
+   "threat": 3,
+   "min_rank": "hr",
+   "hp_mult": 1.15,
+   "walk_mps": 1.2,
+   "run_mps": 3.12,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Voc_Abomination_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Voc_Abomination_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Voc_Abomination_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Abomination/Foley_Abomination_Heavy_Long.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.transient_cord",
+    "rings.ring_of_ordnance",
+    "rings.shield_alternator",
+    "consumables.binding_orb",
+    "rings.feedback_loop",
+    "rings.infinity_pocket"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "amalgam",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Characters/Nerud_Amalgam/Blueprints/Miniboss/Char_Nerud_Amalgam_Miniboss.uasset",
+     "key": "ED2D85754F9EEBFB17CE908D10066954"
+    }
+   },
+   "title": "Amalgam Miniboss",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC3/Characters/Nerud_Amalgam/Mesh/Nerud_Amalgam_Boss_B.uasset",
+   "skeleton": "Remnant2/Content/World_DLC3/Characters/Nerud_Amalgam/Mesh/Nerud_Amalgam_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_DLC3/Characters/Nerud_Amalgam/Textures/Minibosses/T_Amalgam_MiniBossB_mech_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC3/Characters/Nerud_Amalgam/",
+   "anim_idle": "Animations/Nerud_Amalgam_Idle",
+   "anim_walk": "Animations/Neurd_Amalgam_Walk_F",
+   "anim_run": "Animations/Nerud_Amalgam_Atk_Sprint",
+   "anim_turn_l": "Animations/Nerud_Amalgam_Turn_90_L",
+   "anim_turn_r": "Animations/Nerud_Amalgam_Turn_90_R",
+   "anim_roar": "Animations/Nerud_Amalgam_Enraged",
+   "anim_flinch": "Animations/Nerud_Amalgam_Impact_Flinch_F",
+   "anim_stun": "none",
+   "anim_death": "Animations/Nerud_Amalgam_Death_01",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 1.2,
+   "run_mps": 3.5,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "none",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Atk_Twister_Small_Impact.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Amalgam_MB/DLC3_Amalgam_MB_Death_Orb_Tail.uasset",
+   "snd_step": "none",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.point_focus_ring",
+    "rings.shield_alternator",
+    "rings.vacuum_seal",
+    "amulets.reaction_chain",
+    "amulets.zero_hour",
+    "rings.ring_of_restocking"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "bloat_king",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Characters/Fae_Bloat/Blueprints/Miniboss_BloatKing/Char_Fae_BloatKing.uasset",
+     "key": "BEF8673F4B1423C707EE5EBDF54FB336"
+    }
+   },
+   "title": "Bloat King",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Fae/Characters/Fae_Bloat/Mesh/Fae_Bloat_Boss.uasset",
+   "skeleton": "Remnant2/Content/World_Fae/Characters/Fae_Bloat/Mesh/Fae_Bloat_Skeleton.uasset",
+   "forward": "px",
+   "textures": [
+    "*=Remnant2/Content/World_Fae/Characters/Fae_Bloat/Textures/T_Bloat_Boss_Main_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Fae/Characters/Fae_Bloat/",
+   "anim_idle": "Animations/Fae_Bloat_Idle",
+   "anim_walk": "Animations/Fae_Bloat_Walk_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Fae_Bloat_Turn_L_90",
+   "anim_turn_r": "Animations/Fae_Bloat_Turn_R_90",
+   "anim_roar": "Animations/Fae_Bloat_Alert",
+   "anim_flinch": "Animations/Fae_Bloat_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Fae_Bloat_Pipe_Death",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 0.8,
+   "run_mps": 0.8,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Voc_Fae_BloatKing_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Voc_Fae_BloatKing_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Voc_Fae_BloatKing_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_BloatKing/Fae_BloatKing_Foley_Scuttle_Begin.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "armor.gloves_alchemist",
+    "armor.head_alchemist",
+    "armor.body_alchemist",
+    "rings.drakestone_pearl",
+    "mods.voltaic_rondure",
+    "armor.legs_alchemist"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "custodians_eye",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Blueprints/Miniboss/Character_Nerud_CustodianEye_Miniboss.uasset",
+     "key": "A88F988146EADFD3D6FD20B26F6AA093"
+    }
+   },
+   "title": "The Custodian's Eye",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Mesh/Nerud_CustodianEye_Miniboss.uasset",
+   "skeleton": "Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Mesh/Nerud_CustodianEye_Drone_Skeleton.uasset",
+   "forward": "ny",
+   "textures": [
+    "M_Nerud_CustodianEye_Miniboss_metal=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Diff.uasset",
+    "M_Nerud_CustodianEye_Miniboss_skin=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Diff.uasset",
+    "M_Nerud_CustodianEye_Miniboss=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Diff.uasset",
+    "M_Nerud_CustodianEye_Miniboss_Glow=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/",
+   "anim_idle": "Animations/Nerud_CustodianEye_Idle",
+   "anim_walk": "Animations/Nerud_CustodianEye_Move_F_Loop",
+   "anim_run": "none",
+   "anim_turn_l": "none",
+   "anim_turn_r": "none",
+   "anim_roar": "Animations/Nerud_CustodianEye_Alert_01",
+   "anim_flinch": "Animations/Nerud_CustodianEye_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Nerud_CustodianEye_Miniboss_Death",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 4.0,
+   "run_mps": 4.0,
+   "turn_dps": 80,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/Miniboss/CustodianEye_Miniboss_Add_Voc_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/Miniboss/Voc_CustodianEye_Miniboss_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/Miniboss/CustodianEye_Miniboss_Add_Voc_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/CustodianEye/CustodianEye_Foley_Death.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.power_complex",
+    "rings.reserve_boosting_gem",
+    "rings.closed_loop",
+    "rings.nano_fiber_strand",
+    "rings.impact_augment",
+    "rings.ring_of_ordnance"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "fae_archon",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Characters/Fae_Archon/Blueprints/Miniboss/Char_Fae_Archon_Miniboss.uasset",
+     "key": "9D3057AF42748D9D6D353396120D11B7"
+    }
+   },
+   "title": "Magister Dullain",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Fae/Characters/Fae_Archon/Mesh/Fae_Archon_MiniBoss.uasset",
+   "skeleton": "Remnant2/Content/World_Fae/Characters/Fae_Archon/Mesh/Fae_Archon_Skeleton.uasset",
+   "forward": "px",
+   "textures": [
+    "*=Remnant2/Content/World_Fae/Characters/Fae_Archon/Textures/archon_body_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Fae/Characters/Fae_Archon/",
+   "anim_idle": "Animations/Fae_Archon_Idle",
+   "anim_walk": "Animations/Fae_Archon_Walk_F",
+   "anim_run": "Animations/Fae_Archon_Vault_On_Sprint",
+   "anim_turn_l": "Animations/Fae_Archon_Turn90_L",
+   "anim_turn_r": "Animations/Fae_Archon_Turn90_R",
+   "anim_roar": "Animations/Fae_Archon_Alert_Slam_Staff",
+   "anim_flinch": "Animations/Fae_Archon_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Fae_Archon_Impact_Death_Head",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 1.2,
+   "run_mps": 3.53,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Voc_Fae_Archon_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Voc_Fae_Archon_Pain_Flinch.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Voc_Fae_Archon_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Fae_Archon/Fae_Archon_Foley_Cloth_Heavy_Long.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.fae_hunter_ring",
+    "amulets.chains_of_amplification",
+    "rings.leaking_gemstone",
+    "rings.fae_warrior_ring",
+    "rings.wood_ring",
+    "rings.booster_ring"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "harvester",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Blueprints/Char_Nerud_Harvester.uasset",
+     "key": "FB4B805B46BA83EA0F75C082A4BFA5E9"
+    }
+   },
+   "title": "N'Erudian Reaper",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Mesh/Nerud_Harvester_Mini_Boss.uasset",
+   "skeleton": "Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Mesh/Nerud_Harvester_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "M_Nerud_Harvester_Lungs=Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Textures/T_Nerud_Harvester_Lungs_Diff.uasset",
+    "M_NerudHarvester_Dyn=Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Textures/T_Nerud_Harvester_Diff.uasset",
+    "M_NerudHarvester=Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Textures/T_Nerud_Harvester_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/",
+   "anim_idle": "Animations/Nerud_Harvester_Idle",
+   "anim_walk": "Animations/Nerud_Harvester_Walk_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Nerud_Harvester_Turn_90_L",
+   "anim_turn_r": "Animations/Nerud_Harvester_Turn_90_R",
+   "anim_roar": "Animations/Nerud_Harvester_Possessed_Roar",
+   "anim_flinch": "Animations/Nerud_Harvester_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Nerud_Harvester_Death_B",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/Voc_DLC3_Harvester_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/Voc_DLC3_Harvester_Pain.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/Voc_DLC3_Harvester_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC3/DLC3_Harvester/DLC3_Harvester_Foley_BodyFall.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.tolerance_band",
+    "amulets.emergency_switch",
+    "rings.defensive_action_loop",
+    "rings.ring_of_ordnance",
+    "rings.conservation_seal",
+    "rings.detonating_cord"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "hatchery",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Characters/Nerud_Barnacle_Hatchery/Blueprints/Aberration/Char_Nerud_Barnacle_Hatchery_Aberration.uasset",
+     "key": "7092EFD64637B132CF1AABB2BCBAE895"
+    }
+   },
+   "title": "Befouled Larva",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Nerud/Characters/Nerud_Barnacle_Hatchery/Mesh/Barnacle_Hatchery.uasset",
+   "skeleton": "Remnant2/Content/World_Nerud/Characters/Nerud_Barnacle_Hatchery/Mesh/Barnacle_Hatchery_Skeleton.uasset",
+   "forward": "px",
+   "textures": [
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_Barnacle_Hatchery/Textures/T_Barnacle_Hatchery_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Nerud/Characters/Nerud_Barnacle_Hatchery/",
+   "anim_idle": "Animation/Barnacle_Hatchery_Idle",
+   "anim_walk": "Animation/Barnacle_Hatchery_Move_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animation/Barnacle_Hatchery_Turn_L_90_2",
+   "anim_turn_r": "Animation/Barnacle_Hatchery_Turn_R_90_2",
+   "anim_roar": "Animation/Barnacle_Hatchery_Alert",
+   "anim_flinch": "Animation/Barnacle_Hatchery_Flinch_BL",
+   "anim_stun": "none",
+   "anim_death": "Animation/Barnacle_Hatchery_Death_L",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Voc_Nerud_BarnacleHatchery_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Voc_Nerud_BarnacleHatchery_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Voc_Nerud_BarnacleHatchery_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Barnacle_Hatchery/Foley_Nerud_BarnacleHatchery_Heavy_Long.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "mods.space_crabs"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "impaler",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Characters/Fae_Impaler/Blueprints/Spear/Miniboss/Char_Fae_Impaler_Miniboss.uasset",
+     "key": "17AA1D884E111612DA6C4C9CD732E9C5"
+    }
+   },
+   "title": "Bruin, Blade of the King",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC1/Characters/Fae_Impaler/Mesh/Fae_Impaler_Miniboss.uasset",
+   "skeleton": "Remnant2/Content/World_DLC1/Characters/Fae_Impaler/Mesh/Fae_Impaler_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Characters/Fae_Impaler/Textures/Impaler_Miniboss/T_Fae_Impaler_Miniboss_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC1/Characters/Fae_Impaler/",
+   "anim_idle": "Animations/Fae_Impaler_Idle",
+   "anim_walk": "Animations/Fae_Impaler_Walk_F",
+   "anim_run": "Animations/Fae_Impaler_Dash_F",
+   "anim_turn_l": "Animations/Fae_Impaler_Turn_90_L",
+   "anim_turn_r": "Animations/Fae_Impaler_Turn_90_R",
+   "anim_roar": "Animations/Fae_Impaler_Taunt",
+   "anim_flinch": "Animations/Fae_Impaler_Impact_Flinch_F",
+   "anim_stun": "none",
+   "anim_death": "Animations/Fae_Impaler_Death_01",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 1.2,
+   "run_mps": 2.12,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/Miniboss/Voc_Fae_Impaler_MB_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/Miniboss/Voc_Fae_Impaler_MB_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/Miniboss/Voc_Fae_Impaler_MB_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Fae_Impaler/DLC1_Fae_Impaler_Foley_Plate_Heavy_Long.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.nightmare_sigil",
+    "rings.alchemy_stone",
+    "rings.leaking_gemstone",
+    "rings.red_ring_of_death",
+    "rings.fae_hunter_ring",
+    "amulets.weightless_weight"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "kiln",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_Kiln/Blueprints/Miniboss/Char_LS_Kiln_Miniboss.uasset",
+     "key": "3AB64ADD40D8736ED873008295C2780B"
+    }
+   },
+   "title": "Cinderclad Forge",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_Kiln_MiniBoss/Mesh/Pan_Kiln_MiniBoss.uasset",
+   "skeleton": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_Kiln/Mesh/Pan_LivingStoneKiln_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_Kiln/Textures/T_Living_Stone_Kiln_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_Kiln/",
+   "anim_idle": "Animations/Pan_Kiln_Idle",
+   "anim_walk": "Animations/Pan_Kiln_Walk_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Pan_Kiln_Turn_90_L",
+   "anim_turn_r": "Animations/Pan_Kiln_Turn_90_R",
+   "anim_roar": "Animations/Pan_Kiln_Alert_01",
+   "anim_flinch": "Animations/Pan_Kiln_Impact_F",
+   "anim_stun": "none",
+   "anim_death": "Animations/Pan_Kiln_Death_B_01",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/Voc_LS_Kiln_MB_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/Voc_LS_Kiln_MB_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/Voc_LS_Kiln_MB_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/LS_Kiln_MB/LS_Kiln_MB_Move_Close.uasset",
+   "zones": [
+    "101",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "amulets.beads_of_the_valorous",
+    "rings.ring_of_the_forest_spirit",
+    "amulets.canine_keepsake",
+    "rings.matriarchs_ring",
+    "rings.guardians_ring",
+    "amulets.fragrant_thorn"
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "phantom",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Nerud/Characters/Nerud_Phantom/Blueprints/Miniboss/SuperPhantom/Char_Nerud_Phantom_SUPER.uasset",
+     "key": "423A866E497A3B074C405EB7CE54989B"
+    }
+   },
+   "title": "The Astropath",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Nerud/Characters/Nerud_Phantom/Mesh/Nerud_Phantom.uasset",
+   "skeleton": "Remnant2/Content/World_Nerud/Characters/Nerud_Phantom/Mesh/Nerud_Phantom_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_Phantom/Textures/T_Nerud_Phantom_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Nerud/Characters/Nerud_Phantom/",
+   "anim_idle": "Animations/Nerud_Phantom_Idle",
+   "anim_walk": "Animations/Nerud_Phantom_Move_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Nerud_Phantom_Turn_90_L",
+   "anim_turn_r": "Animations/Nerud_Phantom_Turn_90_R",
+   "anim_roar": "Animations/Nerud_Phantom_Taunt",
+   "anim_flinch": "Animations/Nerud_Phantom_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Nerud_Phantom_Death_B",
+   "scale": 1.0,
+   "threat": 3,
+   "min_rank": "hr",
+   "hp_mult": 1.15,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Voc_Nerud_Phantom_Miniboss_Alert_BP.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Voc_Phantom_Miniboss_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Miniboss/Voc_Phantom_Miniboss_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Nerud/Phantom/Foley_Phantom_Heavy_Long.uasset",
+   "zones": [
+    "102",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "mutators.transference",
+    "armor.head_spaceworker",
+    "rings.tightly_wound_coil",
+    "armor.body_spaceworker",
+    "armor.gloves_spaceworker",
+    "armor.legs_spaceworker"
+   ],
+   "fx_color": "#4FD8FF"
+  },
+  {
+   "id": "root_horror",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Characters/Root_Horror/Blueprints/Miniboss/Char_Root_Horror_Miniboss.uasset",
+     "key": "A140C9E54FAE2B09B461CC8E9819A5B1"
+    }
+   },
+   "title": "Kaeula's Shadow",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Jungle/Characters/Root_Horror/Mesh/Root_Horror_Miniboss.uasset",
+   "skeleton": "Remnant2/Content/World_Jungle/Characters/Root_Horror/Mesh/Pan_Horror_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_Jungle/Characters/Root_Horror/Textures/Miniboss/T_Root_Horror_Miniboss_body_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Jungle/Characters/Root_Horror/",
+   "anim_idle": "Animation/Root_Horror_Idle",
+   "anim_walk": "Animation/Root_Horror_Walk_F_01",
+   "anim_run": "none",
+   "anim_turn_l": "Animation/Root_Horror_Turn_90_L",
+   "anim_turn_r": "Animation/Root_Horror_Turn_90_R",
+   "anim_roar": "Animation/Root_Horror_Taunt",
+   "anim_flinch": "Animation/Root_Horror_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animation/Root_Horror_Death_01",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Voc_Root_Horror_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Horror/Foley_Root_Horror_Heavy_Long.uasset",
+   "zones": [
+    "101",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.tear_of_kaeula",
+    "mods.rootlash"
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "shifting_soldier",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Blueprints/Miniboss/Char_LS_SS_Miniboss.uasset",
+     "key": "3E07E4214141E4A89BC60A8365980F35"
+    }
+   },
+   "title": "The Stonewarden",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Mesh/Pan_LivingStone_SS_Complete_Miniboss.uasset",
+   "skeleton": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Mesh/Pan_LivingStone_SS_Complete_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "M_ShiftingSoldier=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Textures/T_ShiftingSoldier_Diff.uasset",
+    "T_ShiftingSoldier_Miniboss=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Textures/T_ShiftingSoldier_Miniboss_Diff.uasset",
+    "*=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Textures/T_ShiftingSoldier_Miniboss_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/",
+   "anim_idle": "Animations/Pan_ShiftingSoldier_Idle",
+   "anim_walk": "Animations/Pan_ShiftingSoldier_Walk_F",
+   "anim_run": "Animations/Pan_ShiftingSoldier_Run_F",
+   "anim_turn_l": "Animations/Pan_ShiftingSoldier_Turn_90_L",
+   "anim_turn_r": "Animations/Pan_ShiftingSoldier_Turn_90_R",
+   "anim_roar": "Animations/Pan_ShiftingSoldier_Alert",
+   "anim_flinch": "Animations/Pan_ShiftingSoldier_Impact_Flinch_F",
+   "anim_stun": "none",
+   "anim_death": "Animations/Pan_ShiftingSoldier_Death_01",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 1.2,
+   "run_mps": 3.12,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/Voc_MB/Voc_DLC2_SS_MB_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/Voc_MB/Voc_DLC2_SS_MB_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/Voc_MB/Voc_DLC2_SS_MB_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC2/DLC2_SS_MB/DLC2_SS_MB_Foley_Heavy_Long.uasset",
+   "zones": [
+    "101",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "mutators.far_sighted",
+    "rings.gul_signet",
+    "rings.empowering_loop",
+    "rings.stone_of_balance",
+    "amulets.reed_of_the_vaunnt",
+    "rings.brawlers_pride"
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "shrewd",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Characters/Root_Wraith/Blueprints/Miniboss/Char_Root_Wraith_Miniboss.uasset",
+     "key": "7926097B40986DBB40A43896323A2573"
+    }
+   },
+   "title": "Shrewd",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Jungle/Characters/Root_Wraith/Mesh/Root_Wraith_MiniBoss.uasset",
+   "skeleton": "Remnant2/Content/World_Jungle/Characters/Root_Wraith/Mesh/Root_Wraith_Skeleton.uasset",
+   "forward": "nx",
+   "textures": [
+    "M_Root_Wraith_Mini_Boss_Cape=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Cape_Diff.uasset",
+    "M_Root_Wraith_Mini_Boss_Root=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Cape_Diff.uasset",
+    "M_Root_Wraith_Mini_Boss_Robe=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Robe_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Jungle/Characters/Root_Wraith/",
+   "anim_idle": "Animations/Root_Wraith_Idle",
+   "anim_walk": "Animations/Root_Wraith_WalkF",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Root_Wraith_TurnL_90",
+   "anim_turn_r": "Animations/Root_Wraith_TurnR_90",
+   "anim_roar": "Animations/Root_Wraith_P_Alert",
+   "anim_flinch": "Animations/Root_Wraith_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Root_Wraith_Impact_Death",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Voc_Root_Wraith_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Voc_Root_Wraith_Flinch.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Voc_Root_Wraith_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Wraith/Root_Wraith_Foley_Bow_Draw.uasset",
+   "zones": [
+    "101",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "mods.tremor"
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "sunken_witch",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Characters/Dran_Sunken_Witch/Blueprints/Miniboss/Char_Witch_Miniboss.uasset",
+     "key": "34355E02492471DA06B5ECB5E4CC0667"
+    }
+   },
+   "title": "Sunken Witch",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_DLC1/Characters/Dran_Sunken_Witch/Mesh/Dran_Sunken_Witch_Miniboss.uasset",
+   "skeleton": "Remnant2/Content/World_DLC1/Characters/Dran_Sunken_Witch/Mesh/Dran_Sunken_Witch_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Characters/Dran_Sunken_Witch/Textures/T_Dran_Sunken_Witch_Miniboss_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_DLC1/Characters/Dran_Sunken_Witch/",
+   "anim_idle": "Animation/Dran_Sunken_Witch_Idle",
+   "anim_walk": "Animation/Dran_Sunken_Witch_Walk_F",
+   "anim_run": "Animation/Dran_Sunken_Witch_Atk_Uppercut_Sprint",
+   "anim_turn_l": "Animation/Dran_Sunken_Witch_Turn_90_L",
+   "anim_turn_r": "Animation/Dran_Sunken_Witch_Turn_90_R",
+   "anim_roar": "Animation/Dran_Sunken_Witch_Alert",
+   "anim_flinch": "Animation/Dran_Sunken_Witch_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animation/Dran_Sunken_Witch_Impact_Death_F",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 2.33,
+   "run_mps": 0.84,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/MiniBoss_Voc/Voc_DLC1_Dran_Witch_MB_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/MiniBoss_Voc/Voc_DLC1_Dran_Witch_MB_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/MiniBoss_Voc/Voc_DLC1_Dran_Witch_MB_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_DLC1/Dran_Sunken_Witch/DLC1_Dran_Witch_Foley_Anchor_Drag_Heavy_Pickup.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "mods.creeping_mist"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "mother_mind",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Characters/Root_Flyer/Blueprints/Mothermind/Char_Root_Flyer_Mothermind.uasset",
+     "key": "7380314A4ED704E4DDB998A69ACE610E"
+    }
+   },
+   "title": "Mother Mind",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Jungle/Characters/Root_Flyer/Mesh/Mother_Mind.uasset",
+   "skeleton": "Remnant2/Content/World_Jungle/Characters/Root_Flyer/Mesh/Root_Flyer_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_Jungle/Characters/Root_Flyer/Textures/T_root_flyer_A_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Jungle/Characters/Root_Flyer/",
+   "anim_idle": "Animations/Root_Flyer_Idle",
+   "anim_walk": "Animations/Root_Flyer_Move_F",
+   "anim_run": "Animations/Root_Flyer_Charge_F",
+   "anim_turn_l": "Animations/Root_Flyer_Turn_135_L",
+   "anim_turn_r": "Animations/Root_Flyer_Turn_135_R",
+   "anim_roar": "Animations/Root_Flyer_Alert",
+   "anim_flinch": "Animations/Root_Flyer_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Root_Flyer_Death_01",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 1.2,
+   "run_mps": 3.12,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Voc_Root_Flyer_Mothermind_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Voc_Root_Flyer_Mothermind_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Voc_Root_Flyer_Mothermind_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Flyer_Mothermind/Root_Flyer_Mothermind_Foley_Heavy_Long.uasset",
+   "zones": [
+    "101",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "amulets.sinister_totem",
+    "rings.heart_of_the_wolf",
+    "rings.soul_link",
+    "amulets.scavengers_bauble",
+    "amulets.stalkers_brand",
+    "consumables.brightstone"
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "legion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Jungle/Characters/Pan_Priest/Blueprints/Miniboss_Legion/Char_Root_Cultist_Legion_Body.uasset",
+     "key": "1FB92C284D1AE691E11BB995140CD791"
+    }
+   },
+   "title": "Legion",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Jungle/Characters/Pan_Priest/Mesh/Pan_Priest_Legion.uasset",
+   "skeleton": "Remnant2/Content/World_Jungle/Characters/Pan_Priest/Mesh/Pan_Priest_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "*=Remnant2/Content/World_Jungle/Characters/Pan_Priest/Textures/t_pan_priest_diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Jungle/Characters/Pan_Priest/",
+   "anim_idle": "Animations/Pan_Priest_Idle",
+   "anim_walk": "Animations/Pan_Priest_Walk_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Pan_Priest_Turn_90_L",
+   "anim_turn_r": "Animations/Pan_Priest_Turn_90_R",
+   "anim_roar": "none",
+   "anim_flinch": "Animations/Pan_Priest_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Pan_Priest_Impact_Death",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 0.98,
+   "run_mps": 0.98,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "none",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Jungle/Root_Cultist_Legion/Root_Cultist_Legion_Portal_Impact.uasset",
+   "snd_death": "none",
+   "snd_step": "none",
+   "zones": [
+    "101",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.gul_signet",
+    "rings.ring_of_the_forest_spirit",
+    "rings.guardians_ring",
+    "consumables.oilskin_balm",
+    "rings.kolket_eyelet",
+    "rings.empowering_loop"
+   ],
+   "fx_color": "#8CF06A"
+  },
+  {
+   "id": "gwendil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Fae/Characters/Dran_Female/Blueprints/Bomber/Miniboss/Char_Dran_Miniboss.uasset",
+     "key": "DD8D5C7F4EE52AA1C83794B5CF4CF3F2"
+    }
+   },
+   "title": "Gwendil : The Unburnt",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Fae/Characters/Dran_Female/Mesh/Dran_NPC_Female_Grenadier.uasset",
+   "skeleton": "Remnant2/Content/World_Fae/Characters/Dran_Female/Mesh/Dran_NPC_Female_Body_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "M_Dran_Firebomb=Remnant2/Content/World_Fae/Characters/Dran_Rat/Textures/T_Dran_Rat_Diff.uasset",
+    "*=Remnant2/Content/World_Fae/Characters/Dran_Female_Gernadier/Textures/T_Dran_NPC_Female_Grenadier_Cloth_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Fae/Characters/Dran_Female/",
+   "anim_idle": "Animations/Dran_F_Idle",
+   "anim_walk": "Animations/Dran_F_Walk_F",
+   "anim_run": "Animations/Dran_F_Run_F",
+   "anim_turn_l": "Animations/Dran_F_Turn_90_L",
+   "anim_turn_r": "Animations/Dran_F_Turn_90_R",
+   "anim_roar": "Animations/Dran_F_Fidget_Taunt_Atk_Feint",
+   "anim_flinch": "Animations/Dran_F_Impact_Flinch_F",
+   "anim_stun": "Animations/Dran_F_Impact_Heavy_B_Knockdown",
+   "anim_death": "Animations/Dran_F_Impact_Death_B_01",
+   "scale": 1.0,
+   "threat": 2,
+   "min_rank": "lr",
+   "hp_mult": 1.0,
+   "walk_mps": 1.2,
+   "run_mps": 3.12,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "none",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Voc_Dran_F_Bomber_MiniBoss_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Voc_Dran_F_Bomber_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Fae/Dran_Bomber/Dran_Bomber_Bomb_Foley_Grab.uasset",
+   "zones": [
+    "104",
+    "108",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "amulets.hangmans_noose",
+    "rings.stone_of_revelation",
+    "rings.stone_of_malevolence",
+    "rings.alchemy_stone",
+    "rings.stream_coupler",
+    "amulets.weightless_weight"
+   ],
+   "fx_color": "#B072FF"
+  },
+  {
+   "id": "root_mantis",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Characters/Root_MiniBoss/Blueprints/Intro_Miniboss/Char_Root_Mantis_Intro_Miniboss.uasset",
+     "key": "C6E6E5804A23E4A18B3B3CB061C86C1A"
+    }
+   },
+   "title": "Root Mantis",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Root/Characters/Root_MiniBoss/Mesh/Root_Intro_Miniboss_Variant.uasset",
+   "skeleton": "Remnant2/Content/World_Root/Characters/Root_MiniBoss/Mesh/Root_MiniBoss_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "arms=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Arms_Diff.uasset",
+    "Head=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Head_Diff.uasset",
+    "back_top=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Back_Diff.uasset",
+    "Sides=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_sides_Diff.uasset",
+    "Vines=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Vines_Diff.uasset",
+    "M_Root_Miniboss_Variant=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Variant_Diff.uasset",
+    "M_Root_Miniboss_Variant_Wings=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Variant_Diff.uasset",
+    "*=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Variant_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Root/Characters/Root_MiniBoss/",
+   "anim_idle": "Animations/Root_Intro_Miniboss_Idle",
+   "anim_walk": "Animations/Root_Intro_Miniboss_Move_F",
+   "anim_run": "none",
+   "anim_turn_l": "Animations/Root_Intro_Miniboss_Turn_90_L",
+   "anim_turn_r": "Animations/Root_Intro_Miniboss_Turn_90_R",
+   "anim_roar": "Animations/Root_Intro_Miniboss_Taunt",
+   "anim_flinch": "Animations/Root_Intro_Miniboss_Impact_Flinch_B",
+   "anim_stun": "none",
+   "anim_death": "Animations/Root_Intro_Miniboss_Impact_Death_F",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 1.2,
+   "run_mps": 1.2,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Pain_Flinch.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Voc_Root_Mantis_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Mantis/Root_Mantis_Foley_Heavy_Long.uasset",
+   "zones": [
+    "104",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "rings.zanias_malice",
+    "armor.body_invader",
+    "armor.legs_invader",
+    "weapons.hellfire",
+    "rings.reaping_stone",
+    "amulets.ankh_of_power"
+   ],
+   "fx_color": "#FF4A2A"
+  },
+  {
+   "id": "venom",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Root/Characters/Root_Knight/Blueprints/Char_Root_Knight.uasset",
+     "key": "034159F04B5181F437BA1DA2FABCEE93"
+    }
+   },
+   "title": "Venom",
+   "tier": "boss",
+   "mesh": "Remnant2/Content/World_Root/Characters/Root_Knight/Mesh/Root_Knight_Miniboss.uasset",
+   "skeleton": "Remnant2/Content/World_Root/Characters/Root_Knight/Mesh/Root_Knight_Skeleton.uasset",
+   "forward": "py",
+   "textures": [
+    "m_Miniboss_Cape=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Cape_Diff.uasset",
+    "m_Miniboss_Cape_Dyn=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Cape_Diff.uasset",
+    "M_Root_Knight_Miniboss_Armor=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_MiniBoss_Armor_Diff.uasset",
+    "m_Root_Knight_Miniboss_Body=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Diff.uasset"
+   ],
+   "anim_dir": "Remnant2/Content/World_Root/Characters/Root_Knight/",
+   "anim_idle": "Animations/Root_Knight_Idle",
+   "anim_walk": "Animations/Root_Knight_NC_Walk_F",
+   "anim_run": "Animations/Root_Knight_Dash_F",
+   "anim_turn_l": "Animations/Root_Knight_Turn_L",
+   "anim_turn_r": "Animations/Root_Knight_Turn_R",
+   "anim_roar": "Animations/Root_Knight_Taunt",
+   "anim_flinch": "Animations/Root_Knight_Flinch_F",
+   "anim_stun": "none",
+   "anim_death": "Animations/Root_Knight_Death_01",
+   "scale": 1.0,
+   "threat": 4,
+   "min_rank": "mr",
+   "hp_mult": 1.3,
+   "walk_mps": 1.2,
+   "run_mps": 6.75,
+   "turn_dps": 120,
+   "aggro_m": 40,
+   "leash_m": 160,
+   "flinch_frac": 0.07,
+   "stagger_frac": 0.12,
+   "melee_hits": 140,
+   "snd_roar": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Voc_Root_Knight_Alert.uasset",
+   "snd_pain": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Voc_Root_Knight_Pain_Heavy.uasset",
+   "snd_death": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Voc_Root_Knight_Death.uasset",
+   "snd_step": "Remnant2/Content/WwiseAudio/Events/Creature/Creature_Root/Root_Knight/Root_Knight_Foley_Movement_Crackle.uasset",
+   "zones": [
+    "104",
+    "105",
+    "109"
+   ],
+   "spawn_weight": 1.0,
+   "loot": [
+    "relics.decayed_heart",
+    "weapons.decayedclaws",
+    "rings.kinetic_cycle_stone",
+    "rings.flyweights_sting",
+    "mods.skewer",
+    "amulets.escalation_protocol"
+   ],
+   "fx_color": "#FF4A2A"
   }
  ]
 }

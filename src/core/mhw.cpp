@@ -4,6 +4,7 @@
 // (justbustin/minecraft-crossover-bridge, MIT; HunterPie, Apache-2.0). Nothing here patches MHW's code: the mod
 // reads memory, calls the game's own functions, and gets a per-frame game-thread callback by pointing the sMhCamera
 // object at a copy of its vtable with one slot replaced. MHW's code integrity checks are never touched.
+#include <atomic>
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -280,6 +281,45 @@ bool world_ray(const Vec3& from, const Vec3& to, Vec3* hit) {
 }
 
 static float g_fovOverride = 0.0f;
+// MHW's weapon type of the hunter, read the way the game's own getter does (SharpPluginLoader's
+// Player:GetWeaponType pattern "8B 80 F8 09 00 00 C3": [player + d] -> +0x9F8). The getter is found once, on a worker
+// thread, and only read from (never called). -1 while unknown.
+static std::atomic<int> g_wtDisp{-2};  // -2 not searched, -3 searching, -1 not found, else d
+static DWORD WINAPI find_weapon_getter(LPVOID) {
+    int found = -1;
+    for (uintptr_t h : scan_text("8B 80 F8 09 00 00 C3", 16)) {
+        uint8_t* f = (uint8_t*)h - 18;
+        if (!mem_readable(f, 18)) continue;
+        for (int k = 0; k + 3 < 18 && found < 0; k++) {
+            int d = -1;
+            if (f[k] == 0x48 && f[k + 1] == 0x8B && f[k + 2] == 0x81 && k + 7 <= 18) memcpy(&d, f + k + 3, 4);
+            else if (f[k] == 0x48 && f[k + 1] == 0x8B && f[k + 2] == 0x41) d = f[k + 3];
+            if (d > 0 && d < 0x40000) found = d;
+        }
+        char bytes[3 * 18 + 1] = {0};
+        for (int k = 0; k < 18; k++) snprintf(bytes + 3 * k, 4, "%02X ", f[k]);
+        log("mhw: weapon type getter at %p: %s-> %s", (void*)f, bytes, found >= 0 ? "player field found" : "not understood");
+        if (found >= 0) break;
+    }
+    if (found >= 0) log("mhw: weapon type = [player + 0x%X] + 0x9F8", found);
+    g_wtDisp.store(found);
+    return 0;
+}
+int player_weapon_type() {
+    int d = g_wtDisp.load();
+    if (d == -2) {
+        int expect = -2;
+        if (g_wtDisp.compare_exchange_strong(expect, -3))  // in game, MHW's code is decrypted by now
+            CreateThread(nullptr, 0, find_weapon_getter, nullptr, 0, nullptr);
+        return -1;
+    }
+    if (d < 0 || !g_player) return -1;
+    uint8_t* w = rd_ptr((uintptr_t)g_player + d);
+    int t = -1;
+    if (!w || !rd((uintptr_t)w + 0x9F8, &t) || t < 0 || t > 13) return -1;
+    return t;
+}
+
 bool camera_view(GameView* v) {
     uint8_t* mgr = rd_ptr(HOOKV_S_MH_CAMERA);
     if (!mgr || !mem_readable(mgr + kViewport0 + kVpProj, 64)) return false;

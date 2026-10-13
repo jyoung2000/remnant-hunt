@@ -111,6 +111,56 @@
    "id": "item_name_stride",
    "value": 0,
    "why": "MHW's item text holds this many messages per item id (name first); 0 until the in-game diagnostic confirms it, and then materials show MHW's own names"
+  },
+  {
+   "id": "boss_hp_lr",
+   "value": 9000,
+   "why": "Remnant boss HP in low-rank zones, times the boss sheet hp_mult (threat 1 = 0.85)"
+  },
+  {
+   "id": "boss_hp_hr",
+   "value": 22000,
+   "why": "Remnant boss HP in high-rank zones, times hp_mult"
+  },
+  {
+   "id": "boss_hp_mr",
+   "value": 42000,
+   "why": "Remnant boss HP in master-rank zones, times hp_mult"
+  },
+  {
+   "id": "boss_dmg_lr",
+   "value": 1.0,
+   "why": "Remnant boss damage to the hunter in low rank, times the attack damage"
+  },
+  {
+   "id": "boss_dmg_hr",
+   "value": 1.8,
+   "why": "Remnant boss damage in high rank (MHW monsters hit roughly this much harder there)"
+  },
+  {
+   "id": "boss_dmg_mr",
+   "value": 2.7,
+   "why": "Remnant boss damage in master rank"
+  },
+  {
+   "id": "rank_hp_hr",
+   "value": 7000,
+   "why": "a zone whose largest MHW monster has this much HP or more counts as high rank"
+  },
+  {
+   "id": "rank_hp_mr",
+   "value": 16000,
+   "why": "a zone whose largest MHW monster has this much HP or more counts as master rank (Hoarfrost Reach and the Guiding Lands always do)"
+  },
+  {
+   "id": "boss_zone_chance",
+   "value": 0.6,
+   "why": "chance that a Remnant boss roams a hunting zone, rolled once per visit (and again after one falls)"
+  },
+  {
+   "id": "boss_proj_speed",
+   "value": 2600,
+   "why": "speed of the Remnant bosses projectiles, cm/s"
   }
  ]
 }
