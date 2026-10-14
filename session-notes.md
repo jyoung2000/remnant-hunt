@@ -308,3 +308,14 @@ What each needs, from the diagnostics so far:
   map loaded (BC7 1024), hitbox 191 bones, hand joint via the fallback chain player+0xA8 -> +0x310, depth candidate
   flaps (matched then "no candidate"), the hunter sat at HP 0 alive (MHW does not faint from HP alone), boss HP
   9000 LR too high for MHW hits (now 2500/6000/11000).
+- 10:30 session (ca8a614): all Ravager maps + muzzle flare load (BC7), 30 boss anims decode, hitboxes 191/151/103
+  bones, Ravager staggers; hunter HP read right (150 -> 127) then stuck at 0 alive: MHW faints only through its own
+  damage path. d890918 (installed, needs a game restart): [bar] proxies=0 by default (stand-ins removed from the
+  pouch), [actions] relic/skill/consumable=S:I play MHW actions on use, the faint action is LEARNED when HP reaches 0
+  from MHW's own damage (learned_reactions.txt "faint S I"; a barrel bomb in the Training Area does it), the depth
+  match keeps its candidate (the boss flicker was the match flapping), bosses.cpp ini path had a literal CR ("\r"),
+  so [bosses] keys were never read before.
+- Jalon's open asks and what they need: clutch claw on Remnant bosses = only possible if bosses become real MHW
+  monsters (nativePC model swap over an MHW monster, MHW AI); Remnant animations on the hunter's body = hunter pose
+  write (new write kind) + skeleton retarget; real new items in the bar = nativePC itemData/GMD/atlas overrides
+  generated from memory; pause = time-scale write. All four need his decision.
