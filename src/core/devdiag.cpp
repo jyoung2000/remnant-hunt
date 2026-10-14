@@ -5,6 +5,7 @@
 // data headers. It only reads game memory.
 #include <algorithm>
 #include <cctype>
+#include <cmath>
 #include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
@@ -481,6 +482,45 @@ static void time_scale_candidates() {
     outf("time scale candidates printed: %d", printed);
 }
 
+// Sun hunt: float3 unit vectors in light/sky/scene-like singletons, sampled 2 s apart. The sun moves slowly (small
+// change) or, when static, points up (y > 0.2). Use as [visuals] sun_from=<singleton>+0x<off>.
+static void light_dir_candidates() {
+    outf("-- light direction candidates");
+    struct S { std::string name; uint8_t* o; std::vector<uint8_t> a; };
+    std::vector<S> v;
+    for (auto& kv : g_singletons) {
+        bool match = false;
+        for (const char* k : {"Render", "Scene", "Light", "Sky", "Env", "Shadow", "Camera", "World"})
+            if (kv.first.find(k) != std::string::npos) { match = true; break; }
+        if (!match) continue;
+        uint8_t* o = rd_ptr(kv.second);
+        if (!o || !mem_readable(o, 0x2000)) continue;
+        v.push_back({kv.first, o, std::vector<uint8_t>(o, o + 0x2000)});
+    }
+    Sleep(2000);
+    int printed = 0;
+    for (auto& s : v) {
+        if (!mem_readable(s.o, 0x2000)) continue;
+        for (size_t off = 0; off + 12 <= 0x2000 && printed < 40; off += 4) {
+            float a[3], b[3];
+            memcpy(a, &s.a[off], 12); memcpy(b, s.o + off, 12);
+            auto unit = [](const float* f) {
+                if (!(fabsf(f[0]) < 2 && fabsf(f[1]) < 2 && fabsf(f[2]) < 2)) return false;
+                float l = sqrtf(f[0] * f[0] + f[1] * f[1] + f[2] * f[2]);
+                return l >= 0.98f && l <= 1.02f;
+            };
+            if (!unit(a) || !unit(b)) continue;
+            float d = fabsf(a[0] - b[0]) + fabsf(a[1] - b[1]) + fabsf(a[2] - b[2]);
+            bool moved = d > 1e-6f && d < 0.05f;
+            bool still = d <= 1e-6f && fabsf(b[1]) > 0.2f;
+            if (!moved && !still) continue;
+            outf("light dir candidate: %s +0x%zX (%.3f,%.3f,%.3f) -> (%.3f,%.3f,%.3f)", s.name.c_str(), off, a[0], a[1], a[2], b[0], b[1], b[2]);
+            printed++;
+        }
+    }
+    outf("light dir candidates printed: %d", printed);
+}
+
 static void report() {
     outf("== Remnant Hunt diagnostic (read-only) ==");
     outf("api %s", game_api_init() ? "ok" : "missing");
@@ -596,6 +636,7 @@ static void report() {
         if (r) hexdump((uintptr_t)r, 0x100);
     }
     time_scale_candidates();
+    light_dir_candidates();
     outf("== end ==");
 }
 

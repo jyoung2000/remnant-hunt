@@ -12,6 +12,7 @@
 #include <map>
 #include <string>
 #include <tuple>
+#include <vector>
 
 #include "state.h"
 
@@ -48,6 +49,12 @@ int g_drinkSet = -1, g_drinkId = 0;
 int g_poolSum = -1;
 double g_poolAt = -10, g_drinkArmAt = -1, g_drinkCandAt = -1, g_actChangedAt = -10;
 int g_drinkCandSet = -1, g_drinkCandId = -1, g_dPrevSet = -1, g_dPrevId = -1;
+// the carve action: learned when MHW's own carve adds an item to the pouch (ids > 20) while HP is steady and the
+// mod did not add it; the action that began 2.5..5 s before and lasted 2 s or more is the carving animation
+struct ActChange { double t; int set, id; };
+std::vector<ActChange> g_actRing;  // the last 6 s of action changes
+int g_carveSet = -1, g_carveId = 0, g_carveSum = -1;
+double g_carvePollAt = -10, g_ownPouchUntil = -10, g_hpChangedAt = -10;
 
 // The same range check as turf.cpp: item-use or status animations and corrupt files are not hit reactions.
 bool plausible_action(int set, int id) { return set >= 0 && set <= 15 && id >= 0 && id < 4096; }
@@ -65,7 +72,9 @@ void load() {
     char line[128];
     while (fgets(line, sizeof(line), f)) {
         int w, h, s, i, c;
-        if (strncmp(line, "drink ", 6) == 0) {
+        if (strncmp(line, "carve ", 6) == 0) {
+            if (sscanf(line + 6, "%d %d", &s, &i) == 2 && plausible_action(s, i)) { g_carveSet = s; g_carveId = i; }
+        } else if (strncmp(line, "drink ", 6) == 0) {
             if (sscanf(line + 6, "%d %d", &s, &i) == 2 && plausible_action(s, i)) { g_drinkSet = s; g_drinkId = i; }
         } else if (strncmp(line, "faint ", 6) == 0) {
             if (sscanf(line + 6, "%d %d", &s, &i) == 2 && plausible_action(s, i)) { g_faintSet = s; g_faintId = i; }
@@ -84,6 +93,7 @@ void save() {
         for (const Seen& s : kv.second) fprintf(f, "%d %d %d %d %d\n", kv.first.weapon, kv.first.heavy, s.set, s.id, s.count);
     if (g_faintSet >= 0) fprintf(f, "faint %d %d\n", g_faintSet, g_faintId);
     if (g_drinkSet >= 0) fprintf(f, "drink %d %d\n", g_drinkSet, g_drinkId);
+    if (g_carveSet >= 0) fprintf(f, "carve %d %d\n", g_carveSet, g_carveId);
     fclose(f);
 }
 
@@ -135,6 +145,15 @@ bool reactions_drink(int* set, int* id) {
     *id = g_drinkId;
     return true;
 }
+bool reactions_carve(int* set, int* id) {
+    if (!g_loaded) load();
+    if (g_carveSet < 0) return false;
+    *set = g_carveSet;
+    *id = g_carveId;
+    return true;
+}
+// The mod is about to change the pouch itself: not a carve of MHW's to learn from (masked for 1 s).
+void reactions_own_pouch_change(double t) { g_ownPouchUntil = t + 1.0; }
 double reactions_own_damage_at() { return g_ownHurtAt; }
 
 // Plays an action through the unit's own ActionController (the hunter's, or a monster's: the turf wars).
@@ -223,7 +242,7 @@ void reactions_tick(const Live& l, double t) {
     if (t - g_poolAt >= 0.25) {
         g_poolAt = t;
         int sum = 0;
-        for (int item = 1; item <= 20; item++) sum += mhw_pouch_count(item);
+        sum = mhw_pouch_sum(1, 20);
         if (g_poolSum >= 0 && sum == g_poolSum - 1 && g_drinkSet < 0 && hp > 0) {
             if (t - g_actChangedAt <= 1.0) {  // the drinking action began just before the count fell
                 g_drinkCandAt = g_actChangedAt;
@@ -257,6 +276,33 @@ void reactions_tick(const Live& l, double t) {
             g_drinkCandSet = set;
             g_drinkCandId = id;
         }
+    }
+    // Carve: the pouch gains one item (ids > 20) with HP steady, the mod not having added it.
+    if (g_lastHp >= 0 && fabsf(hp - g_lastHp) > 0.5f) g_hpChangedAt = t;
+    if (g_actRing.empty() || g_actRing.back().set != set || g_actRing.back().id != id) g_actRing.push_back({t, set, id});
+    while (g_actRing.size() > 1 && g_actRing[1].t < t - 6.0) g_actRing.erase(g_actRing.begin());
+    if (t - g_carvePollAt >= 0.25) {
+        g_carvePollAt = t;
+        int sum = 0;
+        sum = mhw_pouch_sum(21, 2500);
+        if (g_carveSum >= 0 && sum == g_carveSum + 1 && t > g_ownPouchUntil && g_carveSet < 0 && hp > 0 &&
+            t - g_hpChangedAt > 5.0) {
+            double want = t - 3.0;
+            for (size_t k = 0; k < g_actRing.size(); k++) {
+                double begin = g_actRing[k].t, end = k + 1 < g_actRing.size() ? g_actRing[k + 1].t : t;
+                if (begin <= want && want < end) {
+                    if (t - begin >= 2.5 && t - begin <= 5.0 && end - begin >= 2.0 &&
+                        plausible_action(g_actRing[k].set, g_actRing[k].id)) {
+                        g_carveSet = g_actRing[k].set;
+                        g_carveId = g_actRing[k].id;
+                        save();
+                        log("reactions: learned carve action %d:%d", g_carveSet, g_carveId);
+                    }
+                    break;
+                }
+            }
+        }
+        g_carveSum = sum;
     }
     g_lastHp = hp;
     g_prevSet = set;

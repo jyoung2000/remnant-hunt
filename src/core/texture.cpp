@@ -9,23 +9,28 @@
 
 namespace rh {
 
-static DXGI_FORMAT dxgi_format(const std::string& f, int* blockBytes) {
+static DXGI_FORMAT dxgi_format(const std::string& f, int* blockBytes, bool srgb) {
     *blockBytes = 16;
-    if (f == "BC7") return DXGI_FORMAT_BC7_UNORM;
-    if (f == "BC3") return DXGI_FORMAT_BC3_UNORM;
+    if (f == "BC7") return srgb ? DXGI_FORMAT_BC7_UNORM_SRGB : DXGI_FORMAT_BC7_UNORM;
+    if (f == "BC3") return srgb ? DXGI_FORMAT_BC3_UNORM_SRGB : DXGI_FORMAT_BC3_UNORM;
     if (f == "BC5") return DXGI_FORMAT_BC5_UNORM;
     *blockBytes = 8;
-    if (f == "BC1") return DXGI_FORMAT_BC1_UNORM;
+    if (f == "BC1") return srgb ? DXGI_FORMAT_BC1_UNORM_SRGB : DXGI_FORMAT_BC1_UNORM;
     if (f == "BC4") return DXGI_FORMAT_BC4_UNORM;
     *blockBytes = 0;
-    if (f == "BGRA8") return DXGI_FORMAT_B8G8R8A8_UNORM;
+    if (f == "BGRA8") return srgb ? DXGI_FORMAT_B8G8R8A8_UNORM_SRGB : DXGI_FORMAT_B8G8R8A8_UNORM;
     return DXGI_FORMAT_UNKNOWN;
 }
 
 bool r2_make_texture(ID3D11Device* dev, const R2Image& img, const char* asset, ID3D11ShaderResourceView** srv) {
+    return r2_make_texture(dev, img, asset, srv, false);
+}
+
+// srgb = true for albedo / base-colour textures (the sampler then returns linear); normal and mask maps stay false.
+bool r2_make_texture(ID3D11Device* dev, const R2Image& img, const char* asset, ID3D11ShaderResourceView** srv, bool srgb) {
     *srv = nullptr;
     int bb = 0;
-    DXGI_FORMAT fmt = dxgi_format(img.format, &bb);
+    DXGI_FORMAT fmt = dxgi_format(img.format, &bb, srgb);
     size_t want = bb ? (size_t)((img.w + 3) / 4) * (size_t)((img.h + 3) / 4) * bb : (size_t)img.w * img.h * 4;
     if (img.failed || fmt == DXGI_FORMAT_UNKNOWN || img.w <= 0 || img.h <= 0 || img.pixels.size() < want) {
         if (!img.failed) log("overlay: image %s (%s %dx%d) has %zu bytes, %zu needed", asset, img.format.c_str(), img.w, img.h, img.pixels.size(), want);

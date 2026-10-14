@@ -77,6 +77,8 @@ void snapshot(GameSnapshot* out);                 // fills from live memory
 bool add_hp(uint8_t* health, float delta);
 bool reactions_play(int set, int id);               // game thread: DoAction on the hunter (faint sequence)
 bool reactions_faint(int* set, int* id);            // the faint action learned from MHW (false = none yet)
+bool reactions_carve(int* set, int* id);            // the carving action learned from MHW (false = none yet)
+void reactions_own_pouch_change(double t);     // the mod is about to change the pouch itself (masks carve learning for 1 s)
 void show_damage(uint8_t* em, int amount, const Vec3& pos, bool crit);
 bool fire_slinger(const Vec3& origin, const Vec3& target);
 bool world_ray(const Vec3& from, const Vec3& to, Vec3* hit);  // true = blocked by level geometry
@@ -98,6 +100,7 @@ const std::string& r2_name(const sheets::R2Name& n);
 struct R2Image { int w = 0, h = 0; std::string format; std::vector<uint8_t> pixels; bool failed = false; };
 const R2Image* r2_image(const char* asset, int maxSide);  // nullptr until loaded (loads on a worker thread)
 bool r2_make_texture(ID3D11Device* dev, const R2Image& img, const char* asset, ID3D11ShaderResourceView** srv);  // texture.cpp
+bool r2_make_texture(ID3D11Device* dev, const R2Image& img, const char* asset, ID3D11ShaderResourceView** srv, bool srgb);  // albedo: _SRGB formats
 int r2_cells_checked(int* failed);  // test mode: resolves every Remnant II cell of the sheets
 // A play of a Remnant II sound event (one variation of each layer), stereo 16-bit; nullptr until decoded.
 struct R2Sound { int rate = 0; std::vector<int16_t> pcm; bool failed = false; };
@@ -116,9 +119,12 @@ void audio_stop(const char* event);  // stops that event's playing voices (trigg
 bool overlay_install();
 void overlay_remove();
 HWND game_window();
-void* texture_for(const char* asset, int maxSide, int* w, int* h);  // ImTextureID or nullptr (render thread)
+void* texture_for(const char* asset, int maxSide, int* w, int* h, bool srgb = false);  // ImTextureID or nullptr (render thread)
 // Input routing decided by the mod each frame.
-struct InputBlock { bool keyboard = false, mouse = false, mouseButtons = false; uint8_t keys[256] = {}; };
+// mouseButtons blocks every mouse button; mouseButton[i] blocks one (0 left, 1 right, 2 middle, 3 X1, 4 X2).
+struct InputBlock { bool keyboard = false, mouse = false, mouseButtons = false; uint8_t mouseButton[8] = {}; uint8_t keys[256] = {}; };
+// Reports the clutch-claw mouse button (ini [keys] clutch_claw) pressed to MHW for ~80 ms, starting delaySeconds from now.
+void inject_claw(double delaySeconds);
 void set_input_block(const InputBlock& b);
 bool key_down(int vk);       // reads the physical key state while the game window has focus
 bool key_pressed(int vk);    // edge, once per press (render-thread frame)
@@ -167,7 +173,7 @@ const char* nativepc_take_toast();   // a one-time message for the game thread t
 
 // Settings (remnant_hunt.ini in the mod folder).
 // Defaults avoid MHW's own default PC bindings (B, G, V, T, P are free or unused in solo play).
-struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', skill2 = 'H', relic = 'T', terminal = 'P', boss = VK_F9; };
+struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', aimSlinger = 'V', clutchClaw = VK_MBUTTON, skill = 'G', skill2 = 'H', relic = 'T', terminal = 'P', boss = VK_F9; };
 const Keys& keys();
 // [gun] in the ini: where the hunter's hand joint is read from, and how the gun sits in it.
 struct GunCfg { int handL1 = 0x90, handL2 = 0x2B0, handEntry = 396, handStride = 0x40; float off[3] = {0, 0, 0}; int axis = 2; bool axisNeg = false; };

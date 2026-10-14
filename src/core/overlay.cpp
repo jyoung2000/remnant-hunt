@@ -99,10 +99,65 @@ static void poll_keys() {
     }
 }
 
+// Mouse button index (DirectInput order: 0 left, 1 right, 2 middle, 3 X1, 4 X2) of a VK, or -1.
+static int vk_button(int vk) {
+    switch (vk) {
+        case VK_LBUTTON: return 0;
+        case VK_RBUTTON: return 1;
+        case VK_MBUTTON: return 2;
+        case VK_XBUTTON1: return 3;
+        case VK_XBUTTON2: return 4;
+    }
+    return -1;
+}
+static bool button_blocked(const InputBlock& b, int idx) {
+    return b.mouse || b.mouseButtons || (idx >= 0 && idx < 8 && b.mouseButton[idx]);
+}
+
+// Synthesised clutch-claw press (inject_claw): reported down between g_clawFrom and g_clawTo (GetTickCount64 ms).
+static volatile LONGLONG g_clawFrom = 0, g_clawTo = 0;
+static bool claw_active() {
+    LONGLONG t = (LONGLONG)GetTickCount64();
+    return g_clawTo && t >= g_clawFrom && t < g_clawTo;
+}
+static int claw_button() {
+    int i = vk_button(keys().clutchClaw);
+    return i < 0 ? 2 : i;
+}
+void inject_claw(double delaySeconds) {
+    LONGLONG t = (LONGLONG)GetTickCount64();
+    g_clawFrom = t + (LONGLONG)(delaySeconds * 1000);
+    g_clawTo = g_clawFrom + 80;
+    static LONGLONG lastLog = 0;
+    if (t - lastLog >= 1000) {
+        lastLog = t;
+        log("input: claw shot injected (button %d)", claw_button());
+    }
+}
+
+// Per frame: mirror the claw window as window messages (for a game that reads the mouse through them).
+static void claw_tick() {
+    static bool down = false;
+    bool want = claw_active();
+    if (want == down || !g_hwnd) return;
+    down = want;
+    int b = claw_button();
+    UINT msg = 0;
+    WPARAM wp = 0;
+    if (b == 0) { msg = want ? WM_LBUTTONDOWN : WM_LBUTTONUP; wp = want ? MK_LBUTTON : 0; }
+    else if (b == 1) { msg = want ? WM_RBUTTONDOWN : WM_RBUTTONUP; wp = want ? MK_RBUTTON : 0; }
+    else if (b == 2) { msg = want ? WM_MBUTTONDOWN : WM_MBUTTONUP; wp = want ? MK_MBUTTON : 0; }
+    else { msg = want ? WM_XBUTTONDOWN : WM_XBUTTONUP; wp = MAKEWPARAM(want ? (b == 4 ? MK_XBUTTON2 : MK_XBUTTON1) : 0, b == 4 ? XBUTTON2 : XBUTTON1); }
+    POINT pt = {};
+    GetCursorPos(&pt);
+    ScreenToClient(g_hwnd, &pt);
+    PostMessageW(g_hwnd, msg, wp, MAKELPARAM(pt.x, pt.y));
+}
+
 static bool vk_blocked(const InputBlock& b, int vk) {
     if (vk <= 0 || vk >= 256) return false;
-    bool mouseVk = vk == VK_LBUTTON || vk == VK_RBUTTON || vk == VK_MBUTTON || vk == VK_XBUTTON1 || vk == VK_XBUTTON2;
-    if (mouseVk) return b.mouse || b.mouseButtons;
+    int btn = vk_button(vk);
+    if (btn >= 0) return button_blocked(b, btn);
     return b.keyboard || b.keys[vk];
 }
 
@@ -151,23 +206,30 @@ static HRESULT WINAPI hkGetState(IDirectInputDevice8W* dev, DWORD cb, LPVOID dat
     } else if (cb == sizeof(DIMOUSESTATE) || cb == sizeof(DIMOUSESTATE2)) {
         size_t buttons = cb == sizeof(DIMOUSESTATE) ? 4 : 8;
         if (b.mouse) memset(p, 0, cb);
-        else if (b.mouseButtons) memset(p + 12, 0, buttons);
+        else {
+            for (size_t i = 0; i < buttons; i++)
+                if (button_blocked(b, (int)i)) p[12 + i] = 0;
+            int cbtn = claw_button();
+            if (claw_active() && cbtn < (int)buttons) p[12 + cbtn] = 0x80;
+        }
     }
     return hr;
 }
 
 static HRESULT WINAPI hkGetData(IDirectInputDevice8W* dev, DWORD cb, LPDIDEVICEOBJECTDATA rg, LPDWORD inOut,
                                 DWORD flags) {
+    DWORD cap = inOut ? *inOut : 0;
     HRESULT hr = oGetData(dev, cb, rg, inOut, flags);
     InterlockedIncrement(&g_cntDiData);
-    if (FAILED(hr) || !rg || !inOut || (flags & DIGDD_PEEK) || *inOut == 0) return hr;
+    if (FAILED(hr) || !rg || !inOut || (flags & DIGDD_PEEK)) return hr;
     InputBlock b = current_block();
     DIDEVICEINSTANCEW info = {sizeof(info)};
     bool isMouse = SUCCEEDED(dev->GetDeviceInfo(&info)) && GET_DIDEVICE_TYPE(info.dwDevType) == DI8DEVTYPE_MOUSE;
     DWORD w = 0;
     for (DWORD i = 0; i < *inOut; i++) {
         DIDEVICEOBJECTDATA* e = (DIDEVICEOBJECTDATA*)((uint8_t*)rg + i * cb);
-        bool drop = isMouse ? (b.mouse || (b.mouseButtons && e->dwOfs >= DIMOFS_BUTTON0 && e->dwOfs <= DIMOFS_BUTTON7))
+        bool isBtn = e->dwOfs >= DIMOFS_BUTTON0 && e->dwOfs <= DIMOFS_BUTTON7;
+        bool drop = isMouse ? (b.mouse || (isBtn && button_blocked(b, (int)(e->dwOfs - DIMOFS_BUTTON0))))
                             : dik_blocked(b, e->dwOfs);
         if (!drop) {
             if (w != i) memmove((uint8_t*)rg + w * cb, e, cb);
@@ -175,6 +237,20 @@ static HRESULT WINAPI hkGetData(IDirectInputDevice8W* dev, DWORD cb, LPDIDEVICEO
         }
     }
     *inOut = w;
+    if (isMouse && !b.mouse && cb >= sizeof(DIDEVICEOBJECTDATA)) {
+        // The injected claw press: one down event when the window opens, one up when it closes.
+        static bool reported = false;
+        bool want = claw_active();
+        if (want != reported && w < cap) {
+            DIDEVICEOBJECTDATA* e = (DIDEVICEOBJECTDATA*)((uint8_t*)rg + w * cb);
+            memset(e, 0, cb);
+            e->dwOfs = DIMOFS_BUTTON0 + claw_button();
+            e->dwData = want ? 0x80 : 0;
+            e->dwTimeStamp = GetTickCount();
+            reported = want;
+            *inOut = w + 1;
+        }
+    }
     return hr;
 }
 
@@ -215,6 +291,12 @@ static void filter_raw(RAWINPUT* ri, const InputBlock& b) {
             ri->data.mouse.usButtonFlags = 0;
         } else if (b.mouseButtons) {
             ri->data.mouse.usButtonFlags &= (USHORT)(RI_MOUSE_WHEEL | RI_MOUSE_HWHEEL);
+        } else {
+            static const USHORT kBits[5] = {0x0003, 0x000C, 0x0030, 0x00C0, 0x0300};  // RI_MOUSE_*_BUTTON_n_DOWN|UP
+            USHORT drop = 0;
+            for (int i = 0; i < 5; i++)
+                if (b.mouseButton[i]) drop |= kBits[i];
+            ri->data.mouse.usButtonFlags &= (USHORT)~drop;
         }
     } else if (ri->header.dwType == RIM_TYPEKEYBOARD) {
         if (vk_blocked(b, ri->data.keyboard.VKey)) {
@@ -248,7 +330,9 @@ static UINT WINAPI hkGetRawInputBuffer(PRAWINPUT data, PUINT size, UINT hdr) {
 static SHORT WINAPI hkGetAsyncKeyState(int vk) {
     SHORT s = pGetAsyncKeyState(vk);
     InterlockedIncrement(&g_cntAsync);
-    return vk_blocked(current_block(), vk) ? 0 : s;
+    if (vk_blocked(current_block(), vk)) return 0;
+    if (vk_button(vk) >= 0 && vk_button(vk) == claw_button() && claw_active()) s |= (SHORT)0x8000;
+    return s;
 }
 
 // While a Remnant screen is open the game must not re-centre or confine the cursor.
@@ -293,7 +377,14 @@ static LRESULT CALLBACK wndproc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
         bool buttonMsg = mouseMsg && msg != WM_MOUSEMOVE && msg != WM_MOUSEWHEEL && msg != WM_MOUSEHWHEEL;
         bool keyMsg = msg >= WM_KEYFIRST && msg <= WM_KEYLAST;
         if (b.mouse && mouseMsg) return 0;
-        if (b.mouseButtons && buttonMsg) return 0;
+        if (buttonMsg) {
+            int idx = -1;
+            if (msg >= WM_LBUTTONDOWN && msg <= WM_LBUTTONDBLCLK) idx = 0;
+            else if (msg >= WM_RBUTTONDOWN && msg <= WM_RBUTTONDBLCLK) idx = 1;
+            else if (msg >= WM_MBUTTONDOWN && msg <= WM_MBUTTONDBLCLK) idx = 2;
+            else if (msg >= WM_XBUTTONDOWN && msg <= WM_XBUTTONDBLCLK) idx = GET_XBUTTON_WPARAM(wp) == XBUTTON2 ? 4 : 3;
+            if (button_blocked(b, idx)) return 0;
+        }
         // Key-ups always reach the game, or a key held while a screen opens stays latched.
         bool keyUp = msg == WM_KEYUP || msg == WM_SYSKEYUP;
         if (keyMsg && !keyUp && (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) && vk_blocked(b, (int)wp))
@@ -309,9 +400,9 @@ static LRESULT CALLBACK wndproc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
 struct Tex { ID3D11ShaderResourceView* srv = nullptr; int w = 0, h = 0; bool failed = false; };
 static std::map<std::string, Tex> g_tex;
 
-void* texture_for(const char* asset, int maxSide, int* w, int* h) {
+void* texture_for(const char* asset, int maxSide, int* w, int* h, bool srgb) {
     if (!asset || !g_dev) return nullptr;
-    std::string k = std::string(asset) + "|" + std::to_string(maxSide);
+    std::string k = std::string(asset) + "|" + std::to_string(maxSide) + (srgb ? "|s" : "");
     auto it = g_tex.find(k);
     if (it != g_tex.end()) {
         if (w) *w = it->second.w;
@@ -321,7 +412,7 @@ void* texture_for(const char* asset, int maxSide, int* w, int* h) {
     const R2Image* img = r2_image(asset, maxSide);
     if (!img) return nullptr;
     Tex t;
-    if (r2_make_texture(g_dev, *img, asset, &t.srv)) {  // texture.cpp, shared with tests/test_textures.cpp
+    if (r2_make_texture(g_dev, *img, asset, &t.srv, srgb)) {  // texture.cpp, shared with tests/test_textures.cpp
         t.w = img->w;
         t.h = img->h;
     } else {
@@ -722,6 +813,7 @@ static void render(IDXGISwapChain* sc) {
     if (!g_imguiReady) return;
     if (!g_rtv && !g_bufferCount && !make_targets(sc)) return;
     poll_keys();
+    claw_tick();
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     // The UI lays out at a logical resolution (about 1080p) and the framebuffer scale blows it up to the real one, so

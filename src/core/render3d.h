@@ -14,9 +14,10 @@ struct DrawItem {
     float tint[4] = {1, 1, 1, 0};
 };
 
-// [visuals] sun_yaw / sun_pitch (degrees; the sun turns with the world, not the camera), sun_strength, ambient.
-// Filled once by main.cpp; read by the pass.
-struct SceneLight { float sunYaw = 35, sunPitch = 55, sunStrength = 1.0f, ambient = 0.45f; };
+// [visuals] sun_yaw / sun_pitch (degrees; the sun turns with the world, not the camera), sun_strength, ambient,
+// sun_from=<singleton>+0x<off> (a float3 in MHW's memory found by the diagnostic's "light dir candidate" lines;
+// overrides yaw/pitch and the ground fit). Filled once by main.cpp; read by the pass.
+struct SceneLight { float sunYaw = 35, sunPitch = 55, sunStrength = 1.0f, ambient = 0.45f; char sunFrom[96] = {0}; };
 extern SceneLight g_sceneLight;
 
 // Render thread, Direct3D 11 only: draws the items into rtv with MHW's view and projection (row-vector matrices).

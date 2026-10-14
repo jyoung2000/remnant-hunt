@@ -28,6 +28,11 @@ static int read_key(const char* ini, const char* name, int def) {
     if (!v[0]) return def;
     if (v[1] == 0 && v[0] >= 'a' && v[0] <= 'z') return v[0] - 32;
     if (v[1] == 0) return (unsigned char)v[0];
+    if (_stricmp(v, "lbutton") == 0) return VK_LBUTTON;
+    if (_stricmp(v, "rbutton") == 0) return VK_RBUTTON;
+    if (_stricmp(v, "mbutton") == 0) return VK_MBUTTON;
+    if (_stricmp(v, "xbutton1") == 0) return VK_XBUTTON1;
+    if (_stricmp(v, "xbutton2") == 0) return VK_XBUTTON2;
     if (_stricmp(v, "mouse4") == 0) return VK_XBUTTON1;
     if (_stricmp(v, "mouse5") == 0) return VK_XBUTTON2;
     if ((v[0] == 'F' || v[0] == 'f') && v[1] >= '1' && v[1] <= '9') return VK_F1 + atoi(v + 1) - 1;
@@ -60,6 +65,8 @@ static void load_settings() {
                   "; Ward 13 terminal and the Remnant menus at MHW's NPCs\r\n"
                   "gun=B\r\nreload=R\r\nswap=X\r\nmod=V\r\nskill=G\r\nskill2=H\r\nrelic=T\r\nterminal=P\r\n"
                   "; brings a Remnant II boss 30 m in front of you (hunting zones and the Training Area)\r\nboss=F9\r\n"
+                  "; MHW's Aim Slinger key, and the clutch-claw button the mod presses for you when you press it down the sights of a Remnant gun\r\n"
+                  "aim_slinger=V\r\nclutch_claw=MBUTTON\r\n"
                   "[gun]\r\n; the hunter's hand joint (a world matrix found by the diagnostic): player+hand_l1 -> +hand_l2 -> entry hand_entry\r\n"
                   "; of hand_stride bytes. hand_offset_x/y/z (cm, in the joint's frame) and hand_axis (x,y,z,-x,-y,-z: the barrel direction)\r\n"
                   "; let you align the gun in game\r\n"
@@ -70,6 +77,7 @@ static void load_settings() {
                   "[visuals]\r\n; UI scale: 0 = automatic (screen height / 1080, at least 1), or e.g. 1.5\r\nui_scale=0\r\n"
                   "; Remnant bosses: sun direction in degrees (fixed in the world), sun strength, ambient light\r\n"
                   "sun_yaw=35\r\nsun_pitch=55\r\nsun_strength=1.0\r\nambient=0.45\r\n"
+                  "; sun_from=<singleton>+0x<off>: MHW's own sun vector (see the diagnostic's light dir candidate lines); overrides the above\r\nsun_from=\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);
@@ -79,6 +87,8 @@ static void load_settings() {
     g_keys.reload = read_key(ini, "reload", 'R');
     g_keys.swap = read_key(ini, "swap", 'X');
     g_keys.mod = read_key(ini, "mod", 'V');
+    g_keys.aimSlinger = read_key(ini, "aim_slinger", 'V');
+    g_keys.clutchClaw = read_key(ini, "clutch_claw", VK_MBUTTON);
     g_keys.skill = read_key(ini, "skill", 'G');
     g_keys.skill2 = read_key(ini, "skill2", 'H');
     g_keys.relic = read_key(ini, "relic", 'T');
@@ -107,6 +117,7 @@ static void load_settings() {
         g_sceneLight.sunPitch = fv("sun_pitch", 55.0f);
         g_sceneLight.sunStrength = fv("sun_strength", 1.0f);
         g_sceneLight.ambient = fv("ambient", 0.45f);
+        GetPrivateProfileStringA("visuals", "sun_from", "", g_sceneLight.sunFrom, sizeof(g_sceneLight.sunFrom), ini);
     }
     static const char* const kActKeys[3] = {"relic", "skill", "consumable"};
     for (int i = 0; i < 3; i++) {

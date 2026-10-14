@@ -376,3 +376,26 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   sun_yaw/sun_pitch/sun_strength/ambient). Drink action learned from the first potion use (learned_reactions.txt
   "drink S I") and played for the Dragon Heart and consumables. V passes to MHW while aiming a Remnant gun (slinger /
   clutch claw); the weapon mod key is ignored in ADS.
+
+## 2026-10-14 (later): dock flashing, carve animation, lighting accuracy
+- Jalon's screenshot (night, training area, Ravager): the dock popped up mid-fight. Cause: the input-rate heuristic
+  (MHW's input polling pauses for other reasons too, and the training area counts as "in base"). The heuristic is now
+  opt-in ([menu] heuristic=1); the dock shows on the [menu] flag byte when one is known, else only by hand: 9 opens it,
+  9 closes it (hint says "[9] Close"), any screen or leaving town closes it.
+- Same screenshot: the Ravager renders as a near-black silhouette with saturated red, no blue moonlight. Diagnosis:
+  albedo uploaded as BC7_UNORM (sRGB read as linear, no gamma on output) plus a fixed sun that ignores night. Fix in
+  progress: sRGB texture formats for base colour + sRGB/ACES output, sun azimuth fitted from the ground readback around
+  the boss (N/E/S/W blocks) until devdiag finds the game's light vector ("light dir candidate" lines; [visuals]
+  sun_from=<singleton>+0x<off>), night falls back to the hemisphere/moon tint.
+- Carving a Remnant corpse must play MHW's carve animation: learned like the drink action (pouch gain with no HP change
+  while the mod did not add it, the action current ~3 s before; "carve S I" in learned_reactions.txt; [bosses]
+  carve_action=S:I override); carve delay becomes 3 s when known.
+- Second screenshot (ADS on the Huntmaster, dock flashing): confirmed cause. No [menu] flag byte is configured, so the
+  dock followed the input-rate heuristic alone; gun mode blocks the mouse buttons and ADS drops MHW's input reads below
+  20% of the running maximum for 0.5 s, so "menu open" flips on and off while aiming. Heuristic now off by default.
+- Clutch claw while aiming a Remnant gun: V (ini [keys] aim_slinger) passes to MHW and 120 ms later the mod reports
+  the clutch-claw button ([keys] clutch_claw, default MBUTTON) down for 80 ms through the DirectInput, GetAsyncKeyState
+  and window-message hooks; LMB/RMB stay blocked (gun fire / ADS), the other mouse buttons pass through in ADS. Not
+  injected into raw input (unknown whether MHW reads the mouse that way; the log line "input: claw shot injected"
+  plus the claw firing in game will tell).
+- Carve learning now sums the pouch in one walk (mhw_pouch_sum) instead of ~2,500 locked lookups per poll.

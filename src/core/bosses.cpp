@@ -596,7 +596,22 @@ void loot(SaveData& s, Live& l, const Boss& b) {
 }
 
 // ---------------------------------------------------------------- carving the corpse
-constexpr double kCorpseHold = 90.0, kCarveDelay = 1.2;
+constexpr double kCorpseHold = 90.0, kCarveDelay = 1.2, kCarveAnimDelay = 3.0;
+
+// The carving action: the ini's [bosses] carve_action=S:I, else the one learned from MHW's own carve. False = none.
+bool carve_action(int* set, int* id) {
+    static int s_set = -2, s_id = 0;
+    if (s_set == -2) {
+        char ini[MAX_PATH], v[64] = {0};
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
+        GetPrivateProfileStringA("bosses", "carve_action", "", v, sizeof(v), ini);
+        if (sscanf(v, "%d:%d", &s_set, &s_id) != 2) s_set = -1;
+    }
+    *set = s_set;
+    *id = s_id;
+    if (*set < 0) return reactions_carve(set, id);
+    return true;
+}
 constexpr float kCarveRange = 300.0f;  // cm from the corpse's hitbox
 constexpr int kCarves = 3;
 
@@ -644,6 +659,7 @@ void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
         int row = carve_material(b);
         int id = row >= 0 ? (int)kMaterials[row].mhw_item_id : 0;
         int n = 1 + rand() % 3;
+        if (id > 0) reactions_own_pouch_change(t);
         int gave = id > 0 ? mhw_pouch_add(id, n) : 0;
         if (id > 0 && gave == 0) {  // no room in the pouch: nothing is carved yet
             toast(l, "Your item pouch is full");
@@ -666,7 +682,18 @@ void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
     }
     if (*keyEdge) {
         *keyEdge = false;
-        b.carveAt = t + kCarveDelay;
+        int c_set, c_id;
+        if (carve_action(&c_set, &c_id)) {
+            reactions_play(c_set, c_id);  // MHW's own carving animation; the material lands as it ends
+            b.carveAt = t + kCarveAnimDelay;
+        } else {
+            static bool warned = false;
+            if (!warned) {
+                warned = true;
+                log("bosses: carve action unknown yet (carve an MHW monster once to teach it)");
+            }
+            b.carveAt = t + kCarveDelay;
+        }
         return;
     }
     // the prompt, unless another toast is showing

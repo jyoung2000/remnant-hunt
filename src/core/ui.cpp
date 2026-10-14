@@ -1864,6 +1864,7 @@ static void hud(const SaveData& s, const Live& l) {
 static std::atomic<bool> g_menuHeur{false};
 bool menu_heuristic_open() { return g_menuHeur.load(); }
 static bool g_dockShown = false, g_dockHover = false;
+static bool g_dockManual = false;  // opened by hand with 9 (no menu flag known)
 
 static bool dock_enabled() {
     static int on = -1;
@@ -1979,7 +1980,7 @@ static bool dock_draw(const SaveData& s) {
     }
     panel_end();
     {  // the foot hint, in the same pill as the screens' foot line
-        const char* hint = "[9] Remnant equipment";
+        const char* hint = g_dockManual ? "[9] Close    click a row to edit" : "[9] Remnant equipment";
         ImDrawList* dl = ImGui::GetWindowDrawList();
         float tw = text_w(g_body, 15, hint), w = tw + 44, x = pos.x + (size.x - w) * 0.5f, y = pos.y + size.y - 24;
         dl->AddRectFilled(ImVec2(x, y), ImVec2(x + w, y + 22), IM_COL32(20, 18, 15, 225), 11.0f);
@@ -2024,8 +2025,19 @@ void mod_frame() {
     // MHW's Item Box / Change Equipment menu: the ini's flag byte when set, else the input-rate heuristic.
     bool heur = menu_open_signal(inGame && inBase && viewValid && baseSince > 0 && now_s() - baseSince > 4.0, now_s());
     int flagByte = menu_flag_read();
-    bool menuOpen = flagByte >= 0 ? flagByte != 0 : heur;
-    bool dockOn = dock_enabled() && inGame && inBase && s.archetype >= 0 && menuOpen && g_screen == SCR_NONE;
+    // The input-rate heuristic flashes the dock in play (any pause in MHW's input polling trips it), so it only ever
+    // shows the dock when the ini opts in ([menu] heuristic=1); otherwise the dock follows the flag byte, or the 9 key
+    // toggles it by hand.
+    static int heurOn = -1;
+    if (heurOn < 0) {
+        char ini[MAX_PATH];
+        snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+        heurOn = GetPrivateProfileIntA("menu", "heuristic", 0, ini) != 0;
+    }
+    if (inGame && g_screen == SCR_NONE && key_pressed('9') && !g_dockShown) g_dockManual = true;
+    if (!inGame || !inBase || g_screen != SCR_NONE) g_dockManual = false;
+    bool menuOpen = flagByte >= 0 ? flagByte != 0 : (heurOn && heur);
+    bool dockOn = dock_enabled() && inGame && inBase && s.archetype >= 0 && (menuOpen || g_dockManual) && g_screen == SCR_NONE;
     if (g_screen == SCR_NONE && settled && !s.introDone && r2_ready()) open(SCR_INTRO);
     if (g_screen != SCR_NONE) {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_fromDock && g_screen != SCR_INTRO) {
@@ -2037,7 +2049,10 @@ void mod_frame() {
             open(g_screen == SCR_ARCHETYPE || g_screen == SCR_TRAITS || g_screen == SCR_PRISM ? SCR_TERMINAL : SCR_NONE);
         if (!inGame) open(SCR_NONE);
     } else if (inGame) {
-        if (g_dockShown && dockOn && key_pressed('9')) dock_go(SCR_TERMINAL, slot_index("LONG GUN"));
+        if (g_dockShown && dockOn && key_pressed('9')) {
+            if (g_dockManual && flagByte < 0 && !(heurOn && heur)) g_dockManual = false;  // a hand-opened dock: 9 closes it
+            else dock_go(SCR_TERMINAL, slot_index("LONG GUN"));
+        }
         else if (key_pressed(k.terminal) && inBase && s.archetype >= 0) {
             if (nearMenu >= 0) open_menu(nearMenu, kMenus[nearMenu].role);
             else open(SCR_TERMINAL);
@@ -2052,6 +2067,7 @@ void mod_frame() {
         if (key_pressed(k.skill2)) post(CMD_SKILL2);
         if (key_pressed(k.relic)) post(CMD_RELIC);
         if (key_pressed(k.mod) && !(gunMode && aiming)) post(CMD_MOD);
+        if (gunMode && aiming && key_pressed(k.aimSlinger)) inject_claw(0.12);
         if (gunMode && key_pressed(k.reload)) post(CMD_RELOAD);
         if (gunMode && key_pressed(k.swap)) post(CMD_SWAP);
     }
@@ -2070,7 +2086,8 @@ void mod_frame() {
             if (g_dockHover) b.mouseButtons = true;
         }
         if (gunMode) {
-            b.mouseButtons = true;
+            if (aiming) b.mouseButton[0] = b.mouseButton[1] = 1;  // fire and aim stay with the gun; the claw button reaches MHW
+            else b.mouseButtons = true;
             b.keys[k.reload] = b.keys[k.swap] = 1;
         }
     }

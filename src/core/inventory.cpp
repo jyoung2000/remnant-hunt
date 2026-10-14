@@ -134,6 +134,22 @@ int mhw_pouch_count(int id) {
     return (int)std::min<long long>(n, 1 << 30);
 }
 
+// The pouch's total count of items with ids in [lo, hi]. Any thread. One walk, one lock.
+int mhw_pouch_sum(int lo, int hi) {
+    std::lock_guard<std::mutex> l(g_invLock);
+    if (!g_slot) return 0;
+    long long n = 0;
+    for (const Container& c : g_containers) {
+        if (!c.pouch) continue;
+        for (int i = 0; i < c.entries; i++) {
+            uint8_t* e = g_slot + c.off + (size_t)i * 16;
+            int id = *(int*)(e + 8);
+            if (id >= lo && id <= hi) n += std::max(0, *(int*)(e + 12));
+        }
+    }
+    return (int)std::min<long long>(n, 1 << 30);
+}
+
 // Game thread. Sets the pouch's entry for the item to the count (a free slot when it has none); count 0 clears it.
 bool mhw_pouch_set(int id, int count) {
     if (id <= 0 || count < 0) return false;
