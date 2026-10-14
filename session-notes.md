@@ -249,3 +249,8 @@ What each needs, from the diagnostics so far:
   mouse wheel swaps long gun / hand gun in gun mode (wheel blocked from the game then). Boss key press now logs.
   Not yet: the hunter holding/reloading the gun with MHW animations and Remnant armour (needs the hand joint and
   action ids, see the plan above); consumables in MHW's item bar (needs the bar's current-slot field).
+- Published: GitHub v0.4.1 (1dd8613); Melty remnant-hunt 0.4.0 then 0.4.1 live (2-run tests passed each time).
+  Installed in MHW: the dev build c9ce122 = 0.4.1 + research.cpp's motion-based hand-joint search (hunting zones
+  and the Training Area, first 10 min per zone, top candidates every 30 s in dev_research.txt, "[hand-like]" tag).
+  Jalon's next session: Training Area, draw the weapon, swing it, walk; then send dev_research.txt and
+  remnant_hunt.log ("boss key" line after F9).
