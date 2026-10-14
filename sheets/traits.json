@@ -979,6 +979,31 @@
    ]
   },
   {
+   "id": "gifted",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Trait_Gifted.uasset",
+     "key": "7B912BEF42BE44788B1ECD8022C3030F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Trait_Gifted.uasset",
+     "key": "EC8D4E8F40EAC48A5E3481A28DE867FC"
+    }
+   },
+   "icon": "none",
+   "effects": "skill_dur+30%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
    "id": "resolute",
    "kind": "trait",
    "name": {

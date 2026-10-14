@@ -47,11 +47,22 @@ irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 |
   stamina cost act on MHW's own stamina. Heavier Remnant armor makes stamina costs higher. A Remnant evade is a real
   dodge that spent stamina, so it now works on a gamepad too. The mod finds where MHW keeps your stamina during your
   first dodges in a hunt.
-- **Remnant levels, trait points and traits.** Slaying or capturing monsters and defeating Remnant bosses earns
-  experience. Each Remnant level is a trait point, and a new hunter starts with 5. Spend them in **TRAITS** at the
-  Ward 13 terminal: up to 10 points per trait, and you can take them back at any time. Core traits (Vigor, Endurance,
-  Spirit, Expertise) are known from the start. Learn the others from the Elder Melder or from Remnant bosses. Your
-  primary archetype's own trait is always at full strength.
+- **Archetypes, perks, traits and trait points work as in Remnant II.** Slaying or capturing monsters and defeating
+  Remnant bosses earns experience.
+  - **Archetype levels:** archetypes level from 1 to 10 on Remnant II's experience table. The two equipped archetypes
+    share the experience, and a level-10 archetype takes none.
+  - **Skills:** each archetype's skills unlock at levels 1, 5 and 10.
+  - **Perks:** the prime perk grows at levels 5 and 10. The damage perk grows with every level. Team, utility and
+    relic perks unlock at levels 2, 3 and 4 and are upgraded five levels later. The prime perk only works from the
+    primary archetype.
+  - **Archetype traits:** each equipped archetype's trait gains a point per archetype level. When an archetype reaches
+    level 10, its trait can be used with any archetype for trait points.
+  - **Core traits:** your primary archetype puts its 5 core points into Vigor, Endurance, Spirit and Expertise.
+  - **Trait points:** every Remnant level earns a trait point to spend in **TRAITS** at the Ward 13 terminal, up to
+    85. Each trait goes up to 10, and you can take your points back at any time.
+  - **Learning traits:** learn more traits from the Elder Melder or from Remnant bosses. All 14 archetypes have their
+    3 skills and 5 perks, and all 43 traits are in.
+  - **Weapon upgrades:** weapons upgrade to +20, or to +10 for special weapons with a mod of their own.
 - **Prisms**, as in Remnant II's The Dark Horizon. Craft them at the Elder Melder; the first Remnant boss you defeat
   also leaves one. The equipped prism gains experience as you hunt. Each prism level offers three choices: a new relic
   fragment for one of its five slots, one more level for a fragment (up to +10), or a fusion of two fragments that are
@@ -91,7 +102,7 @@ irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 |
   Medic), with their own names, emblems, skills and perks read from your install.
 - **The whole Remnant II arsenal**: all 14 archetypes with their skills, perks and traits, 112 weapons (long guns,
   hand guns and melee weapons), 36 mods, 66 mutators, 225 rings, 103 amulets, 27 relics, 44 relic fragments,
-  53 consumables, 120 armor pieces, 42 traits, 7 prisms with 23 fusions and Remnant II's legendary
+  53 consumables, 120 armor pieces, 43 traits, 7 prisms with 23 fusions and Remnant II's legendary
   prism bonuses.
 - **Remnant menus at MHW's own NPCs** in Astera and Seliana. Stand next to one and press **P**:
   - **Smithy (McCabe):** guns, melee weapons, mods, mutators, armor and gun upgrades (+1 to +10).

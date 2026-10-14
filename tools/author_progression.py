@@ -54,7 +54,7 @@ TRAITS = {
     "flashcaster": ("cdr+10%;mod_gen+10%", "approx"), "fortify": ("dr+10%", "approx"), "kinship": ("dr+5%", "fallback"),
     "longshot": ("dmg_ranged+10%", "approx"), "potency": ("heal+20%", "approx"), "regrowth": ("regen+1.5", "exact"),
     "strongback": ("stamina_cost-15%", "approx"), "swiftness": ("stamina_cost-7.5%", "approx"),
-    "triage": ("heal+50%", "exact"), "untouchable": ("on_evade:dr+30% 2s", "approx"),
+    "triage": ("heal+50%", "exact"), "untouchable": ("on_evade:dr+30% 2s", "approx"), "gifted": ("skill_dur+30%", "exact"),
     # traits learned from the Elder Melder or Remnant bosses
     "amplitude": ("dmg_skill+10%", "approx"), "arcanestrike": ("mod_gen+15%", "approx"),
     "barkskin": ("dr+10%", "exact"), "bloodbond": ("dr+5%", "approx"), "bloodstream": ("regen+1", "approx"),
@@ -68,8 +68,12 @@ TRAITS = {
     "softbreak": ("dmg+3%", "fallback"), "wayfarer": ("stamina_cost-5%", "approx"),
 }
 
+# Traits the catalog does not list (DLC folders it does not scan), with their text keys from the install.
+EXTRA_TRAITS = [{"cat": "trait", "path": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Trait_Gifted.uasset",
+                 "texts": [["7B912BEF42BE44788B1ECD8022C3030F", "Gifted"], ["632D24364F1E453284F98291989A07F2", "Archetype Trait"],
+                           ["EC8D4E8F40EAC48A5E3481A28DE867FC", "(description)"]], "icons": []}]
 traits = []
-for it in sorted((x for x in CAT if x["cat"] == "trait"), key=lambda x: x["path"]):
+for it in sorted([x for x in CAT if x["cat"] == "trait"] + EXTRA_TRAITS, key=lambda x: x["path"]):
     base = it["path"].rsplit("/", 1)[1][:-7]
     tid = base.replace("Trait_", "").lower()
     texts = [t for t in it["texts"] if "Needs Lore" not in t[1] and "Needs Flavor" not in t[1]]

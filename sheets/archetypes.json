@@ -10,6 +10,10 @@
   "skills": "list:ref:skills",
   "perks": "list:ref:perks",
   "trait": "ref:traits|none",
+  "core_vigor": "num",
+  "core_endurance": "num",
+  "core_spirit": "num",
+  "core_expertise": "num",
   "starter_long": "ref:weapons",
   "starter_hand": "ref:weapons",
   "starter_melee": "ref:weapons",
@@ -65,7 +69,11 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "core_vigor": 1,
+   "core_endurance": 0,
+   "core_spirit": 2,
+   "core_expertise": 2
   },
   {
    "id": "archon",
@@ -113,7 +121,11 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "core_vigor": 1,
+   "core_endurance": 1,
+   "core_spirit": 3,
+   "core_expertise": 0
   },
   {
    "id": "challenger",
@@ -159,7 +171,11 @@
    "zenny": 0,
    "recipe": [
     "none"
-   ]
+   ],
+   "core_vigor": 3,
+   "core_endurance": 2,
+   "core_spirit": 0,
+   "core_expertise": 0
   },
   {
    "id": "engineer",
@@ -207,7 +223,11 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "core_vigor": 2,
+   "core_endurance": 3,
+   "core_spirit": 0,
+   "core_expertise": 0
   },
   {
    "id": "explorer",
@@ -239,6 +259,7 @@
    ],
    "perks": [
     "lucky",
+    "scavenger",
     "metaldetector",
     "prospector",
     "selfdiscovery"
@@ -254,7 +275,11 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "core_vigor": 0,
+   "core_endurance": 2,
+   "core_spirit": 2,
+   "core_expertise": 1
   },
   {
    "id": "gunslinger",
@@ -302,7 +327,11 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "core_vigor": 2,
+   "core_endurance": 1,
+   "core_spirit": 0,
+   "core_expertise": 2
   },
   {
    "id": "handler",
@@ -348,7 +377,11 @@
    "zenny": 0,
    "recipe": [
     "none"
-   ]
+   ],
+   "core_vigor": 1,
+   "core_endurance": 1,
+   "core_spirit": 0,
+   "core_expertise": 3
   },
   {
    "id": "hunter",
@@ -394,7 +427,11 @@
    "zenny": 0,
    "recipe": [
     "none"
-   ]
+   ],
+   "core_vigor": 1,
+   "core_endurance": 2,
+   "core_spirit": 0,
+   "core_expertise": 2
   },
   {
    "id": "invader",
@@ -442,7 +479,11 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "core_vigor": 0,
+   "core_endurance": 4,
+   "core_spirit": 1,
+   "core_expertise": 0
   },
   {
    "id": "invoker",
@@ -479,7 +520,7 @@
     "mindandbody",
     "soothsayer"
    ],
-   "trait": "none",
+   "trait": "gifted",
    "starter_long": "blackmaw_ar47",
    "starter_hand": "service_pistol",
    "starter_melee": "hatchet",
@@ -491,7 +532,11 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "core_vigor": 2,
+   "core_endurance": 0,
+   "core_spirit": 0,
+   "core_expertise": 3
   },
   {
    "id": "medic",
@@ -537,7 +582,11 @@
    "zenny": 0,
    "recipe": [
     "none"
-   ]
+   ],
+   "core_vigor": 2,
+   "core_endurance": 0,
+   "core_spirit": 1,
+   "core_expertise": 2
   },
   {
    "id": "ritualist",
@@ -586,7 +635,11 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "core_vigor": 0,
+   "core_endurance": 0,
+   "core_spirit": 3,
+   "core_expertise": 2
   },
   {
    "id": "summoner",
@@ -634,7 +687,11 @@
     "ore_high*5",
     "bone_high*4",
     "part_high*2"
-   ]
+   ],
+   "core_vigor": 1,
+   "core_endurance": 0,
+   "core_spirit": 3,
+   "core_expertise": 1
   },
   {
    "id": "warden",
@@ -665,7 +722,11 @@
     "summoncombatdrone"
    ],
    "perks": [
-    "dynamic"
+    "dynamic",
+    "galvanize",
+    "safeguard",
+    "contingency",
+    "energize"
    ],
    "trait": "barrier",
    "starter_long": "blackmaw_ar47",
@@ -679,7 +740,11 @@
     "bone_master*4",
     "elder_master*3",
     "gem_master*1"
-   ]
+   ],
+   "core_vigor": 0,
+   "core_endurance": 1,
+   "core_spirit": 2,
+   "core_expertise": 2
   }
  ]
 }

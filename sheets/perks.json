@@ -4,6 +4,7 @@
  "columns": {
   "id": "id",
   "kind": "enum:prime|perk",
+  "type": "enum:prime|damage|team|utility|relic",
   "name": "r2text",
   "icon": "r2tex|none",
   "effects": "effects",
@@ -13,6 +14,7 @@
   {
    "id": "spirited",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/Perk_Spirited.uasset",
@@ -20,12 +22,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "relic_heal+15%",
+   "fidelity": "approx"
   },
   {
    "id": "liquidcourage",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/LiquidCourage/Perk_LiquidCourage.uasset",
@@ -33,12 +36,13 @@
     }
    },
    "icon": "none",
-   "effects": "crit+5%",
+   "effects": "dmg+25%;crit+5%",
    "fidelity": "exact"
   },
   {
    "id": "panacea",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/Panacea/Perk_Panacea.uasset",
@@ -46,12 +50,13 @@
     }
    },
    "icon": "none",
-   "effects": "dr+5%",
-   "fidelity": "fallback"
+   "effects": "res_bleed+15%;res_fire+15%;res_shock+15%;res_acid+15%",
+   "fidelity": "approx"
   },
   {
    "id": "goldtolead",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/GoldToLead/Perk_GoldToLead.uasset",
@@ -59,12 +64,13 @@
     }
    },
    "icon": "none",
-   "effects": "ammo+20%",
-   "fidelity": "fallback"
+   "effects": "ammo+15%",
+   "fidelity": "approx"
   },
   {
    "id": "experimentalist",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Alchemist/Perks/Experimentalist/Perk_Experimentalist.uasset",
@@ -72,12 +78,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "on_relic:dmg+10% 60s",
+   "fidelity": "approx"
   },
   {
    "id": "tempest",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/Perk_Tempest.uasset",
@@ -85,12 +92,13 @@
     }
    },
    "icon": "none",
-   "effects": "mod_gen+10%",
-   "fidelity": "fallback"
+   "effects": "mod_gen+50%",
+   "fidelity": "approx"
   },
   {
    "id": "amplify",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/Amplify/Perk_Amplify.uasset",
@@ -98,12 +106,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_mod+5%",
+   "effects": "dmg_mod+50%;crit+10%",
    "fidelity": "exact"
   },
   {
    "id": "powercreep",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/PowerCreep/Perk_PowerCreep.uasset",
@@ -112,11 +121,12 @@
    },
    "icon": "none",
    "effects": "mod_gen+10%",
-   "fidelity": "exact"
+   "fidelity": "approx"
   },
   {
    "id": "spiritwithin",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/Perk_SpiritWithin.uasset",
@@ -124,12 +134,13 @@
     }
    },
    "icon": "none",
-   "effects": "mod_gen+5%",
+   "effects": "mod_gen+10%",
    "fidelity": "exact"
   },
   {
    "id": "powerleak",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Archon/Perks/PowerLeak/Perk_PowerLeak.uasset",
@@ -137,12 +148,13 @@
     }
    },
    "icon": "none",
-   "effects": "mod_gen+10%",
-   "fidelity": "fallback"
+   "effects": "on_relic:mod_gen+100% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "diehard",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/DieHard/Perk_DieHard.uasset",
@@ -150,12 +162,13 @@
     }
    },
    "icon": "none",
-   "effects": "heal+10%",
-   "fidelity": "fallback"
+   "effects": "low_hp(20):dr+40%",
+   "fidelity": "approx"
   },
   {
    "id": "closequarters",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/Perk_CloseQuarters.uasset",
@@ -163,12 +176,13 @@
     }
    },
    "icon": "none",
-   "effects": "crit+5%",
-   "fidelity": "exact"
+   "effects": "dmg+35%;crit+5%",
+   "fidelity": "approx"
   },
   {
    "id": "intimidatingpresence",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/IntimidatingPresence/Perk_IntimidatingPresence.uasset",
@@ -176,12 +190,13 @@
     }
    },
    "icon": "none",
-   "effects": "dr+5%",
-   "fidelity": "fallback"
+   "effects": "on_skill:dr+10% 15s",
+   "fidelity": "approx"
   },
   {
    "id": "powerlifter",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/Perk_PowerLifter.uasset",
@@ -190,11 +205,12 @@
    },
    "icon": "none",
    "effects": "stamina_cost-50%",
-   "fidelity": "exact"
+   "fidelity": "approx"
   },
   {
    "id": "faceofdanger",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Challenger/Perks/FaceOfDanger/Perk_FaceOfDanger.uasset",
@@ -202,12 +218,13 @@
     }
    },
    "icon": "none",
-   "effects": "on_relic:dmg+10% 10s",
-   "fidelity": "exact"
+   "effects": "on_relic:dmg+10% 10s;on_relic:dr+10% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "hightech",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/Overclock/Perk_HighTech.uasset",
@@ -215,12 +232,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "on_skill:dmg+25% 15s",
+   "fidelity": "approx"
   },
   {
    "id": "metalworker",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/Metalworker/Perk_Metalworker.uasset",
@@ -228,12 +246,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_skill+5%;max_hp+2.5%",
+   "effects": "dmg_skill+50%;dmg_ranged+25%;crit+5%",
    "fidelity": "exact"
   },
   {
    "id": "magneticfield",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/MagneticField/Perk_MagneticField.uasset",
@@ -241,12 +260,13 @@
     }
    },
    "icon": "none",
-   "effects": "dr+5%",
-   "fidelity": "fallback"
+   "effects": "dr+15%",
+   "fidelity": "approx"
   },
   {
    "id": "heavymobility",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/HeavyMobility/Perk_HeavyMobility.uasset",
@@ -254,12 +274,13 @@
     }
    },
    "icon": "none",
-   "effects": "stamina_cost-17.5%;on_evade:stamina_cost-17.5% 10s",
-   "fidelity": "exact"
+   "effects": "stamina_cost-25%",
+   "fidelity": "approx"
   },
   {
    "id": "surplus",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Engineer/Perks/Surplus/Perk_Surplus.uasset",
@@ -267,12 +288,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "ammo+15%",
+   "fidelity": "approx"
   },
   {
    "id": "lucky",
-   "kind": "perk",
+   "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/Lucky/Perk_Lucky.uasset",
@@ -280,12 +302,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+0.5% 20s",
-   "fidelity": "exact"
+   "effects": "xp+15%",
+   "fidelity": "approx"
   },
   {
    "id": "metaldetector",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/Perk_MetalDetector.uasset",
@@ -293,12 +316,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "ammo+10%",
+   "fidelity": "approx"
   },
   {
    "id": "prospector",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/Perk_Prospector.uasset",
@@ -306,12 +330,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "xp+5%",
+   "fidelity": "approx"
   },
   {
    "id": "selfdiscovery",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/SelfDiscovery/Perk_SelfDiscovery.uasset",
@@ -319,12 +344,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "on_relic:dmg+15% 30s",
+   "fidelity": "approx"
   },
   {
    "id": "loaded",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/Leadbringer/Perk_Loaded.uasset",
@@ -332,12 +358,13 @@
     }
    },
    "icon": "none",
-   "effects": "reload+10%",
-   "fidelity": "fallback"
+   "effects": "on_skill:reload+100% 8s",
+   "fidelity": "approx"
   },
   {
    "id": "swiftshot",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/SwiftShot/Perk_SwiftShot.uasset",
@@ -345,12 +372,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_ranged+2.5%;fire_rate+9%;crit+5%",
+   "effects": "fire_rate+15%;dmg_ranged+25%;crit+5%",
    "fidelity": "exact"
   },
   {
    "id": "posseup",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/PosseUp/Perk_PosseUp.uasset",
@@ -358,12 +386,13 @@
     }
    },
    "icon": "none",
-   "effects": "ammo+20%",
-   "fidelity": "fallback"
+   "effects": "ammo+30%",
+   "fidelity": "approx"
   },
   {
    "id": "quickhands",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/QuickHands/Perk_QuickHands.uasset",
@@ -371,12 +400,13 @@
     }
    },
    "icon": "none",
-   "effects": "reload+10%",
-   "fidelity": "exact"
+   "effects": "reload+15%",
+   "fidelity": "approx"
   },
   {
    "id": "sleightofhand",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Gunslinger/Perks/SleightOfHand/Perk_SleightOfHand.uasset",
@@ -390,6 +420,7 @@
   {
    "id": "bonded",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/Resucitate/Perk_Bonded.uasset",
@@ -397,12 +428,13 @@
     }
    },
    "icon": "none",
-   "effects": "max_hp+50%",
-   "fidelity": "exact"
+   "effects": "low_hp(30):dr+20%",
+   "fidelity": "approx"
   },
   {
    "id": "packhunter",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/PackHunter/Perk_PackHunter.uasset",
@@ -410,12 +442,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_ranged+8%",
-   "fidelity": "fallback"
+   "effects": "dmg+30%;crit+5%",
+   "fidelity": "approx"
   },
   {
    "id": "heartofthepack",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/HeartOfThePack/Perk_HeartOfThePack.uasset",
@@ -424,11 +457,12 @@
    },
    "icon": "none",
    "effects": "stamina_cost-15%",
-   "fidelity": "exact"
+   "fidelity": "approx"
   },
   {
    "id": "teamwork",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/Teamwork/Perk_Teamwork.uasset",
@@ -437,11 +471,12 @@
    },
    "icon": "none",
    "effects": "dr+5%",
-   "fidelity": "fallback"
+   "fidelity": "approx"
   },
   {
    "id": "bestfriend",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Handler/Perks/BestFriend/Perk_BestFriend.uasset",
@@ -449,12 +484,13 @@
     }
    },
    "icon": "none",
-   "effects": "dr+5%",
-   "fidelity": "fallback"
+   "effects": "on_relic:dmg+25% 15s",
+   "fidelity": "approx"
   },
   {
    "id": "deadtorightsv3",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Perk_DeadToRightsV3.uasset",
@@ -462,12 +498,13 @@
     }
    },
    "icon": "none",
-   "effects": "weakspot+10%",
-   "fidelity": "fallback"
+   "effects": "on_weakspot:skill_dur+20% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "deadeye",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Perk_Deadeye.uasset",
@@ -475,12 +512,13 @@
     }
    },
    "icon": "none",
-   "effects": "weakspot+1.5%",
+   "effects": "dmg_ranged+40%;weakspot+15%;crit+5%",
    "fidelity": "exact"
   },
   {
    "id": "returntosender",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Perk_ReturnToSender.uasset",
@@ -488,12 +526,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "ammo+25%",
+   "fidelity": "approx"
   },
   {
    "id": "urgency",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Urgency/Perk_Urgency.uasset",
@@ -501,12 +540,13 @@
     }
    },
    "icon": "none",
-   "effects": "on_kill:reload+15% 10s",
-   "fidelity": "exact"
+   "effects": "on_kill:reload+15% 5s;on_kill:stamina_cost-15% 5s",
+   "fidelity": "approx"
   },
   {
    "id": "intuition",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Hunter/Perks/Intuition/Perk_Intuition.uasset",
@@ -514,12 +554,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "on_relic:skill_dur+50% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "shadownew",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Perk_ShadowNEW.uasset",
@@ -527,12 +568,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+5%",
-   "fidelity": "fallback"
+   "effects": "dmg+15%",
+   "fidelity": "approx"
   },
   {
    "id": "shark",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/SHARK/Perk_SHARK.uasset",
@@ -540,12 +582,13 @@
     }
    },
    "icon": "none",
-   "effects": "on_evade:dmg_melee+0.7% 1s",
-   "fidelity": "exact"
+   "effects": "on_evade:dmg+7% 10s x5;on_evade:crit+1% 10s x5",
+   "fidelity": "approx"
   },
   {
    "id": "loophole",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Loophole/Perk_Loophole.uasset",
@@ -554,11 +597,12 @@
    },
    "icon": "none",
    "effects": "lifesteal+3%",
-   "fidelity": "fallback"
+   "fidelity": "approx"
   },
   {
    "id": "bypass",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Bypass/Perk_Bypass.uasset",
@@ -566,12 +610,13 @@
     }
    },
    "icon": "none",
-   "effects": "on_evade:dmg+10% 10s",
-   "fidelity": "fallback"
+   "effects": "stamina_cost-15%",
+   "fidelity": "exact"
   },
   {
    "id": "override",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Invader/Perks/Override/Perk_Override.uasset",
@@ -579,12 +624,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+3%",
-   "fidelity": "fallback"
+   "effects": "on_relic:dr+15% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "primeperk_visionary",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Visionary/PrimePerk_Visionary.uasset",
@@ -592,12 +638,13 @@
     }
    },
    "icon": "none",
-   "effects": "on_skill:cdr+3% 10s",
-   "fidelity": "exact"
+   "effects": "cdr+15%",
+   "fidelity": "approx"
   },
   {
    "id": "entranced",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Entranced/Perk_Entranced.uasset",
@@ -605,12 +652,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_skill+3%",
+   "effects": "dmg_skill+30%;dmg_elem+15%;crit+5%",
    "fidelity": "exact"
   },
   {
    "id": "communion",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Communion/Perk_Communion.uasset",
@@ -618,12 +666,13 @@
     }
    },
    "icon": "none",
-   "effects": "cdr+1%",
-   "fidelity": "exact"
+   "effects": "on_skill:regen+1 15s",
+   "fidelity": "approx"
   },
   {
    "id": "mindandbody",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/MindAndBody/Perk_MindAndBody.uasset",
@@ -631,12 +680,13 @@
     }
    },
    "icon": "none",
-   "effects": "stamina_cost-2.5%",
+   "effects": "on_skill:dr+5% 15s;on_skill:stamina_cost-5% 15s",
    "fidelity": "exact"
   },
   {
    "id": "soothsayer",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/PerksAndTraits/Soothsayer/Perk_Soothsayer.uasset",
@@ -644,12 +694,13 @@
     }
    },
    "icon": "none",
-   "effects": "skill_dur+10%",
-   "fidelity": "fallback"
+   "effects": "relic_speed+25%;on_relic:skill_dur+20% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "regenerator",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Regenerator/Perk_Regenerator.uasset",
@@ -657,12 +708,13 @@
     }
    },
    "icon": "none",
-   "effects": "heal-50%",
-   "fidelity": "exact"
+   "effects": "relic_charges+1",
+   "fidelity": "approx"
   },
   {
    "id": "invigorated",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Invigorated/Perk_Invigorated.uasset",
@@ -670,12 +722,13 @@
     }
    },
    "icon": "none",
-   "effects": "crit+5%",
+   "effects": "dmg+25%;crit+5%",
    "fidelity": "exact"
   },
   {
    "id": "benevolence",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Perk_Benevolence.uasset",
@@ -683,12 +736,13 @@
     }
    },
    "icon": "none",
-   "effects": "relic_heal+15%;low_hp(35):relic_heal+15%;low_hp(35):max_hp+35%",
+   "effects": "relic_heal+15%",
    "fidelity": "exact"
   },
   {
    "id": "backbone",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Perk_Backbone.uasset",
@@ -696,12 +750,13 @@
     }
    },
    "icon": "none",
-   "effects": "max_hp+1",
-   "fidelity": "exact"
+   "effects": "dr+5%",
+   "fidelity": "approx"
   },
   {
    "id": "benefactor",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Medic/Perks/Perk_Benefactor.uasset",
@@ -709,12 +764,13 @@
     }
    },
    "icon": "none",
-   "effects": "on_relic:relic_speed+20% 10s",
+   "effects": "relic_speed+20%",
    "fidelity": "exact"
   },
   {
    "id": "primeperk_vile",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Vile/PrimePerk_Vile.uasset",
@@ -722,12 +778,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_status+5%",
-   "fidelity": "exact"
+   "effects": "dmg_status+15%",
+   "fidelity": "approx"
   },
   {
    "id": "wrath",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Wrath/Perk_Wrath.uasset",
@@ -735,12 +792,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg+2.5%;crit+5%",
-   "fidelity": "exact"
+   "effects": "vs_status+25%;crit+5%",
+   "fidelity": "approx"
   },
   {
    "id": "terrify",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Terrify/Perk_Terrify.uasset",
@@ -748,12 +806,13 @@
     }
    },
    "icon": "none",
-   "effects": "dr+5%",
-   "fidelity": "fallback"
+   "effects": "ammo+10%",
+   "fidelity": "approx"
   },
   {
    "id": "darkblood",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/DarkBlood/Perk_DarkBlood.uasset",
@@ -761,12 +820,13 @@
     }
    },
    "icon": "none",
-   "effects": "dr+25%",
-   "fidelity": "exact"
+   "effects": "res_bleed+25%;res_fire+25%;res_shock+25%;res_acid+25%",
+   "fidelity": "approx"
   },
   {
    "id": "purge",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/PerksAndTraits/Purge/Perk_Purge.uasset",
@@ -774,12 +834,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_status+10%",
-   "fidelity": "fallback"
+   "effects": "on_relic:dr+10% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "ruthless",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Ruthless/Perk_Ruthless.uasset",
@@ -787,12 +848,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_skill+10%",
-   "fidelity": "fallback"
+   "effects": "dmg_skill+20%",
+   "fidelity": "approx"
   },
   {
    "id": "dominator",
    "kind": "perk",
+   "type": "damage",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Dominator/Perk_Dominator.uasset",
@@ -800,12 +862,13 @@
     }
    },
    "icon": "none",
-   "effects": "dmg_mod+10%",
-   "fidelity": "fallback"
+   "effects": "dmg_mod+35%;dmg_skill+35%;dmg_explosive+35%;crit+5%",
+   "fidelity": "exact"
   },
   {
    "id": "residue",
    "kind": "perk",
+   "type": "team",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Residue/Perk_Residue.uasset",
@@ -814,11 +877,12 @@
    },
    "icon": "none",
    "effects": "heal+20%",
-   "fidelity": "exact"
+   "fidelity": "approx"
   },
   {
    "id": "outrage",
    "kind": "perk",
+   "type": "utility",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Outrage/Perk_Outrage.uasset",
@@ -826,12 +890,13 @@
     }
    },
    "icon": "none",
-   "effects": "lifesteal+3%;stamina_cost-7.5%",
-   "fidelity": "exact"
+   "effects": "on_skill:lifesteal+3% 10s;on_skill:stamina_cost-15% 10s",
+   "fidelity": "approx"
   },
   {
    "id": "incite",
    "kind": "perk",
+   "type": "relic",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Archetypes/Summoner/Perks/Incite/Perk_Incite.uasset",
@@ -839,12 +904,13 @@
     }
    },
    "icon": "none",
-   "effects": "on_relic:dmg+15% 10s",
-   "fidelity": "exact"
+   "effects": "on_relic:dmg_skill+15% 30s",
+   "fidelity": "approx"
   },
   {
    "id": "dynamic",
    "kind": "prime",
+   "type": "prime",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Perks/Perk_Dynamic.uasset",
@@ -853,7 +919,77 @@
    },
    "icon": "none",
    "effects": "shield+20%",
+   "fidelity": "approx"
+  },
+  {
+   "id": "scavenger",
+   "kind": "perk",
+   "type": "damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Archetypes/Explorer/Perks/Perk_Scavenger/Perk_Scavenger.uasset",
+     "key": "08955271418EAAE93E620C830F78B4E2"
+    }
+   },
+   "icon": "none",
+   "effects": "on_kill:dmg+5% 20s x5;on_kill:crit+5% 20s",
+   "fidelity": "approx"
+  },
+  {
+   "id": "galvanize",
+   "kind": "perk",
+   "type": "damage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Perks/Perk_Galvanize.uasset",
+     "key": "7B0DA4F441090FA4DC316BB8D463F75D"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+25%;crit+5%",
    "fidelity": "exact"
+  },
+  {
+   "id": "safeguard",
+   "kind": "perk",
+   "type": "team",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Perks/Perk_Safeguard.uasset",
+     "key": "27B854C84DF46F782FF88BB739C7F602"
+    }
+   },
+   "icon": "none",
+   "effects": "heal+10%",
+   "fidelity": "approx"
+  },
+  {
+   "id": "contingency",
+   "kind": "perk",
+   "type": "utility",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Perks/Perk_Contingency.uasset",
+     "key": "2D290E33405F66D17F39F593F0A60554"
+    }
+   },
+   "icon": "none",
+   "effects": "low_hp(25):dr+25%",
+   "fidelity": "approx"
+  },
+  {
+   "id": "energize",
+   "kind": "perk",
+   "type": "relic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Perks/Perk_Energize.uasset",
+     "key": "7D6C51CB4C6956CF0F54BD8BF5ADA6AB"
+    }
+   },
+   "icon": "none",
+   "effects": "on_relic:dr+20% 10s",
+   "fidelity": "approx"
   }
  ]
 }

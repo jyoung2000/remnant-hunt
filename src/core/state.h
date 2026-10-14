@@ -40,12 +40,14 @@ struct SaveData {
     std::vector<Prism> prism;             // per prisms row
     int prismOn = -1;                     // the equipped prism
     int difficulty = 1;                   // difficulties row for the Remnant monsters (Veteran), chosen at Ward 13
+    std::vector<double> archXp;           // experience of each archetype (levels 1..10)
 
     SaveData() {
         for (int c = 0; c < CAT_COUNT; c++) owned[c].assign(cat_count((Cat)c), 0);
         stock.assign(kConsumablesCount, 0);
         level.assign(kWeaponsCount, 0);
         trait.assign(kTraitsCount, 0);
+        archXp.assign(kArchetypesCount, 0);
         prism.assign(kPrismsCount, Prism());
         for (int i = 0; i < kTraitsCount; i++)
             if (kTraits[i].kind == TRAITS_KIND_CORE) owned[CAT_TRAIT][i] = 1;  // core traits are known from the start
@@ -136,6 +138,14 @@ void research_tick(const Live& l, double now);
 enum PSKind : int8_t { PS_NONE, PS_FRAGMENT, PS_FUSION, PS_LEGENDARY, PS_RAISE };
 double level_xp(int level);                 // experience needed for a Remnant level, from zero
 int remnant_level(double xp);
+int archetype_level(const SaveData& s, int archetype);  // 1..10 (0 for none)
+double archetype_next_xp(int level);        // the archetype's total experience for the next level, 0 at 10
+int skills_unlocked(int level);             // Remnant II: the first skill at level 1, the second at 5, the third at 10
+int skill_index(const SaveData& s, int slot);  // the chosen skill of an archetype slot, among those unlocked
+float perk_scale(int perk, int level);      // how much of a perk an archetype of this level gives (0 = not yet)
+int perk_unlock_level(int perk);
+int trait_auto(const SaveData& s, int row); // points the archetypes put in a trait on their own
+int trait_level(const SaveData& s, int row);  // 0..10, all told
 int trait_points(const SaveData& s);        // earned
 int trait_points_spent(const SaveData& s);
 bool trait_known(const SaveData& s, int row);
@@ -182,7 +192,9 @@ std::vector<int> perks_of(int archetypeRow);           // perks rows (prime firs
 void choose_archetype(int row, int slot);              // render thread (takes the lock); slot 0 primary, 1 secondary
 void equip(Cat c, int row, int slot);                  // render thread (takes the lock)
 void use_consumable(int row);                          // render thread (takes the lock)
-float upgrade_mult(int level);
+float upgrade_mult(int weapon, int level);
+int weapon_max_level(int weapon);          // Remnant II: +20, or +10 for special weapons
+std::string upgrade_cost(int weapon, int level, int* zenny);  // recipe from level to level + 1
 bool can_equip_here(const Live& l);                    // in town
 
 // MHW's own inventory (inventory.cpp). Reads work on any thread; changes only on the game thread.

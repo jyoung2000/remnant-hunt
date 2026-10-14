@@ -17,6 +17,12 @@ void toast(Live&, const char* fmt, ...) {
     vsnprintf(g_toast, sizeof(g_toast), fmt, a);
     va_end(a);
 }
+std::vector<int> skills_of(int a) { return a >= 0 ? rows_of(kArchetypes[a].skills, skills_index) : std::vector<int>{}; }
+std::vector<int> perks_of(int a) { return a >= 0 ? rows_of(kArchetypes[a].perks, perks_index) : std::vector<int>{}; }
+const std::string& r2_text(const sheets::R2Text&) {
+    static const std::string n = "name";
+    return n;
+}
 }  // namespace rh
 
 using namespace rh;
@@ -44,7 +50,40 @@ int main() {
     award_xp(s, l, (float)level_xp(3), 0);
     EXPECT(remnant_level(s.xp) == 3 && trait_points(s) == start + 3, "level %d, points %d", remnant_level(s.xp), trait_points(s));
     EXPECT(strstr(g_toast, "Remnant level 3") != nullptr, "a level-up toast: %s", g_toast);
-    EXPECT(trait_set(s, vigor, -1) && trait_set(s, vigor, 1), "points come back and go again");
+    EXPECT(trait_set(s, vigor, 1) && trait_set(s, vigor, -1) && trait_set(s, vigor, 1), "points go in, come back and go again");
+
+    // Archetypes (Remnant II): levels on the experience table, shared by the two; skills at 1 / 5 / 10; perks by
+    // kind and level; the archetype trait one point per level; the primary's five core points.
+    int gs = archetypes_index("gunslinger"), hu = archetypes_index("hunter");
+    s.archetype = gs;
+    s.archetype2 = hu;
+    EXPECT(archetype_level(s, gs) == 1 && skills_unlocked(1) == 1 && skill_index(s, 0) == 0, "a new archetype is level 1 with one skill");
+    s.skill[0] = 2;
+    EXPECT(skill_index(s, 0) == 0, "a locked skill cannot be used");
+    award_xp(s, l, 2 * 17565.0f, 0);  // shared: each gets 17565 -> level 4
+    EXPECT(archetype_level(s, gs) == 4 && archetype_level(s, hu) == 4, "levels %d / %d", archetype_level(s, gs), archetype_level(s, hu));
+    s.archXp[gs] = 35205;
+    EXPECT(archetype_level(s, gs) == 6 && skill_index(s, 0) == 1, "level 6 opens the second skill (index %d)", skill_index(s, 0));
+    std::vector<int> pk = perks_of(gs);
+    for (int p : pk) {
+        float k = perk_scale(p, 6);
+        int t = kPerks[p].type;
+        float want = t == PERKS_TYPE_PRIME ? 0.8f : t == PERKS_TYPE_DAMAGE ? 0.6f : 0.6f;  // team / utility / relic: unlocked, upgraded at 7 / 8 / 9
+        EXPECT(fabsf(k - want) < 0.01f, "perk %s at level 6: %.2f, expected %.2f", kPerks[p].id, k, want);
+    }
+    int ammo = traits_index("ammoreserves");
+    EXPECT(trait_auto(s, ammo) == 6 && trait_level(s, ammo) == 6, "the Gunslinger's trait at its level (%d)", trait_level(s, ammo));
+    EXPECT(!trait_set(s, ammo, 1), "an archetype trait takes no points before level 10");
+    int core = 0;
+    for (const char* c : {"vigor", "endurance", "spirit", "expertise"}) core += trait_auto(s, traits_index(c));
+    EXPECT(core == 5, "the primary archetype's 5 core points (%d)", core);
+    s.archXp[gs] = 200000;
+    award_xp(s, l, 1000, 0);  // a level-10 archetype takes no share: the hunter gets it all
+    EXPECT(archetype_level(s, gs) == 10 && s.archXp[hu] >= 17565 + 1000 - 0.5, "level 10 takes no share");
+    s.archetype = hu;
+    s.archetype2 = -1;
+    EXPECT(trait_known(s, ammo) && trait_auto(s, ammo) == 0 && trait_set(s, ammo, 1), "a mastered archetype's trait, for points");
+    s.trait[ammo] = 0;
 
     // A prism, equipped, fed experience.
     int greed = prisms_index("greed");
@@ -100,6 +139,7 @@ int main() {
 
     // Effects: Vigor's points, and the Traitor legendary maxing core traits.
     traits_reset(s);
+    s.archetype = s.archetype2 = -1;  // no archetype core points in the way
     EffectState fx;
     s.trait[vigor] = 5;
     progress_sources(s, fx);

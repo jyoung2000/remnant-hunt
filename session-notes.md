@@ -92,3 +92,17 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   status, xp), chosen at Ward 13 (SaveData.difficulty), applied at spawn. Boss styles (bosses.json style/prefer_m/
   combo via tools/author_boss_styles.py): brute, hunter, duelist, ranged, caster, juggernaut, sentinel; enrage roar.
 - Tests: make test-logic now also runs tests/test_progress.cpp (all pass).
+
+## 2026-10-13 19:40 request: classes and traits exactly as Remnant II; Remnant features as in R2; MHW-looking GUI
+- Archetypes (progress.cpp): levels 1-10 on R2's XP table (5000 ... 94770), XP split between the two equipped
+  (a level-10 one takes none); skills unlock at 1/5/10 (skill_index); perks by type (perks.json type): prime 0.6/0.8/1.0
+  at 1/5/10, damage level/10, team/utility/relic unlock 2/3/4 at 0.6 and full at 7/8/9; prime only from the primary.
+- Traits: each equipped archetype's trait +1 per archetype level (auto); primary's 5 core points (archetypes.json
+  core_*, from the toolkit); archetype traits usable by others for points once that archetype is level 10; free
+  points from Remnant levels (start 0, cap 85). 43 traits (Gifted added); Warden's 4 perks and Explorer's Scavenger
+  added; perk effects re-written by hand at their top level (tools/author_archetypes.py).
+- Weapons: +20 for regular, +10 for special (own mod) weapons; regular levels are half steps of upgrades.json.
+- Not added: Gambler and Paragon (World_DLC4 in the install) are unreleased placeholders ("TBD" text).
+- GUI: Monster Hunter menu style everywhere (palette, gold double frame with diamonds, amber cursor buttons, section
+  headings with diamonds, RARE n in MHW colours). The Remnant-style health bars stay (asked for earlier).
+- tests/preview_ui.cpp: preview harness for the screens under Wine (not finished: needs stubs).

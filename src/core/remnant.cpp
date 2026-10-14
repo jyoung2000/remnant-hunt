@@ -60,7 +60,28 @@ int gun_mod(const SaveData& s, int gun) {
 std::vector<int> skills_of(int a) { return a >= 0 ? rows_of(kArchetypes[a].skills, skills_index) : std::vector<int>{}; }
 std::vector<int> perks_of(int a) { return a >= 0 ? rows_of(kArchetypes[a].perks, perks_index) : std::vector<int>{}; }
 
-float upgrade_mult(int level) { return level > 0 && level <= kUpgradesCount ? kUpgrades[level - 1].damage_mult : 1.0f; }
+// Remnant II: regular weapons upgrade to +20, special (boss) weapons, the ones with a mod of their own, to +10; a
+// regular weapon's two levels make one step of the upgrade table (half its materials each).
+int weapon_max_level(int w) { return w >= 0 && kWeapons[w].mod >= 0 ? kUpgradesCount : kUpgradesCount * 2; }
+float upgrade_mult(int w, int level) {
+    if (level <= 0) return 1.0f;
+    auto at = [](int i) { return i <= 0 ? 1.0f : kUpgrades[std::min(i, (int)kUpgradesCount) - 1].damage_mult; };
+    if (weapon_max_level(w) <= kUpgradesCount) return at(level);
+    return (at(level / 2) + at((level + 1) / 2)) * 0.5f;
+}
+std::string upgrade_cost(int w, int level, int* zenny) {
+    if (level >= weapon_max_level(w)) { *zenny = 0; return ""; }
+    bool regular = weapon_max_level(w) > kUpgradesCount;
+    const Upgrades& u = kUpgrades[regular ? level / 2 : level];
+    *zenny = regular ? (int)u.zenny / 2 : (int)u.zenny;
+    if (!regular) return u.recipe;
+    std::string out;
+    for (const Need& n : recipe_of(u.recipe)) {
+        if (!out.empty()) out += ",";
+        out += std::string(kMaterials[n.material].id) + "*" + std::to_string(std::max(1, (n.count + 1) / 2));
+    }
+    return out;
+}
 
 bool can_equip_here(const Live& l) { return l.snap.inGame && l.snap.inBase; }
 
@@ -80,14 +101,16 @@ static void rebuild_sources(const SaveData& s, Live& l) {
     for (int slot = 0; slot < 2; slot++) {
         int a = slot == 0 ? s.archetype : s.archetype2;
         if (a < 0) continue;
+        // Remnant II: perks unlock and grow with the archetype's level; the prime perk only from the primary
+        // archetype (or the second too, with the Prime Time legendary). Archetype traits: progress_sources().
+        int level = archetype_level(s, a);
         std::vector<int> pk = perks_of(a);
-        for (size_t i = 0; i < pk.size(); i++)
-            if (slot == 0 || kPerks[pk[i]].kind != PERKS_KIND_PRIME) fx.add_source(kPerks[pk[i]].effects);
-        int tr = kArchetypes[a].trait;
-        if (tr >= 0 && slot == 0) fx.add_source(kTraits[tr].effects);
-        if (slot == 1 && prime_time(s))  // the Prime Time legendary
-            for (int p : pk)
-                if (kPerks[p].kind == PERKS_KIND_PRIME) fx.add_source(kPerks[p].effects);
+        for (int p : pk) {
+            bool prime = kPerks[p].kind == PERKS_KIND_PRIME;
+            if (prime && slot == 1 && !prime_time(s)) continue;
+            float k = perk_scale(p, level);
+            if (k > 0) fx.add_source(kPerks[p].effects, k);
+        }
     }
     progress_sources(s, fx);
     if (s.longGun >= 0) fx.add_source(kWeapons[s.longGun].effects, 1.0f, 1);
@@ -536,7 +559,7 @@ static int fire(SaveData& s, Live& l, int gun, double t) {
     float range = w.range_m * 100.0f;  // MHW units are centimetres
     float spread = w.spread_deg * (l.aiming ? tune(TUNING_ADS_SPREAD_MULT) : 1.0f) *
                    std::max(0.2f, 1.0f - stat(l, ST_ACCURACY, t)) * 3.14159265f / 180.0f;
-    float base = w.damage * tune(TUNING_DAMAGE_SCALE) * upgrade_mult(s.level[gun]) *
+    float base = w.damage * tune(TUNING_DAMAGE_SCALE) * upgrade_mult(gun, s.level[gun]) *
                  (1.0f + stat(l, ST_DMG, t) + stat(l, ST_DMG_RANGED, t));
     float critChance = w.crit / 100.0f + stat(l, ST_CRIT, t);
     float critMult = tune(TUNING_CRIT_MULT) + stat(l, ST_CRIT_DMG, t);
@@ -615,11 +638,12 @@ static void handle(SaveData& s, Live& l, const Request& r, double t) {
     ItemView it = item(r.cat, r.row);
     const char* recipe = it.recipe;
     int zen = it.zenny;
+    std::string upRecipe;
     if (r.kind == Request::UPGRADE) {
         int lvl = s.level[r.row];
-        if (lvl >= kUpgradesCount) { snprintf(l.said, sizeof(l.said), "Already at the highest level."); return; }
-        recipe = kUpgrades[lvl].recipe;
-        zen = (int)kUpgrades[lvl].zenny;
+        if (lvl >= weapon_max_level(r.row)) { snprintf(l.said, sizeof(l.said), "Already at the highest level."); return; }
+        upRecipe = upgrade_cost(r.row, lvl, &zen);
+        recipe = upRecipe.c_str();
     } else if (r.kind == Request::CRAFT && r.cat != CAT_CONSUMABLE && s.has(r.cat, r.row)) {
         snprintf(l.said, sizeof(l.said), "You already have this.");
         return;
@@ -834,7 +858,7 @@ void mod_game_tick() {
             int ar = slot == 0 ? s.archetype : s.archetype2;
             std::vector<int> sk = skills_of(ar);
             if (sk.empty()) continue;
-            const Skills& k = kSkills[sk[std::min((int)sk.size() - 1, std::max(0, s.skill[slot]))]];
+            const Skills& k = kSkills[sk[skill_index(s, slot)]];
             if (t < l.skillReady[slot]) continue;
             float durScale = 1.0f + stat(l, ST_SKILL_DUR, t);
             float cdr = std::min(1.0f - tune(TUNING_SKILL_COOLDOWN_FLOOR), std::max(0.0f, stat(l, ST_CDR, t)));
@@ -1059,6 +1083,10 @@ void save_write(const SaveData& s) {
     j += "  \"skill\": " + std::to_string(s.skill[0]) + ",\n  \"skill2\": " + std::to_string(s.skill[1]) + ",\n";
     j += "  \"relicCharges\": " + std::to_string(s.relicCharges) + ",\n";
     j += "  \"xp\": " + std::to_string((long long)s.xp) + ",\n";
+    j += "  \"archetypeXp\": {";
+    for (int i = 0, n = 0; i < kArchetypesCount; i++)
+        if (s.archXp[i] > 0) j += (n++ ? ", " : "") + q(kArchetypes[i].id) + ": " + std::to_string((long long)s.archXp[i]);
+    j += "},\n";
     j += "  \"difficulty\": " + q(kDifficulties[std::max(0, std::min(kDifficultiesCount - 1, s.difficulty))].id) + ",\n";
     j += "  \"prismOn\": " + id_or_empty(CAT_PRISM, s.prismOn) + ",\n";
     j += "  \"traitPoints\": {";
@@ -1202,13 +1230,17 @@ void save_load() {
             }
             for (auto& kv : json_counts(j, "levels")) {
                 int r = row_by_id(CAT_WEAPON, kv.first);
-                if (r >= 0) s.level[r] = std::min((int)kUpgradesCount, kv.second);
+                if (r >= 0) s.level[r] = std::min(weapon_max_level(r), kv.second);
             }
             for (auto& kv : json_counts(j, "stock")) {
                 int r = row_by_id(CAT_CONSUMABLE, kv.first);
                 if (r >= 0) s.stock[r] = kv.second;
             }
             s.xp = atof(json_str(j, "xp").c_str());
+            for (auto& kv : json_counts(j, "archetypeXp")) {
+                int r = row_by_id(CAT_ARCHETYPE, kv.first);
+                if (r >= 0) s.archXp[r] = kv.second;
+            }
             int dfc = difficulties_index(json_str(j, "difficulty").c_str());
             if (dfc >= 0) s.difficulty = dfc;
             s.prismOn = row_by_id(CAT_PRISM, json_str(j, "prismOn"));

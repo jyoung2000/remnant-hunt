@@ -219,13 +219,13 @@
   },
   {
    "id": "trait_points_start",
-   "value": 5,
-   "why": "trait points a new hunter starts with (each Remnant level adds one)"
+   "value": 0,
+   "why": "trait points to spend a new hunter starts with (Remnant II: none; the primary archetype's 5 core points come on their own)"
   },
   {
    "id": "trait_points_max",
    "value": 85,
-   "why": "trait points earned from levels at most (Remnant II's cap)"
+   "why": "trait points earned from Remnant levels at most (Remnant II's 85)"
   },
   {
    "id": "prism_xp_base",
