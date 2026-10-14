@@ -88,10 +88,13 @@ std::map<std::string, bool> g_failed;
 const Model* model_get(const char* asset, bool* failed) {
     std::lock_guard<std::mutex> l(g_lock);
     std::string key(asset ? asset : "");
-    if (failed) *failed = g_failed.count("M" + key) > 0;
+    if (g_failed.count("M" + key)) {  // decoded once and failed: say so once, not every frame
+        if (failed) *failed = true;
+        return nullptr;
+    }
+    if (failed) *failed = false;
     auto it = g_models.find(key);
     if (it != g_models.end()) return it->second.get();
-    if (failed && *failed) return nullptr;
     const R2Blob* b = r2_blob("MESH", asset);
     if (!b) return nullptr;
     In in{b->data};

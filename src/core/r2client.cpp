@@ -387,8 +387,13 @@ static DWORD WINAPI worker(LPVOID) {
     char exe[MAX_PATH], next[MAX_PATH], run[MAX_PATH], dir[MAX_PATH];
     snprintf(exe, sizeof(exe), "%s\\r2read.exe", mod_dir());
     snprintf(next, sizeof(next), "%s\\r2read_next.exe", mod_dir());
-    if (GetFileAttributesA(next) != INVALID_FILE_ATTRIBUTES && MoveFileExA(next, exe, MOVEFILE_REPLACE_EXISTING))
-        log("r2: updated r2read.exe");
+    // Only a NEWER helper replaces the current one; a stale r2read_next.exe (an older install left it) is dropped.
+    WIN32_FILE_ATTRIBUTE_DATA an, ae;
+    if (GetFileAttributesExA(next, GetFileExInfoStandard, &an)) {
+        bool newer = !GetFileAttributesExA(exe, GetFileExInfoStandard, &ae) || CompareFileTime(&an.ftLastWriteTime, &ae.ftLastWriteTime) > 0;
+        if (newer && MoveFileExA(next, exe, MOVEFILE_REPLACE_EXISTING)) log("r2: updated r2read.exe");
+        else if (!newer && DeleteFileA(next)) log("r2: dropped a stale r2read_next.exe");
+    }
     snprintf(dir, sizeof(dir), "%s\\loaded", mod_dir());
     CreateDirectoryA(dir, nullptr);
     {

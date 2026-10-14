@@ -9,7 +9,7 @@ mkdir -p "$M/fonts" "$M/licenses"
 cmp -s build/win/dinput8.dll "$G/dinput8.dll" || cp build/win/dinput8.dll "$G/dinput8.dll" || echo "dinput8.dll in use: close the game and install again"
 cp build/win/remnant_hunt.dll "$M/"
 if ! cmp -s build/win/r2read.exe "$M/r2read.exe"; then
-  cp build/win/r2read.exe "$M/r2read.exe" 2>/dev/null || { cp build/win/r2read.exe "$M/r2read_next.exe"; echo "r2read.exe in use: left as r2read_next.exe"; }
+  { cp build/win/r2read.exe "$M/r2read.exe" 2>/dev/null && rm -f "$M/r2read_next.exe"; } || { cp build/win/r2read.exe "$M/r2read_next.exe"; echo "r2read.exe in use: left as r2read_next.exe"; }
 fi
 cp assets/fonts/*.ttf assets/fonts/OFL-*.txt "$M/fonts/"
 cp LICENSE* NOTICE* "$M/licenses/" 2>/dev/null || true

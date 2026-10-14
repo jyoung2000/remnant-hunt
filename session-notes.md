@@ -201,3 +201,19 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   startup checks (hooks, game-tick, overlay, remnant2) into Melty's test checks file. Previous in-game log (10:34
   today, old build): hooks 0 failed, overlay DX11 2560x1440, r2read OK, game tick OK, but "sUserData ... MISSING"
   (inventory not found in that build; crafting depends on it: check "inventory:" lines in the new log).
+- In-game (Melty test runs, 23:01 and 23:07): all four checks pass, save slot found (123 containers). Diagnostics
+  (scratchpad diag_report.md): MHW's own item text gives the REAL ids: Iron Ore 205, Machalite 206, Dragonite 207,
+  Fucium 209, Earth Crystal 210, Bone S/M/+ 236/237/239, Keenbone 240, Hardbone 241, Elder Dragon Bone 242, Elder
+  Dragon Blood 263, Eltalite 1030, Solidbone 1051, Spiritvein 1852, Whetstone 114, Capture Net 115 (mhw-db ids were
+  NOT game ids; materials.json corrected). Pouch at save slot +0x760, 16 bytes per entry; item bar current-slot field
+  still unknown (watch found only small counters at player +0x34/+0x50/+0xD4/+0xB0C/+0xC20). NPC spots recorded but
+  unlabelled: zone 301 (5225,1782,-1732) and (4753,1791,-2679); zone 501 (10066,1601,128). Joints: research.cpp's
+  one-level scan found only the hunter's own transform; the hand joint needs a motion-based multi-level search.
+  Actions seen: set 1 idle 0,2-8,10,32,33,53,...; set 3 (weapon drawn) 0,1,2,4,5,7,18,23,27,34,70-72,75-78,81,85,88,
+  94,110; draw sequence 3:5 -> 3:1 -> 3:2 -> 3:0. No item-use, bowgun fire/reload or flinch data yet.
+- BUG found and fixed: a stale r2read_next.exe (this morning's old helper, left by install_dev.sh) was swapped in
+  over the new r2read.exe at startup, so MESH/SKEL/ANIM replied "bad request": no gun model, no boss models, and
+  "could not be decoded" logged every frame. r2client now only swaps in a NEWER helper and drops a stale one;
+  install_dev.sh deletes r2read_next.exe after a direct copy; model_get logs a failed decode once.
+- Bosses "not loading": no "boss" line in the log at all; key_down needs the game window focused. Added a log line on
+  the boss key press ("boss key: view ..., zone ..., rank ...") so the next run shows whether F9 arrived.

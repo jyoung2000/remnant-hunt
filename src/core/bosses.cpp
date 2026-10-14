@@ -1233,6 +1233,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     }
     // Debug / training: the boss key brings the next boss 30 m in front of the hunter (any rank, to try them all).
     bool key = key_down(keys().boss);
+    if (key && !g_keyWas) log("boss key: view %s, zone %d, rank %d", g.view.valid ? "valid" : "not valid yet", g.zone, rank);
     if (key && !g_keyWas && kBossesCount > 0 && g.view.valid) {
         Vec3 f = sub(g.view.camTarget, g.view.camPos);
         float yaw = atan2f(f.x, f.z);

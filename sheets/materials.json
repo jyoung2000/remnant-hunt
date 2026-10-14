@@ -13,105 +13,105 @@
    "id": "ore_low",
    "rank": "low",
    "kind": "ore",
-   "mhw_item_id": 116,
+   "mhw_item_id": 205,
    "note": "Iron Ore"
   },
   {
    "id": "bone_low",
    "rank": "low",
    "kind": "bone",
-   "mhw_item_id": 147,
+   "mhw_item_id": 236,
    "note": "Monster Bone S"
   },
   {
    "id": "ore_low2",
    "rank": "low",
    "kind": "ore",
-   "mhw_item_id": 117,
+   "mhw_item_id": 206,
    "note": "Machalite Ore"
   },
   {
    "id": "bone_low2",
    "rank": "low",
    "kind": "bone",
-   "mhw_item_id": 148,
+   "mhw_item_id": 237,
    "note": "Monster Bone M"
   },
   {
    "id": "crystal_low",
    "rank": "low",
    "kind": "crystal",
-   "mhw_item_id": 121,
+   "mhw_item_id": 210,
    "note": "Earth Crystal"
   },
   {
    "id": "ore_high",
    "rank": "high",
    "kind": "ore",
-   "mhw_item_id": 118,
+   "mhw_item_id": 207,
    "note": "Dragonite Ore"
   },
   {
    "id": "bone_high",
    "rank": "high",
    "kind": "bone",
-   "mhw_item_id": 150,
+   "mhw_item_id": 239,
    "note": "Monster Bone+"
   },
   {
    "id": "part_high",
    "rank": "high",
    "kind": "part",
-   "mhw_item_id": 151,
+   "mhw_item_id": 240,
    "note": "Monster Keenbone"
   },
   {
    "id": "ore_high2",
    "rank": "high",
    "kind": "ore",
-   "mhw_item_id": 120,
+   "mhw_item_id": 209,
    "note": "Fucium Ore"
   },
   {
    "id": "elder_high",
    "rank": "high",
    "kind": "elder",
-   "mhw_item_id": 153,
+   "mhw_item_id": 242,
    "note": "Elder Dragon Bone"
   },
   {
    "id": "part_high2",
    "rank": "high",
    "kind": "part",
-   "mhw_item_id": 152,
+   "mhw_item_id": 241,
    "note": "Monster Hardbone"
   },
   {
    "id": "ore_master",
    "rank": "master",
    "kind": "ore",
-   "mhw_item_id": 604,
+   "mhw_item_id": 1030,
    "note": "Eltalite Ore"
   },
   {
    "id": "bone_master",
    "rank": "master",
    "kind": "bone",
-   "mhw_item_id": 668,
+   "mhw_item_id": 1051,
    "note": "Monster Solidbone"
   },
   {
    "id": "elder_master",
    "rank": "master",
    "kind": "elder",
-   "mhw_item_id": 174,
+   "mhw_item_id": 263,
    "note": "Elder Dragon Blood"
   },
   {
    "id": "gem_master",
    "rank": "master",
    "kind": "gem",
-   "mhw_item_id": 990,
+   "mhw_item_id": 1852,
    "note": "Spiritvein Gem"
   }
  ]
