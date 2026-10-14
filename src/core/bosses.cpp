@@ -1447,13 +1447,13 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
 struct StatusArt { const char* icon; ImU32 color; };
 const StatusArt kArt[SS_COUNT] = {
     {nullptr, 0},
-    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Bleed.uasset", IM_COL32(210, 30, 30, 255)},
-    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Fire.uasset", IM_COL32(255, 140, 30, 255)},
-    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Corrosive.uasset", IM_COL32(130, 210, 60, 255)},
-    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Shock.uasset", IM_COL32(90, 170, 255, 255)},
-    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Exposed.uasset", IM_COL32(240, 220, 90, 255)},
-    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Slow.uasset", IM_COL32(150, 150, 230, 255)},
-    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Omen_Bad.uasset", IM_COL32(255, 80, 80, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Bleed", IM_COL32(210, 30, 30, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Fire", IM_COL32(255, 140, 30, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Corrosive", IM_COL32(130, 210, 60, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Shock", IM_COL32(90, 170, 255, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Exposed", IM_COL32(240, 220, 90, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Slow", IM_COL32(150, 150, 230, 255)},
+    {"Remnant2/Content/UI2/UI_Icons/UI_Icons_Status/T_UI_Icon_Status_Omen_Bad", IM_COL32(255, 80, 80, 255)},
 };
 
 // A row of status icons from x (to the right), centred on y; returns the row's width.

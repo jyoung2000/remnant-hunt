@@ -155,7 +155,9 @@ tools/build_native.sh test       # the logic tests, run natively
 tools/build_native.sh preview    # renders the screens to build/preview/screen_N.png
 ```
 
-`preview` writes N = 0 terminal, 1 traits, 2 prism, 3 archetype, 4 melder, 5 HUD. Set `TC=<path to bin>` to use a
+`preview` writes N = 0 terminal, 1 traits, 2 prism, 3 archetype, 4 melder, 5 HUD.
+`python -I tools/check_assets.py <abs path to build\win2read.exe> <Remnant II dir>` asks the helper for every asset the
+sheets reference from your own install and reports what fails to load. Set `TC=<path to bin>` to use a
 toolchain somewhere else.
 
 ## Uninstall

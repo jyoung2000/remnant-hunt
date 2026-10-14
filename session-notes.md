@@ -157,3 +157,9 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   the v0.2 design but not on the approved-writes list; the stamina offset comes from a heuristic scan and is written to;
   mod_game_tick holds the Shared lock across I/O and one-time init (a Present hitch on first use).
 - Still not confirmed in game: everything since v0.2 (checklist above).
+- Assets: tools/check_assets.py drives build/win/r2read.exe against the real Remnant II install for every asset the
+  sheets and bosses.cpp name. Result: 3610 load, 0 fail (1850 texts, 833 textures, 3 names, 115 meshes, 58 skeletons,
+  360 animations incl. all boss attacks, 391 sounds). Two data bugs fixed on the way: difficulties.json icons and the
+  seven HUD status icons in bosses.cpp carried ".uasset", which the TEX request adds again, so they never loaded.
+  Run it after any sheet change: `python -I tools/check_assets.py "<abs path>\build\win\r2read.exe" "<Remnant2 dir>"`.
+  Not covered (needs the game): the DX11 upload of BC7 textures and the 3D draw of meshes; the preview stubs icons.

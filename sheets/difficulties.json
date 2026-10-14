@@ -19,7 +19,7 @@
    "id": "survivor",
    "label": "Survivor",
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_01.uasset"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_01"
    },
    "hp_mult": 0.75,
    "dmg_mult": 0.7,
@@ -34,7 +34,7 @@
    "id": "veteran",
    "label": "Veteran",
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_02.uasset"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_02"
    },
    "hp_mult": 1.0,
    "dmg_mult": 1.0,
@@ -49,7 +49,7 @@
    "id": "nightmare",
    "label": "Nightmare",
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_03.uasset"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_03"
    },
    "hp_mult": 1.4,
    "dmg_mult": 1.45,
@@ -64,7 +64,7 @@
    "id": "apocalypse",
    "label": "Apocalypse",
    "icon": {
-    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_04.uasset"
+    "r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Travel/T_UI_Travel_Icon_Difficulty_04"
    },
    "hp_mult": 1.9,
    "dmg_mult": 2.0,
