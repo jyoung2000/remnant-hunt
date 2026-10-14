@@ -182,7 +182,8 @@ void build_blocks(uint8_t* pl) {
 
 // Adds a tracker for every clean matrix in the block that sits 50-250 cm from the hunter right now.
 void scan_block(int bi, const Vec3& root) {
-    const Block& bk = g_blocks[bi];
+    Block& bk = g_blocks[bi];
+    if (!mem_readable((const void*)bk.p, 0x40)) { bk.readable = 0; return; }  // freed by a zone load since the build
     const size_t readable = bk.readable;
     for (int layout = 0; layout < 3; layout++) {
         for (int stride = 0x30; stride <= 0x40; stride += 0x10) {

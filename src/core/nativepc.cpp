@@ -160,6 +160,23 @@ static bool itm_at(const uint8_t* p, int expect, std::vector<uint8_t>* out) {
 
 static bool find_itm(void* res, int expect, std::vector<uint8_t>* out) {
     const uint8_t* r = (const uint8_t*)res;
+    // The loaded resource keeps no file header: a count (2775) sits a few bytes before a pointer to the 32-byte rows.
+    for (size_t o = 0x40; o + 4 <= 0x200 && expect > 0 && readable(r + o, 4); o += 4) {
+        if (get<uint32_t>(r, o) != (uint32_t)expect) continue;
+        for (size_t q = o + 4; q + 8 <= o + 0x40 && readable(r + q, 8); q += 8) {
+            const uint8_t* rows = *(const uint8_t* const*)(r + q);
+            if (!rows || (uintptr_t)rows < 0x10000 || !readable(rows, (size_t)expect * 32)) continue;
+            bool ok = true;
+            for (int k : {0, 1, 2, 3, 5, expect - 1}) ok = ok && get<uint16_t>(rows, (size_t)k * 32) == k;
+            if (!ok) continue;
+            out->resize(10 + (size_t)expect * 32);
+            uint8_t head[10] = {0x01, 0x10, 0x09, 0x18, 0xBE, 0x00, (uint8_t)(expect & 0xFF), (uint8_t)(expect >> 8), 0, 0};
+            memcpy(out->data(), head, 10);
+            memcpy(out->data() + 10, rows, (size_t)expect * 32);
+            log("nativepc: item rows at %p (count %d at resource +0x%zx, pointer at +0x%zx)", rows, expect, o, q);
+            return true;
+        }
+    }
     for (size_t o = 0; o + 10 <= 0x800 && readable(r + o, 10); o++)  // the file image inside the resource object
         if (itm_at(r + o, expect, out)) return true;
     for (size_t o = 0; o + 8 <= 0x400 && readable(r + o, 8); o += 8) {  // or in a buffer it points to
