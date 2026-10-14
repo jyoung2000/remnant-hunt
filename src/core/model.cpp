@@ -158,6 +158,43 @@ const Model* model_get(const char* asset, bool* failed) {
     return r;
 }
 
+const Model* skeleton_model(const char* asset, bool* failed) {
+    std::lock_guard<std::mutex> l(g_lock);
+    std::string key = std::string("S|") + (asset ? asset : "");
+    if (failed) *failed = g_failed.count(key) > 0;
+    auto it = g_models.find(key);
+    if (it != g_models.end()) return it->second.get();
+    if (failed && *failed) return nullptr;
+    const R2Blob* b = r2_blob("SKEL", asset);
+    if (!b) return nullptr;
+    auto m = std::make_unique<Model>();
+    In in{b->data};
+    if (b->failed || b->data.size() < 8 || memcmp(b->data.data(), "RSKL", 4)) in.ok = false;
+    in.p = 4;
+    if (in.ok) in.bones(&m->bones);
+    if (!in.ok || m->bones.empty()) {
+        g_failed[key] = true;
+        if (failed) *failed = true;
+        log("model: skeleton %s could not be decoded", asset);
+        return nullptr;
+    }
+    size_t n = m->bones.size();
+    std::vector<float> global(n * 12);
+    m->invBind.resize(n * 12);
+    for (size_t i = 0; i < n; i++) {
+        float local[12];
+        to_mat(m->bones[i].ref, local);
+        int p = m->bones[i].parent;
+        if (p >= 0 && (size_t)p < i) mul(&global[p * 12], local, &global[i * 12]);
+        else memcpy(&global[i * 12], local, sizeof(local));
+        inverse(&global[i * 12], &m->invBind[i * 12]);
+    }
+    log("model: skeleton %s: %zu bones", asset, n);
+    const Model* r = m.get();
+    g_models[key] = std::move(m);
+    return r;
+}
+
 const Anim* anim_get(const char* animAsset, const char* skelAsset, const Model* m, bool* failed) {
     if (!m) return nullptr;
     std::lock_guard<std::mutex> l(g_lock);
@@ -296,6 +333,26 @@ void pose(const Model& m, const Anim* a, float t, bool loop, const Anim* b, floa
         if (p >= 0 && (size_t)p < i) mul(&global[p * 12], local, &global[i * 12]);
         else memcpy(&global[i * 12], local, sizeof(local));
         mul(&global[i * 12], &m.invBind[i * 12], &(*palette)[i * 12]);
+    }
+}
+
+void pose_global(const Model& m, const Anim* a, float t, bool loop, std::vector<float>* global) {
+    size_t n = m.bones.size();
+    std::vector<Xform> la(n);
+    std::vector<char> ha(n, 0);
+    for (size_t i = 0; i < n; i++) la[i] = m.bones[i].ref;
+    if (a) sample(*a, t, loop, &la, &ha);
+    if (n > 0) {
+        la[0].t[0] = m.bones[0].ref.t[0];
+        la[0].t[1] = m.bones[0].ref.t[1];
+    }
+    global->resize(n * 12);
+    for (size_t i = 0; i < n; i++) {
+        float local[12];
+        to_mat(la[i], local);
+        int p = m.bones[i].parent;
+        if (p >= 0 && (size_t)p < i) mul(&(*global)[p * 12], local, &(*global)[i * 12]);
+        else memcpy(&(*global)[i * 12], local, sizeof(local));
     }
 }
 

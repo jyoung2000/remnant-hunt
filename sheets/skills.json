@@ -9,7 +9,8 @@
   "fidelity": "enum:exact|approx|fallback",
   "cooldown_s": "num",
   "duration_s": "num",
-  "snd_use": "r2snd|none"
+  "snd_use": "r2snd|none",
+  "anim": "str"
  },
  "rows": [
   {
@@ -27,7 +28,8 @@
    "fidelity": "approx",
    "cooldown_s": 75.0,
    "duration_s": 10.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_StoneMist_Activate.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_StoneMist_Activate.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Alchemist_Vial_Hold_Throw.uasset"
   },
   {
    "id": "alchemistvial_frenzydust",
@@ -44,7 +46,8 @@
    "fidelity": "approx",
    "cooldown_s": 75.0,
    "duration_s": 10.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_FrenzyDust_Activate.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_FrenzyDust_Activate.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_FrenzyDust.uasset"
   },
   {
    "id": "alchemistvial_elixiroflife",
@@ -61,7 +64,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 10.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_ElixirOfLife_Activate.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Alchemist/Alchemist_ElixirOfLife_Activate.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Alchemist_Vial_Tap.uasset"
   },
   {
    "id": "realityrune",
@@ -78,7 +82,8 @@
    "fidelity": "fallback",
    "cooldown_s": 75.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_RealityRune_Aura_Activate.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_RealityRune_Aura_Activate.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "chaosgate",
@@ -95,7 +100,8 @@
    "fidelity": "exact",
    "cooldown_s": 85.0,
    "duration_s": 20.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_ChaosGate_Aura_Loop.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_ChaosGate_Aura_Loop.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "havocform",
@@ -112,7 +118,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 30.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_HavocForm_Blink_End.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Archon/Archon_HavocForm_Blink_End.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "warstomp",
@@ -129,7 +136,8 @@
    "fidelity": "approx",
    "cooldown_s": 50.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_WarStomp.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_WarStomp.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Challenger_01.uasset"
   },
   {
    "id": "juggernaut",
@@ -146,7 +154,8 @@
    "fidelity": "exact",
    "cooldown_s": 60.0,
    "duration_s": 25.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_Juggernaut_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_Juggernaut_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Perk_Juggernaut.uasset"
   },
   {
    "id": "rampage",
@@ -163,7 +172,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 10.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_Rampage_Berserk_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Challenger/Challenger_Rampage_Berserk_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Skill_RageStart.uasset"
   },
   {
    "id": "deployable_gatling",
@@ -180,7 +190,8 @@
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/HC/Player_M_HC_Action_Deploy_Turret.uasset"
   },
   {
    "id": "deployable_flamethrower",
@@ -197,7 +208,8 @@
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Engineer/Engineer_FlameCannon_Projectile_Loop.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Engineer/Engineer_FlameCannon_Projectile_Loop.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/HC/Player_M_HC_Action_Deploy_Turret.uasset"
   },
   {
    "id": "deployable_impactcannon",
@@ -214,7 +226,8 @@
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Engineer/Engineer_VulcanCannon_Barrel_Winddown.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Engineer/Engineer_VulcanCannon_Barrel_Winddown.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/HC/Player_M_HC_Action_Deploy_Turret_Impact_Cannon.uasset"
   },
   {
    "id": "plainswalker",
@@ -231,7 +244,8 @@
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 30.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_Plainswalker_Activate.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_Plainswalker_Activate.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "golddigger",
@@ -248,7 +262,8 @@
    "fidelity": "approx",
    "cooldown_s": 45.0,
    "duration_s": 45.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_GoldDigger_Dirt_Slide_01.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_GoldDigger_Dirt_Slide_01.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Gold_Digger_01.uasset"
   },
   {
    "id": "fortunehunter",
@@ -265,7 +280,8 @@
    "fidelity": "fallback",
    "cooldown_s": 90.0,
    "duration_s": 60.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_FortuneHunter_Activate.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Explorer/Explorer_FortuneHunter_Activate.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "aimable_quickdraw",
@@ -282,7 +298,8 @@
    "fidelity": "approx",
    "cooldown_s": 40.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_QuickDraw_Draw.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_QuickDraw_Draw.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/1R/Player_M_1R_Gunslinger_QuickDraw.uasset"
   },
   {
    "id": "sidewinder",
@@ -299,7 +316,8 @@
    "fidelity": "approx",
    "cooldown_s": 50.0,
    "duration_s": 60.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_Sidewinder_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_Sidewinder_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/1R/Player_M_1R_Gunslinger_Flourish_Quick.uasset"
   },
   {
    "id": "bulletstorm",
@@ -316,7 +334,8 @@
    "fidelity": "exact",
    "cooldown_s": 60.0,
    "duration_s": 20.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_Bulletstorm_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Gunslinger/Gunslinger_Bulletstorm_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/Player_M_1R_Gunslinger_Flourish.uasset"
   },
   {
    "id": "guarddog",
@@ -333,7 +352,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 20.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_GuardDog.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_GuardDog.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Handler_Go_01.uasset"
   },
   {
    "id": "supportdog_command",
@@ -350,7 +370,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 25.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_SupportDog.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_SupportDog.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Handler_Command_01.uasset"
   },
   {
    "id": "attackdog",
@@ -367,7 +388,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 20.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_AttackDog.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Handler/Handler_Howl_AttackDog.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Dog_Whistle.uasset"
   },
   {
    "id": "hunters_mark",
@@ -384,7 +406,8 @@
    "fidelity": "exact",
    "cooldown_s": 70.0,
    "duration_s": 25.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_Mark_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_Mark_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Utility_HuntersMark.uasset"
   },
   {
    "id": "huntersfocus",
@@ -401,7 +424,8 @@
    "fidelity": "approx",
    "cooldown_s": 50.0,
    "duration_s": 25.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_Focus_Aura_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_Focus_Aura_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "huntersshroud",
@@ -418,7 +442,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_ShroudCloak_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Hunter/Hunter_ShroudCloak_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_ShadeCloak.uasset"
   },
   {
    "id": "voidcloak",
@@ -435,7 +460,8 @@
    "fidelity": "fallback",
    "cooldown_s": 75.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_VoidCloak_ActivateDodge_Ping.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_VoidCloak_ActivateDodge_Ping.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "wormhole",
@@ -452,7 +478,8 @@
    "fidelity": "approx",
    "cooldown_s": 35.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_WormHole_Teleport_Arrive.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_WormHole_Teleport_Arrive.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "reboot",
@@ -469,7 +496,8 @@
    "fidelity": "approx",
    "cooldown_s": 55.0,
    "duration_s": 3.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_Reboot_Activate.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Invader/Invader_Reboot_Activate.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset"
   },
   {
    "id": "wayofwater",
@@ -486,7 +514,8 @@
    "fidelity": "approx",
    "cooldown_s": 120.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC2/Characters/PlayerDLC2/Male/Player_M_UN_Invoker_Water.uasset"
   },
   {
    "id": "wayofforest",
@@ -503,7 +532,8 @@
    "fidelity": "approx",
    "cooldown_s": 120.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC2/Characters/PlayerDLC2/Male/Player_M_UN_Invoker_Forest.uasset"
   },
   {
    "id": "wayofsand",
@@ -520,7 +550,8 @@
    "fidelity": "fallback",
    "cooldown_s": 120.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC2/Characters/PlayerDLC2/Male/Player_M_UN_Invoker_Sand.uasset"
   },
   {
    "id": "wellspring",
@@ -537,7 +568,8 @@
    "fidelity": "exact",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Medic_Sanctuary_Start.uasset"
   },
   {
    "id": "healingsurge",
@@ -554,7 +586,8 @@
    "fidelity": "fallback",
    "cooldown_s": 100.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Medic/Medic_HealingSurge_Cast.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Medic/Medic_HealingSurge_Cast.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Skill_SanctuaryStart.uasset"
   },
   {
    "id": "redemption",
@@ -571,7 +604,8 @@
    "fidelity": "fallback",
    "cooldown_s": 120.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Medic/Medic_Redemption_Cast_Buildup.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Medic/Medic_Redemption_Cast_Buildup.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Medic_Sanctuary_Charged_End.uasset"
   },
   {
    "id": "eruption",
@@ -588,7 +622,8 @@
    "fidelity": "fallback",
    "cooldown_s": 40.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC1/Characters/PlayerDLC1/Male/Player_M_UN_Ritualist_Eruption.uasset"
   },
   {
    "id": "miasma",
@@ -605,7 +640,8 @@
    "fidelity": "fallback",
    "cooldown_s": 45.0,
    "duration_s": 10.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC1/Characters/PlayerDLC1/Male/Player_M_UN_Ritualist_Miasma.uasset"
   },
   {
    "id": "deathwish",
@@ -622,7 +658,8 @@
    "fidelity": "approx",
    "cooldown_s": 90.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC1/Characters/PlayerDLC1/Male/Player_M_UN_Ritualist_DeathWish.uasset"
   },
   {
    "id": "summonhollowminion",
@@ -639,7 +676,8 @@
    "fidelity": "approx",
    "cooldown_s": 30.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Summoner_Summon.uasset"
   },
   {
    "id": "summonflyerminion",
@@ -656,7 +694,8 @@
    "fidelity": "approx",
    "cooldown_s": 45.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Summoner_Summon.uasset"
   },
   {
    "id": "summonbruteminion",
@@ -673,7 +712,8 @@
    "fidelity": "approx",
    "cooldown_s": 120.0,
    "duration_s": 15.0,
-   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset"
+   "snd_use": "Remnant2/Content/WwiseAudio/Events/Player/Player_Archetypes/Summoner/Summoner_Chastise_Buff.uasset",
+   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Summoner_Sacrifice.uasset"
   },
   {
    "id": "summonshielddrone",
@@ -690,7 +730,8 @@
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC3/Characters/PlayerDLC3/Animations/Player_M_Warden_Drone_Release.uasset"
   },
   {
    "id": "summonhealdrone",
@@ -707,7 +748,8 @@
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC3/Characters/PlayerDLC3/Animations/Player_M_Warden_Drone_Send.uasset"
   },
   {
    "id": "summoncombatdrone",
@@ -724,7 +766,8 @@
    "fidelity": "approx",
    "cooldown_s": 60.0,
    "duration_s": 15.0,
-   "snd_use": "none"
+   "snd_use": "none",
+   "anim": "Remnant2/Content/World_DLC3/Characters/PlayerDLC3/Animations/Player_M_Warden_Drone_Release.uasset"
   }
  ]
 }

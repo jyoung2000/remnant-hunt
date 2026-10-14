@@ -34,3 +34,16 @@ Example: `item_eng.gmd` is 479703 bytes in G0 but 515124 in G8 (the patched one)
 - common/text/steam/item_eng.gmd 515124 B (`GMD\0` magic).
 - Item icon atlas: ui/common/tex/cmn_item00_ID.tex 1048768 B (HiPC copy wins; also cmn_item00M_ID.tex, cmn_micon00/01(M)_ID.tex,
   itemMenu00_ID.tex). TEX header `54 45 58 00`, 1024x1024 (0x400 at +0x14/+0x18) block-compressed, 192-byte header.
+
+## MOD3 model skeleton (`mhwread <game> BONES <path.mod3> [out.json]`, verified on m_body001_0000 / f_body001_0000)
+- Every hunter equipment piece (`/pl/{m,f}_equip/plNNN_xxxx/{helm,body,arm,wst,leg}/mod/*.mod3`) and the face models carry the full
+  hunter skeleton; there is no separate base-body mod3. The male body piece used here is `/pl/m_equip/pl001_0000/body/mod/m_body001_0000.mod3`.
+- Header: `"MOD\0"`, u16 version 0xED @4, u16 boneCount @6 (86), u16 meshCount @8, u16 materialCount @0xA, u32 vertexCount/faceCount/...,
+  then u64 offsets from 0x30: bones, groups, material names, meshes, vertex buffer, faces, ... Bone offset on this model: 0x140.
+- Bone section (offset from header u64 @0x30), n = boneCount:
+  - n * 24-byte entry: u16 functionId, u8 parent (0xFF = root; parent index may be greater than the child's), u8 (second link byte, NOT the
+    self index), f32 unk, f32 length, f32 x, f32 y, f32 z (local translation, equals row 3 of the local matrix).
+  - n * 64-byte local 4x4 (row-vector convention, translation in row 3; rotation rows are unit length).
+  - n * 64-byte inverse-bind 4x4 (checked: world * invBind = identity, error < 1e-5).
+  - 512-byte u8 table functionId -> bone index (0xFF none), so vertex bone ids (function ids) resolve through it.
+- Units are centimetres, +Y up, rest pose is a T-pose (arms along +/-X). World = local * parent world (row vectors).

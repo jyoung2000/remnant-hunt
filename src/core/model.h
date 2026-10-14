@@ -51,6 +51,12 @@ const Anim* anim_get(const char* animAsset, const char* skeletonAsset, const Mod
 void pose(const Model& m, const Anim* a, float t, bool loop, const Anim* b, float tb, float blend, std::vector<float>* palette,
           float rootDelta[3] = nullptr);
 
+// A skeleton alone (SKEL reply: bones and inverse bind, no vertices), for posing the player's skeleton without a mesh.
+const Model* skeleton_model(const char* skelAsset, bool* failed = nullptr);
+// Bone globals (bones x 12 floats, 3x4 row-major, model space) of an animation at time t (a = nullptr: the reference
+// pose). The root's x/y translation stays at the reference, as in pose().
+void pose_global(const Model& m, const Anim* a, float t, bool loop, std::vector<float>* global);
+
 // Root bone translation (model space) of an animation at time t, for driving the creature by the animation's own motion.
 bool anim_root(const Anim& a, float t, bool loop, float out[3]);
 

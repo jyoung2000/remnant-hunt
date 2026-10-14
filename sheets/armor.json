@@ -12,7 +12,11 @@
   "tier": "num",
   "menu": "enum:smithy|melder|provisions|archetype",
   "zenny": "num",
-  "recipe": "recipe"
+  "recipe": "recipe",
+  "mesh": "str",
+  "skeleton": "str",
+  "textures": "list",
+  "normals": "list"
  },
  "rows": [
   {
@@ -42,6 +46,18 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Alchemist_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Alchemist_Shoulder=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Shoulder_Diff.uasset",
+    "M_Player_M_Armor_Alchemist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Coat_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Coat_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Alchemist_Shoulder=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Shoulder_Norm.uasset",
+    "M_Player_M_Armor_Alchemist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Coat_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Coat_Norm.uasset"
    ]
   },
   {
@@ -70,6 +86,20 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Arcanist_Top_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Arcanist_Torso_1_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Torso_1_Diff.uasset",
+    "M_Player_Armor_Arcanist_Torso_2_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Torso_1_Diff.uasset",
+    "M_Player_Armor_Arcanist_Gloves_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Gloves_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Torso_1_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Arcanist_Torso_1_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Torso_1_Norm.uasset",
+    "M_Player_Armor_Arcanist_Torso_2_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Torso_1_Norm.uasset",
+    "M_Player_Armor_Arcanist_Gloves_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Gloves_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Torso_1_Norm.uasset"
    ]
   },
   {
@@ -99,6 +129,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Male/Player_M_MilitaryUniform_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1001_Norm.uasset"
    ]
   },
   {
@@ -127,6 +165,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Bandit_Top_LONG_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Bandit_Armor=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1003_Diff.uasset"
+   ],
+   "normals": [
+    "M_Bandit_Armor=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1002_Norm.uasset"
    ]
   },
   {
@@ -155,6 +201,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Defender_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Tops_02_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Tops_02_Norm.uasset"
    ]
   },
   {
@@ -184,6 +238,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Mesh/Player_M_RedPrince_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_BodyCloth_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Lower_Body_Norm.uasset"
    ]
   },
   {
@@ -212,6 +274,18 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Cultist_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Player_M_Cultist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Diff.uasset",
+    "Player_M_Cultist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Diff.uasset"
+   ],
+   "normals": [
+    "Player_M_Cultist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Norm.uasset",
+    "Player_M_Cultist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_Armor_Cultist_Top_Norm.uasset"
    ]
   },
   {
@@ -240,6 +314,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Elder_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/T_Player_Armor_Elder_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/_Graveyard/T_Elder_Armor_Norm.uasset"
    ]
   },
   {
@@ -269,6 +351,18 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Nerud_Engineer_Torso.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Engineer_Torso1=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Torso1_Diff.uasset",
+    "M_Player_Armor_Engineer_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Torso_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Torso_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Engineer_Torso1=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Torso1_Norm.uasset",
+    "M_Player_Armor_Engineer_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Torso_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Torso_Norm.uasset"
    ]
   },
   {
@@ -297,6 +391,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Explorer_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_M_Armor_Explorer_Extra_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_Armor_Explorer_Cape_Norm.uasset"
    ]
   },
   {
@@ -326,6 +428,18 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Fae_Heavy_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Fae_Heavy_Armor_Lower_Body=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Lower_Body_Diff.uasset",
+    "Fae_Heavy_Armor_BodyCloth_Base=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_BodyCloth_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_BodyCloth_Diff.uasset"
+   ],
+   "normals": [
+    "Fae_Heavy_Armor_Lower_Body=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Lower_Body_Norm.uasset",
+    "Fae_Heavy_Armor_BodyCloth_Base=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_BodyCloth_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Lower_Body_Norm.uasset"
    ]
   },
   {
@@ -354,6 +468,18 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Gunslinger_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Gunslinger_Torso_2_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Torso_1_Diff.uasset",
+    "M_Player_Armor_Gunslinger_Torso_2_Cloth_Dyn=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Torso_1_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Torso_1_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Gunslinger_Torso_2_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Torso_1_Norm.uasset",
+    "M_Player_Armor_Gunslinger_Torso_2_Cloth_Dyn=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Torso_1_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Torso_1_Norm.uasset"
    ]
   },
   {
@@ -382,6 +508,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Handler_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_01_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_02_Norm.uasset"
    ]
   },
   {
@@ -410,6 +544,20 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Sharpshooter_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Diff.uasset",
+    "M_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Diff.uasset",
+    "M_Sharpshooter_Jacket=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Jacket_Diff.uasset",
+    "M_Sharpshooter_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Norm.uasset",
+    "M_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Norm.uasset",
+    "M_Sharpshooter_Jacket=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Jacket_Norm.uasset",
+    "M_Sharpshooter_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Legs_Norm.uasset"
    ]
   },
   {
@@ -439,6 +587,20 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Root_Invader_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Root_Invader_Head_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Head_Diff.uasset",
+    "Root_Invader_Arm_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Arm_Diff.uasset",
+    "Root_Invader_Hand_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Hand_Diff.uasset",
+    "Root_Invader_Torso_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Torso_Diff.uasset"
+   ],
+   "normals": [
+    "Root_Invader_Head_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Head_Norm.uasset",
+    "Root_Invader_Arm_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Arm_Norm.uasset",
+    "Root_Invader_Hand_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Hand_Norm.uasset",
+    "Root_Invader_Torso_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Torso_Norm.uasset"
    ]
   },
   {
@@ -468,6 +630,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Mesh/Player_M_Invoker_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_chest02_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_head_Norm.uasset"
    ]
   },
   {
@@ -496,6 +666,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Leto_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Torso_A_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Torso_A_Norm.uasset"
    ]
   },
   {
@@ -525,6 +703,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Leto_2_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Torso_A_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Torso_A_Norm.uasset"
    ]
   },
   {
@@ -553,6 +739,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Medic_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Jacket_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Jacket_Norm.uasset"
    ]
   },
   {
@@ -583,6 +777,16 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Meshes/Player_M_Nerud_Warrior_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Armor_Pauldrons_NerudWarrior=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Pauldrons_Diff.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Torso_Diff.uasset"
+   ],
+   "normals": [
+    "M_Armor_Pauldrons_NerudWarrior=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Pauldrons_Norm.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Torso_Norm.uasset"
    ]
   },
   {
@@ -611,6 +815,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Radiant_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1002_Norm.uasset"
    ]
   },
   {
@@ -640,6 +852,16 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_RedWidowRegalia_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Red_Widow_Regalia_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Torso_Diff.uasset",
+    "M_Red_Widow_Regalia_Torso2=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Torso2_Diff.uasset"
+   ],
+   "normals": [
+    "M_Red_Widow_Regalia_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Torso_Norm.uasset",
+    "M_Red_Widow_Regalia_Torso2=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Torso2_Norm.uasset"
    ]
   },
   {
@@ -669,6 +891,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Mesh/Player_M_Ritualist_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Torso1_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Hat_Norm.uasset"
    ]
   },
   {
@@ -698,6 +928,16 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Nerud_Light_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Nerud_Light_Torso_Fill=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Torso_1_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Torso_1_Diff.uasset"
+   ],
+   "normals": [
+    "Nerud_Light_Torso_Fill=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Torso_1_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Torso_1_Norm.uasset"
    ]
   },
   {
@@ -726,6 +966,20 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_RootArmour_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Root_Summoner_Chest1=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Torso1_Diff.uasset",
+    "M_Player_M_Armor_Root_Summoner_Chest2_Proxy=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Torso1_Diff.uasset",
+    "M_Player_M_Armor_Root_Summoner_Chest2_Dyn=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Torso1_Diff.uasset",
+    "M_Player_M_Armor_Root_Summoner_Chest2_Base=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Torso1_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Root_Summoner_Chest1=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Helm_Norm.uasset",
+    "M_Player_M_Armor_Root_Summoner_Chest2_Proxy=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Helm_Norm.uasset",
+    "M_Player_M_Armor_Root_Summoner_Chest2_Dyn=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Helm_Norm.uasset",
+    "M_Player_M_Armor_Root_Summoner_Chest2_Base=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Helm_Norm.uasset"
    ]
   },
   {
@@ -755,6 +1009,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Drifter_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Drifter_armor/Textures/Revision/T_Drifter_Armor_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Drifter_armor/Textures/Revision/T_Drifter_Armor_Norm.uasset"
    ]
   },
   {
@@ -783,6 +1045,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Tops/Player_M_Void_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Shoulders_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Shoulders_Norm.uasset"
    ]
   },
   {
@@ -813,6 +1083,16 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Mesh/Player_M_Warden_Torso_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Warden_Archetype_hands=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Hands_Diff.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Head_Diff.uasset"
+   ],
+   "normals": [
+    "M_Warden_Archetype_hands=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Hands_Norm.uasset",
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Hands_Norm.uasset"
    ]
   },
   {
@@ -842,6 +1122,16 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Alchemist_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Alchemist_Gloves=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Gloves_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Gloves_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Alchemist_Gloves=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Gloves_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Gloves_Norm.uasset"
    ]
   },
   {
@@ -870,6 +1160,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Arcanist_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Arcanist_Gloves=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Gloves_Diff.uasset",
+    "M_Player_Armor_Arcanist_Gloves_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Gloves_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Arcanist_Gloves=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Gloves_Norm.uasset",
+    "M_Player_Armor_Arcanist_Gloves_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Gloves_Norm.uasset"
    ]
   },
   {
@@ -899,6 +1199,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Male/Player_M_MilitaryUniform_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1001_Norm.uasset"
    ]
   },
   {
@@ -927,6 +1235,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Bandit_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Bandit_Armor=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1003_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1003_Diff.uasset"
+   ],
+   "normals": [
+    "M_Bandit_Armor=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1002_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1002_Norm.uasset"
    ]
   },
   {
@@ -955,6 +1273,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Defender_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Gloves_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Gloves_Norm.uasset"
    ]
   },
   {
@@ -984,6 +1310,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Mesh/Player_M_RedPrince_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Gloves_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Gloves_Norm.uasset"
    ]
   },
   {
@@ -1012,6 +1346,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Cultist_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Cultist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Diff.uasset"
+   ],
+   "normals": [
+    "M_Cultist_Coat=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_Armor_Cultist_Bottom_Norm.uasset"
    ]
   },
   {
@@ -1040,6 +1384,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Elder_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/T_Player_Armor_Elder_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/_Graveyard/T_Elder_Armor_Norm.uasset"
    ]
   },
   {
@@ -1069,6 +1421,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Nerud_Engineer_Arms.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Engineer_Arms=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Engineer_Arms=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Arms_Norm.uasset"
    ]
   },
   {
@@ -1097,6 +1457,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Explorer_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_Armor_Explorer_Glove_Gauntlet_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_Armor_Explorer_Glove_Gauntlet_Norm.uasset"
    ]
   },
   {
@@ -1126,6 +1494,16 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Fae_Heavy_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Fae_Heavy_Armor_Gloves=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Gloves_Diff.uasset",
+    "Fae_Heavy_Armor_Gloves_HANDS=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Gloves_Diff.uasset"
+   ],
+   "normals": [
+    "Fae_Heavy_Armor_Gloves=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Gloves_Norm.uasset",
+    "Fae_Heavy_Armor_Gloves_HANDS=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Gloves_Norm.uasset"
    ]
   },
   {
@@ -1154,6 +1532,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Gunslinger_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Gunslinger_Arms=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Arms_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Gunslinger_Arms=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Arms_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Arms_Norm.uasset"
    ]
   },
   {
@@ -1182,6 +1570,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Handler_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_01_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_02_Norm.uasset"
    ]
   },
   {
@@ -1210,6 +1606,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Sharpshooter_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Accessories_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Accessories_Norm.uasset"
    ]
   },
   {
@@ -1239,6 +1643,16 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Root_Invader_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Root_Invader_Arm_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Arm_Diff.uasset",
+    "Root_Invader_Hand_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Hand_Diff.uasset"
+   ],
+   "normals": [
+    "Root_Invader_Arm_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Arm_Norm.uasset",
+    "Root_Invader_Hand_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Hand_Norm.uasset"
    ]
   },
   {
@@ -1268,6 +1682,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Mesh/Player_M_Invoker_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_gloves_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_gloves_Norm.uasset"
    ]
   },
   {
@@ -1296,6 +1718,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Leto_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Arms_Norm.uasset"
    ]
   },
   {
@@ -1325,6 +1755,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Leto_2_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Arms_Norm.uasset"
    ]
   },
   {
@@ -1353,6 +1791,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Medic_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Arms_Norm.uasset"
    ]
   },
   {
@@ -1383,6 +1829,14 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Meshes/Player_M_Nerud_Warrior_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Arms_Norm.uasset"
    ]
   },
   {
@@ -1406,6 +1860,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Radiant_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1002_Norm.uasset"
    ]
   },
   {
@@ -1435,6 +1897,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_RedWidowRegalia_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Arms_Norm.uasset"
    ]
   },
   {
@@ -1464,6 +1934,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Mesh/Player_M_Ritualist_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Gloves_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Gloves_Norm.uasset"
    ]
   },
   {
@@ -1493,6 +1971,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Nerud_Light_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Nerud_Light_Hands=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Hands_Diff.uasset"
+   ],
+   "normals": [
+    "M_Nerud_Light_Hands=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Hands_Norm.uasset"
    ]
   },
   {
@@ -1521,6 +2007,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_RootArmour_Gloves.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Root_Summoner_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Root_Summoner_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Norm.uasset"
    ]
   },
   {
@@ -1550,6 +2044,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Drifter_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Drifter_armor/Textures/Revision/T_Drifter_Armor_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Drifter_armor/Textures/Revision/T_Drifter_Armor_Norm.uasset"
    ]
   },
   {
@@ -1578,6 +2080,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Gloves/Player_M_Void_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Arms_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Arms_Norm.uasset"
    ]
   },
   {
@@ -1608,6 +2118,14 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Mesh/Player_M_Warden_Gloves_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Hands_Norm.uasset"
    ]
   },
   {
@@ -1637,6 +2155,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Alchemist_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Alchemist_Hat=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Hat_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Alchemist_Hat=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Hat_Norm.uasset"
    ]
   },
   {
@@ -1665,6 +2191,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Arcanist_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Arcanist_Helmet=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Helmet_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Arcanist_Helmet=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Helmet_Norm.uasset"
    ]
   },
   {
@@ -1694,6 +2228,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Male/Player_M_MilitaryUniform_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1001_Norm.uasset"
    ]
   },
   {
@@ -1722,6 +2264,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Bandit_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Bandit_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/_Graveyard/T_Bandit_Armor_Head_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/_Graveyard/T_Bandit_Armor_Head_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Bandit_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/_Graveyard/T_Bandit_Armor_Head_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/_Graveyard/T_Bandit_Armor_Head_Norm.uasset"
    ]
   },
   {
@@ -1751,6 +2303,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/BloodlessCrown/Mesh/Player_M_Armor_BloodlessCrown_Helm.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/BloodlessCrown/Material/T_Bloodless_Crown_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/BloodlessCrown/Material/T_Bloodless_Crown_Norm.uasset"
    ]
   },
   {
@@ -1779,6 +2339,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Defender_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Head_Norm.uasset"
    ]
   },
   {
@@ -1808,6 +2376,16 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Mesh/Player_M_RedPrince_Helm_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_RedPrince_Unlit=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Chest02_Diff.uasset",
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Head_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_RedPrince_Unlit=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Chest01_Norm.uasset",
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Head_Norm.uasset"
    ]
   },
   {
@@ -1836,6 +2414,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Cultist_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_armor_Cultist_Coat_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_Armor_Cultist_Bottom_Norm.uasset"
    ]
   },
   {
@@ -1864,6 +2450,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Elder_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/T_Player_Armor_Elder_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/_Graveyard/T_Elder_Armor_Norm.uasset"
    ]
   },
   {
@@ -1893,6 +2487,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Nerud_Engineer_Head.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Engineer_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Head_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Engineer_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Head_Norm.uasset"
    ]
   },
   {
@@ -1921,6 +2523,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Explorer_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_Armor_Explorer_Hat_Glasses_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_Armor_Explorer_Hat_Glasses_Norm.uasset"
    ]
   },
   {
@@ -1950,6 +2560,16 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Fae_Heavy_Helm_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Fae_Heavy_Armor_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Head_Diff.uasset",
+    "Fae_Heavy_Armor_Head_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Head_Diff.uasset"
+   ],
+   "normals": [
+    "Fae_Heavy_Armor_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Head_Norm.uasset",
+    "Fae_Heavy_Armor_Head_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Head_Norm.uasset"
    ]
   },
   {
@@ -1978,6 +2598,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Medic_Hat_Classic_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Field_Medic_Hat/Textures/T_Player_Armor_Field_Medic_Hat_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Field_Medic_Hat/Textures/T_Player_Armor_FIeld_Medic_Hat_Norm.uasset"
    ]
   },
   {
@@ -2006,6 +2634,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Gunslinger_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Gunslinger_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Head_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Gunslinger_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Head_Norm.uasset"
    ]
   },
   {
@@ -2034,6 +2670,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Handler_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_01_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_02_Norm.uasset"
    ]
   },
   {
@@ -2062,6 +2706,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Sharpshooter_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Accessories_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Accessories_Norm.uasset"
    ]
   },
   {
@@ -2091,6 +2745,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Root_Invader_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Root_Invader_Head_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Head_Diff.uasset"
+   ],
+   "normals": [
+    "Root_Invader_Head_Mat=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Head_Norm.uasset"
    ]
   },
   {
@@ -2120,6 +2782,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Mesh/Player_M_Invoker_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_head_Norm.uasset"
    ]
   },
   {
@@ -2148,6 +2818,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Leto_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Head_Norm.uasset"
    ]
   },
   {
@@ -2177,6 +2855,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Leto_2_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Head_Norm.uasset"
    ]
   },
   {
@@ -2206,6 +2892,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Pan_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Pan_Crown/Textures/T_Player_Armor_Pan_Crown_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Pan_Crown/Textures/T_Player_Armor_Pan_Crown_Norm.uasset"
    ]
   },
   {
@@ -2234,6 +2928,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Medic_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Head_Norm.uasset"
    ]
   },
   {
@@ -2263,6 +2965,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/MudtoothsHat/Mesh/Player_M_Mudtooth_Helm_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/NPC/Unique/Mudtooth/Textures/revised/T_NPC_Mudtooth_Hat_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/NPC/Unique/Mudtooth/Textures/revised/T_NPC_Mudtooth_Hat_Norm.uasset"
    ]
   },
   {
@@ -2293,6 +3003,14 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Meshes/Player_M_Nerud_Warrior_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Armor_Helmet_NerudWarrior=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Torso1_Diff.uasset"
+   ],
+   "normals": [
+    "M_Armor_Helmet_NerudWarrior=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Torso1_Norm.uasset"
    ]
   },
   {
@@ -2322,6 +3040,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Nerud_Head.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Nerud_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Head/Textures/T_Player_M_Armor_Nerud_Head_Diff.uasset"
+   ],
+   "normals": [
+    "M_Nerud_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Head/Textures/T_Player_M_Armor_Nerud_Head_Norm.uasset"
    ]
   },
   {
@@ -2350,6 +3076,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Radiant_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1002_Norm.uasset"
    ]
   },
   {
@@ -2379,6 +3113,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Armor_RedPrinceCrown_Helm.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Head_Norm.uasset"
    ]
   },
   {
@@ -2408,6 +3150,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_RedWidowRegalia_Helmet_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Helmet_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Helmet_Norm.uasset"
    ]
   },
   {
@@ -2437,6 +3187,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Mesh/Player_M_Ritualist_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Hat_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Hat_Norm.uasset"
    ]
   },
   {
@@ -2466,6 +3224,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Nerud_Light_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Nerud_Light_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Head_Diff.uasset"
+   ],
+   "normals": [
+    "M_Nerud_Light_Head=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Head_Norm.uasset"
    ]
   },
   {
@@ -2494,6 +3260,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_RootArmour_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Helm_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Helm_Norm.uasset"
    ]
   },
   {
@@ -2523,6 +3297,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/TopHat/Mesh/Player_M_Dran_Preacher_Helm_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Characters/Dran_Preacher/Textures/T_Dran_Preacher_Hat_Diff.uasset"
+   ],
+   "normals": [
+    "none"
    ]
   },
   {
@@ -2552,6 +3334,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/TrueCrimsonCrown/Mesh/Player_M_TrueCrimpsonCrown_Helm_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Head_Norm.uasset"
    ]
   },
   {
@@ -2580,6 +3370,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Hats/Player_M_Void_Hat_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Head_Norm.uasset"
    ]
   },
   {
@@ -2610,6 +3408,14 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Mesh/Player_M_Warden_Head_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Head_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Head_Norm.uasset"
    ]
   },
   {
@@ -2638,6 +3444,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Armor/WeldingGoggles/Player_M_Welding_Goggles_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_welding_goggles_A01=Remnant2/Content/World_DLC3/Items/Armor/WeldingGoggles/T_welding_goggles_A01_Diff.uasset",
+    "M_welding_goggles_A01_Filler=Remnant2/Content/World_DLC3/Items/Armor/WeldingGoggles/T_welding_goggles_A01_Diff.uasset"
+   ],
+   "normals": [
+    "M_welding_goggles_A01=Remnant2/Content/World_DLC3/Items/Armor/WeldingGoggles/T_welding_goggles_A01_Norm.uasset",
+    "M_welding_goggles_A01_Filler=Remnant2/Content/World_DLC3/Items/Armor/WeldingGoggles/T_welding_goggles_A01_Norm.uasset"
    ]
   },
   {
@@ -2667,6 +3483,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Alchemist_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Pant_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Alchemist/Textures/T_Player_M_Armor_Alchemist_Pant_Norm.uasset"
    ]
   },
   {
@@ -2695,6 +3519,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Arcanist_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Arcanist_Legs_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Legs_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Arcanist_Legs_Cloth=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Legs_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Arcanist/Textures/T_Player_Armor_Arcanist_Legs_Norm.uasset"
    ]
   },
   {
@@ -2724,6 +3558,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Male/Player_M_MilitaryUniform_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Armor/MilitaryUniform/Material/T_Player_Military_Uniform_1001_Norm.uasset"
    ]
   },
   {
@@ -2752,6 +3594,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Bandit_Pants_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Bandit_Armor/Textures/T_Player_Armor_Bandit_1002_Norm.uasset"
    ]
   },
   {
@@ -2780,6 +3630,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Defender_Bottoms_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Bottoms_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Defender/Textures/Defender_Rework/T_Player_M_Armor_Defender_Bottoms_Norm.uasset"
    ]
   },
   {
@@ -2809,6 +3667,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Mesh/Player_M_RedPrince_Legs_02.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Lower_Body_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Armor/RedPrinceArmor/Textures/T_Player_Armor_RedPrince_Lower_Body_Norm.uasset"
    ]
   },
   {
@@ -2837,6 +3703,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Cultist_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_Armor_Cultist_Bottom_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Cultist/Textures/T_Player_Armor_Cultist_Bottom_Norm.uasset"
    ]
   },
   {
@@ -2865,6 +3739,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Elder_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/T_Player_Armor_Elder_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Elder_Armor/Textures/_Graveyard/T_Elder_Armor_Norm.uasset"
    ]
   },
   {
@@ -2894,6 +3776,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Nerud_Engineer_Legs.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Engineer_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Engineer_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Engineer/Textures/T_Player_Armor_Nerud_Engineer_Legs_Norm.uasset"
    ]
   },
   {
@@ -2922,6 +3812,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Explorer_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_M_Armor_Explorer_Pants_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Explorer/Textures/T_Player_M_Armor_Explorer_Pants_Norm.uasset"
    ]
   },
   {
@@ -2951,6 +3849,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Fae_Heavy_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Lower_Body_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/FaeHeavy/Textures/T_Fae_Heavy_Armor_Lower_Body_Norm.uasset"
    ]
   },
   {
@@ -2979,6 +3885,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Gunslinger_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_Armor_Gunslinger_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Legs_Diff.uasset",
+    "M_Player_Armor_Gunslinger_Legs_Dyn=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_Armor_Gunslinger_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Legs_Norm.uasset",
+    "M_Player_Armor_Gunslinger_Legs_Dyn=Remnant2/Content/Characters/Player/PlayerGear/Male/Gunslinger/Textures/T_Player_Armor_Gunslinger_Legs_Norm.uasset"
    ]
   },
   {
@@ -3007,6 +3923,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Handler_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_01_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Handler/Textures/T_Player_Armor_Handler_Set_02_Norm.uasset"
    ]
   },
   {
@@ -3035,6 +3959,16 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Sharpshooter_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Player_M_Armor_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Diff.uasset",
+    "M_Player_M_Armor_Sharpshooter_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "M_Player_M_Armor_Sharpshooter_Torso=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Torso_Norm.uasset",
+    "M_Player_M_Armor_Sharpshooter_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Sharpshooter/Updated/T_Player_M_Armor_Sharpshooter_Legs_Norm.uasset"
    ]
   },
   {
@@ -3064,6 +3998,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Root_Invader_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Lower_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Invader/Textures/T_Player_M_Armor_Root_Invader_Lower_Norm.uasset"
    ]
   },
   {
@@ -3093,6 +4035,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Mesh/Player_M_Invoker_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_legs_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Items/Archetypes/Invoker/Armor/Textures/T_Player_Armor_Invoker_legs_Norm.uasset"
    ]
   },
   {
@@ -3121,6 +4071,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Leto_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Legs_Norm.uasset"
    ]
   },
   {
@@ -3150,6 +4108,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Leto_2_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Letos_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "Letos_Legs=Remnant2/Content/Characters/Player/PlayerGear/Male/Letos/Textures/T_Player_M_Armor_Letos_Legs_Norm.uasset"
    ]
   },
   {
@@ -3178,6 +4144,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Medic_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Lower_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Medic/Textures/T_Player_Armor_Medic_Lower_Norm.uasset"
    ]
   },
   {
@@ -3208,6 +4182,14 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Meshes/Player_M_Nerud_Warrior_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC3/Items/Armor/NErudWarrior/Textures/T_Player_Armor_NerudWarrior_Legs_Norm.uasset"
    ]
   },
   {
@@ -3236,6 +4218,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Radiant_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1003_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Radiant/Textures/T_Player_Armor_Radiant_1002_Norm.uasset"
    ]
   },
   {
@@ -3265,6 +4255,14 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_RedWidowRegalia_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Pants_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Red_Widow_Regalia/Textures/T_Player_Male_Red_Widow_Pants_Norm.uasset"
    ]
   },
   {
@@ -3294,6 +4292,14 @@
     "ore_high2*3",
     "elder_high*2",
     "part_high2*2"
+   ],
+   "mesh": "Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Mesh/Player_M_Ritualist_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Items/Archetypes/Ritualist/Armor/Textures/T_Player_Armor_Ritualist_Legs_Norm.uasset"
    ]
   },
   {
@@ -3323,6 +4329,16 @@
     "ore_high*2",
     "bone_high*2",
     "part_high*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Nerud_Light_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "M_Nerud_Light=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/_New_Nerud_Light/Textures/T_Nerud_Light_Diff.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "M_Nerud_Light=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/_New_Nerud_Light/Textures/T_Nerud_Light_Norm.uasset",
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Nerud_Light/Textures/T_Player_M_Armor_Nerud_Light_Legs_Norm.uasset"
    ]
   },
   {
@@ -3351,6 +4367,18 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_RootArmour_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "Root_Summoner_Legs_Cloth_DynLoins=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Diff.uasset",
+    "Root_Summoner_Legs_Cloth_DynSides=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Diff.uasset",
+    "Root_Summoner_Legs_Cloth_Base=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "Root_Summoner_Legs_Cloth_DynLoins=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Norm.uasset",
+    "Root_Summoner_Legs_Cloth_DynSides=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Norm.uasset",
+    "Root_Summoner_Legs_Cloth_Base=Remnant2/Content/Characters/Player/PlayerGear/Male/Root_Summoner/Textures/T_Player_M_Armor_Root_Summoner_Legs_Norm.uasset"
    ]
   },
   {
@@ -3380,6 +4408,14 @@
     "ore_low2*2",
     "bone_low2*2",
     "crystal_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Drifter_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Drifter_armor/Textures/Revision/T_Drifter_Armor_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Drifter_armor/Textures/Revision/T_Drifter_Armor_Norm.uasset"
    ]
   },
   {
@@ -3408,6 +4444,14 @@
    "recipe": [
     "ore_low*2",
     "bone_low*1"
+   ],
+   "mesh": "Remnant2/Content/Characters/Player/Male/Skins/Bottoms/Player_M_Void_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/Characters/Player/PlayerGear/Male/Void/Textures/_Graveyard/T_Void_Armor_Legs_Norm.uasset"
    ]
   },
   {
@@ -3438,6 +4482,14 @@
     "bone_master*2",
     "elder_master*2",
     "gem_master*1"
+   ],
+   "mesh": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Mesh/Player_M_Warden_Legs_01.uasset",
+   "skeleton": "Remnant2/Content/Characters/Player/Male/Mesh/Player_M_Skeleton.uasset",
+   "textures": [
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Legs_Diff.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Armor/Textures/T_Player_M_Armor_Warden_Legs_Norm.uasset"
    ]
   }
  ]

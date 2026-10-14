@@ -1,6 +1,7 @@
 // mhwread: reads files out of Monster Hunter: World chunk archives in place (nothing is copied unless GET is asked).
 //   mhwread <game dir> LIST [filter]          matching paths, sizes, source chunk (higher priority listed last)
 //   mhwread <game dir> GET <path> <out file>  one file's bytes, highest-priority chunk wins
+//   mhwread <game dir> BONES <path.mod3> [out.json]  skeleton of a MOD3 model (layout in tools/mhwchunk_notes.md)
 // Format (see tools/mhwchunk_notes.md): chunkX.bin = u32 magic, u32 count, count*8-byte entries (compressed size, offset);
 // each entry is one 0x40000-byte block of a virtual "PKG": Kraken/Oodle-compressed (or stored when size 0), then XORed
 // with a 16-byte key chosen per block from a key sequence. The PKG holds a parent/child file table at 0x100.
@@ -8,6 +9,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
 #include <algorithm>
 #include <fstream>
 #include <iterator>
@@ -143,6 +145,64 @@ static void scanDir(const std::string& dir, int group, std::vector<Pkg*>& out) {
     }
 }
 
+// MOD3 skeleton. Header: "MOD\0", u16 version @4, u16 boneCount @6, u64 boneOffset @0x30.
+// Bone section: n*24-byte entries {u16 functionId, u8 parent (0xFF root), u8 self index, f32 unk, f32 length, f32 x,y,z (local)},
+// n*64 local 4x4 (row-vector, translation in row 3), n*64 inverse-bind 4x4, then a 512-byte u8 table functionId -> bone index (0xFF none).
+struct Bone { int idx, fn, parent; float unk, len, lp[3], L[16], IB[16], W[16]; };
+static int bonesCmd(const std::vector<byte>& d, const char* outPath) {
+    if (d.size() < 0x140 || memcmp(d.data(), "MOD", 4) != 0) { fprintf(stderr, "not a MOD3\n"); return 1; }
+    int n = Pkg::rd<uint16_t>(&d[6]); uint64_t bo = Pkg::rd<uint64_t>(&d[0x30]);
+    if (n <= 0 || bo + (uint64_t)n * 152 + 512 > d.size()) { fprintf(stderr, "bad bone table (n=%d off=%llu)\n", n, (unsigned long long)bo); return 1; }
+    std::vector<Bone> b(n);
+    int bad = 0;
+    for (int i = 0; i < n; i++) {
+        const byte* e = &d[bo + (size_t)i * 24]; Bone& k = b[i];
+        k.idx = i; k.fn = Pkg::rd<uint16_t>(e); k.parent = e[2] == 0xFF ? -1 : e[2];
+        if (k.parent >= n) bad++;
+        k.unk = Pkg::rd<float>(e + 4); k.len = Pkg::rd<float>(e + 8);
+        for (int j = 0; j < 3; j++) k.lp[j] = Pkg::rd<float>(e + 12 + 4 * j);
+        memcpy(k.L, &d[bo + (size_t)n * 24 + (size_t)i * 64], 64);
+        memcpy(k.IB, &d[bo + (size_t)n * 88 + (size_t)i * 64], 64);
+    }
+    double maxPosDiff = 0, maxIdErr = 0, maxRot = 0;
+    for (int i = 0; i < n; i++) {   // parents may come later in the table, so resolve recursively
+        std::vector<int> chain; for (int c = i; c >= 0; c = b[c].parent) { chain.push_back(c); if (chain.size() > (size_t)n) { fprintf(stderr, "parent cycle\n"); return 1; } }
+        float W[16] = {1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1};
+        for (size_t c = 0; c < chain.size(); c++) {   // W = L_i * L_parent * ... (row vectors)
+            float R[16]; const float* A = W; const float* B = b[chain[c]].L;
+            for (int r = 0; r < 4; r++) for (int q = 0; q < 4; q++) { R[r*4+q] = 0; for (int t = 0; t < 4; t++) R[r*4+q] += A[r*4+t] * B[t*4+q]; }
+            memcpy(W, R, 64);
+        }
+        memcpy(b[i].W, W, 64);
+        Bone& k = b[i];
+        for (int j = 0; j < 3; j++) maxPosDiff = std::max(maxPosDiff, (double)fabsf(k.L[12 + j] - k.lp[j]));
+        for (int r = 0; r < 3; r++) { double l = 0; for (int q = 0; q < 3; q++) l += (double)k.L[r*4+q] * k.L[r*4+q]; maxRot = std::max(maxRot, fabs(sqrt(l) - 1)); }
+        // inverse bind * world should be identity
+        for (int r = 0; r < 4; r++) for (int q = 0; q < 4; q++) { double v = 0; for (int t = 0; t < 4; t++) v += (double)k.W[r*4+t] * k.IB[t*4+q]; maxIdErr = std::max(maxIdErr, fabs(v - (r == q))); }
+    }
+    printf("bones=%d boneOffset=0x%llx structural-bad=%d  |L.t-entry.pos|max=%.3g  rotRowLen-1 max=%.3g  |W*IB-I| max=%.3g\n", n, (unsigned long long)bo, bad, maxPosDiff, maxRot, maxIdErr);
+    // depth, chain lengths, height
+    int maxDepth = 0; double lo[3] = {1e30,1e30,1e30}, hi[3] = {-1e30,-1e30,-1e30};
+    std::vector<int> depth(n), kids(n, 0);
+    for (int i = 0; i < n; i++) { int dd = 0; for (int c = b[i].parent; c >= 0; c = b[c].parent) dd++; depth[i] = dd; maxDepth = std::max(maxDepth, dd); if (b[i].parent >= 0) kids[b[i].parent]++;
+        for (int j = 0; j < 3; j++) { lo[j] = std::min(lo[j], (double)b[i].W[12+j]); hi[j] = std::max(hi[j], (double)b[i].W[12+j]); } }
+    printf("max depth=%d  world bbox min=(%.1f %.1f %.1f) max=(%.1f %.1f %.1f)  height(y)=%.1f units\n", maxDepth, lo[0], lo[1], lo[2], hi[0], hi[1], hi[2], hi[1] - lo[1]);
+    for (int i = 0; i < n; i++) if (!kids[i] && depth[i] >= 3) {   // leaf chains
+        double len = 0; std::string s; std::vector<int> ch; for (int c = i; c >= 0; c = b[c].parent) ch.push_back(c);
+        for (size_t k = 0; k + 1 < ch.size(); k++) { const float* a = b[ch[k]].W; const float* p = b[ch[k+1]].W; len += sqrt((a[12]-p[12])*(a[12]-p[12]) + (a[13]-p[13])*(a[13]-p[13]) + (a[14]-p[14])*(a[14]-p[14])); }
+        printf("leaf %d (fn %d) depth %d chain length %.1f\n", i, b[i].fn, depth[i], len);
+    }
+    if (outPath) {
+        FILE* o = fopen(outPath, "w"); if (!o) { fprintf(stderr, "cannot write %s\n", outPath); return 1; }
+        fprintf(o, "[\n");
+        for (int i = 0; i < n; i++) { const Bone& k = b[i];
+            fprintf(o, " {\"index\":%d,\"id\":%d,\"parent\":%d,\"length\":%.6g,\"local_pos\":[%.6g,%.6g,%.6g],\"local_rot_matrix\":[[%.7g,%.7g,%.7g],[%.7g,%.7g,%.7g],[%.7g,%.7g,%.7g]],\"world_pos\":[%.6g,%.6g,%.6g]}%s\n",
+                k.idx, k.fn, k.parent, k.len, k.L[12], k.L[13], k.L[14], k.L[0], k.L[1], k.L[2], k.L[4], k.L[5], k.L[6], k.L[8], k.L[9], k.L[10], k.W[12], k.W[13], k.W[14], i + 1 < n ? "," : ""); }
+        fprintf(o, "]\n"); fclose(o); printf("wrote %s\n", outPath);
+    }
+    return 0;
+}
+
 int main(int argc, char** argv) {
     if (argc < 3) { fprintf(stderr, "usage: mhwread <game dir> LIST [filter] | GET <path> <out>\n"); return 2; }
     std::string game = argv[1], cmd = argv[2];
@@ -158,6 +218,15 @@ int main(int argc, char** argv) {
         std::string flt = argc > 3 ? lower(argv[3]) : "";
         for (Pkg* p : pk) for (auto& e : p->ents)
             if (flt.empty() || lower(e.path).find(flt) != std::string::npos) printf("%10llu  %-18s  %s\n", (unsigned long long)e.size, p->name.c_str(), e.path.c_str());
+    } else if (cmd == "BONES" && argc >= 4) {
+        std::string want = lower(argv[3]); std::replace(want.begin(), want.end(), '\\', '/');
+        if (want.empty() || want[0] != '/') want = "/" + want;
+        for (size_t i = pk.size(); i-- > 0;) for (auto& e : pk[i]->ents) if (lower(e.path) == want) {
+            std::vector<byte> d; if (!pk[i]->read(e.off, e.size, d)) { fprintf(stderr, "read failed\n"); return 1; }
+            printf("%s from %s\n", e.path.c_str(), pk[i]->name.c_str());
+            return bonesCmd(d, argc > 4 ? argv[4] : nullptr);
+        }
+        fprintf(stderr, "not found\n"); return 1;
     } else if (cmd == "GET" && argc >= 5) {
         std::string want = lower(argv[3]); std::replace(want.begin(), want.end(), '\\', '/');
         if (want.empty() || want[0] != '/') want = "/" + want;

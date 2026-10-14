@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "imgui.h"
+#include "hunter.h"
 #include "model.h"
 #include "render3d.h"
 
@@ -1832,6 +1833,7 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
         append_props(r, *d.m, bodyPal, d.world, &items);
     }
     gunmodel_append(&items);
+    hunter_append(&items);  // the Remnant armour on the hunter
     if (items.empty()) return;
     render3d_frame(dev, ctx, rtv, w, h, v.view, v.proj, items);
 }

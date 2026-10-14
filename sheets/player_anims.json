@@ -1,0 +1,55 @@
+{
+ "sheet": "player_anims",
+ "phase": "v0.2",
+ "about": "Remnant II player animations the mod plays on the hunter (idle, relic, consumable, drink, eat), looked up by id. Paths and frame counts only; derived from the player's install.",
+ "columns": {
+  "id": "id",
+  "use": "str",
+  "asset": "str",
+  "frames": "num"
+ },
+ "rows": [
+  {
+   "id": "dragonheart",
+   "use": "relic",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset",
+   "frames": 96
+  },
+  {
+   "id": "hc_dragonheart",
+   "use": "relic",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/HC/Player_M_HC_Action_DragonHeart.uasset",
+   "frames": 96
+  },
+  {
+   "id": "crouch_dragonheart",
+   "use": "relic",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Crouch_Action_DragonHeart.uasset",
+   "frames": 96
+  },
+  {
+   "id": "drink",
+   "use": "consumable",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset",
+   "frames": 91
+  },
+  {
+   "id": "eat",
+   "use": "consumable",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset",
+   "frames": 91
+  },
+  {
+   "id": "idle",
+   "use": "idle",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Idle.uasset",
+   "frames": 401
+  },
+  {
+   "id": "idle_fidget_01",
+   "use": "idle",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Idle_Fidget_01.uasset",
+   "frames": 373
+  }
+ ]
+}

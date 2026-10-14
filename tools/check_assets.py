@@ -98,7 +98,7 @@ def main():
                                 else:
                                     bad["prop-bone"] += 1
                                     fails.append(f"prop-bone {where} {bone} is not a bone of {r['skeleton']}")
-                elif col in ("mesh_tex", "textures") and isinstance(v, list):
+                elif col in ("mesh_tex", "textures", "normals") and isinstance(v, list):
                     for e in v:
                         if "=" in e:
                             check("gun-texture", where + ".mesh_tex", "TEX", e.split("=", 1)[1].replace(".uasset", ""), "1024")
@@ -107,7 +107,7 @@ def main():
                         check("mesh", where, "MESH", v)
                     elif col == "skeleton":
                         check("skeleton", where, "SKEL", v)
-                    elif col.startswith("anim") and v.endswith(".uasset"):
+                    elif (col.startswith("anim") or (col == "asset" and sh["sheet"] == "player_anims")) and v.endswith(".uasset"):
                         check("animation", where + "." + col, "ANIM", v)
                     elif col.startswith("snd") or col == "event":
                         check("sound", where + "." + col, "SND", v, "1")

@@ -12,6 +12,7 @@
 #include <cstring>
 
 #include "bosses.h"
+#include "hunter.h"
 #include "state.h"
 
 namespace rh {
@@ -693,7 +694,8 @@ static void handle(SaveData& s, Live& l, const Request& r, double t) {
     log("craft: %s %s row %d (%d zenny)", r.kind == Request::UPGRADE ? "upgrade" : "made", cat_label(r.cat), r.row, zen);
 }
 
-static void play_use_action(int which) {
+static void play_use_action(int which, const char* anim) {
+    hunter_play(anim);  // Remnant's own animation on the hunter (sheet anim column), over MHW's action
     const ActionCfg& a = action_cfg();
     if (a.set[which] >= 0) { reactions_play(a.set[which], a.id[which]); return; }
     int s, d;
@@ -718,7 +720,7 @@ void use_consumable(int row) {
         s.stock[row]--;
         apply_use(l, kConsumables[row].effects, t, 1.0f, 0.0f, 10.0f, 1.0f);
         audio_play(kConsumables[row].snd_use);
-        play_use_action(2);
+        play_use_action(2, kConsumables[row].anim);
         bool concoction = false;
         for (const Effect& e : effects_of(kConsumables[row].effects))
             concoction |= e.act == ACT_BUFF;
@@ -857,6 +859,7 @@ void mod_game_tick() {
     research_tick(l, t);
     reactions_tick(l, t);
     gunmodel_tick(s, l);
+    hunter_tick(s, l, t);  // the Remnant armour on the hunter's joints; Remnant animations written to them
     const GameSnapshot& g = l.snap;
     const Archetypes* a = archetype();
     if (l.loadoutChanged) {
@@ -967,6 +970,7 @@ void mod_game_tick() {
         if (bossEv & BOSS_EV_EVADE) trigger(l, TR_ON_EVADE, t);  // dodged through a boss's hit
 
         // ---- relic
+        if (has(CMD_RELIC)) hunter_relic_key();  // [hunter] pose_test
         if (has(CMD_RELIC) && s.relic >= 0) {
             if (s.relicCharges > 0 && t >= l.relicBusyUntil && g.playerHealth) {
                 s.relicCharges--;
@@ -975,7 +979,7 @@ void mod_game_tick() {
                           1.0f + stat(l, ST_RELIC_HEAL, t));
                 l.relicBusyUntil = t + 0.8 / speed;
                 audio_play(kRelics[s.relic].snd_use);
-                play_use_action(0);
+                play_use_action(0, kRelics[s.relic].anim);
                 trigger(l, TR_ON_RELIC, t);
                 l.dirty = true;
             } else if (s.relicCharges <= 0) {
@@ -997,7 +1001,7 @@ void mod_game_tick() {
             l.skillReady[slot] = t + k.cooldown_s * (1.0f - cdr);
             apply_use(l, k.effects, t, durScale, stat(l, ST_DMG_SKILL, t), k.duration_s, 1.0f);
             audio_play(k.snd_use);
-            play_use_action(1);
+            play_use_action(1, k.anim);
             trigger(l, TR_ON_SKILL, t);
             log("skill %s", k.id);
         }

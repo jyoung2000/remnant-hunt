@@ -399,3 +399,29 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   injected into raw input (unknown whether MHW reads the mouse that way; the log line "input: claw shot injected"
   plus the claw firing in game will tell).
 - Carve learning now sums the pouch in one walk (mhw_pouch_sum) instead of ~2,500 locked lookups per poll.
+
+## 2026-10-14: player merge (Remnant player on the MHW hunter), research
+- Hunter skeleton read from the install (mhwread BONES, layout in tools/mhwchunk_notes.md): every pl/*_equip .mod3 carries
+  the full skeleton; m_body001_0000 has 86 bones, cm, +Y up, T-pose with arms along X. Root/pelvis at 0; spine ids 2,3,
+  head id 4 (y 51); left arm ids 5-8 (hand id 8 at x +72), right arm ids 9-12 (hand id 12 at x -72); left leg ids 14-17,
+  right 18-21; fingers, twist and helper bones for the rest; function ids never exceed 254 (512-byte id->index table).
+- Therefore the in-memory joint block (player+0x90 -> +0x2B0, 0x40 world matrices, entry 396 = a hand) is NOT indexed
+  by function id; the runtime must match block entries to .mod3 bones by geometry (parent-child distances are pose
+  independent) before a retarget can write poses. Derived tables: build/mhw_hunter_bones.json (not shipped).
+- Remnant player catalogued from the install (r2read): Player_M_Skeleton (369 bones; Pelvis, Spine1-4, Neck, Head,
+  Clavicle/UpperArm/ForeArm/Hand_L/R, Thigh/Calf/Ankle/Toes_L/R, Fing_<Finger>N), all 120 armour rows have meshes +
+  base colour (+ normals except head_tophat), 49 player animations: DragonHeart (96 f), Drink/Eat (91), Idle (401),
+  all 42 skills (11 share the generic Skill_Activate). Sheets gained armor mesh/skeleton/textures/normals, skills/
+  relics/consumables anim, new player_anims.json (7) and hunter_bones.json (86 rows: id, parent_id, length, local
+  pose, r2 name for 50 main-chain + finger bones). check_assets: 4162 load, 0 fail.
+- Built (hunter.cpp/hunter_rig.cpp): runtime matcher finds the hunter's 86 bones in the joint block by bone length +
+  hierarchy (test: 81/86 recovered from a shuffled block with 3 copies + 300 noise joints); Remnant armour is drawn on
+  the hunter's joints ([hunter] armour=1) over MHW's own armour (the game's armour cannot be hidden without patches);
+  Dragon Heart / skill / consumable rows with an anim play the Remnant animation on the hunter by writing the mapped
+  joint matrices each tick while it plays ([hunter] pose_write=1, the approved write; the learned MHW action still
+  plays too). [hunter] pose_test=1: the relic key lifts both hand entries 30 cm for 2 s and logs "pose test wrote N
+  entries" so a play session can tell whether the game rebuilds the block after our tick (then writes are invisible
+  and the write would have to move to a later hook). Remnant's reference pose is arms-down, the hunter's is a T-pose;
+  the rig aligns bind directions (twist not corrected yet).
+- Open after a play session: "hunter: N of 86 bones matched" line, whether entry 396 is a hand, pose_test outcome,
+  armour fit, Dragon Heart animation visible.
