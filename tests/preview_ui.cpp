@@ -66,7 +66,8 @@ const std::string& r2_text(const sheets::R2Text& t) {
 }
 const std::string& r2_name(const sheets::R2Name&) { static const std::string w = "Wallace"; return w; }
 void set_input_block(const InputBlock&) {}
-void* texture_for(const char* asset, int maxSide, int* w, int* h);  // real icons through r2read, below
+void inject_claw(double) {}
+void* texture_for(const char* asset, int maxSide, int* w, int* h, bool srgb);  // real icons through r2read, below
 void use_consumable(int) {}
 bool can_equip_here(const Live&) { return true; }
 void equip(Cat, int, int) {}
@@ -163,7 +164,7 @@ static bool r2_preview_start() {
 }
 
 namespace rh {
-void* texture_for(const char* asset, int maxSide, int* w, int* h) {
+void* texture_for(const char* asset, int maxSide, int* w, int* h, bool) {
     if (!asset || !*asset) return nullptr;
     std::string key = std::string(asset) + "|" + std::to_string(maxSide);
     auto it = g_r2Cache.find(key);

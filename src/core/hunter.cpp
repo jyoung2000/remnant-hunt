@@ -26,9 +26,12 @@
 
 namespace rh {
 
+void research_write(const std::string& text);  // research.cpp: appended to dev_research.txt
+
 namespace {
 
-constexpr int kMaxEntries = 1024;
+constexpr int kMaxEntries = 2048;
+constexpr float kNearCm = 400.0f;  // a joint entry's translation is within this of the player
 
 struct Cfg { int armour = 1, poseWrite = 1, poseTest = 0; };
 const Cfg& cfg() {
@@ -63,9 +66,14 @@ bool rigid(const float* f) {
         if (!std::isfinite(f[i]) || fabsf(f[i]) > 1e7f) return false;
     auto len = [&](int r) { return sqrtf(f[r * 4] * f[r * 4] + f[r * 4 + 1] * f[r * 4 + 1] + f[r * 4 + 2] * f[r * 4 + 2]); };
     auto dt = [&](int a, int b) { return f[a * 4] * f[b * 4] + f[a * 4 + 1] * f[b * 4 + 1] + f[a * 4 + 2] * f[b * 4 + 2]; };
-    for (int r = 0; r < 3; r++)
-        if (fabsf(len(r) - 1.0f) > 0.05f) return false;
-    return fabsf(dt(0, 1)) < 0.05f && fabsf(dt(0, 2)) < 0.05f && fabsf(dt(1, 2)) < 0.05f;
+    for (int r = 0; r < 3; r++)  // the tolerance of mhw.cpp read_hand, which reads the same entries for the gun
+        if (fabsf(len(r) - 1.0f) > 0.1f) return false;
+    return fabsf(dt(0, 1)) < 0.1f && fabsf(dt(0, 2)) < 0.1f && fabsf(dt(1, 2)) < 0.1f;
+}
+
+bool near_player(const float* f, const Vec3& pos) {
+    float dx = f[12] - pos.x, dy = f[13] - pos.y, dz = f[14] - pos.z;
+    return dx * dx + dy * dy + dz * dz <= kNearCm * kNearCm;
 }
 
 uint8_t* block_base(uint8_t* pl, int l1, int l2) {
@@ -75,22 +83,68 @@ uint8_t* block_base(uint8_t* pl, int l1, int l2) {
     return *(uint8_t**)(a + l2);
 }
 
-// Reads entries 0.. until the block ends (8 bad entries in a row, or unreadable), at most kMaxEntries.
-int read_block(uint8_t* base, int stride, std::vector<float>* block, std::vector<uint8_t>* ok) {
+// The joint block as mhw.cpp read_hand reaches it (the gun's hand joint): player+l1 -> ptr -> +l2 -> ptr = base,
+// entry * stride. The [gun] chain first, then the fallback 0xA8/0x310; the chain whose hand entry is a rigid matrix
+// near the hunter wins, else the first readable one.
+struct Chain {
+    uint8_t* base = nullptr;
+    int stride = 0x40, l1 = 0, l2 = 0, hand = 396;
+    bool handRigid = false;
+};
+Chain resolve_chain(uint8_t* pl, const Vec3& pos) {
+    const GunCfg& gc = gun_cfg();
+    const int cand[2][4] = {{gc.handL1, gc.handL2, gc.handStride, gc.handEntry}, {0xA8, 0x310, 0x40, 396}};
+    Chain first;
+    for (const auto& c : cand) {
+        if (c[0] < 0 || c[1] < 0 || c[2] < 64 || c[2] > 0x1000 || c[3] < 0) continue;
+        uint8_t* b = block_base(pl, c[0], c[1]);
+        if (!b || !mem_readable(b, 64)) continue;
+        Chain ch;
+        ch.base = b, ch.l1 = c[0], ch.l2 = c[1], ch.stride = c[2], ch.hand = c[3];
+        uint8_t* m = b + (size_t)c[3] * c[2];
+        float f[16];
+        if (mem_readable(m, 64)) {
+            memcpy(f, m, 64);
+            ch.handRigid = rigid(f) && near_player(f, pos);
+        }
+        if (ch.handRigid) return ch;
+        if (!first.base) first = ch;
+    }
+    return first;
+}
+
+// Reads all kMaxEntries entries (stops only where the memory becomes unreadable); each entry on its own: ok = rigid
+// rows, finite, translation within kNearCm of the player. The block interleaves the joints with other data, so
+// there is no "end of block" test. Returns the entries read.
+int read_block(uint8_t* base, int stride, const Vec3& pos, std::vector<float>* block, std::vector<uint8_t>* ok,
+               bool log_it) {
     block->assign((size_t)kMaxEntries * 16, 0);
     ok->assign(kMaxEntries, 0);
-    int n = 0, bad = 0;
+    int n = 0, nRigid = 0, first = -1, last = -1;
     for (int i = 0; i < kMaxEntries; i++) {
         uint8_t* m = base + (size_t)i * stride;
         if (!mem_readable(m, 64)) break;
         float* f = &(*block)[(size_t)i * 16];
         memcpy(f, m, 64);
-        if (rigid(f)) {
+        n = i + 1;
+        if (rigid(f) && near_player(f, pos)) {
             (*ok)[i] = 1;
-            n = i + 1;
-            bad = 0;
-        } else if (++bad >= 8) {
-            break;
+            nRigid++;
+            if (first < 0) first = i;
+            last = i;
+        }
+    }
+    if (log_it) {
+        log("hunter: joint block %p: %d rigid entries of %d scanned, first %d, last %d", (void*)base, nRigid, n, first, last);
+        if (nRigid < 60) {
+            std::string line = "hunter: joint block first entries (raw first floats):";
+            for (int i = 0; i < 8 && i < n; i++) {
+                const float* f = &(*block)[(size_t)i * 16];
+                char b[96];
+                snprintf(b, sizeof(b), " [%d] %g %g %g %g", i, f[0], f[1], f[2], f[3]);
+                line += b;
+            }
+            log("%s", line.c_str());
         }
     }
     return n;
@@ -100,7 +154,8 @@ struct State {
     HunterMap map;
     std::vector<int> entries[kHunterBones];  // matched entry + its copies, per bone
     uint8_t* base = nullptr;
-    int stride = 0x40, zone = -2, bad = 0;
+    int stride = 0x40, zone = -2, bad = 0, dumpedZone = -2;
+    std::string chainSaid;
     double nextTry = 0, retry = 5;  // a failed match is tried again later and later (it costs a hitch)
     bool loggedFail = false;
     // rig
@@ -160,10 +215,38 @@ void unmatch(const char* why) {
     g.anim = nullptr;
 }
 
+// dev_research / dev_diag in the mod folder: the whole block (index, rigid, translation relative to the player) into
+// dev_research.txt, once per zone, so the layout can be read offline.
+void research_dump(uint8_t* base, const Vec3& pos, const std::vector<float>& block, const std::vector<uint8_t>& ok,
+                   int n) {
+    if (g.dumpedZone == g.zone) return;
+    char f1[MAX_PATH], f2[MAX_PATH];
+    snprintf(f1, sizeof(f1), "%s\\dev_research", mod_dir());
+    snprintf(f2, sizeof(f2), "%s\\dev_diag", mod_dir());
+    if (GetFileAttributesA(f1) == INVALID_FILE_ATTRIBUTES && GetFileAttributesA(f2) == INVALID_FILE_ATTRIBUTES) return;
+    g.dumpedZone = g.zone;
+    std::string out;
+    char b[160];
+    snprintf(b, sizeof(b), "== hunter joint block zone %d base %p stride 0x%X player %.1f %.1f %.1f: %d entries ==\n",
+             g.zone, (void*)base, g.stride, pos.x, pos.y, pos.z, n);
+    out += b;
+    out += "index rigid dx dy dz (translation minus the player, cm; rigid 1 = rigid rows, finite, within 400 cm)\n";
+    for (int i = 0; i < n; i++) {
+        const float* f = &block[(size_t)i * 16];
+        snprintf(b, sizeof(b), "%d %d %.1f %.1f %.1f\n", i, ok[i] ? 1 : (rigid(f) ? 2 : 0), f[12] - pos.x, f[13] - pos.y,
+                 f[14] - pos.z);
+        out += b;
+    }
+    out += "(rigid 2 = rigid but farther than 400 cm, 0 = not rigid)\n";
+    research_write(out);
+    log("hunter: joint block layout written to dev_research.txt (zone %d)", g.zone);
+}
+
 void rematch(uint8_t* base, const Vec3& pos, double t) {
     std::vector<float> block;
     std::vector<uint8_t> ok;
-    int n = read_block(base, g.stride, &block, &ok);
+    int n = read_block(base, g.stride, pos, &block, &ok, true);
+    research_dump(base, pos, block, ok, n);
     float p[3] = {pos.x, pos.y, pos.z};
     HunterMap m;
     double t0 = now_s();
@@ -265,10 +348,18 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
         return;
     }
     // ---- the joint block and the map
-    const GunCfg& gc = gun_cfg();
-    g.stride = gc.handStride >= 64 && gc.handStride <= 0x1000 ? gc.handStride : 0x40;
-    uint8_t* base = block_base(snap.player, gc.handL1, gc.handL2);
-    if (!base || !mem_readable(base, 64)) base = block_base(snap.player, 0xA8, 0x310), g.stride = 0x40;
+    Chain ch = resolve_chain(snap.player, snap.pos);
+    uint8_t* base = ch.base;
+    if (base) {
+        g.stride = ch.stride;
+        char said[160];
+        snprintf(said, sizeof(said), "player+0x%X -> +0x%X, stride 0x%X; entry %d is %s", ch.l1, ch.l2, ch.stride, ch.hand,
+                 ch.handRigid ? "a rigid matrix near the hunter" : "NOT rigid / not near the hunter");
+        if (g.chainSaid != said) {
+            g.chainSaid = said;
+            log("hunter: joint block chain %s (base %p)", said, (void*)base);
+        }
+    }
     if (!base || !mem_readable(base, 64)) {
         if (g.map.valid) unmatch("joint block unreadable");
         g.base = nullptr;

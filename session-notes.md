@@ -439,3 +439,19 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   per frame, ring of 3 staging textures; bosses.cpp ground_probe: project, read depth, unproject, iterate twice; median
   of body + 4 feet; spawn moved to a probed point; walls/cliffs block steps with sidestep; tilt to the ground normal up
   to 25°; [bosses] terrain=1; DX12 has no depth). Off-screen bosses keep their last height. tests/test_terrain.cpp.
+
+## 2026-10-14 (night): log-driven fixes after Jalon's play session (0.4.3 build, 16:44-16:52)
+- Log facts: "hunter: bones not matched (0 entries read)" (the block's first entries are not joints; the reader quit
+  after 8 bad entries and never reached 396); "gain target 0.20" (exposure crush, fixed earlier tonight); "input: claw
+  shot injected (button 2)" five times with no claw in game (MHW reads the mouse via raw input); "nativepc: item table
+  not found" every start; no faint/carve/drink learned (no MHW knockout or carve happened).
+- Fixes: hunter.cpp scans all 2048 entries individually (no consecutive-bad stop), same chain resolution as read_hand
+  with the 0xA8/0x310 fallback chosen by whether entry 396 is rigid, research dump of the block when dev_research
+  exists; test: 81/86 with 300 garbage entries first. overlay.cpp: claw press via SendInput (real WM_INPUT), raw-input
+  flag backstop, edges tracked as state (slow frames keep both edges), no re-press while one is in flight, exemption
+  window so our own filter never eats it. nativepc.cpp: row table found by pattern (ids 0..k at 32-byte stride) from
+  any pointer in +0x30..+0x400, in-memory file header handled, hex dump when not found, GMD count mismatch no longer
+  aborts. ui.cpp loot_notify: MHW-style "item obtained" stack (right side, icon + name + xN, slide/hold/fade, 5 rows)
+  for carves, boss drops, crafting and shop grants (preview screen_5.png). tests/preview_ui.cpp stubs updated.
+- Still needs Jalon: approval for the hidden host monster position write (claw mount / part breaks on Remnant
+  bosses); one MHW knockout and one MHW carve to teach the faint and carve actions.

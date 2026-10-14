@@ -119,6 +119,9 @@ static bool button_blocked(const InputBlock& b, int idx) {
 
 // Synthesised clutch-claw press (inject_claw): reported down between g_clawFrom and g_clawTo (GetTickCount64 ms).
 static volatile LONGLONG g_clawFrom = 0, g_clawTo = 0;
+// Press state for the OS/raw paths: each edge is sent exactly once, even if a frame overruns the 80 ms window.
+static volatile bool g_clawReq = false, g_clawDownSent = false, g_clawUpSent = false;
+static volatile LONGLONG g_clawReqDown = 0, g_clawSentDownAt = 0, g_clawSentUpAt = 0;
 static bool claw_active() {
     LONGLONG t = (LONGLONG)GetTickCount64();
     return g_clawTo && t >= g_clawFrom && t < g_clawTo;
@@ -128,23 +131,67 @@ static int claw_button() {
     return i < 0 ? 2 : i;
 }
 void inject_claw(double delaySeconds) {
+    if (g_clawReq && !g_clawUpSent) return;  // a press is still in flight: let it release first (never a stuck button)
     LONGLONG t = (LONGLONG)GetTickCount64();
     g_clawFrom = t + (LONGLONG)(delaySeconds * 1000);
     g_clawTo = g_clawFrom + 80;
-    static LONGLONG lastLog = 0;
-    if (t - lastLog >= 1000) {
-        lastLog = t;
-        log("input: claw shot injected (button %d)", claw_button());
-    }
+    g_clawReqDown = g_clawFrom;
+    g_clawDownSent = g_clawUpSent = false;
+    g_clawReq = true;
 }
 
-// Per frame: mirror the claw window as window messages (for a game that reads the mouse through them).
+// Raw-input button flags (RI_MOUSE_*_DOWN, *_UP) for DirectInput button index 0..4.
+static const USHORT kRawDown[5] = {0x0001, 0x0004, 0x0010, 0x0040, 0x0100};
+static const USHORT kRawUp[5] = {0x0002, 0x0008, 0x0020, 0x0080, 0x0200};
+// Fallback edges for the raw hooks (used only when SendInput could not be used, e.g. the game is not foreground).
+static volatile LONG g_rawPendDown = 0, g_rawPendUp = 0;
+// The claw button must reach MHW through every path from just before the window opens until just after it closes.
+static bool claw_exempt() {
+    if (!g_clawSentDownAt) return false;
+    LONGLONG t = (LONGLONG)GetTickCount64();
+    if (g_clawReq && g_clawDownSent && !g_clawUpSent) return true;
+    return t < g_clawSentUpAt + 200 && t >= g_clawSentDownAt;
+}
+
+// Per frame: report the claw window edges. Primary: SendInput (a real OS mouse event, so it reaches WM_INPUT / raw input
+// and DirectInput alike). Fallback when the game is not foreground: OR the flag into the next raw packet (hooks below)
+// and post window messages.
 static void claw_tick() {
-    static bool down = false;
-    bool want = claw_active();
-    if (want == down || !g_hwnd) return;
-    down = want;
+    if (!g_clawReq || !g_hwnd) return;
+    LONGLONG now = (LONGLONG)GetTickCount64();
+    bool want;
+    if (!g_clawDownSent) {
+        if (now < g_clawReqDown) return;
+        want = true;
+        g_clawDownSent = true;
+        g_clawSentDownAt = now;
+    } else if (now >= g_clawSentDownAt + 80) {
+        want = false;  // never in the same frame as the down: a long frame sends the up on the next one
+        g_clawUpSent = true;
+        g_clawSentUpAt = now;
+        g_clawReq = false;
+    } else {
+        return;
+    }
     int b = claw_button();
+    bool sent = false;
+    if (focused()) {
+        INPUT in = {};
+        in.type = INPUT_MOUSE;
+        DWORD f = 0, data = 0;
+        switch (b) {
+            case 0: f = want ? MOUSEEVENTF_LEFTDOWN : MOUSEEVENTF_LEFTUP; break;
+            case 1: f = want ? MOUSEEVENTF_RIGHTDOWN : MOUSEEVENTF_RIGHTUP; break;
+            case 2: f = want ? MOUSEEVENTF_MIDDLEDOWN : MOUSEEVENTF_MIDDLEUP; break;
+            default: f = want ? MOUSEEVENTF_XDOWN : MOUSEEVENTF_XUP; data = (b == 4) ? XBUTTON2 : XBUTTON1; break;
+        }
+        in.mi.dwFlags = f;
+        in.mi.mouseData = data;
+        sent = SendInput(1, &in, sizeof(INPUT)) == 1;
+    }
+    if (want) log("input: claw shot injected (button %d, via %s)", b, sent ? "SendInput" : "raw hook");
+    if (sent) return;
+    InterlockedExchange(want ? &g_rawPendDown : &g_rawPendUp, 1);
     UINT msg = 0;
     WPARAM wp = 0;
     if (b == 0) { msg = want ? WM_LBUTTONDOWN : WM_LBUTTONUP; wp = want ? MK_LBUTTON : 0; }
@@ -289,6 +336,10 @@ static GetRawInputBuffer_t oGetRawInputBuffer = nullptr;
 
 static void filter_raw(RAWINPUT* ri, const InputBlock& b) {
     if (ri->header.dwType == RIM_TYPEMOUSE) {
+        int cb = claw_button();
+        USHORT clawBits = (USHORT)(kRawDown[cb] | kRawUp[cb]);
+        bool exempt = claw_exempt();
+        USHORT keep = exempt ? (USHORT)(ri->data.mouse.usButtonFlags & clawBits) : (USHORT)0;
         if (b.mouse) {
             ri->data.mouse.lLastX = ri->data.mouse.lLastY = 0;
             ri->data.mouse.usButtonFlags = 0;
@@ -301,6 +352,10 @@ static void filter_raw(RAWINPUT* ri, const InputBlock& b) {
                 if (b.mouseButton[i]) drop |= kBits[i];
             ri->data.mouse.usButtonFlags &= (USHORT)~drop;
         }
+        ri->data.mouse.usButtonFlags |= keep;  // the injected claw press is never blocked
+        // Backstop: deliver a pending claw edge (once) when it could not go through SendInput.
+        if (InterlockedExchange(&g_rawPendDown, 0)) ri->data.mouse.usButtonFlags |= kRawDown[cb];
+        else if (InterlockedExchange(&g_rawPendUp, 0)) ri->data.mouse.usButtonFlags |= kRawUp[cb];
     } else if (ri->header.dwType == RIM_TYPEKEYBOARD) {
         if (vk_blocked(b, ri->data.keyboard.VKey)) {
             ri->data.keyboard.VKey = 0xFF;

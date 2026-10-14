@@ -681,10 +681,14 @@ static void handle(SaveData& s, Live& l, const Request& r, double t) {
     if (zen > 0 && !mhw_spend_zenny(zen)) { snprintf(l.said, sizeof(l.said), "Could not take the zenny."); return; }
     switch (r.kind) {
         case Request::UPGRADE: s.level[r.row]++; break;
-        case Request::BUY_CONSUMABLE: s.stock[r.row]++; break;
+        case Request::BUY_CONSUMABLE:
+            s.stock[r.row]++;
+            if (it.name) loot_notify(r2_text(*it.name).c_str(), 1, it.icon, 0);
+            break;
         default:
             if (r.cat == CAT_CONSUMABLE) s.stock[r.row]++;
             else s.owned[r.cat][r.row] = 1;
+            if (it.name) loot_notify(r2_text(*it.name).c_str(), 1, it.icon, 0);
             if (r.cat == CAT_WEAPON) { l.mag[r.row] = mag_size(l, r.row, t); l.reserve[r.row] = reserve_size(l, r.row, t); }
             break;
     }

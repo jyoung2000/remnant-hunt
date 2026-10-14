@@ -721,6 +721,7 @@ std::string loot_grant(SaveData& s, Live& l, const std::vector<std::pair<Cat, in
     ItemView v = item(pick.first, pick.second);
     const std::string& got = v.name ? r2_text(*v.name) : std::string();
     if (id) *id = v.id;
+    loot_notify(got.empty() ? v.id : got.c_str(), 1, v.icon, 0);
     return got.empty() ? std::string(v.id) : got;
 }
 
@@ -837,6 +838,7 @@ void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
         b.carvesLeft--;
         if (b.carvesLeft <= 0) b.sinkAt = std::min(b.sinkAt, t + 3.0);
         const char* nm = id > 0 ? mhw_item_name(id) : nullptr;
+        if (id > 0) loot_notify(nm ? nm : "Material", gave, nullptr, id);
         std::string what = id > 0 ? std::string(nm ? nm : kMaterials[row].note) + " x" + std::to_string(gave) : std::string();
         // the Remnant loot the boss drops: another piece of its list the hunter does not own yet
         const char* rid = nullptr;

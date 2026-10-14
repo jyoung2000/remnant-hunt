@@ -189,6 +189,7 @@ struct Ent { float p[3], R[9]; bool ok; };
 struct Matcher {
     const std::vector<HBone>& B;
     std::vector<Ent> E;
+    std::vector<int> live;  // the usable entries (rigid, finite), ascending: the block interleaves other data
     std::vector<std::vector<int>> kids;
     std::vector<int> order;
     std::vector<char> isFree;
@@ -222,11 +223,12 @@ struct Matcher {
         for (int k : kids[h]) {
             if (nontrivial && B[k].len < 0.5f) continue;
             float best = 0;
-            for (size_t e = 0; e < E.size() && best < 0.999f; e++) {
-                if ((int)e == c || taken[e]) continue;
-                float f = fitsAt(k, c, (int)e);
+            for (size_t li = 0; li < live.size() && best < 0.999f; li++) {
+                int e = live[li];
+                if (e == c || taken[e]) continue;
+                float f = fitsAt(k, c, e);
                 if (f > 0) best = std::max(best, 0.25f + 0.75f * f);
-                else if (fits(k, E[c].p, (int)e)) best = std::max(best, 0.25f);
+                else if (fits(k, E[c].p, e)) best = std::max(best, 0.25f);
             }
             n += best;
         }
@@ -247,13 +249,13 @@ struct Matcher {
                 bool any = false;
                 for (int k : kids[h]) any |= B[k].len >= 0.5f;
                 if (!any) { deferred.push_back(h); continue; }
-                for (size_t e = 0; e < E.size(); e++) {
-                    if (!E[e].ok || taken[e] || dist(E[e].p, E[rootEntry].p) > 200.0f) continue;
-                    float s = look(h, (int)e, taken, true);
+                for (int e : live) {
+                    if (taken[e] || dist(E[e].p, E[rootEntry].p) > 200.0f) continue;
+                    float s = look(h, e, taken, true);
                     if (s <= 0) continue;
                     int pe = out[B[h].parent];  // ties: at the parent (the pelvis sits on the sub-root), turned as it
                     if (pe >= 0) s += 0.5f * std::max(0.0f, 1.0f - dist(E[e].p, E[pe].p) / 2.0f) + 0.25f * rot_sim(E[e].R, E[pe].R);
-                    if (s > bestS) { bestS = s; best = (int)e; }
+                    if (s > bestS) { bestS = s; best = e; }
                 }
             } else {
                 int pe = out[B[h].parent];
@@ -263,16 +265,16 @@ struct Matcher {
                 m3_v(P.R, B[h].local, want);
                 float wantDir[3] = {want[0], want[1], want[2]};
                 bool hasDir = unit(wantDir);
-                for (size_t e = 0; e < E.size(); e++) {
-                    if (taken[e] || !fits(h, P.p, (int)e)) continue;
+                for (int e : live) {
+                    if (taken[e] || !fits(h, P.p, e)) continue;
                     float d[3] = {E[e].p[0] - P.p[0], E[e].p[1] - P.p[1], E[e].p[2] - P.p[2]};
                     float pref;
-                    float at = fitsAt(h, pe, (int)e);
+                    float at = fitsAt(h, pe, e);
                     if (at > 0) pref = 2.0f + 4.0f * at;
                     else if (B[h].len >= 1.0f && hasDir && unit(d)) pref = d[0] * wantDir[0] + d[1] * wantDir[1] + d[2] * wantDir[2];
                     else pref = rot_sim(E[e].R, P.R);
-                    float s = look(h, (int)e, taken, false) + 0.5f * pref;
-                    if (s > bestS) { bestS = s; best = (int)e; }
+                    float s = look(h, e, taken, false) + 0.5f * pref;
+                    if (s > bestS) { bestS = s; best = e; }
                 }
             }
             if (best >= 0) { out[h] = best; taken[best] = 1; }
@@ -286,10 +288,10 @@ struct Matcher {
             if (ref < 0) continue;
             int best = -1;
             float bestS = -1e9f;
-            for (size_t e = 0; e < E.size(); e++) {
-                if (!E[e].ok || taken[e] || dist(E[e].p, E[ref].p) > 2.0f) continue;
+            for (int e : live) {
+                if (taken[e] || dist(E[e].p, E[ref].p) > 2.0f) continue;
                 float s = rot_sim(E[e].R, E[ref].R);
-                if (s > bestS) { bestS = s; best = (int)e; }
+                if (s > bestS) { bestS = s; best = e; }
             }
             if (best >= 0) { out[h] = best; taken[best] = 1; }
         }
@@ -301,6 +303,18 @@ struct Matcher {
 
 }  // namespace
 
+// A usable joint entry: finite, three unit orthogonal axis rows (the caller's ok[] may only mean "readable"; the block
+// interleaves joints with other data: zeros, NaNs, scaled matrices).
+static bool joint_like(const float* f) {
+    for (int i = 0; i < 16; i++)
+        if (!std::isfinite(f[i]) || fabsf(f[i]) > 1e7f) return false;
+    auto len = [&](int r) { return sqrtf(f[r * 4] * f[r * 4] + f[r * 4 + 1] * f[r * 4 + 1] + f[r * 4 + 2] * f[r * 4 + 2]); };
+    auto dt = [&](int a, int b) { return f[a * 4] * f[b * 4] + f[a * 4 + 1] * f[b * 4 + 1] + f[a * 4 + 2] * f[b * 4 + 2]; };
+    for (int r = 0; r < 3; r++)
+        if (fabsf(len(r) - 1.0f) > 0.1f) return false;
+    return fabsf(dt(0, 1)) < 0.1f && fabsf(dt(0, 2)) < 0.1f && fabsf(dt(1, 2)) < 0.1f;
+}
+
 bool hunter_match(const float* block, const uint8_t* ok, int n, const float playerPos[3], HunterMap* out, int minMatched) {
     *out = HunterMap();
     const auto& B = hunter_bones();
@@ -310,14 +324,26 @@ bool hunter_match(const float* block, const uint8_t* ok, int n, const float play
     std::vector<std::pair<float, int>> roots;
     for (int i = 0; i < n; i++) {
         Ent& e = M.E[i];
-        e.ok = ok[i] != 0;
+        e.ok = ok[i] != 0 && joint_like(block + (size_t)i * 16);
         from_game(block + (size_t)i * 16, e.R, e.p);
         if (!e.ok) continue;
+        M.live.push_back(i);
         float d = dist(e.p, playerPos);
         if (d < 20.0f) roots.push_back({d, i});
     }
     std::sort(roots.begin(), roots.end());
-    if (roots.size() > 4) roots.resize(4);
+    // The skeleton copies (one per armour piece) put several identical roots here: try 4 distinct ones.
+    {
+        std::vector<std::pair<float, int>> distinct;
+        for (auto& r : roots) {
+            bool dup = false;
+            for (auto& d : distinct)
+                dup |= dist(M.E[d.second].p, M.E[r.second].p) < 0.3f && rot_sim(M.E[d.second].R, M.E[r.second].R) > 0.999f;
+            if (!dup) distinct.push_back(r);
+            if (distinct.size() >= 4) break;
+        }
+        roots.swap(distinct);
+    }
     int best[kHunterBones], bestN = 0, bestRoot = -1;
     for (auto& r : roots) {
         int cur[kHunterBones];

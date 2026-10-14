@@ -17,6 +17,7 @@ void* get_resource(const char*, const char*) { return nullptr; }
 const char* gmd_message(void*, int) { return nullptr; }
 }  // namespace rh
 using namespace rh;
+namespace rh { bool np_find_itm(void* res, int expect, std::vector<uint8_t>* out); }
 
 static int g_fail = 0;
 #define CHECK(c)                                                                   \
@@ -61,6 +62,24 @@ int main(int argc, char** argv) {
     CHECK(back.msgs.size() == 5568 && back.msgs[2775 * 2] == "Name 0" && back.msgs[5567] == "Desc 8");
     CHECK(back.msgs[10] == g.msgs[10] && back.labels == g2.labels);
     CHECK(np_gmd_write(back) == out);
+
+    {   // find_itm: a pointer at an unexpected offset, no count field, rows only; and the in-memory file header variant
+        std::vector<uint8_t> rows(2775 * 32, 0xAB);
+        for (int k = 0; k < 2775; k++) { rows[k * 32] = (uint8_t)(k & 0xFF); rows[k * 32 + 1] = (uint8_t)(k >> 8); }
+        std::vector<uint8_t> res(0x600, 0), got;
+        const uint8_t* rp = rows.data();
+        memcpy(res.data() + 0x178, &rp, 8);
+        CHECK(np_find_itm(res.data(), 2774, &got) && got.size() == 10 + 2775 * 32);
+        CHECK(got.size() > 10 && (got[6] | got[7] << 8) == 2775 && memcmp(got.data() + 10, rows.data(), rows.size()) == 0);
+        std::vector<uint8_t> file = {0x01, 0x10, 0x09, 0x18, 0xBE, 0x00, 0xD7, 0x0A, 0, 0}, res2(0x600, 0), got2;
+        file.insert(file.end(), rows.begin(), rows.end());
+        const uint8_t* fp = file.data();
+        memcpy(res2.data() + 0x90, &fp, 8);
+        CHECK(np_find_itm(res2.data(), 0, &got2) && got2.size() == 10 + 2775 * 32 && (got2[6] | got2[7] << 8) == 2775);
+        CHECK(memcmp(got2.data() + 10, rows.data(), rows.size()) == 0);
+        std::vector<uint8_t> empty(0x600, 0), got3;
+        CHECK(!np_find_itm(empty.data(), 2774, &got3));
+    }
 
     if (g_fail == 0) printf("nativepc: round trip ok\n");
     return g_fail ? 1 : 0;

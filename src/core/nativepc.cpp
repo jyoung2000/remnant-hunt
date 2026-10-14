@@ -158,35 +158,60 @@ static bool itm_at(const uint8_t* p, int expect, std::vector<uint8_t>* out) {
     return true;
 }
 
-static bool find_itm(void* res, int expect, std::vector<uint8_t>* out) {
+// 32-byte rows with rows[k].id (u16 at +0) == k: the start of the table, then how far the sequence runs.
+static bool rows_start(const uint8_t* p) {
+    if (!p || (uintptr_t)p < 0x10000 || !readable(p, 5 * 32 + 2 + 32)) return false;
+    for (int k : {0, 1, 2, 3, 5}) if (get<uint16_t>(p, (size_t)k * 32) != k) return false;
+    return true;
+}
+static int rows_count(const uint8_t* p) {
+    int n = 0;
+    while (n < 4096 && readable(p + (size_t)n * 32, 32) && get<uint16_t>(p, (size_t)n * 32) == n) n++;
+    return n;
+}
+static bool take_rows(const uint8_t* rows, const char* how, size_t off, std::vector<uint8_t>* out) {
+    if (!rows_start(rows)) return false;
+    int n = rows_count(rows);
+    if (n < 2000) return false;
+    out->resize(10 + (size_t)n * 32);
+    uint8_t head[10] = {0x01, 0x10, 0x09, 0x18, 0xBE, 0x00, (uint8_t)(n & 0xFF), (uint8_t)(n >> 8), 0, 0};
+    memcpy(out->data(), head, 10);
+    memcpy(out->data() + 10, rows, (size_t)n * 32);
+    log("nativepc: item rows at %p (%d rows, %s at resource +0x%zx)", rows, n, how, off);
+    return true;
+}
+
+// Exported (not static) so the host test can drive it. `expect` is only a hint now: the row count is measured.
+bool np_find_itm(void* res, int expect, std::vector<uint8_t>* out) {
     const uint8_t* r = (const uint8_t*)res;
-    // The loaded resource keeps no file header: a count (2775) sits a few bytes before a pointer to the 32-byte rows.
-    for (size_t o = 0x40; o + 4 <= 0x200 && expect > 0 && readable(r + o, 4); o += 4) {
-        if (get<uint32_t>(r, o) != (uint32_t)expect) continue;
-        for (size_t q = o + 4; q + 8 <= o + 0x40 && readable(r + q, 8); q += 8) {
-            const uint8_t* rows = *(const uint8_t* const*)(r + q);
-            if (!rows || (uintptr_t)rows < 0x10000 || !readable(rows, (size_t)expect * 32)) continue;
-            bool ok = true;
-            for (int k : {0, 1, 2, 3, 5, expect - 1}) ok = ok && get<uint16_t>(rows, (size_t)k * 32) == k;
-            if (!ok) continue;
-            out->resize(10 + (size_t)expect * 32);
-            uint8_t head[10] = {0x01, 0x10, 0x09, 0x18, 0xBE, 0x00, (uint8_t)(expect & 0xFF), (uint8_t)(expect >> 8), 0, 0};
-            memcpy(out->data(), head, 10);
-            memcpy(out->data() + 10, rows, (size_t)expect * 32);
-            log("nativepc: item rows at %p (count %d at resource +0x%zx, pointer at +0x%zx)", rows, expect, o, q);
-            return true;
-        }
-    }
-    for (size_t o = 0; o + 10 <= 0x800 && readable(r + o, 10); o++)  // the file image inside the resource object
-        if (itm_at(r + o, expect, out)) return true;
-    for (size_t o = 0; o + 8 <= 0x400 && readable(r + o, 8); o += 8) {  // or in a buffer it points to
+    if (!r) return false;
+    (void)expect;
+    // 1. any pointer in the resource to the rows, or to an in-memory file header (01 10 09 18, ...) followed by the rows
+    for (size_t o = 0x30; o + 8 <= 0x400 && readable(r + o, 8); o += 8) {
         const uint8_t* p = *(const uint8_t* const*)(r + o);
-        if (!p || (uintptr_t)p < 0x10000 || !readable(p, 0x200)) continue;
-        for (size_t k = 0; k < 0x100; k++)
-            if (itm_at(p + k, expect, out)) return true;
+        if (!p || (uintptr_t)p < 0x10000) continue;
+        if (take_rows(p, "rows pointer", o, out)) return true;
+        if (readable(p, 10) && get<uint32_t>(p, 0) == 0x18091001u && take_rows(p + 10, "header pointer", o, out)) return true;
+    }
+    // 2. the file image (header + rows) stored inline in the resource object
+    for (size_t o = 0; o + 10 <= 0x800 && readable(r + o, 10); o++)
+        if (get<uint32_t>(r, o) == 0x18091001u && take_rows(r + o + 10, "inline header", o, out)) return true;
+    // 3. last resort: the row pattern anywhere in the first 0x1000 bytes (inline rows)
+    for (size_t o = 0; o < 0x1000; o += 2)
+        if (readable(r + o, 5 * 32 + 2 + 32) && take_rows(r + o, "inline rows", o, out)) return true;
+    // nothing matched: dump the start of the resource once per session so its layout can be read
+    static bool dumped = false;
+    if (!dumped) {
+        dumped = true;
+        for (size_t o = 0; o < 0x200 && readable(r + o, 0x20); o += 0x20) {
+            char line[0x20 * 3 + 1] = {};
+            for (size_t i = 0; i < 0x20; i++) snprintf(line + i * 3, 4, "%02x ", r[o + i]);
+            log("nativepc: rItemData +%03zx: %s", o, line);
+        }
     }
     return false;
 }
+static bool find_itm(void* res, int expect, std::vector<uint8_t>* out) { return np_find_itm(res, expect, out); }
 
 // ---------------------------------------------------------------- files and state
 static std::string g_game, g_realJson;
@@ -264,7 +289,17 @@ static void generate(void* res, void* gmd, int gmdCount) {
         }
         log("nativepc: item text image not found; rebuilt %d messages with generated labels", gmdCount);
     }
-    if ((int)g.msgs.size() != base * 2 || !np_itm_add(&itm, kClone, n)) { log("nativepc: item table (%d) and text (%zu) disagree; nothing written", base, g.msgs.size()); return; }
+    if ((int)g.msgs.size() != base * 2) {  // text and table disagree: fit the text to the rows instead of giving up
+        log("nativepc: item table (%d rows) and text (%zu messages) disagree; fitting the text to %d messages", base, g.msgs.size(), base * 2);
+        if ((int)g.msgs.size() > base * 2) { g.msgs.resize(base * 2); if ((int)g.labels.size() > base * 2) g.labels.resize(base * 2); }
+        while ((int)g.msgs.size() < base * 2) {
+            char l[32];
+            snprintf(l, sizeof(l), "RH_ORIG_%zu", g.msgs.size());
+            g.msgs.push_back(std::string());
+            g.labels.push_back(l);
+        }
+    }
+    if (!np_itm_add(&itm, kClone, n)) { log("nativepc: could not extend the item table; nothing written"); return; }
     std::string ids = "{\n  \"base\": " + std::to_string(base) + ",\n  \"count\": " + std::to_string(n) + ",\n  \"items\": {\n";
     for (int i = 0; i < n; i++) {
         std::string key = kBar_items[i].id, up = key;

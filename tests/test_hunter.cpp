@@ -46,7 +46,9 @@ static void game_matrix(const float R[9], const float p[3], float* g) {
 }
 
 // ---- 1. the matcher on a shuffled synthetic block
-static void test_match(bool posed) {
+// garbageHead: the block starts with 300 entries that are no joints (zeros, NaNs, scaled matrices, noise), all
+// "readable" (ok = 1), as in the game where the real joints start much later (the gun's hand is entry 396).
+static void test_match(bool posed, bool garbageHead = false) {
     const auto& B = hunter_bones();
     CHECK(B.size() == kHunterBones, "hunter_bones has %zu rows", B.size());
     std::mt19937 rng(1234);
@@ -114,6 +116,28 @@ static void test_match(bool posed) {
         es.push_back(e);
     }
     std::shuffle(es.begin(), es.end(), rng);
+    if (garbageHead) {
+        std::vector<E> head;
+        for (int i = 0; i < 300; i++) {
+            E e{};
+            e.ok = 1;
+            e.bone = -1;
+            float sc = 0.5f + 2.0f * (i % 7) / 6.0f;  // 0.5 .. 2.5, kept off 1 below
+            if (fabsf(sc - 1.0f) < 0.2f) sc = 2.0f;
+            switch (i % 4) {
+                case 0: break;  // zeros
+                case 1: for (float& v : e.m) v = NAN; break;
+                case 2:  // a scaled matrix at the hunter (a near "joint" with scale)
+                    e.m[0] = e.m[5] = e.m[10] = sc, e.m[15] = 1;
+                    e.m[12] = root[0] + 30 * U(rng), e.m[13] = root[1] + 100 * fabsf(U(rng)), e.m[14] = root[2] + 30 * U(rng);
+                    break;
+                default:  // noise
+                    for (float& v : e.m) v = 500 * U(rng);
+            }
+            head.push_back(e);
+        }
+        es.insert(es.begin(), head.begin(), head.end());
+    }
     std::vector<float> block(es.size() * 16);
     std::vector<uint8_t> ok(es.size());
     for (size_t i = 0; i < es.size(); i++) {
@@ -132,7 +156,7 @@ static void test_match(bool posed) {
         if (d < 0.5f) right++;
         else if (getenv("HUNTER_DEBUG")) printf("  bone %zu (id %d) entry %d (bone %d) off by %.1f\n", h, B[h].id, e, es[e].bone, d);
     }
-    printf("match (%s): %d entries, %d of %zu bones matched, %d at the right place, %zu aliases\n", posed ? "posed" : "bind", (int)es.size(), map.matched,
+    printf("match (%s%s): %d entries, %d of %zu bones matched, %d at the right place, %zu aliases\n", posed ? "posed" : "bind", garbageHead ? ", 300 garbage first" : "", (int)es.size(), map.matched,
            B.size(), right, map.aliases.size());
     CHECK(valid, "map not valid");
     CHECK(right >= 80, "only %d bones recovered", right);
@@ -247,6 +271,8 @@ static void test_retarget(const char* r2path) {
 int main(int argc, char** argv) {
     test_match(false);
     test_match(true);
+    test_match(false, true);
+    test_match(true, true);
     test_retarget(argc > 1 ? argv[1] : "build/r2_player_bones.json");
     if (g_fail) printf("hunter: %d FAILED\n", g_fail);
     else printf("hunter: all passed\n");

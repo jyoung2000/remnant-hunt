@@ -133,6 +133,9 @@ Shared& S();
 
 double now_s();
 void toast(Live& l, const char* fmt, ...);
+// MHW's "item obtained" row at the right edge (icon, name, x N). Thread-safe. r2icon: a Remnant sheet icon asset or
+// nullptr; mhwItemId > 0 draws MHW's material glyph, 0 with no icon draws a scrap glyph.
+void loot_notify(const char* name, int count, const char* r2icon, int mhwItemId);
 void research_tick(const Live& l, double now);
 void research_stop();
 // Progression (progress.cpp): experience, trait points, prisms. Under S().lock.

@@ -440,6 +440,14 @@ DWORD WINAPI joint_worker(LPVOID) {
 
 }  // namespace
 
+// hunter.cpp's joint block layout dump (dev_research / dev_diag flag): appended to dev_research.txt as is.
+void research_write(const std::string& text) {
+    AcquireSRWLockExclusive(&g_textLock);
+    g_text += text;
+    ReleaseSRWLockExclusive(&g_textLock);
+    flush();
+}
+
 // Called from main.cpp shutdown, before the DLL unloads.
 void research_stop() {
     if (!g_jthread) return;

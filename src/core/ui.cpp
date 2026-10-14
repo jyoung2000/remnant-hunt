@@ -10,7 +10,11 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <algorithm>
 #include <functional>
+#include <mutex>
+#include <string>
+#include <vector>
 
 #include "imgui.h"
 #include "bosses.h"
@@ -1641,6 +1645,111 @@ static bool project(const GameView& v, const Vec3& p, ImVec2 vpPos, ImVec2 vpSiz
     return true;
 }
 
+// ---------------------------------------------------------------- item-obtained notices
+// MHW's "item obtained" stack: one dark plate per row at the right edge, mid-height, the icon on the left, the name, and
+// "x N" on the right. Rows slide in from the right, hold, then fade; the newest is at the bottom. The game thread adds
+// rows (loot_notify), the render thread draws them, so the list is behind a mutex.
+namespace {
+struct LootRow {
+    std::string name, icon;
+    int count = 1, mhw = 0;
+    double t0 = 0;
+};
+std::mutex g_lootMx;
+std::vector<LootRow> g_loot;
+constexpr double kLootIn = 0.28, kLootHold = 4.0, kLootOut = 0.6;
+constexpr size_t kLootMax = 5;
+
+void loot_push(const char* name, int count, const char* icon, int mhw, double t0) {
+    if (!name || !name[0] || count <= 0) return;
+    std::lock_guard<std::mutex> lk(g_lootMx);
+    for (LootRow& r : g_loot)  // the same item again while its row is up: one row, the count added
+        if (r.name == name && r.mhw == mhw && now_s() - r.t0 < kLootIn + kLootHold) {
+            r.count += count;
+            r.t0 = t0;
+            return;
+        }
+    g_loot.push_back({name, icon ? icon : "", count, mhw, t0});
+    if (g_loot.size() > kLootMax) g_loot.erase(g_loot.begin(), g_loot.end() - kLootMax);
+}
+
+ImU32 with_alpha(ImU32 c, float a) {
+    return (c & 0x00FFFFFF) | ((ImU32)(((c >> 24) & 255) * std::max(0.0f, std::min(1.0f, a))) << 24);
+}
+}  // namespace
+
+void loot_notify(const char* name, int count, const char* r2icon, int mhwItemId) {
+    loot_push(name, count, r2icon, mhwItemId, now_s());
+}
+
+// MHW has no icon we can read at run time: a material is a small rounded plate with a rarity-coloured gem on it, a
+// scrap (no icon, no item id) a plain cog.
+static void loot_glyph(ImDrawList* fg, ImVec2 a, float sz, int mhw, float al) {
+    ImVec2 c(a.x + sz / 2, a.y + sz / 2);
+    fg->AddRectFilled(a, ImVec2(a.x + sz, a.y + sz), with_alpha(IM_COL32(28, 32, 38, 235), al), 4.0f);
+    fg->AddRect(a, ImVec2(a.x + sz, a.y + sz), with_alpha(col::frameLo, al), 4.0f, 0, 1.0f);
+    ImU32 rc = mhw > 0 ? rarity_color(1 + (mhw % 5)) : IM_COL32(176, 168, 150, 255);
+    float r = sz * 0.3f;
+    if (mhw > 0) {  // a cut gem: a pentagon with a lighter crown
+        ImVec2 pt[5] = {{c.x - r, c.y - r * 0.35f}, {c.x - r * 0.55f, c.y - r}, {c.x + r * 0.55f, c.y - r},
+                        {c.x + r, c.y - r * 0.35f}, {c.x, c.y + r}};
+        fg->AddConvexPolyFilled(pt, 5, with_alpha(rc, al));
+        ImVec2 top[4] = {pt[0], pt[1], pt[2], pt[3]};
+        fg->AddConvexPolyFilled(top, 4, with_alpha(IM_COL32(255, 255, 255, 90), al));
+        fg->AddPolyline(pt, 5, with_alpha(IM_COL32(20, 20, 24, 200), al), ImDrawFlags_Closed, 1.0f);
+        fg->AddLine(pt[0], pt[3], with_alpha(IM_COL32(20, 20, 24, 160), al), 1.0f);
+    } else {  // a cog
+        fg->AddCircleFilled(c, r, with_alpha(rc, al), 8);
+        fg->AddCircleFilled(c, r * 0.4f, with_alpha(IM_COL32(28, 32, 38, 255), al), 12);
+    }
+}
+
+static void loot_draw(ImDrawList* fg, ImGuiViewport* vp, float sc) {
+    double t = now_s();
+    std::vector<LootRow> rows;
+    {
+        std::lock_guard<std::mutex> lk(g_lootMx);
+        g_loot.erase(std::remove_if(g_loot.begin(), g_loot.end(),
+                                    [&](const LootRow& r) { return t - r.t0 > kLootIn + kLootHold + kLootOut; }),
+                     g_loot.end());
+        rows = g_loot;
+    }
+    if (rows.empty()) return;
+    // Right-aligned, 24 px in from the edge, ending at 55% of the height: above the gun panel, clear of the toast.
+    float rw = 300 * sc, rh = 44 * sc, gap = 4 * sc, ih = 36 * sc;
+    float xr = vp->Pos.x + vp->Size.x - 24 * sc;
+    float yb = vp->Pos.y + vp->Size.y * 0.55f;
+    for (size_t i = 0; i < rows.size(); i++) {
+        const LootRow& r = rows[i];
+        double age = t - r.t0;
+        float k = (float)std::max(0.0, std::min(1.0, age / kLootIn));
+        float ease = 1 - (1 - k) * (1 - k);
+        float al = ease * (age > kLootIn + kLootHold ? (float)(1.0 - (age - kLootIn - kLootHold) / kLootOut) : 1.0f);
+        float x1 = xr + (1 - ease) * 70 * sc, x0 = x1 - rw;
+        float y1 = yb - (float)(rows.size() - 1 - i) * (rh + gap), y0 = y1 - rh;
+        fg->AddRectFilled(ImVec2(x0, y0), ImVec2(x1, y1), with_alpha(col::mhwFrame, al));
+        fg->AddRect(ImVec2(x0, y0), ImVec2(x1, y1), with_alpha(col::mhwGold, al), 0, 0, 1.0f);
+        ImVec2 ia(x0 + 6 * sc, y0 + (rh - ih) / 2);
+        int tw = 0, th = 0;
+        void* tex = r.icon.empty() ? nullptr : texture_for(r.icon.c_str(), 128, &tw, &th);
+        if (tex)
+            fg->AddImage((ImTextureID)(uintptr_t)tex, ia, ImVec2(ia.x + ih, ia.y + ih), ImVec2(0, 0), ImVec2(1, 1),
+                         with_alpha(IM_COL32_WHITE, al));
+        else
+            loot_glyph(fg, ia, ih, r.mhw, al);
+        char cnt[16];
+        snprintf(cnt, sizeof(cnt), "x %d", r.count);
+        float cs = 18 * sc;
+        ImVec2 cz = g_bold->CalcTextSizeA(cs, FLT_MAX, 0, cnt);
+        fg->AddText(g_bold, cs, ImVec2(x1 - 12 * sc - cz.x, y0 + (rh - cz.y) / 2), with_alpha(col::mhwText, al), cnt);
+        float nx = ia.x + ih + 10 * sc, fs = 16 * sc;
+        ImVec2 nz = g_body->CalcTextSizeA(fs, FLT_MAX, 0, r.name.c_str());
+        ImVec4 clip(nx, y0, x1 - 20 * sc - cz.x, y1);
+        fg->AddText(g_body, fs, ImVec2(nx, y0 + (rh - nz.y) / 2), with_alpha(col::mhwText, al), r.name.c_str(), nullptr,
+                    0.0f, &clip);
+    }
+}
+
 static void hud(const SaveData& s, const Live& l) {
     if (!archetype() || !l.snap.inGame) return;
     ImGuiViewport* vp = ImGui::GetMainViewport();
@@ -1657,6 +1766,7 @@ static void hud(const SaveData& s, const Live& l) {
         fg->AddRect(a, b, col::mhwGold, 0, 0, 1.0f);
         fg->AddText(g_body, fs, p, col::mhwText, l.toast);
     }
+    loot_draw(fg, vp, sc);
     // At an MHW NPC with a Remnant menu: a Remnant-styled prompt.
     if (l.nearMenu >= 0 && g_screen == SCR_NONE) {
         const Menus& m = kMenus[l.nearMenu];
@@ -2130,7 +2240,18 @@ void ui_preview(int which, const SaveData& s, const Live& l) {
         case 1: screen_traits(s); break;
         case 2: screen_prism(s); break;
         case 3: g_pick = item(CAT_ARCHETYPE, s.archetype); screen_archetype(s); break;
-        case 5: hud(s, l); break;
+        case 5: {  // the HUD, with an item-obtained stack: a Remnant item with its icon, an MHW material, a scrap
+            static bool seeded = false;
+            if (!seeded) {
+                seeded = true;
+                double t0 = now_s() - 1.0;
+                if (kConsumablesCount > 0) loot_push(r2_text(kConsumables[0].name).c_str(), 2, kConsumables[0].icon, 0, t0);
+                loot_push("Iron Ore", 3, nullptr, 2, t0);
+                loot_push("Scrap", 14, nullptr, 0, t0);
+            }
+            hud(s, l);
+            break;
+        }
         case 6: g_slotPick = 0; screen_terminal(s, l); break;
         case 9: dock_draw(s); break;  // the dock under MHW's Item Box / Change Equipment screen
         case 7: g_menuRole = MENUS_ROLE_SMITHY; g_menu = -1; screen_menu(s, l); break;
