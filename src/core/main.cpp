@@ -8,11 +8,13 @@
 namespace rh {
 
 static Keys g_keys;
+static GunCfg g_gun;
 static bool g_test = false;
 static volatile bool g_stop = false;
 static HANDLE g_thread = nullptr;
 
 const Keys& keys() { return g_keys; }
+const GunCfg& gun_cfg() { return g_gun; }
 bool test_mode() { return g_test; }
 
 static int read_key(const char* ini, const char* name, int def) {
@@ -27,6 +29,21 @@ static int read_key(const char* ini, const char* name, int def) {
     return def;
 }
 
+static int read_num(const char* ini, const char* name, int def) {
+    char v[32];
+    GetPrivateProfileStringA("gun", name, "", v, sizeof(v), ini);
+    if (!v[0]) return def;
+    char* e = nullptr;
+    long n = strtol(v, &e, 0);
+    return e == v ? def : (int)n;
+}
+
+static float read_f(const char* ini, const char* name) {
+    char v[32];
+    GetPrivateProfileStringA("gun", name, "", v, sizeof(v), ini);
+    return v[0] ? (float)atof(v) : 0.0f;
+}
+
 static void load_settings() {
     char ini[MAX_PATH];
     snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
@@ -38,6 +55,11 @@ static void load_settings() {
                   "; Ward 13 terminal and the Remnant menus at MHW's NPCs\r\n"
                   "gun=B\r\nreload=R\r\nswap=X\r\nmod=V\r\nskill=G\r\nskill2=H\r\nrelic=T\r\nterminal=P\r\n"
                   "; brings a Remnant II boss 30 m in front of you (hunting zones and the Training Area)\r\nboss=F9\r\n"
+                  "[gun]\r\n; the hunter's hand joint (a world matrix found by the diagnostic): player+hand_l1 -> +hand_l2 -> entry hand_entry\r\n"
+                  "; of hand_stride bytes. hand_offset_x/y/z (cm, in the joint's frame) and hand_axis (x,y,z,-x,-y,-z: the barrel direction)\r\n"
+                  "; let you align the gun in game\r\n"
+                  "hand_l1=0x90\r\nhand_l2=0x2B0\r\nhand_entry=396\r\nhand_stride=0x40\r\n"
+                  "hand_offset_x=0\r\nhand_offset_y=0\r\nhand_offset_z=0\r\nhand_axis=z\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);
@@ -52,6 +74,18 @@ static void load_settings() {
     g_keys.relic = read_key(ini, "relic", 'T');
     g_keys.terminal = read_key(ini, "terminal", 'P');
     g_keys.boss = read_key(ini, "boss", VK_F9);
+    g_gun.handL1 = read_num(ini, "hand_l1", 0x90);
+    g_gun.handL2 = read_num(ini, "hand_l2", 0x2B0);
+    g_gun.handEntry = read_num(ini, "hand_entry", 396);
+    g_gun.handStride = read_num(ini, "hand_stride", 0x40);
+    g_gun.off[0] = read_f(ini, "hand_offset_x");
+    g_gun.off[1] = read_f(ini, "hand_offset_y");
+    g_gun.off[2] = read_f(ini, "hand_offset_z");
+    char ax[16];
+    GetPrivateProfileStringA("gun", "hand_axis", "z", ax, sizeof(ax), ini);
+    const char* a = ax;
+    if (*a == '-') { g_gun.axisNeg = true; a++; }
+    g_gun.axis = (*a == 'x' || *a == 'X') ? 0 : (*a == 'y' || *a == 'Y') ? 1 : 2;
     char env[8];
     g_test = (GetEnvironmentVariableA("MELTY_TEST", env, sizeof(env)) && env[0] == '1') ||
              GetPrivateProfileIntA("test", "enabled", 0, ini) == 1;

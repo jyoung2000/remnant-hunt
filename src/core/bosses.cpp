@@ -595,6 +595,7 @@ int think(Boss& b, Live& l, double t, float dt) {
     if (!foe && dist < r.aggro_m * 100.0f) {
         Vec3 hit, eye = add(head_point(b), {0, std::min(300.0f, height_of(b) * 0.6f), 0});
         sees = !world_ray(eye, add(hunter, {0, 120, 0}), &hit);
+        if (dist < r.aggro_m * 50.0f) sees = true;  // close by: a Remnant boss notices the hunter whatever the sight ray says
     }
     if (sees) b.lastSeen = t;
     if (!b.aggro && (sees || b.hp < b.maxHp)) b.aggro = true;
@@ -1238,9 +1239,11 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         Vec3 f = sub(g.view.camTarget, g.view.camPos);
         float yaw = atan2f(f.x, f.z);
         Vec3 p;
-        if (place_near(g, yaw, 3000, &p) || place_near(g, yaw, 1500, &p)) {
+        if (place_near(g, yaw, 1500, &p) || place_near(g, yaw, 3000, &p) || place_near(g, yaw, 800, &p)) {
             int row = g_nextDebugRow++ % kBossesCount;
             spawn(l, row, p, wrap(yaw + kPi), t);
+            for (Boss& nb : g_bosses)  // a boss called by the key is here for the hunter: it engages at once
+                if (nb.row == row && t - nb.stT0 < 0.5) nb.aggro = true;
             toast(l, "%s approaches (%s)", display_name(row).c_str(), kRankName[rank]);
         } else {
             toast(l, "No ground there for a Remnant boss");

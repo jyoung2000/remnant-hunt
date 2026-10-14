@@ -98,6 +98,19 @@ void gunmodel_tick(const SaveData& s, const Live& l) {
             if (!l.aiming) fwd = unit(add(mul(fwd, 0.6f), mul(upW, -0.35f)));  // held low when not aiming
             Vec3 r = unit(sub(right, mul(fwd, dot(right, fwd))));
             Vec3 up = unit(sub(upW, add(mul(fwd, dot(upW, fwd)), mul(r, dot(upW, r)))));
+            if (g.handValid) {
+                // the hunter's hand joint: origin at its translation (+ the ini offset in its frame), barrel along hand_axis
+                const GunCfg& c = gun_cfg();
+                Vec3 ax[3] = {{g.hand[0], g.hand[1], g.hand[2]}, {g.hand[4], g.hand[5], g.hand[6]}, {g.hand[8], g.hand[9], g.hand[10]}};
+                hand = add(add(add(Vec3{g.hand[12], g.hand[13], g.hand[14]}, mul(ax[0], c.off[0])), mul(ax[1], c.off[1])), mul(ax[2], c.off[2]));
+                fwd = ax[c.axis];
+                r = ax[(c.axis + 1) % 3];
+                up = ax[(c.axis + 2) % 3];
+                if (c.axisNeg) {  // a half turn about the up axis keeps the frame right-handed
+                    fwd = mul(fwd, -1.0f);
+                    r = mul(r, -1.0f);
+                }
+            }
             float fp = first_person_amount();
             if (fp > 0.5f) {
                 // Aiming down sights in first person: the gun in front of the eye, its top just under the line of

@@ -63,6 +63,9 @@ struct GameSnapshot {
     float hp = 0, maxHp = 0;
     Vec3 pos{};
     GameView view;
+    float hand[16] = {};     // the hunter's hand joint, a row-vector world matrix (translation in floats 12..14, cm)
+    bool handValid = false;
+    std::string handJoint;   // which chain it came from, for the log
     std::vector<Monster> monsters;
 };
 
@@ -143,6 +146,9 @@ void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3&
 // Defaults avoid MHW's own default PC bindings (B, G, V, T, P are free or unused in solo play).
 struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', skill2 = 'H', relic = 'T', terminal = 'P', boss = VK_F9; };
 const Keys& keys();
+// [gun] in the ini: where the hunter's hand joint is read from, and how the gun sits in it.
+struct GunCfg { int handL1 = 0x90, handL2 = 0x2B0, handEntry = 396, handStride = 0x40; float off[3] = {0, 0, 0}; int axis = 2; bool axisNeg = false; };
+const GunCfg& gun_cfg();
 bool test_mode();  // MELTY_TEST=1 or test=1 in the ini
 
 }  // namespace rh

@@ -308,6 +308,8 @@ void* texture_for(const char* asset, int maxSide, int* w, int* h) {
     } else {
         t.failed = true;
     }
+    if (!strstr(asset, "/UI2/"))  // model textures: say once what became of each (icons are too many to list)
+        log("overlay: texture %s -> %s %s %dx%d (%zu bytes)", asset, t.failed ? "FAILED" : "ok", img->format.c_str(), img->w, img->h, img->pixels.size());
     g_tex[k] = t;
     if (w) *w = t.w;
     if (h) *h = t.h;

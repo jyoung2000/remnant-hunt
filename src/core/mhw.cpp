@@ -131,6 +131,32 @@ static bool health_of(uint8_t* owner, size_t off, uint8_t** hm, float* cur, floa
 
 bool zone_is_base(int z) { return z == 301 || z == 302 || z == 303 || z == 305 || z == 306 || (z >= 501 && z <= 506); }
 
+// A hand joint matrix through player+l1 -> ptr -> +l2 -> ptr = block, entry * stride; validated as a rigid world matrix near the hunter.
+static bool read_hand(uint8_t* pl, const Vec3& root, int l1, int l2, int entry, int stride, float out[16]) {
+    if (l1 < 0 || l2 < 0 || entry < 0 || stride < 64 || stride > 0x1000) return false;
+    if (!mem_readable(pl + l1, 8)) return false;
+    uint8_t* a = *(uint8_t**)(pl + l1);
+    if (!a || !mem_readable(a + l2, 8)) return false;
+    uint8_t* base = *(uint8_t**)(a + l2);
+    if (!base) return false;
+    uint8_t* m = base + (size_t)entry * stride;
+    if (!mem_readable(m, 64)) return false;
+    float f[16];
+    memcpy(f, m, 64);
+    for (float v : f)
+        if (!std::isfinite(v)) return false;
+    auto len = [&](int r) { return sqrtf(f[r * 4] * f[r * 4] + f[r * 4 + 1] * f[r * 4 + 1] + f[r * 4 + 2] * f[r * 4 + 2]); };
+    auto dt = [&](int a2, int b) { return f[a2 * 4] * f[b * 4] + f[a2 * 4 + 1] * f[b * 4 + 1] + f[a2 * 4 + 2] * f[b * 4 + 2]; };
+    for (int r = 0; r < 3; r++)
+        if (fabsf(len(r) - 1.0f) > 0.1f) return false;
+    if (fabsf(dt(0, 1)) > 0.1f || fabsf(dt(0, 2)) > 0.1f || fabsf(dt(1, 2)) > 0.1f) return false;
+    float dx = f[12] - root.x, dy = f[13] - root.y, dz = f[14] - root.z;
+    float d = sqrtf(dx * dx + dy * dy + dz * dz);
+    if (d < 40.0f || d > 250.0f) return false;
+    memcpy(out, f, 64);
+    return true;
+}
+
 void snapshot(GameSnapshot* s) {
     *s = GameSnapshot();
     uint8_t* sp = rd_ptr(HOOKV_S_PLAYER);
@@ -150,6 +176,25 @@ void snapshot(GameSnapshot* s) {
         memcpy(&s->pos, pl + HOOKV_PLAYER_POS, 12);
         if (health_of(pl, HOOKV_PLAYER_HEALTH_MGR, &s->playerHealth, &s->hp, &s->maxHp))
             used_ok(HOOKS_PLAYER_HEALTH_MGR, "cpHealthManager vtable");
+    }
+    if (s->inGame) {
+        const GunCfg& c = gun_cfg();
+        char id[96];
+        bool ok = read_hand(pl, s->pos, c.handL1, c.handL2, c.handEntry, c.handStride, s->hand);
+        if (ok) snprintf(id, sizeof(id), "player+0x%X -> +0x%X entry %d", c.handL1, c.handL2, c.handEntry);
+        else if ((ok = read_hand(pl, s->pos, 0xA8, 0x310, 396, 0x40, s->hand))) snprintf(id, sizeof(id), "player+0xA8 -> +0x310 entry 396");
+        s->handValid = ok;
+        if (ok) s->handJoint = id;
+        static int logged = 0;  // 0 nothing yet, 1 none validated, 2 a chain validated
+        static std::string last;
+        if (ok && (logged != 2 || last != s->handJoint)) {
+            log("gun: hand joint from %s", id);
+            logged = 2;
+            last = s->handJoint;
+        } else if (!ok && logged == 0) {
+            log("gun: no hand joint chain validated; the estimated hand stays");
+            logged = 1;
+        }
     }
     // Party size (HunterPie PARTY offsets): unverified meaning until seen in game; treat as solo unless clearly >1.
     s->solo = true;

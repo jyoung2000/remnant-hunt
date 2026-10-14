@@ -66,7 +66,7 @@ def main():
                         check("texture", where + "." + col, "TEX", spec, "256")
                     elif kind == "r2name":
                         check("name", where + "." + col, "NAME", spec["asset"], spec.get("pattern", "^(" + spec.get("name", "") + ")$"))
-                elif col == "mesh_tex" and isinstance(v, list):
+                elif col in ("mesh_tex", "textures") and isinstance(v, list):
                     for e in v:
                         if "=" in e:
                             check("gun-texture", where + ".mesh_tex", "TEX", e.split("=", 1)[1].replace(".uasset", ""), "1024")
