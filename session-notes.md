@@ -195,3 +195,9 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   list and the detail. Asset check: 3647 load, 0 fail.
 - Release: `tools/build_native.sh package` and `... installer` rebuild out/remnant_hunt-0.4.0.zip and
   out/RemnantHuntSetup-0.4.0.exe; sha256s in out/release-notes-0.4.0.md (out/ is gitignored).
+- Palette (Jalon): translucent black plates with World's pale-blue outlines (col::frameHi/frameLo/line/mhwGold), gold
+  titles and the amber cursor kept. Preview draws real icons now (tests/preview_ui.cpp starts r2read.exe and decodes
+  BC7/BC3/BC1 with third_party/bcdec, dev-only). Melty: draft mashup remnant-hunt created; melty_log mirrors the
+  startup checks (hooks, game-tick, overlay, remnant2) into Melty's test checks file. Previous in-game log (10:34
+  today, old build): hooks 0 failed, overlay DX11 2560x1440, r2read OK, game tick OK, but "sUserData ... MISSING"
+  (inventory not found in that build; crafting depends on it: check "inventory:" lines in the new log).

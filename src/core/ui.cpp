@@ -21,13 +21,13 @@ namespace rh {
 
 // Monster Hunter: World's menu colours.
 namespace col {
-constexpr ImU32 bg = IM_COL32(17, 16, 14, 238), panel = IM_COL32(31, 28, 23, 242), line = IM_COL32(104, 89, 60, 255);
+constexpr ImU32 bg = IM_COL32(0, 0, 0, 170), panel = IM_COL32(0, 0, 0, 200), line = IM_COL32(96, 138, 162, 220);
 constexpr ImU32 text = IM_COL32(240, 232, 211, 255), dim = IM_COL32(163, 152, 130, 255);
 constexpr ImU32 accent = IM_COL32(232, 168, 58, 255), gold = IM_COL32(216, 186, 118, 255);
-constexpr ImU32 frameHi = IM_COL32(196, 166, 104, 255), frameLo = IM_COL32(70, 60, 42, 255);
-constexpr ImU32 mhwFrame = IM_COL32(28, 23, 18, 205), mhwGold = IM_COL32(184, 154, 94, 255);
+constexpr ImU32 frameHi = IM_COL32(158, 208, 236, 255), frameLo = IM_COL32(78, 118, 142, 200);  // World's pale-blue outlines
+constexpr ImU32 mhwFrame = IM_COL32(0, 0, 0, 175), mhwGold = IM_COL32(158, 208, 236, 235);  // HUD plate and its outline
 constexpr ImU32 mhwText = IM_COL32(242, 232, 207, 255), red = IM_COL32(214, 58, 46, 255);
-constexpr ImU32 plate = IM_COL32(20, 18, 15, 205);  // a panel lets the game show through
+constexpr ImU32 plate = IM_COL32(0, 0, 0, 175);  // a panel lets the game show through
 }  // namespace col
 
 static ImFont* g_body = nullptr;   // Montserrat Medium
@@ -184,8 +184,8 @@ static bool remnant_button(const char* text, ImVec2 size = ImVec2(0, 0), bool en
     bool r = ImGui::InvisibleButton(text, sz);
     bool hov = (enabled && ImGui::IsItemHovered()) || selected, held = enabled && ImGui::IsItemActive();
     ImDrawList* dl = ImGui::GetWindowDrawList();
-    ImU32 top = held ? IM_COL32(120, 86, 34, 255) : hov ? IM_COL32(74, 58, 32, 255) : IM_COL32(38, 35, 29, 255);
-    ImU32 bot = held ? IM_COL32(90, 64, 26, 255) : hov ? IM_COL32(52, 41, 24, 255) : IM_COL32(26, 24, 20, 255);
+    ImU32 top = held ? IM_COL32(120, 86, 34, 255) : hov ? IM_COL32(74, 58, 32, 255) : IM_COL32(12, 22, 30, 215);
+    ImU32 bot = held ? IM_COL32(90, 64, 26, 255) : hov ? IM_COL32(52, 41, 24, 255) : IM_COL32(0, 0, 0, 215);
     dl->AddRectFilledMultiColor(a, b, top, top, bot, bot);
     dl->AddRect(a, b, !enabled ? col::frameLo : hov ? col::accent : col::line, 0, 0, hov ? 1.5f : 1.0f);
     if (hov) diamond(dl, ImVec2(a.x + 9, (a.y + b.y) * 0.5f), 4.0f, col::accent);
@@ -231,7 +231,7 @@ static bool list_row(const char* id, float h, bool selected, bool enabled = true
         float cy = a.y + h * 0.5f;  // World's small pointer at the left of the picked row
         dl->AddTriangleFilled(ImVec2(a.x + 4, cy - 3), ImVec2(a.x + 4, cy + 3), ImVec2(a.x + 10, cy), col::accent);
     } else {
-        dl->AddRectFilled(a, b, hov ? IM_COL32(36, 33, 27, 170) : IM_COL32(26, 24, 20, 120));
+        dl->AddRectFilled(a, b, hov ? IM_COL32(30, 52, 68, 170) : IM_COL32(0, 0, 0, 120));
         dl->AddLine(ImVec2(a.x, b.y - 1), ImVec2(b.x, b.y - 1), col::frameLo);
     }
     dl->PushClipRect(a, b, true);
@@ -318,7 +318,7 @@ static bool begin_screen(const char* id, float wFrac, float hFrac, bool hint = t
     ImVec2 size(vp->Size.x * wFrac, vp->Size.y * hFrac);
     ImGui::SetNextWindowPos(ImVec2(vp->Pos.x + (vp->Size.x - size.x) / 2, vp->Pos.y + (vp->Size.y - size.y) / 2));
     ImGui::SetNextWindowSize(size);
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(12, 11, 9, 140));
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(0, 0, 0, 120));
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(kPadX, kPadY));
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
     bool open = ImGui::Begin(id, nullptr,
@@ -386,12 +386,12 @@ static void panel_begin(const char* id, const char* title, ImVec2 size) {
     float w = ImGui::GetWindowWidth();
     ImDrawList* dl = ImGui::GetWindowDrawList();
     ImVec2 a(p.x + 1, p.y + 1), b(p.x + w - 1, p.y + kBand);
-    dl->AddRectFilledMultiColor(a, b, IM_COL32(60, 50, 30, 255), IM_COL32(60, 50, 30, 255), IM_COL32(28, 24, 18, 255), IM_COL32(28, 24, 18, 255));
+    dl->AddRectFilledMultiColor(a, b, IM_COL32(22, 40, 54, 245), IM_COL32(22, 40, 54, 245), IM_COL32(0, 0, 0, 215), IM_COL32(0, 0, 0, 215));
     dl->AddLine(ImVec2(a.x, b.y), ImVec2(b.x, b.y), col::frameHi);
     float tw = text_w(g_title, 18, title);
     dl->AddText(g_title, 18, ImVec2(p.x + (w - tw) * 0.5f, p.y + (kBand - 18) * 0.5f - 1), col::gold, title);
-    diamond(dl, ImVec2(a.x + 9, (a.y + b.y) * 0.5f), 3.0f, col::gold);
-    diamond(dl, ImVec2(b.x - 9, (a.y + b.y) * 0.5f), 3.0f, col::gold);
+    diamond(dl, ImVec2(a.x + 9, (a.y + b.y) * 0.5f), 3.0f, col::frameHi);
+    diamond(dl, ImVec2(b.x - 9, (a.y + b.y) * 0.5f), 3.0f, col::frameHi);
     ImGui::SetCursorPos(ImVec2(8, kBand + 8));
     ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(4, 2));
