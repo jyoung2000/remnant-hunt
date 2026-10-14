@@ -319,3 +319,35 @@ What each needs, from the diagnostics so far:
   monsters (nativePC model swap over an MHW monster, MHW AI); Remnant animations on the hunter's body = hunter pose
   write (new write kind) + skeleton retarget; real new items in the bar = nativePC itemData/GMD/atlas overrides
   generated from memory; pause = time-scale write. All four need his decision.
+
+## 2026-10-14 ~10:50: Jalon's approvals and the next programme (handoff-quality)
+APPROVED new write kinds: (1) hunter bone poses per frame (Remnant animations on the hunter, with a Remnant->MHW
+skeleton retarget), (2) nativePC overrides generated on the player's PC (itemData.itm / item_eng.gmd / icon atlas)
+for real Remnant items in MHW's bar (if it cannot be made to work, keep hotkeys), (3) a game time-scale write for
+pause. Also asked: clutch claw and all MHW mechanics on Remnant bosses WITHOUT replacing MHW monsters; Remnant armour
+equipped from inside MHW's own equipment menu (one UI, not a separate screen).
+Approach per item:
+A. Clutch claw / MHW mechanics on Remnant bosses: MHW's claw, mounting, part breaks, carves and the lock-on all act on
+   cEnemy entities. Without replacing a monster, the only route is a hidden HOST ENTITY: spawn a real MHW monster
+   (small, e.g. a Jagras-class em) with its model hidden (nativePC transparent material or scale) and keep it at
+   the Remnant boss's position/facing each tick (monster position write = needs approval; facing is approved), and
+   mirror HP both ways (monster HP write is approved). Then the claw latches to the host and the Remnant boss shows
+   the wound/flinch. Research: how the game spawns a monster outside a quest (sEnemy / quest params) and the host's
+   collision shape vs the boss's. Not started.
+B. Remnant animations on the hunter: research.cpp found the hand joint chain; the same arrays hold every bone
+   (entry 396 etc., 0x40 stride). Step 1: dump the hunter's bone count and names (the joint array + a names table
+   if any) and Remnant's player skeleton (r2read SKEL of Remnant2/Content/.../Player skeleton); step 2: a bone-name
+   map (Remnant hand/arm/spine -> MHW); step 3: write the mapped world matrices each frame while a relic/skill
+   animation plays (ACL via r2read ANIM), then release. Not started.
+C. Real items: src/mhwread proved the formats (itemData.itm: 10-byte header, u16 count @6, 32-byte rows; GMD; atlas
+   tex 192-byte header, 1024x1024). Generator: at first start read rItemData and the item GMD from memory
+   (get_resource/gmd_message exist), write nativePC/common/item/itemData.itm (+rows cloned from Antidote's row with
+   new ids and names) and nativePC/common/text/steam/item_eng.gmd (+names), then ask for a restart; the bar proxies
+   then use the new ids (bar_items.json gets generated ids from remnant_hunt/items.json). Icons: atlas override later.
+D. Pause: find MHW's global time scale (a float 1.0 in a singleton, 0 pauses; CE "game speed" scripts touch it),
+   write 0 while a Remnant screen is open and restore. Research first (devdiag watch: a float that is 1.0 and the
+   same across frames in sMhMain/sMhTime-like singletons).
+E. Remnant armour inside MHW's equipment menu: detect MHW's equipment screen (sMhGUI state) and draw the Remnant
+   gear panel docked into it in the same look (the mod cannot add rows to MHW's own list; it overlays beside it);
+   the loadout terminal stays reachable from there.
+Priority: C (self-contained, approved) and D (small) first, then B, then E, then A (largest).
