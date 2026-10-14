@@ -9,7 +9,7 @@ TC      ?= $(HOME)/tc/llvm-mingw-20261006-ucrt-ubuntu-22.04-x86_64/bin
 CXX     := $(TC)/x86_64-w64-mingw32-clang++
 CC      := $(TC)/x86_64-w64-mingw32-clang
 WINDRES := $(TC)/x86_64-w64-mingw32-windres
-VERSION ?= 0.4.1
+VERSION ?= 0.4.2
 B       := build/win
 O       := build/obj
 
