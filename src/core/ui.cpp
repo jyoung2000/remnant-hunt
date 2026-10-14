@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <functional>
 
 #include "imgui.h"
 #include "bosses.h"
@@ -26,6 +27,7 @@ constexpr ImU32 accent = IM_COL32(232, 168, 58, 255), gold = IM_COL32(216, 186, 
 constexpr ImU32 frameHi = IM_COL32(196, 166, 104, 255), frameLo = IM_COL32(70, 60, 42, 255);
 constexpr ImU32 mhwFrame = IM_COL32(28, 23, 18, 205), mhwGold = IM_COL32(184, 154, 94, 255);
 constexpr ImU32 mhwText = IM_COL32(242, 232, 207, 255), red = IM_COL32(214, 58, 46, 255);
+constexpr ImU32 plate = IM_COL32(20, 18, 15, 205);  // a panel lets the game show through
 }  // namespace col
 
 static ImFont* g_body = nullptr;   // Montserrat Medium
@@ -108,7 +110,7 @@ static void image(const char* asset, int maxSide, ImVec2 size, ImU32 tint = IM_C
 }
 
 static void title_text(const char* s, ImU32 c = col::text) {
-    ImGui::PushFont(g_title, 34.0f);
+    ImGui::PushFont(g_title, 24.0f);
     ImGui::PushStyleColor(ImGuiCol_Text, ImColor(c).Value);
     ImGui::TextUnformatted(s);
     ImGui::PopStyleColor();
@@ -195,7 +197,7 @@ static bool remnant_button(const char* text, ImVec2 size = ImVec2(0, 0), bool en
 
 // Button heights, one set for every screen.
 constexpr float kBtnPrimary = 40, kBtnSecondary = 34, kBtnSmall = 26, kBtnBack = 38;
-constexpr float kFoot = 56;                      // the prompt band at the foot of every screen
+constexpr float kFoot = 84;                      // the foot band: buttons on top, the hint pill and prompts below
 constexpr float kPadX = 28, kPadY = 24;          // the screen window's own padding
 constexpr float kRowPad = 24;                    // left edge of a row's content, clear of the cursor diamond
 
@@ -223,12 +225,13 @@ static bool list_row(const char* id, float h, bool selected, bool enabled = true
     bool hov = enabled && ImGui::IsMouseHoveringRect(a, b);
     ImDrawList* dl = ImGui::GetWindowDrawList();
     if (selected) {
-        dl->AddRectFilledMultiColor(a, b, IM_COL32(74, 58, 32, 255), IM_COL32(74, 58, 32, 255), IM_COL32(52, 41, 24, 255),
-                                    IM_COL32(52, 41, 24, 255));
+        dl->AddRectFilledMultiColor(a, b, IM_COL32(74, 58, 32, 225), IM_COL32(74, 58, 32, 225), IM_COL32(52, 41, 24, 225),
+                                    IM_COL32(52, 41, 24, 225));
         dl->AddRect(a, b, col::accent, 0, 0, 1.5f);
-        diamond(dl, ImVec2(a.x + 9, a.y + h * 0.5f), 4.0f, col::accent);
+        float cy = a.y + h * 0.5f;  // World's small pointer at the left of the picked row
+        dl->AddTriangleFilled(ImVec2(a.x + 4, cy - 3), ImVec2(a.x + 4, cy + 3), ImVec2(a.x + 10, cy), col::accent);
     } else {
-        dl->AddRectFilled(a, b, hov ? IM_COL32(36, 33, 27, 255) : IM_COL32(26, 24, 20, 255));
+        dl->AddRectFilled(a, b, hov ? IM_COL32(36, 33, 27, 170) : IM_COL32(26, 24, 20, 120));
         dl->AddLine(ImVec2(a.x, b.y - 1), ImVec2(b.x, b.y - 1), col::frameLo);
     }
     dl->PushClipRect(a, b, true);
@@ -276,65 +279,59 @@ static void empty_hint(const char* s) {
     ImGui::TextColored(ImColor(col::dim).Value, "%s", s);
 }
 
-// MHW's tabs: flat plates; the active one has an amber diamond, amber words and an amber underline. Q/E and the
-// arrow keys cycle. Returns true when the active tab changed.
+// MHW's tabs: small pills; the active one is a gold plate with dark words. Q/E and the arrow keys cycle. Returns
+// true when the active tab changed.
+static bool g_tabsPrompt = false;  // set by tab_strip so the foot can show the Q/E prompt
 static bool tab_strip(const std::vector<const char*>& names, int& active) {
     int n = (int)names.size(), was = active;
     ImGuiIO& io = ImGui::GetIO();
+    g_tabsPrompt = n > 1;
     if (n > 1 && !io.WantTextInput) {
         if (ImGui::IsKeyPressed(ImGuiKey_E) || ImGui::IsKeyPressed(ImGuiKey_RightArrow)) active = (active + 1) % n;
         if (ImGui::IsKeyPressed(ImGuiKey_Q) || ImGui::IsKeyPressed(ImGuiKey_LeftArrow)) active = (active + n - 1) % n;
     }
     ImDrawList* dl = ImGui::GetWindowDrawList();
     for (int i = 0; i < n; i++) {
-        if (i) ImGui::SameLine(0, 4);
+        if (i) ImGui::SameLine(0, 6);
         ImGui::PushID(i);
         float tw = text_w(g_bold, 15, names[i]);
-        float w = std::max(120.0f, tw + 44);
-        ImVec2 a = ImGui::GetCursorScreenPos(), b(a.x + w, a.y + 36);
-        if (ImGui::InvisibleButton("##tab", ImVec2(w, 36))) active = i;
+        float w = std::max(84.0f, tw + 32);
+        ImVec2 a = ImGui::GetCursorScreenPos(), b(a.x + w, a.y + 30);
+        if (ImGui::InvisibleButton("##tab", ImVec2(w, 30))) active = i;
         bool on = i == active, hov = ImGui::IsItemHovered();
-        dl->AddRectFilled(a, b, on ? IM_COL32(44, 37, 26, 255) : hov ? IM_COL32(34, 31, 25, 255) : IM_COL32(24, 22, 18, 255));
-        dl->AddLine(ImVec2(a.x, b.y - 1), ImVec2(b.x, b.y - 1), on ? col::accent : col::frameLo, on ? 2.0f : 1.0f);
-        float tx = a.x + (w - tw) * 0.5f + (on ? 7 : 0);
-        if (on) diamond(dl, ImVec2(tx - 11, a.y + 18), 4.0f, col::accent);
-        dl->AddText(g_bold, 15, ImVec2(tx, a.y + 9), on ? col::accent : hov ? col::text : col::dim, names[i]);
+        dl->AddRectFilled(a, b, on ? col::gold : hov ? IM_COL32(52, 44, 30, 235) : IM_COL32(28, 25, 20, 220), 6.0f);
+        dl->AddRect(a, b, on ? col::frameHi : col::frameLo, 6.0f);
+        dl->AddText(g_bold, 15, ImVec2(a.x + (w - tw) * 0.5f, a.y + 6), on ? IM_COL32(32, 26, 16, 255) : hov ? col::text : col::dim, names[i]);
         ImGui::PopID();
     }
     ImGui::Dummy(ImVec2(0, 4));
     return active != was;
 }
 
-// Full-screen Remnant window: darkened game behind, corner brackets.
+static bool g_escPrompt = true;  // whether this screen can be left with Esc
+
+// Full-screen Remnant window: a light tint over the game and one thin frame; the panels inside carry the colour.
 static bool begin_screen(const char* id, float wFrac, float hFrac, bool hint = true) {
     ImGuiViewport* vp = ImGui::GetMainViewport();
     ImGui::GetBackgroundDrawList()->AddRectFilled(vp->Pos, ImVec2(vp->Pos.x + vp->Size.x, vp->Pos.y + vp->Size.y),
-                                                  IM_COL32(0, 0, 0, 170));
+                                                  IM_COL32(0, 0, 0, 110));
     ImVec2 size(vp->Size.x * wFrac, vp->Size.y * hFrac);
     ImGui::SetNextWindowPos(ImVec2(vp->Pos.x + (vp->Size.x - size.x) / 2, vp->Pos.y + (vp->Size.y - size.y) / 2));
     ImGui::SetNextWindowSize(size);
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImColor(col::bg).Value);
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(12, 11, 9, 140));
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(kPadX, kPadY));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
     bool open = ImGui::Begin(id, nullptr,
                              ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-    ImGui::PopStyleVar();  // the wide padding is the screen's own; its rows and panels keep a small one
+    ImGui::PopStyleVar(2);  // the wide padding is the screen's own; its rows and panels keep a small one
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 6));
-    // MHW's menu frame: a darker band at the top, a double gold border with diamonds at its corners and on the top
-    // and bottom edges, and below a rule the prompt band: the back hint bottom left, the buttons above it.
-    ImVec2 p = ImGui::GetWindowPos(), s = ImGui::GetWindowSize();
+    ImVec2 p = ImGui::GetWindowPos(), sz = ImGui::GetWindowSize();
     ImDrawList* dl = ImGui::GetWindowDrawList();
-    ImVec2 q(p.x + s.x, p.y + s.y);
-    dl->AddRectFilledMultiColor(p, ImVec2(q.x, p.y + 64), IM_COL32(40, 35, 27, 255), IM_COL32(40, 35, 27, 255),
-                                IM_COL32(17, 16, 14, 0), IM_COL32(17, 16, 14, 0));
-    dl->AddRect(p, q, col::frameHi, 0, 0, 1.5f);
-    dl->AddRect(ImVec2(p.x + 5, p.y + 5), ImVec2(q.x - 5, q.y - 5), col::frameLo, 0, 0, 1.0f);
-    for (ImVec2 c : {p, ImVec2(q.x, p.y), ImVec2(p.x, q.y), q, ImVec2((p.x + q.x) * 0.5f, p.y), ImVec2((p.x + q.x) * 0.5f, q.y)})
-        diamond(dl, c, 6.0f, col::frameHi);
-    if (hint) {
-        float ry = q.y - kPadY - kFoot + 3;
-        dl->AddLine(ImVec2(p.x + 14, ry), ImVec2(q.x - 14, ry), col::frameLo);
-        dl->AddText(g_body, 15, ImVec2(p.x + kPadX, q.y - 27), col::dim, "[Esc]  Back");
-    }
+    ImVec2 q(p.x + sz.x, p.y + sz.y);
+    dl->AddRect(p, q, col::frameLo, 0, 0, 1.0f);
+    for (ImVec2 c : {ImVec2((p.x + q.x) * 0.5f, p.y), ImVec2((p.x + q.x) * 0.5f, q.y)}) diamond(dl, c, 6.0f, col::frameHi);
+    g_escPrompt = hint;
+    g_tabsPrompt = false;
     return open;
 }
 static void end_screen() {
@@ -343,9 +340,73 @@ static void end_screen() {
     ImGui::PopStyleColor();
 }
 
+// Top-left of a screen: a small emblem plate and "WARD 13  >  TRAITS", as MHW names the menu you are in.
+static void breadcrumb(const char* first, const char* second) {
+    ImVec2 p = ImGui::GetCursorScreenPos();
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    ImVec2 a(p.x, p.y + 2), b(a.x + 22, a.y + 22);
+    dl->AddRectFilled(a, b, IM_COL32(24, 21, 16, 230));
+    ImGui::SetCursorScreenPos(a);
+    image(kUi[UI_WARD13_TERMINAL].art, 128, ImVec2(22, 22));
+    dl->AddRect(a, b, col::mhwGold);
+    float x = put(g_bold, 16, ImVec2(p.x + 32, p.y + 3), col::dim, upper(first).c_str());
+    x = put(g_bold, 16, ImVec2(x, p.y + 3), col::dim, "  >  ");
+    put(g_bold, 16, ImVec2(x, p.y + 3), col::text, upper(second).c_str());
+    ImGui::SetCursorScreenPos(ImVec2(p.x, p.y + 36));
+    ImGui::Dummy(ImVec2(1, 0));
+}
+
+// Top-right of a screen: the hunter's zenny on a small dark plate with a coin mark.
+static void zenny_plate() {
+    std::string z = zenny_str(mhw_zenny());
+    float tw = text_w(g_bold, 17, z.c_str()), w = tw + 52;
+    ImVec2 p = ImGui::GetWindowPos();
+    ImVec2 a(p.x + ImGui::GetWindowWidth() - kPadX - w, p.y + kPadY), b(a.x + w, a.y + 26);
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    dl->AddRectFilled(a, b, IM_COL32(16, 14, 11, 225));
+    dl->AddRect(a, b, col::frameLo);
+    ImVec2 c(a.x + 15, a.y + 13);
+    dl->AddCircleFilled(c, 8, IM_COL32(60, 50, 30, 255));
+    dl->AddCircle(c, 8, col::gold, 20, 1.2f);
+    dl->AddText(g_bold, 11, ImVec2(c.x - text_w(g_bold, 11, "z") * 0.5f, c.y - 7), col::gold, "z");
+    dl->AddText(g_bold, 17, ImVec2(b.x - 12 - tw, a.y + 3), col::gold, z.c_str());
+}
+
+// A panel: a translucent plate in a gold line with a title band (faint gold gradient, diamonds at both ends, a rule
+// under it). The content scrolls in a child of its own so the band stays put.
+constexpr float kBand = 28;
+static void panel_begin(const char* id, const char* title, ImVec2 size) {
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, col::plate);
+    ImGui::PushStyleColor(ImGuiCol_Border, col::mhwGold);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::BeginChild(id, size, ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor(2);
+    ImVec2 p = ImGui::GetWindowPos();
+    float w = ImGui::GetWindowWidth();
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    ImVec2 a(p.x + 1, p.y + 1), b(p.x + w - 1, p.y + kBand);
+    dl->AddRectFilledMultiColor(a, b, IM_COL32(60, 50, 30, 255), IM_COL32(60, 50, 30, 255), IM_COL32(28, 24, 18, 255), IM_COL32(28, 24, 18, 255));
+    dl->AddLine(ImVec2(a.x, b.y), ImVec2(b.x, b.y), col::frameHi);
+    float tw = text_w(g_title, 18, title);
+    dl->AddText(g_title, 18, ImVec2(p.x + (w - tw) * 0.5f, p.y + (kBand - 18) * 0.5f - 1), col::gold, title);
+    diamond(dl, ImVec2(a.x + 9, (a.y + b.y) * 0.5f), 3.0f, col::gold);
+    diamond(dl, ImVec2(b.x - 9, (a.y + b.y) * 0.5f), 3.0f, col::gold);
+    ImGui::SetCursorPos(ImVec2(8, kBand + 8));
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(4, 2));
+    ImGui::BeginChild("##body", ImVec2(-8, -8));
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor();
+}
+static void panel_end() {
+    ImGui::EndChild();
+    ImGui::EndChild();
+}
+
 // The foot strip: primary buttons from the left edge, BACK at the right edge, all centred on one line.
 static void foot_at(float x, float h) {
-    ImGui::SetCursorPos(ImVec2(x, ImGui::GetWindowHeight() - kPadY - kFoot + 9 + (kBtnPrimary - h) * 0.5f));
+    ImGui::SetCursorPos(ImVec2(x, ImGui::GetWindowHeight() - kPadY - kFoot + 4 + (kBtnPrimary - h) * 0.5f));
 }
 static void foot_next(float h) { foot_at(ImGui::GetItemRectMax().x - ImGui::GetWindowPos().x + 10, h); }
 static bool foot_back(const char* text = "BACK") {
@@ -354,6 +415,24 @@ static bool foot_back(const char* text = "BACK") {
     ImGui::PopFont();
     foot_at(ImGui::GetWindowWidth() - kPadX - w, kBtnBack);
     return remnant_button(text, ImVec2(w, kBtnBack));
+}
+
+// The foot line: the hint in a centred pill, the button prompts at the right edge.
+static void foot_hint(const char* s) {
+    ImVec2 p = ImGui::GetWindowPos();
+    float W = ImGui::GetWindowWidth(), y = p.y + ImGui::GetWindowHeight() - kPadY - 24;
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    float tw = text_w(g_body, 15, s), w = tw + 44, x = p.x + (W - w) * 0.5f;
+    dl->AddRectFilled(ImVec2(x, y), ImVec2(x + w, y + 24), IM_COL32(20, 18, 15, 225), 12.0f);
+    dl->AddRect(ImVec2(x, y), ImVec2(x + w, y + 24), col::line, 12.0f);
+    dl->AddText(g_body, 15, ImVec2(x + 22, y + 3), col::dim, s);
+    float right = p.x + W - kPadX;
+    if (g_escPrompt) {
+        right -= text_w(g_body, 15, "[Esc]  Back");
+        put(g_body, 15, ImVec2(right, y + 3), col::dim, "[Esc]  Back");
+        right -= 24;
+    }
+    if (g_tabsPrompt) put(g_body, 15, ImVec2(right - text_w(g_body, 15, "[Q]/[E]  Tabs"), y + 3), col::dim, "[Q]/[E]  Tabs");
 }
 
 // ---------------------------------------------------------------- screens
@@ -450,10 +529,18 @@ static void effect_lines(const char* dsl) {
     }
 }
 
-static void stats_line(const char* k, const char* fmt, double v) {
+// A stat row as in MHW's info panels: the label left, the value right-aligned to the panel edge.
+static void stat_row(const char* k, const char* v, ImU32 vc = col::text) {
+    ImVec2 p = ImGui::GetCursorScreenPos();
+    float right = p.x + ImGui::GetContentRegionAvail().x;
     ImGui::TextColored(ImColor(col::dim).Value, "%s", k);
-    ImGui::SameLine(170);
-    ImGui::Text(fmt, v);
+    ImGui::SetCursorScreenPos(ImVec2(right - text_w(ImGui::GetFont(), ImGui::GetFontSize(), v), p.y));
+    ImGui::TextColored(ImColor(vc).Value, "%s", v);
+}
+static void stats_line(const char* k, const char* fmt, double v) {
+    char b[48];
+    snprintf(b, sizeof(b), fmt, v);
+    stat_row(k, b);
 }
 
 static const char* material_label(int m) {
@@ -462,29 +549,60 @@ static const char* material_label(int m) {
     return n ? n : kMaterials[m].note;
 }
 
-// Recipe in MHW materials and zenny, with what the hunter has. Returns true when it can be paid.
+// A small plate standing in for an item icon: MHW's item art is not ours to draw, so the row keeps its slot.
+static void item_plate(float size) {
+    ImVec2 a = ImGui::GetCursorScreenPos();
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    dl->AddRectFilled(a, ImVec2(a.x + size, a.y + size), IM_COL32(34, 30, 24, 255), 3.0f);
+    dl->AddRect(a, ImVec2(a.x + size, a.y + size), col::line, 3.0f);
+    diamond(dl, ImVec2(a.x + size * 0.5f, a.y + size * 0.5f), size * 0.2f, col::frameLo);
+    ImGui::Dummy(ImVec2(size, size));
+}
+
+// Recipe in MHW materials and zenny, with what the hunter has, as two banded panels like MHW's forge. Returns true
+// when it can be paid.
 static bool recipe_box(const char* recipe, int zenny) {
     bool ok = true;
-    section("COST");
     bool inv = mhw_inventory_ready();
-    float haveX = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x - 130;  // one column for "have N"
-    for (const Need& n : recipe_of(recipe)) {
-        int id = (int)kMaterials[n.material].mhw_item_id;
-        int have = id > 0 && inv ? mhw_item_count(id) : -1;
-        bool enough = have < 0 || have >= n.count;  // a material with no MHW id yet is not charged (remnant.cpp skips it too)
-        ok &= enough;
-        ImU32 c = have < 0 ? col::dim : enough ? col::text : col::red;
-        float y = ImGui::GetCursorScreenPos().y;
-        ImGui::TextColored(ImColor(c).Value, "%d x %s", n.count, material_label(n.material));
-        ImGui::SameLine();
-        ImGui::SetCursorScreenPos(ImVec2(haveX, y));
-        if (have >= 0) ImGui::TextColored(ImColor(col::dim).Value, "have %d", have);
-        else ImGui::TextColored(ImColor(col::dim).Value, "not tracked yet");
+    std::vector<Need> needs = recipe_of(recipe);
+    if (!needs.empty()) {
+        ImGui::Spacing();
+        panel_begin("##mats", "REQUIRED MATERIALS", ImVec2(0, kBand + 26 + needs.size() * 34.0f));
+        float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
+        for (const Need& n : needs) {
+            int id = (int)kMaterials[n.material].mhw_item_id;
+            int have = id > 0 && inv ? mhw_item_count(id) : -1;
+            bool enough = have < 0 || have >= n.count;  // a material with no MHW id yet is not charged (remnant.cpp skips it too)
+            ok &= enough;
+            ImU32 c = have < 0 ? col::dim : enough ? col::text : col::red;
+            ImVec2 p = ImGui::GetCursorScreenPos();
+            item_plate(22);
+            float y = p.y + 2;
+            char cnt[16];
+            snprintf(cnt, sizeof(cnt), "  x%d", n.count);
+            float x = put(g_body, 17, ImVec2(p.x + 32, y), col::text, material_label(n.material));
+            put(g_body, 16, ImVec2(x, y + 1), col::dim, cnt);
+            char hv[32];
+            if (have >= 0) snprintf(hv, sizeof(hv), "%d", have);
+            else snprintf(hv, sizeof(hv), "not tracked yet");
+            put(g_bold, 16, ImVec2(right - text_w(g_bold, 16, hv), y + 1), c, hv);
+            ImGui::SetCursorScreenPos(ImVec2(p.x, p.y + 30));
+            ImGui::Dummy(ImVec2(1, 0));
+        }
+        panel_end();
     }
     int z = mhw_zenny();
     bool zok = z >= zenny;
     ok &= zok;
-    if (zenny > 0) ImGui::TextColored(ImColor(zok ? col::gold : col::red).Value, "%s", zenny_str(zenny).c_str());
+    if (zenny > 0) {
+        ImGui::Spacing();
+        panel_begin("##cost", "REQUIRED COST", ImVec2(0, kBand + 26 + 34));
+        std::string zs = zenny_str(zenny);
+        float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
+        put(g_bold, 18, ImVec2(right - text_w(g_bold, 18, zs.c_str()), ImGui::GetCursorScreenPos().y), zok ? col::gold : col::red, zs.c_str());
+        ImGui::Dummy(ImVec2(1, 22));
+        panel_end();
+    }
     return ok;
 }
 
@@ -538,9 +656,12 @@ static void bar(float k, ImU32 c) {
 static void level_line(const SaveData& s) {
     int lv = remnant_level(s.xp);
     double a = s.xp - level_xp(lv), b = level_xp(lv + 1) - level_xp(lv);
-    ImGui::TextColored(ImColor(col::gold).Value, "REMNANT LEVEL %d", lv);
-    ImGui::SameLine();
-    ImGui::TextColored(ImColor(col::dim).Value, "  %.0f / %.0f experience to the next", a, b);
+    char xp[64];
+    snprintf(xp, sizeof(xp), "%.0f / %.0f exp", a, b);
+    ImVec2 p = ImGui::GetCursorScreenPos();
+    float right = p.x + ImGui::GetContentRegionAvail().x;
+    ImGui::TextColored(ImColor(col::gold).Value, "Remnant Level %d", lv);
+    put(g_body, 18, ImVec2(right - text_w(g_body, 18, xp), p.y), col::dim, xp);
     bar((float)(a / std::max(1.0, b)), col::gold);
 }
 
@@ -570,15 +691,18 @@ static void archetype_detail(int row, const SaveData& s, bool chooseSkill) {
     int level = archetype_level(s, row);
     int slot = row == s.archetype ? 0 : row == s.archetype2 ? 1 : -1;
     // Level and experience (Remnant II: 1 to 10, the two equipped archetypes share the experience)
-    ImGui::TextColored(ImColor(col::gold).Value, "LEVEL %d", level);
+    ImVec2 lp = ImGui::GetCursorScreenPos();
+    float lright = lp.x + ImGui::GetContentRegionAvail().x;
+    ImGui::TextColored(ImColor(col::gold).Value, "Level %d", level);
     double next = archetype_next_xp(level);
     if (next > 0) {
-        ImGui::SameLine();
-        ImGui::TextColored(ImColor(col::dim).Value, "  %.0f / %.0f experience", s.archXp[row], next);
+        char xp[64];
+        snprintf(xp, sizeof(xp), "%.0f / %.0f exp", s.archXp[row], next);
+        put(g_body, 18, ImVec2(lright - text_w(g_body, 18, xp), lp.y), col::dim, xp);
         bar((float)(s.archXp[row] / next), col::gold);
     } else {
-        ImGui::SameLine();
-        ImGui::TextColored(ImColor(col::dim).Value, "  mastered: its trait can be used with any archetype");
+        const char* m = "mastered: its trait works with any archetype";
+        put(g_body, 16, ImVec2(lright - text_w(g_body, 16, m), lp.y + 1), col::dim, m);
     }
     if (a.prime.asset) {
         section("PRIME PERK");
@@ -675,17 +799,21 @@ static ImU32 rarity_color(int tier) {
     }
 }
 
-static void item_detail(const ItemView& v, const SaveData& s) {
+static void item_detail(const ItemView& v, const SaveData& s, const std::function<void()>& beforeStats = nullptr) {
     float w = ImGui::GetContentRegionAvail().x;
     image(v.icon, 512, ImVec2(w, v.cat == CAT_WEAPON ? 110 : 96));
     title(upper(text_or(v.name)).c_str());
-    ImGui::TextColored(ImColor(rarity_color(v.tier)).Value, "%s  -  RARE %d", cat_label(v.cat), rarity_of(v.tier));
+    ImGui::TextColored(ImColor(col::dim).Value, "%s", cat_label(v.cat));
+    char rar[8];
+    snprintf(rar, sizeof(rar), "%d", rarity_of(v.tier));
+    stat_row("Rarity", rar, rarity_color(v.tier));
     if (v.desc && v.desc->asset) {
         ImGui::PushStyleColor(ImGuiCol_Text, ImColor(col::dim).Value);
         ImGui::TextWrapped("%s", text_or(v.desc).c_str());
         ImGui::PopStyleColor();
     }
     ImGui::Spacing();
+    if (beforeStats) beforeStats();  // the cost sits by the name, as World's Required Materials panel does
     if (v.cat == CAT_ARCHETYPE) {
         archetype_detail(v.row, s, false);
         return;
@@ -763,18 +891,11 @@ static void screen_menu(const SaveData& s, const Live& l) {
     const Npcs& n = kNpcs[hostRow];
     if (!begin_screen("##menu", 0.80f, 0.86f)) return end_screen();
     if (g_npcSays.empty()) g_npcSays = r2_text(greet_of(n, g_greet));
-    float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
-    ImVec2 t0 = ImGui::GetCursorScreenPos();
-    title_text(upper(r2_name(n.name)).c_str(), col::gold);
-    float th = ImGui::GetItemRectSize().y, tw = ImGui::GetItemRectSize().x;
-    char at[64];
-    snprintf(at, sizeof(at), "at %s", role_place(g_menuRole));
-    put(g_body, 18, ImVec2(t0.x + tw + 14, t0.y + th - 29), col::dim, at);
-    std::string zen = zenny_str(mhw_zenny());
-    put(g_bold, 20, ImVec2(right - text_w(g_bold, 20, zen.c_str()), t0.y + th - 31), col::gold, zen.c_str());
+    breadcrumb(role_place(g_menuRole) + 4, "Remnant Wares");  // "the Smithy" -> "Smithy"
+    zenny_plate();
     quote(g_npcSays);
     if (l.said[0] && strcmp(l.said, "done") != 0) ImGui::TextColored(ImColor(col::red).Value, "%s", l.said);
-    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0, 2));
     struct Tab { const char* name; Cat cat; int slot; };
     std::vector<Tab> tabs;
     if (g_menuRole == MENUS_ROLE_SMITHY)
@@ -797,11 +918,12 @@ static void screen_menu(const SaveData& s, const Live& l) {
     const Tab& tb = tabs[cur];
     bool upgrades = tb.slot == -2;
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("list", ImVec2(w * 0.42f, -kFoot));
+    const char* hint = "Select an item.";
+    panel_begin("list", tb.name, ImVec2(w * 0.42f, -kFoot));
     item_list(tb.cat, upgrades ? -1 : tb.slot, s, upgrades, upgrades ? -1 : g_menuRole);
-    ImGui::EndChild();
+    panel_end();
     ImGui::SameLine(0, 20);
-    ImGui::BeginChild("detail", ImVec2(0, -kFoot), ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar);
+    panel_begin("detail", "EQUIPMENT INFO", ImVec2(0, -kFoot));
     // The action button is pinned under a scrolling detail, MHW style: the cost is always one glance from the button.
     const float actionH = kBtnPrimary + 12;
     ImGui::BeginChild("detailscroll", ImVec2(0, -actionH));
@@ -810,34 +932,40 @@ static void screen_menu(const SaveData& s, const Live& l) {
     int actionKind = -1;  // Request kind, or -2 = take a free archetype
     if (g_pick.row >= 0 && g_pick.cat == tb.cat) {
         const ItemView& v = g_pick;
-        item_detail(v, s);
-        ImGui::Spacing();
-        ImGui::Separator();
-        if (upgrades) {
-            int lvl = s.level[v.row], top = weapon_max_level(v.row);
-            if (lvl < top) {
-                int zen = 0;
-                std::string rec = upgrade_cost(v.row, lvl, &zen);
-                ImGui::Text("+%d  ->  +%d of %d  (damage x%.2f -> x%.2f)", lvl, lvl + 1, top, upgrade_mult(v.row, lvl),
-                            upgrade_mult(v.row, lvl + 1));
-                actionOk = recipe_box(rec.c_str(), zen);
-                snprintf(action, sizeof(action), "UPGRADE TO +%d", lvl + 1);
-                actionKind = Request::UPGRADE;
+        auto cost = [&]() {
+            if (upgrades) {
+                int lvl = s.level[v.row], top = weapon_max_level(v.row);
+                if (lvl < top) {
+                    int zen = 0;
+                    std::string rec = upgrade_cost(v.row, lvl, &zen);
+                    ImGui::Text("+%d  ->  +%d of %d  (damage x%.2f -> x%.2f)", lvl, lvl + 1, top, upgrade_mult(v.row, lvl),
+                                upgrade_mult(v.row, lvl + 1));
+                    actionOk = recipe_box(rec.c_str(), zen);
+                    snprintf(action, sizeof(action), "UPGRADE TO +%d", lvl + 1);
+                    actionKind = Request::UPGRADE;
+                    hint = actionOk ? "Can be upgraded." : "You lack materials.";
+                } else {
+                    ImGui::TextColored(ImColor(col::gold).Value, "Fully upgraded (+%d)", lvl);
+                    hint = "Fully upgraded.";
+                }
+            } else if (v.cat == CAT_CONSUMABLE) {
+                actionOk = recipe_box("", v.zenny);
+                snprintf(action, sizeof(action), "BUY  (%s)", zenny_str(v.zenny).c_str());
+                actionKind = Request::BUY_CONSUMABLE;
+                hint = actionOk ? "Can be bought." : "You lack zenny.";
+            } else if (!s.has(v.cat, v.row)) {
+                bool free = v.cat == CAT_ARCHETYPE && v.zenny <= 0;
+                actionOk = free || recipe_box(v.recipe, v.zenny);
+                snprintf(action, sizeof(action), "%s", free ? "TAKE" : "CRAFT");
+                actionKind = free ? -2 : Request::CRAFT;
+                hint = actionOk ? "Can be crafted." : "You lack materials.";
             } else {
-                ImGui::TextColored(ImColor(col::gold).Value, "Fully upgraded (+%d)", lvl);
+                ImGui::TextColored(ImColor(col::gold).Value, "Owned. Equip it at the Ward 13 terminal [%c].", (char)keys().terminal);
+                hint = "Owned.";
             }
-        } else if (v.cat == CAT_CONSUMABLE) {
-            actionOk = recipe_box("", v.zenny);
-            snprintf(action, sizeof(action), "BUY  (%s)", zenny_str(v.zenny).c_str());
-            actionKind = Request::BUY_CONSUMABLE;
-        } else if (!s.has(v.cat, v.row)) {
-            bool free = v.cat == CAT_ARCHETYPE && v.zenny <= 0;
-            actionOk = free || recipe_box(v.recipe, v.zenny);
-            snprintf(action, sizeof(action), "%s", free ? "TAKE" : "CRAFT");
-            actionKind = free ? -2 : Request::CRAFT;
-        } else {
-            ImGui::TextColored(ImColor(col::gold).Value, "Owned. Equip it at the Ward 13 terminal [%c].", (char)keys().terminal);
-        }
+            ImGui::Spacing();
+        };
+        item_detail(v, s, cost);
     } else {
         empty_hint("Select an item to see its details");
     }
@@ -852,13 +980,14 @@ static void screen_menu(const SaveData& s, const Live& l) {
             ui_sound(actionKind == Request::UPGRADE ? "upgrade" : actionKind == Request::BUY_CONSUMABLE ? "buy" : "craft");
         }
     }
-    ImGui::EndChild();
+    panel_end();
     std::string leave = r2_text(n.leave_option);
     ImGui::PushFont(g_bold, 18.0f);
     float lw = std::max(240.0f, ImGui::CalcTextSize(leave.c_str()).x + 40);  // a long farewell still fits its button
     ImGui::PopFont();
     foot_at(ImGui::GetWindowWidth() - kPadX - lw, kBtnBack);
     if (remnant_button(leave.c_str(), ImVec2(lw, kBtnBack))) open(SCR_NONE);
+    foot_hint(hint);
     end_screen();
 }
 
@@ -897,10 +1026,11 @@ static const char* role_label(int role) {
 
 static void screen_terminal(const SaveData& s, const Live& l) {
     if (!begin_screen("##terminal", 0.84f, 0.92f)) return end_screen();
+    breadcrumb("Ward 13", "Loadout");
+    zenny_plate();
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("left", ImVec2(w * 0.40f, -kFoot));
+    panel_begin("left", "WARD 13", ImVec2(w * 0.40f, -kFoot));
     image(kUi[UI_WARD13_TERMINAL].art, 1024, ImVec2(ImGui::GetContentRegionAvail().x, 72));
-    title("WARD 13");
     section("ARCHETYPES");
     for (int slot = 0; slot < 2; slot++) {
         int a = slot == 0 ? s.archetype : s.archetype2;
@@ -972,12 +1102,11 @@ static void screen_terminal(const SaveData& s, const Live& l) {
             ImGui::PopID();
         }
     }
-    ImGui::EndChild();
+    panel_end();
     ImGui::SameLine(0, 24);
-    ImGui::BeginChild("right", ImVec2(0, -kFoot));
+    panel_begin("right", g_slotPick >= 0 ? kSlots[g_slotPick].label : "HUNTER", ImVec2(0, -kFoot));
     if (g_slotPick >= 0) {
         const Slot& sl = kSlots[g_slotPick];
-        title(sl.label);
         float rw = ImGui::GetContentRegionAvail().x;
         ImGui::BeginChild("choices", ImVec2(rw * 0.45f, 0));
         item_list(sl.cat, sl.cat == CAT_WEAPON ? sl.sub : -1, s, true, -1);
@@ -988,18 +1117,11 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         else empty_hint("Select an item to see its details");
         ImGui::EndChild();
     } else {
-        float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
-        ImVec2 t0 = ImGui::GetCursorScreenPos();
-        title_text("HUNTER");
-        float th = ImGui::GetItemRectSize().y;
-        std::string zen = zenny_str(mhw_zenny());
-        char rc[32];
-        snprintf(rc, sizeof(rc), "RELIC CHARGES  %d", s.relicCharges);
-        float zx = right - text_w(g_bold, 18, zen.c_str());
-        put(g_bold, 18, ImVec2(zx, t0.y + th - 29), col::gold, zen.c_str());
-        put(g_bold, 14, ImVec2(zx - 28 - text_w(g_bold, 14, rc), t0.y + th - 27), col::dim, rc);
-        ImGui::Separator();
         level_line(s);
+        char rc[16];
+        snprintf(rc, sizeof(rc), "%d", s.relicCharges);
+        stat_row("Relic charges", rc, col::gold);
+        ImGui::Spacing();
         {
             int free = trait_points(s) - trait_points_spent(s);
             bool ready = s.prismOn >= 0 && s.prism[s.prismOn].offers > 0;
@@ -1068,10 +1190,8 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         }
         if (!any) ImGui::TextColored(ImColor(col::dim).Value, "None carried. %s sells them at %s.",
                                      r2_name(kNpcs[host_of_role(MENUS_ROLE_PROVISIONS)].name).c_str(), role_place(MENUS_ROLE_PROVISIONS));
-        ImGui::Spacing();
-        ImGui::TextColored(ImColor(col::dim).Value, "Pick a slot on the left to change it.");
     }
-    ImGui::EndChild();
+    panel_end();
     if (g_slotPick >= 0) {
         const Slot& sl = kSlots[g_slotPick];
         float nx = kPadX;
@@ -1091,6 +1211,7 @@ static void screen_terminal(const SaveData& s, const Live& l) {
     } else if (foot_back("CLOSE")) {
         open(SCR_NONE);
     }
+    foot_hint(g_slotPick >= 0 ? "Choose an item to equip." : "Pick a slot to change it.");
     end_screen();
 }
 
@@ -1100,17 +1221,9 @@ static int g_traitPick = -1;
 
 static void screen_traits(const SaveData& s) {
     if (!begin_screen("##traits", 0.80f, 0.86f)) return end_screen();
-    title("TRAITS");
-    level_line(s);
+    breadcrumb("Ward 13", "Traits");
+    zenny_plate();
     int earned = trait_points(s), spent = trait_points_spent(s);
-    ImGui::TextColored(ImColor(spent < earned ? col::gold : col::dim).Value, "%d trait point%s to spend   (%d of %d used)",
-                       earned - spent, earned - spent == 1 ? "" : "s", spent, earned);
-    ImGui::TextColored(ImColor(col::dim).Value, "A trait goes up to 10. Your own points can be taken back here at any time.");
-    help_mark("As in Remnant II: your primary archetype puts 5 points into the core traits, each equipped archetype "
-              "raises its own trait by one per archetype level, and every Remnant level earns a trait point to spend "
-              "(85 at most). A trait goes up to 10. Your own points can be taken back here at any time. Learn more "
-              "traits from the Elder Melder or from Remnant bosses.");
-    ImGui::Spacing();
     static const char* kPass[4] = {"CORE TRAITS", "ARCHETYPE TRAITS", "LEARNED TRAITS", "NOT LEARNED YET"};
     std::vector<int> order[4];  // core, archetype, learned, not yet learned
     for (int i = 0; i < kTraitsCount; i++) {
@@ -1123,7 +1236,16 @@ static void screen_traits(const SaveData& s) {
         for (int pass = 0; pass < 4 && g_traitPick < 0; pass++)
             if (!order[pass].empty()) g_traitPick = order[pass][0];
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("list", ImVec2(w * 0.52f, -kFoot));
+    panel_begin("list", "TRAITS", ImVec2(w * 0.52f, -kFoot));
+    level_line(s);
+    ImGui::TextColored(ImColor(spent < earned ? col::gold : col::dim).Value, "%d trait point%s to spend   (%d of %d used)",
+                       earned - spent, earned - spent == 1 ? "" : "s", spent, earned);
+    help_mark("As in Remnant II: your primary archetype puts 5 points into the core traits, each equipped archetype "
+              "raises its own trait by one per archetype level, and every Remnant level earns a trait point to spend "
+              "(85 at most). A trait goes up to 10. Your own points can be taken back here at any time. Learn more "
+              "traits from the Elder Melder or from Remnant bosses.");
+    ImGui::Spacing();
+    ImGui::BeginChild("rows", ImVec2(0, 0));
     for (int pass = 0; pass < 4; pass++) {
         if (order[pass].empty()) continue;
         section(kPass[pass]);
@@ -1159,8 +1281,9 @@ static void screen_traits(const SaveData& s) {
         }
     }
     ImGui::EndChild();
+    panel_end();
     ImGui::SameLine(0, 20);
-    ImGui::BeginChild("detail", ImVec2(0, -kFoot));
+    panel_begin("detail", "TRAIT INFO", ImVec2(0, -kFoot));
     if (g_traitPick >= 0 && g_traitPick < kTraitsCount) {
         const Traits& t = kTraits[g_traitPick];
         title(upper(text_or(&t.name)).c_str());
@@ -1189,10 +1312,11 @@ static void screen_traits(const SaveData& s) {
                    "trait can be used with any archetype for trait points.").c_str());
         effect_lines(at.effects);
     }
-    ImGui::EndChild();
+    panel_end();
     foot_at(kPadX, kBtnSecondary);
     if (remnant_button("TAKE ALL POINTS BACK", ImVec2(260, kBtnSecondary), spent > 0)) change_save([](SaveData& d) { traits_reset(d); return true; });
     if (foot_back()) open(SCR_TERMINAL);
+    foot_hint("Spend or take back trait points.");
     end_screen();
 }
 
@@ -1298,15 +1422,10 @@ static void offer_card(const SaveData::Prism& p, const SaveData::PSlot& o) {
 
 static void screen_prism(const SaveData& s) {
     if (!begin_screen("##prism", 0.82f, 0.86f)) return end_screen();
-    title("PRISMS");
-    ImGui::TextColored(ImColor(col::dim).Value, "The equipped prism gains experience as you hunt. Each level offers three choices.");
-    help_mark("The equipped prism gains experience as you hunt. Each prism level offers three choices: a new relic "
-              "fragment for one of its five slots, one more level for a fragment (up to +10), or a fusion of two "
-              "fragments that are both +5 or more. With all five at +10 it offers a legendary bonus. Fragments show "
-              "their +10 values.");
-    ImGui::Spacing();
+    breadcrumb("Ward 13", "Prisms");
+    zenny_plate();
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("owned", ImVec2(w * 0.28f, -kFoot));
+    panel_begin("owned", "PRISMS", ImVec2(w * 0.28f, -kFoot));
     bool any = false;
     for (int i = 0; i < kPrismsCount; i++) {
         if (!s.has(CAT_PRISM, i)) continue;
@@ -1328,9 +1447,9 @@ static void screen_prism(const SaveData& s) {
     if (!any)
         dim_wrapped(("No prism yet. " + r2_name(kNpcs[host_of_role(MENUS_ROLE_MELDER)].name) +
                      " crafts them, and the first Remnant boss you defeat leaves one.").c_str());
-    ImGui::EndChild();
+    panel_end();
     ImGui::SameLine(0, 20);
-    ImGui::BeginChild("detail", ImVec2(0, -kFoot));
+    panel_begin("detail", "PRISM INFO", ImVec2(0, -kFoot));
     if (any && g_prismPick >= 0) {
         int row = g_prismPick;
         const SaveData::Prism& p = s.prism[row];
@@ -1340,6 +1459,10 @@ static void screen_prism(const SaveData& s) {
         float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
         ImVec2 l0 = ImGui::GetCursorScreenPos();
         ImGui::TextColored(ImColor(col::gold).Value, "+%d of 51", lv);
+        help_mark("The equipped prism gains experience as you hunt. Each prism level offers three choices: a new relic "
+                  "fragment for one of its five slots, one more level for a fragment (up to +10), or a fusion of two "
+                  "fragments that are both +5 or more. With all five at +10 it offers a legendary bonus. Fragments show "
+                  "their +10 values.");
         if (need > 0) {
             char xp[64];
             snprintf(xp, sizeof(xp), "%.0f / %.0f experience", std::min(p.xp, need), need);
@@ -1388,7 +1511,7 @@ static void screen_prism(const SaveData& s) {
     } else {
         empty_hint("Select a prism to see its fragments");
     }
-    ImGui::EndChild();
+    panel_end();
     if (any && g_prismPick >= 0) {
         bool armed = now_s() - g_cleanseArmed < 4.0;
         int row = g_prismPick;
@@ -1403,6 +1526,8 @@ static void screen_prism(const SaveData& s) {
         }
     }
     if (foot_back()) open(SCR_TERMINAL);
+    foot_hint(any && g_prismPick >= 0 && s.prism[g_prismPick].offers > 0 ? "Choose one of the three offers."
+                                                                          : "The equipped prism gains experience as you hunt.");
     end_screen();
 }
 
@@ -1410,11 +1535,8 @@ static void screen_prism(const SaveData& s) {
 
 static void screen_archetype(const SaveData& s) {
     if (!begin_screen("##archetype", 0.84f, 0.86f, s.archetype >= 0)) return end_screen();
-    title(s.archetype < 0 ? "CHOOSE YOUR ARCHETYPE" : "ARCHETYPES");
-    ImGui::TextColored(ImColor(col::dim).Value, "Your archetype brings its skills, perks and trait. Starting archetypes are free.");
-    help_mark("Your archetype brings its skills, perks and trait. Starting archetypes are free; the others are engrams the "
-              "Elder Melder's Remnant guest crafts from MHW materials. A second archetype adds its perks and a second skill.");
-    ImGui::Spacing();
+    breadcrumb("Ward 13", "Archetypes");
+    zenny_plate();
     std::vector<int> rows;
     for (int i = 0; i < kArchetypesCount; i++)
         if (!(s.archetype < 0 && kArchetypes[i].zenny > 0)) rows.push_back(i);  // first choice: the starting four
@@ -1422,7 +1544,7 @@ static void screen_archetype(const SaveData& s) {
     for (int i : rows) picked |= g_pick.cat == CAT_ARCHETYPE && g_pick.row == i;
     if (!picked && !rows.empty()) g_pick = item(CAT_ARCHETYPE, rows[0]);
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("list", ImVec2(w * 0.30f, -kFoot));
+    panel_begin("list", "ARCHETYPES", ImVec2(w * 0.30f, -kFoot));
     for (int i : rows) {
         const Archetypes& a = kArchetypes[i];
         bool own = s.has(CAT_ARCHETYPE, i) || a.zenny <= 0;
@@ -1438,9 +1560,13 @@ static void screen_archetype(const SaveData& s) {
         end_list_row();
         ImGui::PopID();
     }
-    ImGui::EndChild();
+    ImGui::Dummy(ImVec2(0, 4));
+    ImGui::TextColored(ImColor(col::dim).Value, "Starting archetypes are free.");
+    help_mark("Your archetype brings its skills, perks and trait. Starting archetypes are free; the others are engrams the "
+              "Elder Melder's Remnant guest crafts from MHW materials. A second archetype adds its perks and a second skill.");
+    panel_end();
     ImGui::SameLine(0, 20);
-    ImGui::BeginChild("detail", ImVec2(0, -kFoot));
+    panel_begin("detail", "ARCHETYPE INFO", ImVec2(0, -kFoot));
     if (g_pick.cat == CAT_ARCHETYPE && g_pick.row >= 0) {
         const Archetypes& a = kArchetypes[g_pick.row];
         image(a.emblem, 256, ImVec2(96, 96));
@@ -1454,7 +1580,7 @@ static void screen_archetype(const SaveData& s) {
     } else {
         empty_hint("Select an archetype to see its details");
     }
-    ImGui::EndChild();
+    panel_end();
     float nx = kPadX;
     if (g_pick.cat == CAT_ARCHETYPE && g_pick.row >= 0) {
         const Archetypes& a = kArchetypes[g_pick.row];
@@ -1473,6 +1599,7 @@ static void screen_archetype(const SaveData& s) {
         }
     }
     if (s.archetype >= 0 && foot_back()) open(SCR_TERMINAL);
+    foot_hint(s.archetype < 0 ? "Choose your first archetype." : "Choose a primary and a second archetype.");
     end_screen();
 }
 

@@ -180,3 +180,9 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
 - tests/test_craft.cpp (Makefile test-logic and build_native.sh test): a fake save slot with a pouch and an item box;
   containers found by shape, counts across both, box taken first, pouch slot cleared when empty, zenny bounds, all
   742 recipes (2116 needs) parse to real materials, every material mapped. Passes.
+- GUI pass 2, matched against real MHW World screenshots (Smithy > Forge Equipment): each column is its own
+  translucent panel with a 28 px title band (panel_begin), breadcrumb top-left ("SMITHY > REMNANT WARES"), zenny
+  plate top-right, stat rows with right-aligned values, REQUIRED MATERIALS / REQUIRED COST sub-panels next to the
+  item name (have-counts red when short), pill tabs, a centred hint pill at the foot with the prompts at the right,
+  one thin frame line instead of the double frame, selection marked by World's small triangle. HUD unchanged.
+  Jalon confirmed the target is Monster Hunter: World (not Wilds).
