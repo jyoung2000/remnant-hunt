@@ -109,8 +109,8 @@
   },
   {
    "id": "item_name_stride",
-   "value": 0,
-   "why": "MHW's item text holds this many messages per item id (name first); 0 until the in-game diagnostic confirms it, and then materials show MHW's own names"
+   "value": 2,
+   "why": "MHW's item text holds this many messages per item id (name first): 2, as MHWISaveEditor reads names at id*2; materials then show MHW's own names"
   },
   {
    "id": "boss_hp_lr",

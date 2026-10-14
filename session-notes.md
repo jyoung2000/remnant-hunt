@@ -163,3 +163,20 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   seven HUD status icons in bosses.cpp carried ".uasset", which the TEX request adds again, so they never loaded.
   Run it after any sheet change: `python -I tools/check_assets.py "<abs path>\build\win\r2read.exe" "<Remnant2 dir>"`.
   Not covered (needs the game): the DX11 upload of BC7 textures and the 3D draw of meshes; the preview stubs icons.
+
+## 2026-10-13 late: Jalon's approvals
+- Approved as designed: (1) crafting spends MHW zenny and takes MHW materials from the item box / pouch (inventory.cpp),
+  now on the list of allowed game-data writes; (2) the stamina offset from stamina.cpp's scan is an allowed write;
+  (3) mod_game_tick keeping the Shared lock across I/O and first-use init stays for now.
+- Asked: crafting must work as intended -> fill materials.json mhw_item_id from public MHW item id tables (two sources
+  agreeing), keep the zenny-only fallback for any id still 0, and test the craft path on the host.
+- Crafting: materials.json now maps all 15 classes to MHW items (ids from mhw-db.com, which agrees with the known
+  Potion = 1 / Mega Potion = 2 and whose ids index itemData.itm like MHWISaveEditor does): Iron Ore 116, Machalite 117,
+  Dragonite 118, Fucium 120, Earth Crystal 121, Monster Bone S/M/+ 147/148/150, Keenbone 151, Hardbone 152, Elder
+  Dragon Bone 153, Elder Dragon Blood 174, Eltalite 604, Solidbone 668, Spiritvein Gem 990. tuning.item_name_stride = 2.
+  In-game confirmation: the COST rows at the Smithy must show MHW's own item names ("5 x Dragonite Ore", "have N");
+  if a name is wrong or blank, the id or stride is off (dev_items.txt settles it). The zenny-only fallback for id 0
+  stays in remnant.cpp handle() and ui.cpp recipe_box as a safety net.
+- tests/test_craft.cpp (Makefile test-logic and build_native.sh test): a fake save slot with a pouch and an item box;
+  containers found by shape, counts across both, box taken first, pouch slot cleared when empty, zenny bounds, all
+  742 recipes (2116 needs) parse to real materials, every material mapped. Passes.

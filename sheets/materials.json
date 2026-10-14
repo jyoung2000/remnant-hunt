@@ -13,106 +13,106 @@
    "id": "ore_low",
    "rank": "low",
    "kind": "ore",
-   "mhw_item_id": 0,
-   "note": "common low rank ore"
+   "mhw_item_id": 116,
+   "note": "Iron Ore"
   },
   {
    "id": "bone_low",
    "rank": "low",
    "kind": "bone",
-   "mhw_item_id": 0,
-   "note": "small monster bone"
+   "mhw_item_id": 147,
+   "note": "Monster Bone S"
   },
   {
    "id": "ore_low2",
    "rank": "low",
    "kind": "ore",
-   "mhw_item_id": 0,
-   "note": "better low rank ore"
+   "mhw_item_id": 117,
+   "note": "Machalite Ore"
   },
   {
    "id": "bone_low2",
    "rank": "low",
    "kind": "bone",
-   "mhw_item_id": 0,
-   "note": "medium monster bone"
+   "mhw_item_id": 148,
+   "note": "Monster Bone M"
   },
   {
    "id": "crystal_low",
    "rank": "low",
    "kind": "crystal",
-   "mhw_item_id": 0,
-   "note": "low rank crystal"
+   "mhw_item_id": 121,
+   "note": "Earth Crystal"
   },
   {
    "id": "ore_high",
    "rank": "high",
    "kind": "ore",
-   "mhw_item_id": 0,
-   "note": "high rank ore"
+   "mhw_item_id": 118,
+   "note": "Dragonite Ore"
   },
   {
    "id": "bone_high",
    "rank": "high",
    "kind": "bone",
-   "mhw_item_id": 0,
-   "note": "high rank bone"
+   "mhw_item_id": 150,
+   "note": "Monster Bone+"
   },
   {
    "id": "part_high",
    "rank": "high",
    "kind": "part",
-   "mhw_item_id": 0,
-   "note": "high rank wyvern part"
+   "mhw_item_id": 151,
+   "note": "Monster Keenbone"
   },
   {
    "id": "ore_high2",
    "rank": "high",
    "kind": "ore",
-   "mhw_item_id": 0,
-   "note": "rare high rank ore"
+   "mhw_item_id": 120,
+   "note": "Fucium Ore"
   },
   {
    "id": "elder_high",
    "rank": "high",
    "kind": "elder",
-   "mhw_item_id": 0,
-   "note": "elder dragon material"
+   "mhw_item_id": 153,
+   "note": "Elder Dragon Bone"
   },
   {
    "id": "part_high2",
    "rank": "high",
    "kind": "part",
-   "mhw_item_id": 0,
-   "note": "rare high rank wyvern part"
+   "mhw_item_id": 152,
+   "note": "Monster Hardbone"
   },
   {
    "id": "ore_master",
    "rank": "master",
    "kind": "ore",
-   "mhw_item_id": 0,
-   "note": "master rank ore"
+   "mhw_item_id": 604,
+   "note": "Eltalite Ore"
   },
   {
    "id": "bone_master",
    "rank": "master",
    "kind": "bone",
-   "mhw_item_id": 0,
-   "note": "master rank bone"
+   "mhw_item_id": 668,
+   "note": "Monster Solidbone"
   },
   {
    "id": "elder_master",
    "rank": "master",
    "kind": "elder",
-   "mhw_item_id": 0,
-   "note": "master rank elder dragon material"
+   "mhw_item_id": 174,
+   "note": "Elder Dragon Blood"
   },
   {
    "id": "gem_master",
    "rank": "master",
    "kind": "gem",
-   "mhw_item_id": 0,
-   "note": "master rank gem"
+   "mhw_item_id": 990,
+   "note": "Spiritvein Gem"
   }
  ]
 }
