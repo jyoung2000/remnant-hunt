@@ -34,7 +34,7 @@ case "${1:-all}" in
     [ -x build/preview_ui.exe ] || { echo "preview build failed"; exit 1; }
     mkdir -p build/preview
     R2W="$(cygpath -w "${R2:-/c/Program Files (x86)/Steam/steamapps/common/Remnant2}")"
-    for i in 0 1 2 3 4 5 6 7; do ./build/preview_ui.exe $i assets build/preview/screen_$i.bmp "$(cygpath -w "$PWD/build/win")" "$R2W" >/dev/null; done
+    for i in 0 1 2 3 4 5 6 7 8; do ./build/preview_ui.exe $i assets build/preview/screen_$i.bmp "$(cygpath -w "$PWD/build/win")" "$R2W" >/dev/null; done
     python tools/bmp2png.py build/preview/screen_*.bmp && ls build/preview/*.png ;;
   *) make -j8 TC="$TCB" "$@" ;;
 esac

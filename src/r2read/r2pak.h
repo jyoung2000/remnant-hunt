@@ -51,8 +51,16 @@ std::vector<std::string> names(const Bytes& pkg, size_t* end = nullptr);
 struct BulkEntry { int64_t offset, size; uint32_t flags; };
 std::vector<BulkEntry> bulkMap(const Bytes& pkg);
 
-struct Mip { int w = 0, h = 0; bool inlineData = false; size_t at = 0; int64_t size = 0, bulkOffset = 0; };
+// A virtual-texture mip (tiles z-ordered in .ubulk chunks): tiles holds, per tile (row-major), the tile index
+// within the mip data at bulkOffset (UINT32_MAX = absent). vtAssemble() turns it into linear block data.
+struct Mip {
+    int w = 0, h = 0; bool inlineData = false; size_t at = 0; int64_t size = 0, bulkOffset = 0;
+    bool vt = false; int tilesW = 0, tilesH = 0, tileBlocks = 0, borderBlocks = 0, blockBytes = 0; int64_t tileBytes = 0;
+    std::vector<uint32_t> tiles;
+};
 struct Texture { std::string format; int w = 0, h = 0; std::vector<Mip> mips; };
 bool parseTexture(const Bytes& pkg, Texture* out, std::string* err);
+// Stitches a virtual-texture mip's inner tile blocks (borders dropped) into linear block data; bulk is the .ubulk.
+bool vtAssemble(const Mip& m, const Bytes& bulk, Bytes* out, std::string* err);
 
 }  // namespace r2

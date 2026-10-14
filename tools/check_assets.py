@@ -66,6 +66,10 @@ def main():
                         check("texture", where + "." + col, "TEX", spec, "256")
                     elif kind == "r2name":
                         check("name", where + "." + col, "NAME", spec["asset"], spec.get("pattern", "^(" + spec.get("name", "") + ")$"))
+                elif col == "mesh_tex" and isinstance(v, list):
+                    for e in v:
+                        if "=" in e:
+                            check("gun-texture", where + ".mesh_tex", "TEX", e.split("=", 1)[1].replace(".uasset", ""), "1024")
                 elif isinstance(v, str) and "Remnant2/Content" in v:
                     if col == "mesh":
                         check("mesh", where, "MESH", v)
@@ -75,6 +79,10 @@ def main():
                         check("animation", where + "." + col, "ANIM", v)
                     elif col.startswith("snd") or col == "event":
                         check("sound", where + "." + col, "SND", v, "1")
+                    elif col == "mesh_tex":
+                        for e in v.split(","):
+                            if "=" in e:
+                                check("gun-texture", where + ".mesh_tex", "TEX", e.split("=", 1)[1].replace(".uasset", ""), "1024")
     # boss attacks name their animation relative to the boss's anim_dir
     bosses = {b["id"]: b for b in sheets["bosses.json"]["rows"]}
     for r in sheets["boss_attacks.json"]["rows"]:

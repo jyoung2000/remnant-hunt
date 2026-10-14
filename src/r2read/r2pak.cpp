@@ -385,6 +385,114 @@ std::vector<BulkEntry> bulkMap(const Bytes& d) {
     return out;
 }
 
+// Virtual textures (UE 5.2 FVirtualTextureBuiltData): the platform data holds no classic mips (NumMips == 0); after
+// bIsVirtual come the tile layout and data chunks, each chunk an entry of the bulk-data map.
+static bool parseVirtual(const Bytes& d, size_t p, const std::string& pf, const std::vector<BulkEntry>& bmap,
+                         Texture* out, std::string* err) {
+    auto i32 = [&](int32_t* v) {
+        if (p + 4 > d.size()) return false;
+        *v = rd<int32_t>(d.data() + p);
+        p += 4;
+        return true;
+    };
+    auto arr = [&](std::vector<int32_t>* v) {
+        int32_t n;
+        if (!i32(&n) || n < 0 || n > 4096 || p + (size_t)n * 4 > d.size()) return false;
+        v->resize((size_t)n);
+        for (int32_t i = 0; i < n; i++) i32(&(*v)[(size_t)i]);
+        return true;
+    };
+    int32_t virt, cooked, layers, wBlocks, hBlocks, tile, border, nm, w, h;
+    std::vector<int32_t> layerOff, chunkOfMip, baseOfMip;
+    if (!i32(&virt) || virt != 1 || !i32(&cooked) || !i32(&layers) || !i32(&wBlocks) || !i32(&hBlocks) ||
+        !i32(&tile) || !i32(&border) || !arr(&layerOff) || !i32(&nm) || !i32(&w) || !i32(&h) ||
+        !arr(&chunkOfMip) || !arr(&baseOfMip)) { *err = "bad virtual texture"; return false; }
+    if (layers != 1 || wBlocks != 1 || hBlocks != 1 || layerOff.size() != 1 || nm <= 0 || nm > 16 ||
+        chunkOfMip.size() != (size_t)nm || baseOfMip.size() != (size_t)nm || tile <= 0 || tile % 4 || border % 4) {
+        *err = "unsupported virtual texture";
+        return false;
+    }
+    struct Off { int32_t w, h, maxAddr; std::vector<int32_t> addr, off; };
+    int32_t nOff;
+    if (!i32(&nOff) || nOff != nm) { *err = "bad virtual tile offsets"; return false; }
+    std::vector<Off> offs((size_t)nm);
+    for (Off& o : offs)
+        if (!i32(&o.w) || !i32(&o.h) || !i32(&o.maxAddr) || !arr(&o.addr) || !arr(&o.off) || o.addr.size() != o.off.size() ||
+            o.w <= 0 || o.h <= 0 || o.w > 1024 || o.h > 1024) { *err = "bad virtual tile offsets"; return false; }
+    // Three zero ints (empty trailing tables) sit between the tile offsets and the layer format string.
+    for (int z = 0; z < 8 && p + 4 <= d.size() && rd<int32_t>(d.data() + p) == 0; z++) p += 4;
+    int32_t slen;  // layer pixel format (FString), then the layer fallback colour (4 floats)
+    if (!i32(&slen) || slen < 2 || slen > 32 || p + (size_t)slen + 16 > d.size()) { *err = "bad virtual layer"; return false; }
+    p += (size_t)slen + 16;
+    int32_t nChunks;
+    if (!i32(&nChunks) || nChunks < 0 || nChunks > 64) { *err = "bad virtual chunks"; return false; }
+    std::vector<int32_t> chunkBulk;
+    for (int32_t c = 0; c < nChunks; c++) {
+        // FIoHash(20) + SizeInBytes + CodecPayloadSize + codec type + payload offset + bulk index
+        if (p + 20 + 8 + 5 + 4 > d.size()) { *err = "truncated virtual chunk"; return false; }
+        if (d[p + 28] != 4) { *err = "unsupported virtual codec"; return false; }  // 4 = RawGPU
+        chunkBulk.push_back(rd<int32_t>(d.data() + p + 33));
+        p += 37;
+    }
+    if (pf == "PF_B8G8R8A8") { *err = "unsupported virtual format"; return false; }
+    int blockBytes = (pf == "PF_DXT1" || pf == "PF_BC4") ? 8 : 16;
+    int tb = (tile + 2 * border) / 4;
+    for (int m = 0; m < nm; m++) {
+        int32_t ci = chunkOfMip[(size_t)m];
+        if (ci < 0 || (size_t)ci >= chunkBulk.size() || chunkBulk[(size_t)ci] < 0 || (size_t)chunkBulk[(size_t)ci] >= bmap.size()) {
+            *err = "bad virtual chunk";
+            return false;
+        }
+        const Off& o = offs[(size_t)m];
+        Mip mp;
+        mp.vt = true;
+        mp.w = std::max(1, w >> m);
+        mp.h = std::max(1, h >> m);
+        mp.tilesW = o.w; mp.tilesH = o.h;
+        mp.tileBlocks = tb; mp.borderBlocks = border / 4; mp.blockBytes = blockBytes;
+        mp.tileBytes = layerOff[0];
+        mp.bulkOffset = bmap[(size_t)chunkBulk[(size_t)ci]].offset + baseOfMip[(size_t)m];
+        mp.tiles.assign((size_t)o.w * o.h, UINT32_MAX);
+        for (int y = 0; y < o.h; y++)
+            for (int x = 0; x < o.w; x++) {
+                uint32_t addr = 0;  // z-order (Morton) address of the tile
+                for (int b = 0; b < 16; b++) addr |= ((uint32_t)(x >> b & 1) << (2 * b)) | ((uint32_t)(y >> b & 1) << (2 * b + 1));
+                int best = -1;
+                for (size_t k = 0; k < o.addr.size(); k++)
+                    if ((uint32_t)o.addr[k] <= addr) best = (int)k;
+                if (best < 0 || (uint32_t)o.off[(size_t)best] == UINT32_MAX) continue;
+                mp.tiles[(size_t)y * o.w + x] = (uint32_t)o.off[(size_t)best] + (addr - (uint32_t)o.addr[(size_t)best]);
+            }
+        mp.size = (int64_t)((mp.w + 3) / 4) * ((mp.h + 3) / 4) * blockBytes;
+        out->mips.push_back(mp);
+    }
+    return true;
+}
+
+bool vtAssemble(const Mip& m, const Bytes& bulk, Bytes* out, std::string* err) {
+    int bw = (m.w + 3) / 4, bh = (m.h + 3) / 4, inner = m.tileBlocks - 2 * m.borderBlocks;
+    if (inner <= 0) { *err = "bad virtual tile"; return false; }
+    out->assign((size_t)m.size, 0);
+    for (int ty = 0; ty < m.tilesH; ty++)
+        for (int tx = 0; tx < m.tilesW; tx++) {
+            uint32_t ti = m.tiles[(size_t)ty * m.tilesW + tx];
+            if (ti == UINT32_MAX) continue;
+            int64_t base = m.bulkOffset + (int64_t)ti * m.tileBytes;
+            if (base < 0 || (size_t)(base + m.tileBytes) > bulk.size()) { *err = "bulk range"; return false; }
+            for (int by = 0; by < inner; by++) {
+                int dy = ty * inner + by;
+                if (dy >= bh) break;
+                for (int bx = 0; bx < inner; bx++) {
+                    int dx = tx * inner + bx;
+                    if (dx >= bw) break;
+                    const uint8_t* src = bulk.data() + base + ((int64_t)(by + m.borderBlocks) * m.tileBlocks + bx + m.borderBlocks) * m.blockBytes;
+                    std::copy(src, src + m.blockBytes, out->begin() + ((size_t)dy * bw + dx) * m.blockBytes);
+                }
+            }
+        }
+    return true;
+}
+
 bool parseTexture(const Bytes& d, Texture* out, std::string* err) {
     static const char* kFormats[] = {"PF_BC7", "PF_DXT5", "PF_DXT1", "PF_BC5", "PF_BC4", "PF_B8G8R8A8"};
     size_t off = 0;
@@ -407,7 +515,8 @@ bool parseTexture(const Bytes& d, Texture* out, std::string* err) {
     p += 4;  // first mip to serialize
     int32_t nmips = rd<int32_t>(d.data() + p);
     p += 4;
-    if (nmips <= 0 || nmips > 16) { *err = "bad mip count"; return false; }
+    if (nmips == 0) return parseVirtual(d, p, pf, bmap, out, err);
+    if (nmips < 0 || nmips > 16) { *err = "bad mip count"; return false; }
     const uint32_t kSeparate = 0x0100 | 0x0800 | 0x0001;
     for (int i = 0; i < nmips; i++) {
         if (p + 4 > d.size()) { *err = "truncated mips"; return false; }

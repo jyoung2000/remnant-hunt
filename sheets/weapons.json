@@ -78,7 +78,7 @@
    "mesh": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/AbyssalHook/Mesh/Player_AbyssalHook.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "*=Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/AbyssalHook/Textures/T_Weapon_Abyssal_Hook_01a_Diff.uasset"
+    "*=Remnant2/Content/World_DLC1/Items/Weapons/Melee/Special/AbyssalHook/Textures/T_Weapon_Abyssal_Hook_01a_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -123,10 +123,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Mesh/Player_AlphaOmega.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "M_Boss_LongGuns_AlphaOmega_02=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_02_Diff.uasset",
-    "M_Boss_LongGuns_AlphaOmega_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_03_Diff.uasset",
-    "M_Boss_LongGuns_AlphaOmega_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_01_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_01_Diff.uasset"
+    "M_Boss_LongGuns_AlphaOmega_02=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_02_Diff",
+    "M_Boss_LongGuns_AlphaOmega_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_03_Diff",
+    "M_Boss_LongGuns_AlphaOmega_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_01_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Textures/T_Boss_LongGuns_AlphaOmega_01_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/AlphaOmega/Mesh/Player_AlphaOmega.uasset",
    "anim_fire": "none",
@@ -176,8 +176,8 @@
    "mesh": "Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Mesh/Player_Anguish.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "m_Anguish=Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Textures/T_Anguish_Diff.uasset",
-    "*=Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Textures/T_Anguish_Diff.uasset"
+    "m_Anguish=Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Textures/T_Anguish_Diff",
+    "*=Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Textures/T_Anguish_Diff"
    ],
    "skeleton": "Remnant2/Content/World_DLC1/Items/Weapons/Anguish/Mesh/Player_Anguish.uasset",
    "anim_fire": "none",
@@ -227,10 +227,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Mesh/Player_Aphelion.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Aphelion_N_erud_Boss_Weapon_04=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
-    "Aphelion_N_erud_Boss_Weapon_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
-    "Aphelion_N_erud_Boss_Weapon_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset"
+    "Aphelion_N_erud_Boss_Weapon_04=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff",
+    "Aphelion_N_erud_Boss_Weapon_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff",
+    "Aphelion_N_erud_Boss_Weapon_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Mesh/Player_Aphelion.uasset",
    "anim_fire": "none",
@@ -329,7 +329,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Mesh/Player_AssaultRifle.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Textures/T_AssaultRifle_Base_A_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Textures/T_AssaultRifle_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Mesh/Player_AssaultRifle.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AssaultRifle/Animations/Player_AssaultRifle_Shoot.uasset",
@@ -379,8 +379,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Mesh/Player_AtomSmasher.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "M_AtomSmasher=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Textures/T_Weapon_AtomSmasher_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Textures/T_Weapon_AtomSmasher_Diff.uasset"
+    "M_AtomSmasher=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Textures/T_Weapon_AtomSmasher_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hammer/AtomSmasher/Textures/T_Weapon_AtomSmasher_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -479,7 +479,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Mesh/Player_Bulldog.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Textures/T_LongGuns_Shotgun_Bulldog_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Textures/T_LongGuns_Shotgun_Bulldog_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/AutoShotgun/Mesh/Player_Bulldog.uasset",
    "anim_fire": "none",
@@ -577,7 +577,7 @@
    "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/BlackGreatsword/Mesh/Player_Black_Greatsword.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_DLC3/Items/Weapons/BlackGreatsword/Textures/T_Weapon_Black_Greatsword_Diff.uasset"
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/BlackGreatsword/Textures/T_Weapon_Black_Greatsword_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -626,8 +626,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Mesh/Player_BladeOfGul.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "M_BladeOfGul=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Textures/T_Player_Weapons_Melee_BladeOfGul_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Textures/T_Player_Weapons_Melee_BladeOfGul_Diff.uasset"
+    "M_BladeOfGul=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Textures/T_Player_Weapons_Melee_BladeOfGul_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/BladeOfGul/Textures/T_Player_Weapons_Melee_BladeOfGul_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -672,8 +672,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Mesh/Player_RepeaterCrossbow.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Repeater_Crossbow=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Textures/T_HandGuns_SMG_RepeaterCrossbow_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Textures/T_HandGuns_SMG_RepeaterCrossbow_Diff.uasset"
+    "Repeater_Crossbow=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Textures/T_HandGuns_SMG_RepeaterCrossbow_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/BoltDriver/Textures/T_HandGuns_SMG_RepeaterCrossbow_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -723,7 +723,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/BoneChopper/Meshes/Player_BoneChopper.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/BoneChopper/Textures/T_Weapon_BoneChopper_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/BoneChopper/Textures/T_Weapon_BoneChopper_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -773,8 +773,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mesh/Player_FaeHunting.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_LongGuns_Bow_Fae_Hunting=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mods/Pan/Textures/T_LongGuns_Bow_FaeHunting_Mods_Pan_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mods/Pan/Textures/T_LongGuns_Bow_FaeHunting_Mods_Pan_Diff.uasset"
+    "M_LongGuns_Bow_Fae_Hunting=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mods/Pan/Textures/T_LongGuns_Bow_FaeHunting_Mods_Pan_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Bow/_FaeHunting/Mods/Pan/Textures/T_LongGuns_Bow_FaeHunting_Mods_Pan_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -823,8 +823,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Mesh/Player_RustedClaws.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_RustedClaws=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Textures/T_Weapon_Rusted_Claw_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Textures/T_Weapon_Rusted_Claw_Diff.uasset"
+    "M_RustedClaws=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Textures/T_Weapon_Rusted_Claw_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Claws/RustedClaws/Textures/T_Weapon_Rusted_Claw_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -873,7 +873,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mesh/Player_CoachGun.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mods/Nerud/Textures/T_LongGuns_Rifle_CoachGun_Mod_Nerud_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mods/Nerud/Textures/T_LongGuns_Rifle_CoachGun_Mod_Nerud_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mesh/Player_CoachGun.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Animations/Player_CoachGun_Shoot.uasset",
@@ -924,10 +924,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Mesh/Player_Aphelion.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Aphelion_N_erud_Boss_Weapon_04=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
-    "Aphelion_N_erud_Boss_Weapon_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
-    "Aphelion_N_erud_Boss_Weapon_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff.uasset"
+    "Aphelion_N_erud_Boss_Weapon_04=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff",
+    "Aphelion_N_erud_Boss_Weapon_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff",
+    "Aphelion_N_erud_Boss_Weapon_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Textures/T_Boss_HandGuns_Aphelion_01_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Aphelion/Mesh/Player_Aphelion.uasset",
    "anim_fire": "none",
@@ -1029,8 +1029,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Mesh/Player_Special_Deceit.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Boss_LongGuns_Decipet=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset"
+    "M_Boss_LongGuns_Decipet=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1081,10 +1081,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Mesh/Player_Merciless.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Heartbreaker_back=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
-    "Heartbreaker_front=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_front_Diff.uasset",
-    "Heartbreaker_Eyes=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset"
+    "Heartbreaker_back=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff",
+    "Heartbreaker_front=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_front_Diff",
+    "Heartbreaker_Eyes=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1186,8 +1186,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CorruptedNebula/Mesh/Player_Special_Nebula_Corrupted.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Nebula_Nerud_02=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset"
+    "Nebula_Nerud_02=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1238,7 +1238,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Mesh/Player_RunePistol.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Textures/T_Handguns_Pistol_RunePistol_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Textures/T_Handguns_Pistol_RunePistol_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Mesh/Player_RunePistol.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Animations/Player_RunePistol_Shoot.uasset",
@@ -1289,9 +1289,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CorruptedSavior/Mesh/Player_Savior_Corrupted.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Special_LongGuns_Savior=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
-    "M_Special_LongGuns_Savior_Gem=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+    "M_Special_LongGuns_Savior=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff",
+    "M_Special_LongGuns_Savior_Gem=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1342,9 +1342,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Corrupted_Sorrow/Mesh/Player_Sorrow_Corrupted.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Sorrow_Gun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
-    "Sorrow_Flowers=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset"
+    "Sorrow_Gun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff",
+    "Sorrow_Flowers=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1445,8 +1445,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Mesh/Player_CrescentMoon.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Textures/T_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Textures/T_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon_Diff.uasset"
+    "M_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Textures/T_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/CrescentMoon/Textures/T_Boss_LongGuns_Bow_Nimue_Bow_Crescent_Moon_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1496,7 +1496,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Mesh/Player_Crossbow.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Textures/T_Crossbow_Base_A_01_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Textures/T_Crossbow_Base_A_01_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Mesh/Player_Crossbow.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Crossbow/Animations/Player_Crossbow_Shoot.uasset",
@@ -1546,9 +1546,9 @@
    "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/CrystalStaff/Mesh/Player_CrystalStaff.uasset",
    "mesh_fwd": "nx",
    "mesh_tex": [
-    "Melee_Crystal_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
-    "Melee_Crystal_Staff_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff.uasset"
+    "Melee_Crystal_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff",
+    "Melee_Crystal_Staff_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1598,8 +1598,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Mesh/Player_Special_CubeGun.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "M_Boss_HandGuns_CubeGun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Textures/Boss_HandGuns_CubeGun_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Textures/Boss_HandGuns_CubeGun_Diff.uasset"
+    "M_Boss_HandGuns_CubeGun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Textures/Boss_HandGuns_CubeGun_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Textures/Boss_HandGuns_CubeGun_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/CubeGun/Mesh/Player_Special_CubeGun.uasset",
    "anim_fire": "none",
@@ -1650,13 +1650,13 @@
    "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Mesh/Player_DarkMatter_Gauntlets.uasset",
    "mesh_fwd": "px",
    "mesh_tex": [
-    "M_Dark_Matter_Gauntlets_Glass=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
-    "M_Dark_Matter_Gauntlets=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
-    "M_Dark_Matter_Gauntlets_Black_Hole=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
-    "Weapon_Dark_Matter_Gauntlets_Black_Hole_Inverted=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
-    "Gauntlets_Filler_Mat1=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
-    "Gauntlets_Filler_Mat2=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset",
-    "*=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff.uasset"
+    "M_Dark_Matter_Gauntlets_Glass=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff",
+    "M_Dark_Matter_Gauntlets=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff",
+    "M_Dark_Matter_Gauntlets_Black_Hole=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff",
+    "Weapon_Dark_Matter_Gauntlets_Black_Hole_Inverted=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff",
+    "Gauntlets_Filler_Mat1=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff",
+    "Gauntlets_Filler_Mat2=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/DarkMatterGauntlets/Textures/T_Melee_Dark_Matter_Gauntlets_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1756,8 +1756,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Mesh/Player_Special_Deceit.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Boss_LongGuns_Decipet=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff.uasset"
+    "M_Boss_LongGuns_Decipet=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Deceit/Textures/T_Boss_LongGuns_Deceit_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1807,9 +1807,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Mesh/Player_DreamcatcherStaff.uasset",
    "mesh_fwd": "nx",
    "mesh_tex": [
-    "M_Melee_Dreamcatcher_Staff_Base=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff.uasset",
-    "M_Melee_Dreamcatcher_Staff_Dyn=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff.uasset"
+    "M_Melee_Dreamcatcher_Staff_Base=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff",
+    "M_Melee_Dreamcatcher_Staff_Dyn=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Dreamcatcher_Staff/Textures/Dreamcatcher_Staff_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1859,7 +1859,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/EdgeOfTheForest/Mesh/Player_EdgeOfTheForest.uasset",
    "mesh_fwd": "px",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/EdgeOfTheForest/Textures/T_Melee_EdgeOfTheForest_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/EdgeOfTheForest/Textures/T_Melee_EdgeOfTheForest_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1909,8 +1909,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Mesh/Player_Special_Enigma.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Labyrinth - Power Coil - Enigma=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Textures/T_Boss_HandGuns_Enigma_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Textures/T_Boss_HandGuns_Enigma_Diff.uasset"
+    "Labyrinth - Power Coil - Enigma=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Textures/T_Boss_HandGuns_Enigma_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Enigma/Textures/T_Boss_HandGuns_Enigma_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -1960,8 +1960,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Mesh/Player_JungleScar.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Player_Pan_ScaroftheJungleGod=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Textures/T_Player_JungleScar_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Textures/T_Player_JungleScar_Diff.uasset"
+    "M_Player_Pan_ScaroftheJungleGod=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Textures/T_Player_JungleScar_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/FeralJudgment/Textures/T_Player_JungleScar_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2010,8 +2010,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Mesh/Player_Flail_Steel.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "M_melee_flail_base=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Textures/T_Melee_Flail_Steel_Base_A_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Textures/T_Melee_Flail_Steel_Base_A_Diff.uasset"
+    "M_melee_flail_base=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Textures/T_Melee_Flail_Steel_Base_A_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/Flail_Steel_Base/Textures/T_Melee_Flail_Steel_Base_A_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2062,10 +2062,10 @@
    "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Mesh/Player_Genesis.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Player_LongGuns_Genesis=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset",
-    "Player_LongGuns_Genesis_String=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset",
-    "Genesis_Bow_Charge=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset",
-    "*=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff.uasset"
+    "Player_LongGuns_Genesis=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff",
+    "Player_LongGuns_Genesis_String=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff",
+    "Genesis_Bow_Charge=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/Genesis/Textures/T_Player_LongGuns_Genesis_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2115,8 +2115,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Mesh/Player_GodSplitter.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "M_Melee_Godsplitter=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Textures/T_Melee_Godsplitter_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Textures/T_Melee_Godsplitter_Diff.uasset"
+    "M_Melee_Godsplitter=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Textures/T_Melee_Godsplitter_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Godsplitter/Textures/T_Melee_Godsplitter_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2165,7 +2165,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/IronGreatsword/Mesh/Player_Iron_GreatSword.uasset",
    "mesh_fwd": "nx",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/IronGreatsword/Textures/T_Iron_Great_Sword_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/IronGreatsword/Textures/T_Iron_Great_Sword_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2214,7 +2214,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Mesh/Player_TalRatha_Hammer.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Textures/T_Melee_Special_Boss_Tal_Ratha_Hammer_1001_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Textures/T_Melee_Special_Boss_Tal_Ratha_Hammer_1001_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2265,9 +2265,9 @@
    "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Mesh/Player_Scythe_Harvester.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Weapon_Harvester_Scythe=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset",
-    "Weapon_Harvester_Scythe_Blade=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset",
-    "*=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset"
+    "Weapon_Harvester_Scythe=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff",
+    "Weapon_Harvester_Scythe_Blade=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2316,7 +2316,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/Hatchet/Mesh/Player_Hatchet.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/Hatchet/Textures/Melee_Hatchet_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/Hatchet/Textures/Melee_Hatchet_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2366,10 +2366,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Mesh/Player_Hellfire.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Upres_Hellfire_Root=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Root_Diff.uasset",
-    "Upres_Hellfire=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff.uasset",
-    "pistol_smg_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff.uasset"
+    "Upres_Hellfire_Root=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Root_Diff",
+    "Upres_Hellfire=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff",
+    "pistol_smg_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Hellfire/Textures/T_HandGuns_SMG_Upres_Hellfire_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2467,8 +2467,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Mesh/Player_HuntingPistol.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "pistol_hunting_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Textures/T_HuntingPistol_Base_A_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Textures/T_HuntingPistol_Base_A_Diff.uasset"
+    "pistol_hunting_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Textures/T_HuntingPistol_Base_A_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Textures/T_HuntingPistol_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Mesh/Player_HuntingPistol.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/HuntingPistol/Animations/Player_HuntingPistol_Shoot.uasset",
@@ -2517,10 +2517,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Mesh/Player_Huntmaster_Fae.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "HuntMaster_FaeMod_Material=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Mods/Root/Textures/T_LongGuns_Rifle_Sniper_HuntMaster_Mod_Root_Diff.uasset",
-    "M_Player_Rifle_Huntsmaster_Ammo=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset",
-    "Huntmaster=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset"
+    "HuntMaster_FaeMod_Material=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Mods/Root/Textures/T_LongGuns_Rifle_Sniper_HuntMaster_Mod_Root_Diff",
+    "M_Player_Rifle_Huntsmaster_Ammo=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff",
+    "Huntmaster=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Mesh/Player_Huntmaster_Fae.uasset",
    "anim_fire": "none",
@@ -2570,8 +2570,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/HuntressSpear/Mesh/Player_Fae_Huntress_Spear.uasset",
    "mesh_fwd": "nx",
    "mesh_tex": [
-    "01_-_Default=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/Spear/Textures/Graveyard/T_Player_Spear_Pan_01_Diff.uasset",
-    "*=Remnant2/Content/World_DLC1/Items/Weapons/Buster/Textures/T_DranShotgun_FaeMod_Diff.uasset"
+    "01_-_Default=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/Spear/Textures/Graveyard/T_Player_Spear_Pan_01_Diff",
+    "*=Remnant2/Content/World_DLC1/Items/Weapons/Buster/Textures/T_DranShotgun_FaeMod_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2620,7 +2620,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/Katana/Mesh/Player_SteelKatana.uasset",
    "mesh_fwd": "px",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/Katana/Textures/T_SteelKatana_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Katana/Katana/Textures/T_SteelKatana_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2719,7 +2719,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Hatchet/KrellAxe/Mesh/Player_KrellAxe.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Krell_Axe/Textures/T_Melee_Krell_Axe_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Krell_Axe/Textures/T_Melee_Krell_Axe_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2769,8 +2769,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Mesh/Player_LabyrinthStaff.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "M_Melee_Labyrinth_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Textures/T_Melee_Labyrinth_Staff_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Textures/T_Melee_Labyrinth_Staff_Diff.uasset"
+    "M_Melee_Labyrinth_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Textures/T_Melee_Labyrinth_Staff_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/LabyrinthStaff/Textures/T_Melee_Labyrinth_Staff_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2819,8 +2819,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mesh/Player_LeverAction.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Human_Rifle_LeverAction=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mods/Nerud/Textures/T_LongGuns_Rifle_WranglerLeverAction_Mods_Nerud_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Textures/T_LeverAction_Earth_Diff.uasset"
+    "Human_Rifle_LeverAction=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mods/Nerud/Textures/T_LongGuns_Rifle_WranglerLeverAction_Mods_Nerud_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Textures/T_LeverAction_Earth_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Animations/Graveyard/Player_LeverAction_Skeleton_Old.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Animations/Player_LeverAction_Shoot.uasset",
@@ -2869,8 +2869,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mesh/Player_LeverAction.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Human_Rifle_LeverAction=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mods/Nerud/Textures/T_LongGuns_Rifle_WranglerLeverAction_Mods_Nerud_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Textures/T_LeverAction_Earth_Diff.uasset"
+    "Human_Rifle_LeverAction=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Mods/Nerud/Textures/T_LongGuns_Rifle_WranglerLeverAction_Mods_Nerud_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Textures/T_LeverAction_Earth_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Animations/Graveyard/Player_LeverAction_Skeleton_Old.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LeverAction/Animations/Player_LeverAction_Shoot.uasset",
@@ -2919,8 +2919,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Mesh/Player_BoneSaw.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_LongGun_HeavyMG_Bonesaw=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Textures/T_LongGun_HeavyMG_Bonesaw_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Textures/T_LongGun_HeavyMG_Bonesaw_Diff.uasset"
+    "M_LongGun_HeavyMG_Bonesaw=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Textures/T_LongGun_HeavyMG_Bonesaw_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/LMG/Textures/T_LongGun_HeavyMG_Bonesaw_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -2969,8 +2969,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Mesh/Player_MachinePistol.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "pistol_machine_base_mat1=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Textures/T_MachinePistol_Base_A_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Textures/T_MachinePistol_Base_A_Diff.uasset"
+    "pistol_machine_base_mat1=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Textures/T_MachinePistol_Base_A_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Textures/T_MachinePistol_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Mesh/Player_MachinePistol.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/MachinePistol/Animations/Player_MachinePistol_Shoot.uasset",
@@ -3019,8 +3019,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Mesh/Player_Magnum.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Pistol_Magnum_Mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Textures/T_Magnum_Base_A_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Textures/T_Magnum_Base_A_Diff.uasset"
+    "Pistol_Magnum_Mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Textures/T_Magnum_Base_A_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Textures/T_Magnum_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Mesh/Player_Magnum.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Magnum/Animations/Player_Magnum_Shoot.uasset",
@@ -3070,10 +3070,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Mesh/Player_Merciless.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Heartbreaker_back=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
-    "Heartbreaker_front=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_front_Diff.uasset",
-    "Heartbreaker_Eyes=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff.uasset"
+    "Heartbreaker_back=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff",
+    "Heartbreaker_front=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_front_Diff",
+    "Heartbreaker_Eyes=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Merciless/Textures/Heartbreaker_back_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3173,10 +3173,10 @@
    "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/Flail_Mirage/Mesh/Player_Flail_Mirage.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Flail_Mirage=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset",
-    "MI_Mirage_Flail_Sandstorm2=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset",
-    "MI_Mirage_Flail_Sandstorm1=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff.uasset"
+    "Flail_Mirage=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff",
+    "MI_Mirage_Flail_Sandstorm2=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff",
+    "MI_Mirage_Flail_Sandstorm1=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Flail/OrnateFlail/Textures/T_Melee_Standard_Fae_Flail_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3276,7 +3276,7 @@
    "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/Monolith/Mesh/Player_Special_Monolith.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3327,10 +3327,10 @@
    "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Mesh/Player_Monorail.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Player_LongGuns_Monorail=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset",
-    "M_Player_LongGuns_Monorail_Charge=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset",
-    "M_Player_LongGuns_Monorail_Ammo=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset",
-    "*=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff.uasset"
+    "M_Player_LongGuns_Monorail=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff",
+    "M_Player_LongGuns_Monorail_Charge=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff",
+    "M_Player_LongGuns_Monorail_Ammo=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Textures/T_Player_LongGuns_Monorail_Diff"
    ],
    "skeleton": "Remnant2/Content/World_DLC3/Items/Weapons/Monorail/Mesh/Player_Monorail.uasset",
    "anim_fire": "none",
@@ -3380,8 +3380,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Mesh/Player_Special_Nebula.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Nebula_Nerud_02=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff.uasset"
+    "Nebula_Nerud_02=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Textures/T_Special_HandGuns_Boss_Nerud_Nebula_1001_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Mesh/Player_Special_Nebula.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Nebula/Animations/Player_2R_SMG_Nebula_Fire.uasset",
@@ -3431,10 +3431,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Mesh/Player_Nightfall.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "T_Boss_LongGuns_Nightfall_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_01_Diff.uasset",
-    "T_Boss_LongGuns_Nightfall_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_03_Diff.uasset",
-    "T_Boss_LongGuns_Nightfall_02=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_02_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_01_Diff.uasset"
+    "T_Boss_LongGuns_Nightfall_01=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_01_Diff",
+    "T_Boss_LongGuns_Nightfall_03=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_03_Diff",
+    "T_Boss_LongGuns_Nightfall_02=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_02_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Nightfall/Textures/T_Boss_LongGuns_Nightfall_01_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3534,8 +3534,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Mesh/Player_Fae_Blade.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Fae_Blade=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Textures/T_Fae_Blade_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Textures/T_Fae_Blade_Diff.uasset"
+    "Fae_Blade=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Textures/T_Fae_Blade_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/OrnateBlade/Textures/T_Fae_Blade_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3635,8 +3635,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Mesh/Player_PlasmaCutter.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_PlasmaCutter=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Textures/T_PlasmaCutter_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Textures/T_PlasmaCutter_Diff.uasset"
+    "M_PlasmaCutter=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Textures/T_PlasmaCutter_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Textures/T_PlasmaCutter_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/PlasmaCutter/Mesh/Player_PlasmaCutter.uasset",
    "anim_fire": "none",
@@ -3681,8 +3681,8 @@
    "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/Polygun/Mesh/Player_Rifle_Lab.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_LongGun_PolyGun_Stone=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mods/Nerud/Textures/T_LongGuns_Rifle_CoachGun_Mod_Nerud_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff.uasset"
+    "M_LongGun_PolyGun_Stone=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Coachgun/Mods/Nerud/Textures/T_LongGuns_Rifle_CoachGun_Mod_Nerud_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Huntmaster/Textures/T_Rifle_Huntmaster_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3732,9 +3732,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Mesh/Player_BAR.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_LongGuns_AssaultRifle_BAR=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Diff.uasset",
-    "M_LongGuns_AssaultRifle_BAR_Ammo=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Ammo_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Diff.uasset"
+    "M_LongGuns_AssaultRifle_BAR=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Diff",
+    "M_LongGuns_AssaultRifle_BAR_Ammo=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Ammo_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/BurstRifle/Textures/T_LongGuns_AssaultRifle_BAR_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3784,8 +3784,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Mesh/Player_RebellionSpear.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_RebellionSpear=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Textures/T_Melee_RebellionSpear_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Textures/T_Melee_RebellionSpear_Diff.uasset"
+    "M_RebellionSpear=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Textures/T_Melee_RebellionSpear_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/RebellionSpear/Textures/T_Melee_RebellionSpear_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3835,7 +3835,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Mesh/Player_RedDoeStaff.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3886,7 +3886,7 @@
    "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/Redeemer/Mesh/Player_Special_Redeemer.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3937,8 +3937,8 @@
    "mesh": "Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Mesh/Player_RepairTool.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Player_Handguns_Repair_Tool=Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Textures/T_Player_Handguns_Repair_Tool_Diff.uasset",
-    "*=Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Textures/T_Player_Handguns_Repair_Tool_Diff.uasset"
+    "Player_Handguns_Repair_Tool=Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Textures/T_Player_Handguns_Repair_Tool_Diff",
+    "*=Remnant2/Content/World_DLC3/Items/Weapons/RepairTool/Textures/T_Player_Handguns_Repair_Tool_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -3987,7 +3987,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Mesh/Player_Repeater.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Textures/T_Repeater_Base_A_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Textures/T_Repeater_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Mesh/Player_Repeater.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Animations/Player_Repeater_Shoot.uasset",
@@ -4036,7 +4036,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Mesh/Player_Repeater.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Textures/T_Repeater_Base_A_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Textures/T_Repeater_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Mesh/Player_Repeater.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Repeater/Animations/Player_Repeater_Shoot.uasset",
@@ -4085,9 +4085,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Mesh/Player_Repulsor.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Upres_Repulsor_Head=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Head_Diff.uasset",
-    "M_Upres_Repulsor_Body=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Diff.uasset"
+    "M_Upres_Repulsor_Head=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Head_Diff",
+    "M_Upres_Repulsor_Body=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Textures/T_LongGuns_Rifle_Sniper_Upres_Repulsor_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Mesh/Player_Repulsor.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Repulsor/Animations/Player_Repulsor_Shoot.uasset",
@@ -4136,9 +4136,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Mesh/Player_WesternClassic_Fae.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "WesternClassic_FaeMod1=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff.uasset",
-    "Western_Classic=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff.uasset"
+    "WesternClassic_FaeMod1=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff",
+    "Western_Classic=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/Revolver/Textures/T_HuntingPistol_WesternClassic_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4288,7 +4288,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Mesh/Player_RunePistol.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Textures/T_Handguns_Pistol_RunePistol_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Textures/T_Handguns_Pistol_RunePistol_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Mesh/Player_RunePistol.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/RunePistol/Animations/Player_RunePistol_Shoot.uasset",
@@ -4338,7 +4338,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/RuptureCannon/Mesh/Player_RuptureCannon.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/RuptureCannon/Textures/T_RuptureCannon_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/RuptureCannon/Textures/T_RuptureCannon_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4388,9 +4388,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Mesh/Player_Sagittarius.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Special_LongGuns_Sagittarius=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Diff.uasset",
-    "Special_LongGuns_Sagittarius_Glass=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Glass_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Diff.uasset"
+    "Special_LongGuns_Sagittarius=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Diff",
+    "Special_LongGuns_Sagittarius_Glass=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Glass_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sagittarius/Textures/Special_LongGuns_Sagittarius_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4439,9 +4439,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Mesh/Player_Savior.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Special_LongGuns_Savior=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
-    "M_Special_LongGuns_Savior_Gem=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff.uasset"
+    "M_Special_LongGuns_Savior=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff",
+    "M_Special_LongGuns_Savior_Gem=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Textures/T_Special_LongGuns_Savior_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Savior/Mesh/Player_Savior.uasset",
    "anim_fire": "none",
@@ -4490,8 +4490,8 @@
    "mesh": "Remnant2/Content/World_DLC1/Items/Weapons/Melee/Scythe/Mesh/Player_Scythe_Scrap.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Melee_Scrap_Scythe=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff.uasset"
+    "Melee_Scrap_Scythe=Remnant2/Content/World_DLC3/Items/Weapons/HarvesterScythe/Textures/T_Melee_Harvester_Scythe_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4540,8 +4540,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Mesh/Player_ServicePistol.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Service_Pistol=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Textures/T_AutoPistol_Service_Pistol_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Textures/T_AutoPistol_Service_Pistol_Diff.uasset"
+    "Service_Pistol=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Textures/T_AutoPistol_Service_Pistol_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ServicePistol/Textures/T_AutoPistol_Service_Pistol_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4591,9 +4591,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mesh/Player_SawedOff_Dran_Fae.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Basic_Sawed_off_Shotgun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Pan/Textures/T_HandGuns_Shotgun_SawOff_Mods_Pan_Diff.uasset",
-    "Sawed_off_shotgun_-_Fae_Mod=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Fae/Textures/T_HandGuns_Shotguns_SawOff_Mod_Fae_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Fae/Textures/T_HandGuns_Shotguns_SawOff_Mod_Fae_Diff.uasset"
+    "Basic_Sawed_off_Shotgun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Pan/Textures/T_HandGuns_Shotgun_SawOff_Mods_Pan_Diff",
+    "Sawed_off_shotgun_-_Fae_Mod=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Fae/Textures/T_HandGuns_Shotguns_SawOff_Mod_Fae_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mods/Fae/Textures/T_HandGuns_Shotguns_SawOff_Mod_Fae_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Mesh/Player_SawedOff_Dran_Fae.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/ShortBarrel/Animations/Player_Pistol_Short_Barrel_Shoot.uasset",
@@ -4643,8 +4643,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Mesh/Player_Shotgun.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Rifle_Shotgun_mat=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Textures/Base/T_Shotgun_Base_A_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Textures/Base/T_Shotgun_Base_A_Diff.uasset"
+    "Rifle_Shotgun_mat=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Textures/Base/T_Shotgun_Base_A_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Textures/Base/T_Shotgun_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Mesh/Player_Shotgun.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Shotgun/Animations/Player_Shotgun_Shoot.uasset",
@@ -4694,8 +4694,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Mesh/Player_SMG.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "pistol_smg_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Textures/T_SMG_Base_A_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Textures/T_SMG_Base_A_Diff.uasset"
+    "pistol_smg_mat=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Textures/T_SMG_Base_A_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Standard/SMG/Textures/T_SMG_Base_A_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4744,8 +4744,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Mesh/Player_Smolder.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "M_Melee_Smoulder_Upres=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Textures/T_Melee_Smolder_Upres_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Textures/T_Melee_Smolder_Upres_Diff.uasset"
+    "M_Melee_Smoulder_Upres=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Textures/T_Melee_Smolder_Upres_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Smolder/Textures/T_Melee_Smolder_Upres_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4794,10 +4794,10 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mesh/Player_SniperRifle_Fae.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Rifle_Shotgun_mat=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff.uasset",
-    "Widow Maker - Fae Mod=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff.uasset",
-    "M_LongGuns_Rifle_Sniper_Mods_Pan=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Pan/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Pan_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff.uasset"
+    "Rifle_Shotgun_mat=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff",
+    "Widow Maker - Fae Mod=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff",
+    "M_LongGuns_Rifle_Sniper_Mods_Pan=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Pan/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Pan_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mods/Fae/Textures/T_LongGuns_Rifle_Sniper_WidowMaker_Mod_Fae_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Mesh/Player_SniperRifle_Fae.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/Sniper_Rifle/Animations/Player_SniperRifle_Shoot.uasset",
@@ -4847,9 +4847,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Mesh/Player_Sorrow.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "Sorrow_Gun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
-    "Sorrow_Flowers=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff.uasset"
+    "Sorrow_Gun=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff",
+    "Sorrow_Flowers=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Textures/T_Boss_HandGuns_Sorrow_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Player_MiniCrossbow_Skeleton.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/Sorrow/Animations/Player_Pistol_MiniCrossbow_Sorrow_Shoot.uasset",
@@ -4948,7 +4948,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/SteelSpear/Mesh/Player_SteelSpear.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/SteelSpear/Textures/T_Weapon_StealSpear_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Spear/SteelSpear/Textures/T_Weapon_StealSpear_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -4998,9 +4998,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Mesh/Player_SpectralBlade.uasset",
    "mesh_fwd": "px",
    "mesh_tex": [
-    "M_Special_Melee_Boss_Spectral_Blade=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff.uasset",
-    "M_Special_Melee_Boss_Spectral_Blade_Eyes=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff.uasset"
+    "M_Special_Melee_Boss_Spectral_Blade=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff",
+    "M_Special_Melee_Boss_Spectral_Blade_Eyes=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/SpectralBlade/Textures/T_Special_Melee_Boss_Spectral_Blade_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -5049,7 +5049,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Mesh/Player_Sporebloom.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Textures/T_Special_LongGun_Upres_Sporebloom_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Textures/T_Special_LongGun_Upres_Sporebloom_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Player_Sporebloom_Skeleton.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Sporebloom/Animations/Player_Sporebloom_Shoot.uasset",
@@ -5098,9 +5098,9 @@
    "mesh": "Remnant2/Content/World_DLC2/Items/Weapons/CrystalStaff/Mesh/Player_CrystalStaff.uasset",
    "mesh_fwd": "nx",
    "mesh_tex": [
-    "Melee_Crystal_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
-    "Melee_Crystal_Staff_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff.uasset"
+    "Melee_Crystal_Staff=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff",
+    "Melee_Crystal_Staff_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/Scrap_Staff/Textures/T_Melee_Scrap_Staff_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/RedDoeStaff/Textures/T_RedDoeStaff__Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -5149,7 +5149,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Mesh/Player_Starkiller.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Textures/T_LongGuns_AssaultRifle_Particle_Accelerator_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Textures/T_LongGuns_AssaultRifle_Particle_Accelerator_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Mesh/Player_Starkiller.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/Starkiller/Animations/Player_Starkiller_Shoot.uasset",
@@ -5199,7 +5199,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Mesh/Player_Pistol_StarShot.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Textures/T_HandGuns_Special_StarShot_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Textures/T_HandGuns_Special_StarShot_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Mesh/Player_Pistol_StarShot.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/HandGuns/Special/StarShot/Animations/Player_StarShot_Shoot.uasset",
@@ -5249,8 +5249,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Mesh/Player_StoneBreaker.uasset",
    "mesh_fwd": "nx",
    "mesh_tex": [
-    "M_Stonebreaker=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Textures/T_Melee_Stonebreaker_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Textures/T_Melee_Stonebreaker_Diff.uasset"
+    "M_Stonebreaker=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Textures/T_Melee_Stonebreaker_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/GreatSword/Stonebreaker/Textures/T_Melee_Stonebreaker_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -5299,8 +5299,8 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Mesh/Player_Sword.uasset",
    "mesh_fwd": "px",
    "mesh_tex": [
-    "Melee_Sword=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff.uasset"
+    "Melee_Sword=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Standard/Sword/Sword/Textures/Scrap_Sword_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -5350,7 +5350,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Mesh/Player_TalRatha_Hammer.uasset",
    "mesh_fwd": "py",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Textures/T_Melee_Special_Boss_Tal_Ratha_Hammer_1001_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/TalRatha_Hammer/Textures/T_Melee_Special_Boss_Tal_Ratha_Hammer_1001_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",
@@ -5450,7 +5450,7 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Mesh/Player_TommyGun.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Textures/T_TommyGun_Base_A_Diff.uasset"
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Textures/T_TommyGun_Base_A_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Mesh/Player_TommyGun.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Standard/TommyGun/Animations/Player_TommyGun_Shoot.uasset",
@@ -5550,9 +5550,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Mesh/Player_Arbalest.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "Arbalest=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Arbalest_Diff.uasset",
-    "Arbalest_Magazine=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Magazine/T_Arbalest_Magazine_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Arbalest_Diff.uasset"
+    "Arbalest=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Arbalest_Diff",
+    "Arbalest_Magazine=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Magazine/T_Arbalest_Magazine_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Textures/Arbalest_Diff"
    ],
    "skeleton": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Player_TwistedArbalest_Skeleton.uasset",
    "anim_fire": "Remnant2/Content/World_Base/Items/Weapons/LongGuns/Special/TwistedArbalest/Animations/Player_TwistedArbalest_Shoot.uasset",
@@ -5650,9 +5650,9 @@
    "mesh": "Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Mesh/Player_WorldsEdge.uasset",
    "mesh_fwd": "ny",
    "mesh_tex": [
-    "world_s_edge_upres_low1=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff.uasset",
-    "world_s_edge_upres_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff.uasset",
-    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff.uasset"
+    "world_s_edge_upres_low1=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff",
+    "world_s_edge_upres_Gem=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff",
+    "*=Remnant2/Content/World_Base/Items/Weapons/Melee/Special/WorldsEdge/Textures/T_Melee_Worlds_Edge_Upres_Diff"
    ],
    "skeleton": "none",
    "anim_fire": "none",

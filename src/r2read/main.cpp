@@ -110,6 +110,10 @@ static void handle(const std::string& line) {
         for (const std::string& n : names(*p))
             if (std::regex_match(n, m, re) && m.size() > 1) return replyText(m[1].str());
         reply("ERR name not found");
+    } else if (f[0] == "DUMP" && f.size() == 2) {
+        const Bytes* p = package(f[1], &err);
+        if (!p) return reply("ERR " + err);
+        reply("OK " + std::to_string(p->size()), p->data(), p->size());
     } else if (f[0] == "TEX" && f.size() == 3) {
         const Bytes* p = package(f[1] + ".uasset", &err);
         if (!p) return reply("ERR " + err);
@@ -123,7 +127,11 @@ static void handle(const std::string& line) {
         }
         const Mip& m = t.mips[pick];
         Bytes px;
-        if (m.inlineData) {
+        if (m.vt) {
+            Bytes bulk;
+            if (!g_paks.read(f[1] + ".ubulk", &bulk, &err)) return reply("ERR " + err);
+            if (!vtAssemble(m, bulk, &px, &err)) return reply("ERR " + err);
+        } else if (m.inlineData) {
             px.assign(p->begin() + m.at, p->begin() + m.at + m.size);
         } else {
             Bytes bulk;

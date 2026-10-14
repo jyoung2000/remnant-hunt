@@ -217,3 +217,35 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   install_dev.sh deletes r2read_next.exe after a direct copy; model_get logs a failed decode once.
 - Bosses "not loading": no "boss" line in the log at all; key_down needs the game window focused. Added a log line on
   the boss key press ("boss key: view ..., zone ..., rank ...") so the next run shows whether F9 arrived.
+
+## Next: the hunter as the Remnant II player (Jalon, 2026-10-13 late)
+Asked: Remnant guns replace the MHW weapon in the hunter's hands with the right animations; Remnant armour on the
+hunter; skill/ability animations and effects; the Dragon Heart customised as in Remnant II; Remnant gear in MHW's
+item bar beside the whetstone and net; the hunter should feel like the Remnant II player with Remnant gear.
+What exists: gun drawn at an estimated hand position with its own fire/reload animations (gunmodel.cpp); relic +
+3 fragment slots at the terminal (that is Remnant II's relic customisation: relic choice and three fragments);
+first person when aiming; skills with effects but no body animation.
+What each needs, from the diagnostics so far:
+1. Gun in the real hand: the right-hand joint world matrix. research.cpp's one-level scan found only the hunter root.
+   Plan: a motion-based search (a block whose translation moves with the hunter but differs from the root by a
+   stable 60-110 cm, and swings when the hunter attacks), 2-3 pointer levels deep from the player object, logged with
+   the candidate offsets; then gunmodel attaches to it and hides nothing of MHW (MHW's weapon stays sheathed: the mod
+   should keep the hunter in the "no weapon" action set, set 1, while in gun mode, which the action log shows as the
+   default stance).
+2. Hunter animations: play MHW's own bowgun draw/fire/reload actions through ActionController::DoAction (allowed) once
+   their ids are known. The action log only recorded set 1 and set 3 so far; a labelled recording (press the key,
+   log "label: ...") of light bowgun draw, fire, reload and item drinking is the missing data.
+3. Remnant armour on the hunter: needs the hunter's joint matrices (same as 1) to skin Remnant armour meshes over
+   the hunter, and MHW's own armour hidden (a game write Jalon has not approved yet: ask first).
+4. Item bar: the current-slot field was not found by the watch; candidates player +0x34/+0x50/+0xD4/+0xB0C/+0xC20.
+   A second watch that records which candidate changes exactly when the player scrolls the bar settles it.
+- 0.4.1: gun diffuse maps are UE virtual textures (NumMips 0, bIsVirtual 1, 136x136 BC7 tiles in Morton order with a
+  4 px border): r2pak.cpp parseVirtual + vtAssemble stitch them; 88 of 92 distinct gun maps load, 4 (Anguish,
+  Corrupted Deceit, Corrupted Savior, +1) use a layout still rejected ("unsupported virtual texture") and keep the
+  flat colour. weapons.json mesh_tex lost its ".uasset" suffixes (the TEX request adds one); r2client strips a
+  suffix defensively. r2read gained DUMP <pkg> (raw package bytes, debugging). Preview screen 8 draws a gun map.
+  ui.cpp: Item-Box-style section row (EQUIPMENT / ITEMS / ARCHETYPES / TRAITS / PRISMS) on the Ward 13 screens, ITEMS
+  view on the terminal, gun panel moved up and right of MHW's centre prompts, "[P] Remnant gear" prompt in town, the
+  mouse wheel swaps long gun / hand gun in gun mode (wheel blocked from the game then). Boss key press now logs.
+  Not yet: the hunter holding/reloading the gun with MHW animations and Remnant armour (needs the hand joint and
+  action ids, see the plan above); consumables in MHW's item bar (needs the bar's current-slot field).

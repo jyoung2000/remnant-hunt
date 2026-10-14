@@ -447,6 +447,7 @@ static std::string g_npcSays;
 static ItemView g_pick;          // selected item in a list
 static int g_slotPick = -1;      // loadout slot being changed
 static char g_filter[64] = {0};
+static bool g_itemsView = false;  // the terminal's right panel shows only the items (consumables), MHW's Item Box "Manage Items"
 
 static void ui_sound(const char* id) {
     int i = ui_sounds_index(id);
@@ -461,6 +462,7 @@ static void open(Screen s) {
     g_npcSays.clear();
     g_pick = ItemView();
     g_slotPick = -1;
+    g_itemsView = false;  // the section row sets it again after opening the terminal for ITEMS
     g_filter[0] = 0;
 }
 
@@ -518,6 +520,17 @@ static void screen_intro() {
     if ((remnant_button("CONTINUE", ImVec2(200, kBtnPrimary), ready) || (ready && ImGui::IsKeyPressed(ImGuiKey_Enter))))
         open(SCR_ARCHETYPE);
     end_screen();
+}
+
+// The Ward 13 section row under the breadcrumb, like MHW's Item Box menu: one pill per screen, the current one lit.
+// Q/E cycle it. Not shown on the NPC menus (they carry their own tab strip).
+static void section_row(int active) {  // active: 0 equipment, 1 items, 2 archetypes, 3 traits, 4 prisms
+    int was = active;
+    tab_strip({"EQUIPMENT", "ITEMS", "ARCHETYPES", "TRAITS", "PRISMS"}, active);
+    if (active == was) return;
+    static const Screen kTarget[5] = {SCR_TERMINAL, SCR_TERMINAL, SCR_ARCHETYPE, SCR_TRAITS, SCR_PRISM};
+    open(kTarget[active]);
+    g_itemsView = active == 1;
 }
 
 // ---- shared pieces
@@ -1026,8 +1039,9 @@ static const char* role_label(int role) {
 
 static void screen_terminal(const SaveData& s, const Live& l) {
     if (!begin_screen("##terminal", 0.84f, 0.92f)) return end_screen();
-    breadcrumb("Ward 13", "Loadout");
+    breadcrumb("Ward 13", g_itemsView ? "Items" : "Loadout");
     zenny_plate();
+    section_row(g_itemsView ? 1 : 0);
     float w = ImGui::GetContentRegionAvail().x;
     panel_begin("left", "WARD 13", ImVec2(w * 0.40f, -kFoot));
     image(kUi[UI_WARD13_TERMINAL].art, 1024, ImVec2(ImGui::GetContentRegionAvail().x, 72));
@@ -1057,7 +1071,6 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         ImGui::PopID();
     }
     ImGui::Dummy(ImVec2(0, 4));
-    if (remnant_button("ARCHETYPES AND SKILLS", ImVec2(-1, kBtnSecondary))) open(SCR_ARCHETYPE);
     int vendors = 0;
     for (int role = 0; role < 3; role++) vendors += !role_has_spot(role);  // visit them in person once their spot is known
     ImGui::BeginChild("slots", ImVec2(0, vendors ? -(26 + vendors * (kBtnSecondary + 4) + 8) : 0));
@@ -1070,7 +1083,7 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         int row = slot_row(s, sl);
         ImGui::PushID(i);
         bool sel = g_slotPick == i;
-        if (list_row("s", 52, sel)) { g_slotPick = i; g_pick = ItemView(); g_filter[0] = 0; }
+        if (list_row("s", 52, sel)) { g_slotPick = i; g_itemsView = false; g_pick = ItemView(); g_filter[0] = 0; }
         ItemView v = row >= 0 ? item(sl.cat, row) : ItemView();
         row_at(kRowPad, 6);
         image(v.icon, 128, ImVec2(40, 40));
@@ -1104,7 +1117,7 @@ static void screen_terminal(const SaveData& s, const Live& l) {
     }
     panel_end();
     ImGui::SameLine(0, 24);
-    panel_begin("right", g_slotPick >= 0 ? kSlots[g_slotPick].label : "HUNTER", ImVec2(0, -kFoot));
+    panel_begin("right", g_slotPick >= 0 ? kSlots[g_slotPick].label : g_itemsView ? "ITEMS" : "HUNTER", ImVec2(0, -kFoot));
     if (g_slotPick >= 0) {
         const Slot& sl = kSlots[g_slotPick];
         float rw = ImGui::GetContentRegionAvail().x;
@@ -1117,12 +1130,12 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         else empty_hint("Select an item to see its details");
         ImGui::EndChild();
     } else {
-        level_line(s);
         char rc[16];
         snprintf(rc, sizeof(rc), "%d", s.relicCharges);
+        if (!g_itemsView) level_line(s);
         stat_row("Relic charges", rc, col::gold);
         ImGui::Spacing();
-        {
+        if (!g_itemsView) {
             int free = trait_points(s) - trait_points_spent(s);
             bool ready = s.prismOn >= 0 && s.prism[s.prismOn].offers > 0;
             char tb[48], pb[48];
@@ -1134,8 +1147,8 @@ static void screen_terminal(const SaveData& s, const Live& l) {
             if (remnant_button(pb, ImVec2(half, kBtnSecondary))) open(SCR_PRISM);
         }
         // Remnant II's difficulty for the Remnant monsters met from now on
-        section("REMNANT DIFFICULTY");
-        {
+        if (!g_itemsView) section("REMNANT DIFFICULTY");
+        if (!g_itemsView) {
             float bw = (ImGui::GetContentRegionAvail().x - 3 * 6) / kDifficultiesCount;
             for (int i = 0; i < kDifficultiesCount; i++) {
                 ImGui::PushID(400 + i);
@@ -1151,8 +1164,8 @@ static void screen_terminal(const SaveData& s, const Live& l) {
                 ImGui::PopID();
             }
         }
-        section("EQUIPPED");
-        {
+        if (!g_itemsView) section("EQUIPPED");
+        if (!g_itemsView) {
             ImVec2 g0 = ImGui::GetCursorScreenPos();
             float cw = ImGui::GetContentRegionAvail().x / 2;
             int cnt = (int)(sizeof(kSlots) / sizeof(kSlots[0]));
@@ -1211,7 +1224,7 @@ static void screen_terminal(const SaveData& s, const Live& l) {
     } else if (foot_back("CLOSE")) {
         open(SCR_NONE);
     }
-    foot_hint(g_slotPick >= 0 ? "Choose an item to equip." : "Pick a slot to change it.");
+    foot_hint(g_slotPick >= 0 ? "Choose an item to equip." : g_itemsView ? "Use a consumable." : "Pick a slot to change it.");
     end_screen();
 }
 
@@ -1223,6 +1236,7 @@ static void screen_traits(const SaveData& s) {
     if (!begin_screen("##traits", 0.80f, 0.86f)) return end_screen();
     breadcrumb("Ward 13", "Traits");
     zenny_plate();
+    section_row(3);
     int earned = trait_points(s), spent = trait_points_spent(s);
     static const char* kPass[4] = {"CORE TRAITS", "ARCHETYPE TRAITS", "LEARNED TRAITS", "NOT LEARNED YET"};
     std::vector<int> order[4];  // core, archetype, learned, not yet learned
@@ -1430,6 +1444,7 @@ static void screen_prism(const SaveData& s) {
     if (!begin_screen("##prism", 0.82f, 0.86f)) return end_screen();
     breadcrumb("Ward 13", "Prisms");
     zenny_plate();
+    section_row(4);
     float w = ImGui::GetContentRegionAvail().x;
     panel_begin("owned", "PRISMS", ImVec2(w * 0.28f, -kFoot));
     bool any = false;
@@ -1543,6 +1558,7 @@ static void screen_archetype(const SaveData& s) {
     if (!begin_screen("##archetype", 0.84f, 0.86f, s.archetype >= 0)) return end_screen();
     breadcrumb("Ward 13", "Archetypes");
     zenny_plate();
+    if (s.archetype >= 0) section_row(2);
     std::vector<int> rows;
     for (int i = 0; i < kArchetypesCount; i++)
         if (!(s.archetype < 0 && kArchetypes[i].zenny > 0)) rows.push_back(i);  // first choice: the starting four
@@ -1649,6 +1665,16 @@ static void hud(const SaveData& s, const Live& l) {
         fg->AddRectFilled(ImVec2(p.x - 20, p.y - 10), ImVec2(p.x - 16, p.y + ts.y + 10), col::accent);
         fg->AddText(g_bold, 20 * sc, p, col::text, b);
     }
+    // A standing prompt in town, so the Remnant menu is findable without standing at an NPC.
+    if (l.snap.inBase && g_screen == SCR_NONE && l.nearMenu < 0 && s.archetype >= 0) {
+        char b[160];
+        snprintf(b, sizeof(b), "[%c]  Remnant gear: equipment, items, archetypes, traits, prisms", (char)keys().terminal);
+        ImVec2 ts = g_bold->CalcTextSizeA(18 * sc, FLT_MAX, 0, b);
+        ImVec2 p(vp->Pos.x + vp->Size.x - 40 * sc - 20 - ts.x, vp->Pos.y + vp->Size.y - 190 * sc);
+        fg->AddRectFilled(ImVec2(p.x - 20, p.y - 10), ImVec2(p.x + ts.x + 20, p.y + ts.y + 10), col::bg);
+        fg->AddRectFilled(ImVec2(p.x - 20, p.y - 10), ImVec2(p.x - 16, p.y + ts.y + 10), col::accent);
+        fg->AddText(g_bold, 18 * sc, p, col::text, b);
+    }
     if (!l.combatAllowed) return;
     ImVec2 c(vp->Pos.x + vp->Size.x / 2, vp->Pos.y + vp->Size.y / 2);
     int gun = equipped_gun(s, l);
@@ -1679,9 +1705,9 @@ static void hud(const SaveData& s, const Live& l) {
             }
         }
     }
-    // Gun panel, bottom centre, clear of MHW's item bar and slinger (bottom right) until the guns live in the bar.
+    // Gun panel, raised and right of centre so MHW's centre prompts ("Change or organize your equipment.") stay readable.
     ImVec2 size(360 * sc, 120 * sc);
-    ImVec2 p(vp->Pos.x + (vp->Size.x - size.x) / 2, vp->Pos.y + vp->Size.y - size.y - 36 * sc);
+    ImVec2 p(vp->Pos.x + (vp->Size.x - size.x) / 2 + vp->Size.x * 0.12f, vp->Pos.y + vp->Size.y - size.y - 150 * sc);
     ImVec2 pe(p.x + size.x, p.y + size.y);
     fg->AddRectFilled(p, pe, col::mhwFrame);
     fg->AddRect(p, pe, col::mhwGold, 0, 0, 1.5f);
@@ -1883,6 +1909,19 @@ void ui_preview(int which, const SaveData& s, const Live& l) {
         case 5: hud(s, l); break;
         case 6: g_slotPick = 0; screen_terminal(s, l); break;
         case 7: g_menuRole = MENUS_ROLE_SMITHY; g_menu = -1; screen_menu(s, l); break;
+        case 8: {  // a gun's diffuse map as the renderer sees it (virtual-texture stitching check)
+            int w = weapons_index("huntmaster_m1");
+            std::string all = w >= 0 ? kWeapons[w].mesh_tex : "";
+            size_t eq = all.find('=');
+            std::string tex = eq == std::string::npos ? "" : all.substr(eq + 1, all.find(',', eq) - eq - 1);
+            ImGui::SetNextWindowPos(ImVec2(40, 40));
+            ImGui::SetNextWindowSize(ImVec2(1100, 820));
+            ImGui::Begin("##tex", nullptr, ImGuiWindowFlags_NoDecoration);
+            ImGui::TextUnformatted(tex.c_str());
+            image(tex.c_str(), 1024, ImVec2(768, 768));
+            ImGui::End();
+            break;
+        }
         default: g_menuRole = MENUS_ROLE_MELDER; g_menu = -1; screen_menu(s, l); break;
     }
 }
