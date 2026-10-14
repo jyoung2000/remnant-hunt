@@ -285,3 +285,11 @@ What each needs, from the diagnostics so far:
 - Death: hurt_hunter logs "hunter hit: ... hp A -> B of M"; a lethal hit forces HP to 0 (approved write) and plays
   [bosses] faint_action=S:I through DoAction when set; remnant.cpp regen/refund/heal skip while HP is 0. To find the
   faint action id: faint once normally (any MHW monster) and read the "action S:I" lines around it in dev_diag.txt.
+- Jalon (2026-10-14): Remnant items must be NEW MHW items with their own icons, names and animations, not proxies of
+  existing ones. The only way MHW can show a new item in its bar is through its own data: itemData.itm (item rows),
+  item_eng.gmd (names) and the icon atlas .tex, overridden through the nativePC folder that MHW reads before its
+  chunks (the standard MHW data-mod path; no code is patched). The mod would generate those overrides on the player's
+  PC from their own install (rule 2 holds: nothing shipped), with rows cloned from a cure-type item so MHW uses its
+  drinking animation and no built-in effect. Spike started: src/mhwread (chunk reader: Blowfish + Oodle) to extract
+  the three files; then an "nativePC writer" at install/first start. The proxy system stays as the fallback until the
+  new items work (bar_items.json decides).

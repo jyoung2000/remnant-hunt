@@ -88,6 +88,16 @@ $(B)/r2read.exe: $(R2READ_OBJ) $(patsubst third_party/ooz/%,$(O)/ooz/%.o,$(OOZ))
 	@mkdir -p $(B)
 	$(CXX) -static -s -O2 -o $@ $^
 
+$(O)/mhwread/%.o: src/mhwread/%
+	@mkdir -p $(dir $@)
+	$(CXX) -O2 -std=c++17 -Wall -c $< -o $@
+
+# mhwread: reads Monster Hunter: World chunk archives in place (tools/mhwchunk_notes.md); not part of 'all'
+mhwread: $(B)/mhwread.exe
+$(B)/mhwread.exe: $(O)/mhwread/main.cpp.o $(patsubst third_party/ooz/%,$(O)/ooz/%.o,$(OOZ))
+	@mkdir -p $(B)
+	$(CXX) -static -s -O2 -o $@ $^
+
 # r2read for Linux (dev tools: tools/test_mesh.py, tools/author_bosses.py, tools/attack_timing.py)
 linux:
 	@mkdir -p build/linux
