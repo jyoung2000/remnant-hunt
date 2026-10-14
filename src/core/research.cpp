@@ -243,7 +243,7 @@ void joint_tick(uint8_t* pl, const GameSnapshot& g, double now) {
         g_seenKey.reserve(kMaxTrackers);
         g_rank.reserve(kMaxTrackers);
     }
-    bool hunting = g.inGame && pl && g.view.valid && (!g.inBase || g.zone == 504) && g.zone >= 0;  // hunting zones and the Training Area
+    bool hunting = g.inGame && pl && g.view.valid && g.zone >= 0;  // any zone: the arms swing in town too, and the hub is where the search can run unattended
     if (!hunting) { g_run.zone = -2; return; }
     JointRun& r = g_run;
     if (r.zone != g.zone) {  // a new zone: fresh run

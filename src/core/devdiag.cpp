@@ -560,55 +560,106 @@ static void report() {
 
 
 // ---------------------------------------------------------------- item bar watch (read-only)
-// For two minutes after the report, the player object and the save slot are sampled twice a second. A field that
-// changes several times and only ever holds item ids from the pouch is a candidate for the item bar's current item.
+// For 150 s after the report, the player object, the save slot and the first 0x4000 bytes of every singleton are
+// sampled every 0.25 s. Every 4-byte field that changes is counted; the last 16 values and the times of the first 12
+// changes are kept (from a pool preallocated in watch_start). The report lists fields that changed 2..60 times and
+// only ever held small values (an index), pouch item ids, or bytes (0..255): candidates for the item bar's current slot.
 
+struct WatchRec {
+    uint32_t vals[16];
+    float times[12];
+};
 struct Watch {
     uint8_t* base = nullptr;
     size_t size = 0;
-    const char* name = "";
-    std::vector<uint32_t> last;
-    std::vector<uint8_t> changes, onlyIds;
+    std::string name;
+    std::vector<uint32_t> last, rec;       // rec: 1-based index into g_recs, 0 = none
+    std::vector<uint8_t> changes, flags;   // flags: 1 small 0..31, 2 pouch id, 4 byte 0..255 (true so far for every value)
 };
-static Watch g_watch[2];
+static std::vector<Watch> g_watch;
+static std::vector<WatchRec> g_recs;
+static std::vector<uint32_t> g_recFree;
 static std::vector<int> g_watchIds;
-static double g_watchUntil = 0, g_watchNext = 0;
+static std::string g_watchNotes;
+static double g_watchStart = 0, g_watchUntil = 0, g_watchNext = 0;
+static const size_t kWatchCap = 3u << 20;   // total watched bytes
+static const double kWatchSecs = 150.0, kWatchStep = 0.25;
 
 static bool is_pouch_id(uint32_t v) {
     return std::find(g_watchIds.begin(), g_watchIds.end(), (int)v) != g_watchIds.end();
 }
+static uint8_t val_flags(uint32_t v) { return (uint8_t)((v < 32 ? 1 : 0) | (is_pouch_id(v) ? 2 : 0) | (v < 256 ? 4 : 0)); }
+
+static void watch_add(uint8_t* base, size_t size, const std::string& name, size_t* total) {
+    if (!base) return;
+    if (*total + size > kWatchCap) { outf("watch: skipped %s (%zu bytes would exceed the %zu byte cap)", name.c_str(), size, kWatchCap); return; }
+    if (!mem_readable(base, size)) { outf("watch: skipped %s (not readable)", name.c_str()); return; }
+    for (const Watch& o : g_watch) if (o.base == base) return;
+    Watch w;
+    w.base = base;
+    w.size = size;
+    w.name = name;
+    size_t n = size / 4;
+    w.last.assign((uint32_t*)base, (uint32_t*)base + n);
+    w.rec.assign(n, 0);
+    w.changes.assign(n, 0);
+    w.flags.resize(n);
+    for (size_t i = 0; i < n; i++) w.flags[i] = val_flags(w.last[i]);
+    *total += size;
+    g_watch.push_back(std::move(w));
+}
 
 static void watch_start(uint8_t* player, uint8_t* u, const std::vector<int>& ids, double now) {
     g_watchIds = ids;
-    g_watch[0] = Watch{player, 0x20000, "player"};
-    g_watch[1] = Watch{u, 0x26CC00, "save slot"};
-    for (Watch& w : g_watch) {
-        if (!w.base || !mem_readable(w.base, w.size)) { w.base = nullptr; continue; }
-        size_t n = w.size / 4;
-        w.last.assign((uint32_t*)w.base, (uint32_t*)w.base + n);
-        w.changes.assign(n, 0);
-        w.onlyIds.assign(n, 0);
-        for (size_t i = 0; i < n; i++) w.onlyIds[i] = is_pouch_id(w.last[i]);
-    }
-    g_watchUntil = now + 120.0;
-    g_watchNext = now + 0.5;
+    g_out.clear();
+    g_watch.clear();
+    g_watch.reserve(100);
+    g_recs.assign(30000, WatchRec{});
+    g_recFree.clear();
+    g_recFree.reserve(g_recs.size());
+    for (size_t i = g_recs.size(); i > 0; i--) g_recFree.push_back((uint32_t)i);   // 1-based
+    size_t total = 0;
+    watch_add(player, 0x20000, "player", &total);
+    for (auto& kv : g_singletons) watch_add(rd_ptr(kv.second), 0x4000, kv.first, &total);
+    watch_add(u, 0x26CC00, "save slot", &total);
+    g_watchStart = now;
+    g_watchUntil = now + kWatchSecs;
+    g_watchNext = now + kWatchStep;
+    outf("watch: %zu targets, %zu bytes", g_watch.size(), total);
+    g_watchNotes = g_out;
+    g_out.clear();
     Shared& sh = S();
     AcquireSRWLockExclusive(&sh.lock);
-    toast(sh.live, "Remnant Hunt diagnostic: scroll through your item bar a few times");
+    toast(sh.live, "Remnant Hunt diagnostic: scroll the item bar with the arrow keys, then open and close the item bar");
     sh.live.toastUntil = now + 20.0;
     ReleaseSRWLockExclusive(&sh.lock);
 }
 
-static void watch_sample() {
+static void watch_sample(double now) {
+    float t = (float)(now - g_watchStart);
     for (Watch& w : g_watch) {
-        if (!w.base || !mem_readable(w.base, w.size)) continue;
+        if (!mem_readable(w.base, w.size)) continue;
         const uint32_t* cur = (const uint32_t*)w.base;
         for (size_t i = 0, n = w.last.size(); i < n; i++) {
             uint32_t v = cur[i];
             if (v == w.last[i]) continue;
             w.last[i] = v;
-            if (w.changes[i] < 255) w.changes[i]++;
-            if (!is_pouch_id(v)) w.onlyIds[i] = 0;
+            uint8_t c = w.changes[i];
+            if (c >= 61) continue;                    // too noisy to be an index
+            w.changes[i] = ++c;
+            w.flags[i] &= val_flags(v);
+            if (c > 60) {                             // drop its history, it is out
+                if (w.rec[i]) { g_recFree.push_back(w.rec[i]); w.rec[i] = 0; }
+                continue;
+            }
+            if (!w.rec[i]) {
+                if (g_recFree.empty()) continue;      // pool exhausted: counts only
+                w.rec[i] = g_recFree.back();
+                g_recFree.pop_back();
+            }
+            WatchRec& r = g_recs[w.rec[i] - 1];
+            r.vals[(c - 1) & 15] = v;
+            if (c <= 12) r.times[c - 1] = t;
         }
     }
 }
@@ -616,22 +667,37 @@ static void watch_sample() {
 static void watch_report() {
     g_out.clear();
     outf("== item bar watch ==");
-    for (Watch& w : g_watch) {
-        if (!w.base) continue;
-        int shown = 0;
-        for (size_t i = 0; i < w.last.size() && shown < 40; i++)
-            if (w.onlyIds[i] && w.changes[i] >= 3) {
-                outf("%s +0x%zX changed %d times, now %u", w.name, i * 4, w.changes[i], w.last[i]);
-                shown++;
-            }
-        // Small counters that changed a few times (an index into the bar rather than an item id).
-        int idx = 0;
-        for (size_t i = 0; i < w.last.size() && idx < 40; i++)
-            if (w.changes[i] >= 3 && w.changes[i] <= 60 && w.last[i] < 32) {
-                outf("%s +0x%zX small value changed %d times, now %u", w.name, i * 4, w.changes[i], w.last[i]);
-                idx++;
-            }
-        outf("%s: %d id fields", w.name, shown);
+    g_out += g_watchNotes;
+    struct Cand { size_t w, i; int c; };
+    std::vector<Cand> cands;
+    for (size_t wi = 0; wi < g_watch.size(); wi++) {
+        const Watch& w = g_watch[wi];
+        for (size_t i = 0; i < w.last.size(); i++)
+            if (w.changes[i] >= 2 && w.changes[i] <= 60 && w.flags[i] && w.rec[i]) cands.push_back({wi, i, w.changes[i]});
+    }
+    std::stable_sort(cands.begin(), cands.end(), [](const Cand& a, const Cand& b) { return a.c < b.c; });
+    outf("candidates: %zu (showing up to 200, fewest changes first)", cands.size());
+    int shown = 0;
+    for (const Cand& cd : cands) {
+        if (shown++ >= 200) break;
+        const Watch& w = g_watch[cd.w];
+        const WatchRec& r = g_recs[w.rec[cd.i] - 1];
+        std::string vs, ts;
+        int n = cd.c, first = n > 16 ? n - 16 : 0;
+        char b[32];
+        for (int k = first; k < n; k++) { snprintf(b, sizeof(b), "%s%u", vs.empty() ? "" : ",", r.vals[k & 15]); vs += b; }
+        for (int k = 0; k < n && k < 12; k++) { snprintf(b, sizeof(b), "%s%.1f", ts.empty() ? "" : ",", r.times[k]); ts += b; }
+        outf("%s +0x%zX changes %d values %s at %ss", w.name.c_str(), cd.i * 4, cd.c, vs.c_str(), ts.c_str());
+    }
+    // Best lead: fields that only ever held pouch item ids and changed at least 3 times.
+    int lead = 0;
+    for (const Cand& cd : cands) {
+        const Watch& w = g_watch[cd.w];
+        if (lead >= 40) break;
+        if ((w.flags[cd.i] & 2) && cd.c >= 3) {
+            outf("best lead: %s +0x%zX only pouch ids, changed %d times, now %u", w.name.c_str(), cd.i * 4, cd.c, w.last[cd.i]);
+            lead++;
+        }
     }
     outf("== end watch ==");
 }
@@ -703,10 +769,10 @@ void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3&
             watch_report();
             append_out();
             log("diagnostic item bar watch written");
-            for (Watch& w : g_watch) w = Watch{};
+            std::vector<Watch>().swap(g_watch);
         } else if (now >= g_watchNext) {
             g_watchNext = now + 0.5;
-            watch_sample();
+            watch_sample(now);
         }
         return;
     }
