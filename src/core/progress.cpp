@@ -161,12 +161,17 @@ bool trait_known(const SaveData& s, int row) {
     }
 }
 
-bool trait_set(SaveData& s, int row, int delta) {
+bool trait_can_set(const SaveData& s, int row, int delta) {
     if (!trait_known(s, row) || (delta != 1 && delta != -1)) return false;
     if (kTraits[row].kind == TRAITS_KIND_ARCHETYPE && archetype_level(s, archetype_of_trait(row)) < 10) return false;
     int v = s.trait[row] + delta;
     if (v < 0 || v + (delta > 0 ? trait_auto(s, row) : 0) > kTraitMax) return false;
-    if (delta > 0 && trait_points_spent(s) >= trait_points(s)) return false;
+    return delta < 0 || trait_points_spent(s) < trait_points(s);
+}
+
+bool trait_set(SaveData& s, int row, int delta) {
+    if (!trait_can_set(s, row, delta)) return false;
+    int v = s.trait[row] + delta;
     s.trait[row] = (uint8_t)v;
     return true;
 }

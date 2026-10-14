@@ -106,3 +106,7 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
 - GUI: Monster Hunter menu style everywhere (palette, gold double frame with diamonds, amber cursor buttons, section
   headings with diamonds, RARE n in MHW colours). The Remnant-style health bars stay (asked for earlier).
 - tests/preview_ui.cpp: preview harness for the screens under Wine (not finished: needs stubs).
+
+## GUI check (software preview)
+- `make preview-ui` builds build/preview_ui.exe; `wine preview_ui.exe <0-4> <dir with fonts\> out.bmp` renders terminal/traits/prism/archetype/melder with a sample save.
+- Fixed from the preview: window padding inherited by child panels, label() breaking SameLine rows, progression block moved to the terminal's HUNTER panel, archetype-trait "+" only from archetype level 10 (trait_can_set), Elder Melder lists archetype engrams, leave button sized to its text.

@@ -112,6 +112,13 @@ test-logic: src/core/gen/sheets.gen.h
 	wine build/test_logic.exe
 	wine build/test_progress.exe
 
+# dev preview of the screens (no game needed): wine build/preview_ui.exe <screen 0-4> <dir with fonts\> <out.bmp>
+preview-ui: src/core/gen/sheets.gen.h
+	@mkdir -p build
+	$(CXX) -O2 -std=c++17 -DNOMINMAX -DRH_PREVIEW -DIMGUI_USER_CONFIG='"rh_imconfig.h"' -Ithird_party/imgui -Isrc/core \
+	    tests/preview_ui.cpp src/core/ui.cpp src/core/progress.cpp src/core/effects.cpp src/core/mem.cpp $(filter-out third_party/imgui/backends/%,$(IMGUI)) \
+	    -static -o build/preview_ui.exe
+
 installer: all
 	python3 tools/make_installer.py $(VERSION)
 	$(WINDRES) build/installer/setup.rc -O coff -o build/installer/setup.res.o
@@ -120,4 +127,4 @@ installer: all
 	    -Ibuild/installer src/installer/setup.cpp build/installer/setup.res.o \
 	    -lcomctl32 -lole32 -lshell32 -luxtheme -luuid -o out/RemnantHuntSetup-$(VERSION).exe
 
-.PHONY: all gen test test-logic package installer linux
+.PHONY: all gen test test-logic preview-ui package installer linux

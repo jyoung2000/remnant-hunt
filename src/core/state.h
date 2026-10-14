@@ -150,6 +150,7 @@ int trait_points(const SaveData& s);        // earned
 int trait_points_spent(const SaveData& s);
 bool trait_known(const SaveData& s, int row);
 bool trait_set(SaveData& s, int row, int delta);  // one point in (+1) or out (-1)
+bool trait_can_set(const SaveData& s, int row, int delta);
 void traits_reset(SaveData& s);
 int prism_level(const SaveData::Prism& p);  // 0..51
 double prism_need(const SaveData::Prism& p);  // experience for its next level, 0 at the top

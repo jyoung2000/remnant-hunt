@@ -123,17 +123,21 @@ static void diamond(ImDrawList* dl, ImVec2 c, float r, ImU32 fill) {
 // Section heading, MHW style: a diamond, the words, a thin gold rule.
 static void label(const char* s, ImU32 c = col::dim) {
     ImGui::PushFont(g_bold, 14.0f);
+    bool heading = ImGui::GetCursorPosX() <= ImGui::GetStyle().WindowPadding.x + 2;  // at the start of a line
     ImVec2 p = ImGui::GetCursorScreenPos();
     float h = ImGui::GetTextLineHeight();
     ImDrawList* dl = ImGui::GetWindowDrawList();
+    ImGui::Dummy(ImVec2(9, h));
     diamond(dl, ImVec2(p.x + 4, p.y + h * 0.5f), 3.5f, col::gold);
-    ImGui::SetCursorScreenPos(ImVec2(p.x + 13, p.y));
+    ImGui::SameLine(0, 4);
     ImGui::PushStyleColor(ImGuiCol_Text, ImColor(c).Value);
     ImGui::TextUnformatted(s);
     ImGui::PopStyleColor();
-    ImVec2 e = ImGui::GetItemRectMax();
-    float right = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
-    if (right - e.x > 40) dl->AddLine(ImVec2(e.x + 8, p.y + h * 0.5f), ImVec2(right, p.y + h * 0.5f), col::frameLo);
+    if (heading) {  // a rule to the right edge, for headings
+        ImVec2 e = ImGui::GetItemRectMax();
+        float right = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
+        if (right - e.x > 40) dl->AddLine(ImVec2(e.x + 8, p.y + h * 0.5f), ImVec2(right, p.y + h * 0.5f), col::frameLo);
+    }
     ImGui::PopFont();
 }
 
@@ -145,7 +149,7 @@ static void quote(const std::string& s) {
 }
 
 // A button in MHW's style: a dark plate in a thin gold frame; the amber cursor (a lit frame and a diamond) on hover.
-static bool remnant_button(const char* text, ImVec2 size = ImVec2(0, 0), bool enabled = true) {
+static bool remnant_button(const char* text, ImVec2 size = ImVec2(0, 0), bool enabled = true, bool selected = false) {
     ImGui::PushFont(g_bold, 18.0f);
     const char* end = strstr(text, "##");  // ImGui's hidden-id suffix is not drawn
     if (!end) end = text + strlen(text);
@@ -155,7 +159,7 @@ static bool remnant_button(const char* text, ImVec2 size = ImVec2(0, 0), bool en
               size.y > 0 ? size.y : ts.y + 12);
     ImVec2 a = ImGui::GetCursorScreenPos(), b(a.x + sz.x, a.y + sz.y);
     bool r = ImGui::InvisibleButton(text, sz);
-    bool hov = enabled && ImGui::IsItemHovered(), held = enabled && ImGui::IsItemActive();
+    bool hov = (enabled && ImGui::IsItemHovered()) || selected, held = enabled && ImGui::IsItemActive();
     ImDrawList* dl = ImGui::GetWindowDrawList();
     ImU32 top = held ? IM_COL32(120, 86, 34, 255) : hov ? IM_COL32(74, 58, 32, 255) : IM_COL32(38, 35, 29, 255);
     ImU32 bot = held ? IM_COL32(90, 64, 26, 255) : hov ? IM_COL32(52, 41, 24, 255) : IM_COL32(26, 24, 20, 255);
@@ -180,6 +184,8 @@ static bool begin_screen(const char* id, float wFrac, float hFrac) {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(28, 24));
     bool open = ImGui::Begin(id, nullptr,
                              ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+    ImGui::PopStyleVar();  // the wide padding is the screen's own; its rows and panels keep a small one
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 6));
     // MHW's menu frame: a darker band at the top, a double gold border with diamonds at its corners and on the top
     // and bottom edges, and the back hint at the foot.
     ImVec2 p = ImGui::GetWindowPos(), s = ImGui::GetWindowSize();
@@ -540,7 +546,9 @@ static void item_list(Cat c, int weaponSlot, const SaveData& s, bool ownedOnly, 
     ImGui::BeginChild("rows", ImVec2(0, 0));
     for (int i = 0; i < cat_count(c); i++) {
         ItemView v = item(c, i);
-        if (menuRole >= 0 && v.menu != menuRole) continue;
+        // archetype engrams (menu "archetype") are the Elder Melder's; the free starting ones are given, not sold
+        int sells = c == CAT_ARCHETYPE && v.menu == ARCHETYPES_MENU_ARCHETYPE ? (v.zenny > 0 ? MENUS_ROLE_MELDER : -2) : v.menu;
+        if (menuRole >= 0 && sells != menuRole) continue;
         if (c == CAT_WEAPON && weaponSlot >= 0 && kWeapons[i].slot != weaponSlot) continue;
         bool own = c == CAT_CONSUMABLE ? s.stock[i] > 0 : s.has(c, i);
         if (ownedOnly && !own) continue;
@@ -647,8 +655,10 @@ static void screen_menu(const SaveData& s, const Live& l) {
     }
     ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 62);
     ImGui::Dummy(ImVec2(1, 1));
-    ImGui::SameLine(ImGui::GetWindowWidth() - 300);
-    if (remnant_button(r2_text(n.leave_option).c_str(), ImVec2(240, 38))) open(SCR_NONE);
+    std::string leave = r2_text(n.leave_option);
+    float lw = std::max(240.0f, ImGui::CalcTextSize(leave.c_str()).x + 40);  // a long farewell still fits its button
+    ImGui::SameLine(ImGui::GetWindowWidth() - 60 - lw);
+    if (remnant_button(leave.c_str(), ImVec2(lw, 38))) open(SCR_NONE);
     end_screen();
 }
 
@@ -712,38 +722,6 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         ImGui::PopID();
     }
     if (remnant_button("ARCHETYPES AND SKILLS", ImVec2(-1, 34))) open(SCR_ARCHETYPE);
-    level_line(s);
-    {
-        int free = trait_points(s) - trait_points_spent(s);
-        bool ready = s.prismOn >= 0 && s.prism[s.prismOn].offers > 0;
-        char tb[48], pb[48];
-        snprintf(tb, sizeof(tb), free > 0 ? "TRAITS (%d)" : "TRAITS", free);
-        snprintf(pb, sizeof(pb), ready ? "PRISM (LEVEL UP)" : "PRISM");
-        float half = (ImGui::GetContentRegionAvail().x - 8) / 2;
-        if (remnant_button(tb, ImVec2(half, 30))) open(SCR_TRAITS);
-        ImGui::SameLine(0, 8);
-        if (remnant_button(pb, ImVec2(half, 30))) open(SCR_PRISM);
-    }
-    // Remnant II's difficulty for the Remnant monsters met from now on
-    label("REMNANT DIFFICULTY");
-    {
-        float bw = (ImGui::GetContentRegionAvail().x - 3 * 6) / kDifficultiesCount;
-        for (int i = 0; i < kDifficultiesCount; i++) {
-            ImGui::PushID(400 + i);
-            if (i) ImGui::SameLine(0, 6);
-            bool on = s.difficulty == i;
-            if (on) ImGui::PushStyleColor(ImGuiCol_Button, ImColor(col::accent).Value);
-            if (remnant_button(kDifficulties[i].label, ImVec2(bw, 30)) && !on)
-                change_save([i](SaveData& d) { d.difficulty = i; return true; });
-            if (on) ImGui::PopStyleColor();
-            if (ImGui::IsItemHovered()) {
-                const Difficulties& d = kDifficulties[i];
-                ImGui::SetTooltip("Remnant monsters: health x%.2f, damage x%.2f, pace x%.2f%s; experience x%.1f", d.hp_mult,
-                                  d.dmg_mult, d.tempo, d.enrage_frac > 0 ? ", enraged sooner" : ", never enraged", d.xp_mult);
-            }
-            ImGui::PopID();
-        }
-    }
     ImGui::Spacing();
     ImGui::BeginChild("slots", ImVec2(0, -150));
     for (int i = 0; i < (int)(sizeof(kSlots) / sizeof(kSlots[0])); i++) {
@@ -801,6 +779,38 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         ImGui::EndChild();
         if (slot_row(s, sl) >= 0 && sl.cat != CAT_WEAPON && remnant_button("REMOVE", ImVec2(200, 36))) equip(sl.cat, -1, sl.sub);
     } else {
+        title("HUNTER");
+        level_line(s);
+        {
+            int free = trait_points(s) - trait_points_spent(s);
+            bool ready = s.prismOn >= 0 && s.prism[s.prismOn].offers > 0;
+            char tb[48], pb[48];
+            snprintf(tb, sizeof(tb), free > 0 ? "TRAITS (%d)" : "TRAITS", free);
+            snprintf(pb, sizeof(pb), ready ? "PRISM (LEVEL UP)" : "PRISM");
+            float half = (ImGui::GetContentRegionAvail().x - 8) / 2;
+            if (remnant_button(tb, ImVec2(half, 30))) open(SCR_TRAITS);
+            ImGui::SameLine(0, 8);
+            if (remnant_button(pb, ImVec2(half, 30))) open(SCR_PRISM);
+        }
+        // Remnant II's difficulty for the Remnant monsters met from now on
+        label("REMNANT DIFFICULTY");
+        {
+            float bw = (ImGui::GetContentRegionAvail().x - 3 * 6) / kDifficultiesCount;
+            for (int i = 0; i < kDifficultiesCount; i++) {
+                ImGui::PushID(400 + i);
+                if (i) ImGui::SameLine(0, 6);
+                bool on = s.difficulty == i;
+                if (remnant_button(kDifficulties[i].label, ImVec2(bw, 30), true, on) && !on)
+                    change_save([i](SaveData& d) { d.difficulty = i; return true; });
+                if (ImGui::IsItemHovered()) {
+                    const Difficulties& d = kDifficulties[i];
+                    ImGui::SetTooltip("Remnant monsters: health x%.2f, damage x%.2f, pace x%.2f%s; experience x%.1f", d.hp_mult,
+                                      d.dmg_mult, d.tempo, d.enrage_frac > 0 ? ", enraged sooner" : ", never enraged", d.xp_mult);
+                }
+                ImGui::PopID();
+            }
+        }
+        ImGui::Spacing();
         title("CONSUMABLES");
         bool any = false;
         for (int i = 0; i < kConsumablesCount; i++) {
@@ -862,13 +872,16 @@ static void screen_traits(const SaveData& s) {
             ImGui::SameLine(ImGui::GetContentRegionAvail().x * 0.42f);
             if (known) {
                 pips(lv, 10, au);
-                bool spendable = t.kind != TRAITS_KIND_ARCHETYPE || au < 10;
+                bool spendable = trait_can_set(s, i, 1) || mine > 0;
                 if (spendable) {
                     ImGui::SameLine();
                     if (remnant_button("-", ImVec2(26, 22), mine > 0)) change_save([i](SaveData& d) { return trait_set(d, i, -1); });
                     ImGui::SameLine();
-                    if (remnant_button("+", ImVec2(26, 22), lv < 10 && spent < earned))
+                    if (remnant_button("+", ImVec2(26, 22), trait_can_set(s, i, 1)))
                         change_save([i](SaveData& d) { return trait_set(d, i, 1); });
+                } else if (t.kind == TRAITS_KIND_ARCHETYPE) {
+                    ImGui::SameLine();
+                    ImGui::TextColored(ImColor(col::dim).Value, "with its archetype");
                 }
             } else {
                 ImGui::TextColored(ImColor(col::dim).Value, "not learned yet");
@@ -1072,7 +1085,7 @@ static void screen_prism(const SaveData& s) {
 static void screen_archetype(const SaveData& s) {
     if (!begin_screen("##archetype", 0.84f, 0.86f)) return end_screen();
     title(s.archetype < 0 ? "CHOOSE YOUR ARCHETYPE" : "ARCHETYPES");
-    label("Your archetype brings its skills, perks and trait. Starting archetypes are free; the others are engrams the "
+    dim_wrapped("Your archetype brings its skills, perks and trait. Starting archetypes are free; the others are engrams the "
           "Elder Melder's Remnant guest crafts from MHW materials. A second archetype adds its perks and a second skill.");
     ImGui::Separator();
     float w = ImGui::GetContentRegionAvail().x;
