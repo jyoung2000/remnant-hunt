@@ -110,3 +110,50 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
 ## GUI check (software preview)
 - `make preview-ui` builds build/preview_ui.exe; `wine preview_ui.exe <0-4> <dir with fonts\> out.bmp` renders terminal/traits/prism/archetype/melder with a sample save.
 - Fixed from the preview: window padding inherited by child panels, label() breaking SameLine rows, progression block moved to the terminal's HUNTER panel, archetype-trait "+" only from archetype level 10 (trait_can_set), Elder Melder lists archetype engrams, leave button sized to its text.
+
+## 2026-10-13 evening: native Windows build, GUI production pass (branch claude/remnant-hunt-gui-debug-78c4ff)
+- Build now runs on Jalon's PC without WSL/Wine: llvm-mingw 20261006 Windows release in C:\Users\jalon\tc\, GNU make
+  from winget (ezwinports.make). `tools/build_native.sh` = make -j8; `... test` = the three logic tests run natively
+  (all pass at 42049a1); `... preview` = screens 0-5 to build/preview/screen_N.png (tools/bmp2png.py converts).
+- Model routing through Jev (jev_decide ROUTE): first BLOCKED on the missing toolchain, PROCEED once it built. Split:
+  Haiku = web research (scratchpad gui_research.md) and README; Sonnet = ui.cpp polish from a written spec and a
+  read-only correctness review of the rest of src/core; Fable = spec, render review, fixes of review findings, notes.
+- GUI findings from the before renders (build/preview/before_N.png):
+  terminal: slot rows 44 px clipped their second line; weapon icons 80 wide pushed labels; three fallback vendor
+  buttons all read "VISIT WALLACE" (preview stub, but the role was missing); the right HUNTER panel was mostly empty;
+  button heights were 30/34/36/38/40. traits: three-line explanation paragraph; "-" / "+" could collide with pips;
+  the selected trait sat under the archetype-trait block. prism: STRENGTHEN cards had no effect lines (uneven cards);
+  fragments as a plain list. archetype: USE THIS SKILL under the bullets; perk kind text ran into the name.
+  melder: ImGui's stock tab bar; empty detail panel until a click; zenny placed from the window width.
+  HUD: no preview existed, so it was never checked.
+- In-game test checklist for Jalon (send back remnant_hunt.log and the learned files):
+  1. Start MHW, reach Astera. Expect the Worldstone intro once, then the archetype choice (if the save is fresh).
+  2. P at Ward 13 -> terminal: scroll the slot list, pick LONG GUN, equip a gun, REMOVE a ring, BACK TO HUNTER; change
+     difficulty; open TRAITS, spend and refund a point; open PRISM. Esc from each. Check nothing is clipped at 2560x1440.
+  3. P near McCabe / Wallace / Brabus (or the VENDOR buttons): tabs with Q/E, search, craft one ring, buy a consumable.
+  4. B then RMB: first person; log lines "first person:" (eye vs camera), "mhw: weapon type".
+  5. F9 in the Training Area: boss spawns; log "render3d", "model", "anim", "scene depth"; its bar and the compass strip.
+  6. Fight an MHW monster near a boss: "turf:" lines and learned_turf.txt.
+  7. Sprint/dodge: "stamina:" lines, learned_stamina.txt. Take hits from a boss: learned_reactions.txt.
+  8. Kill something: archetype XP and trait points rise on the terminal (HUNTER panel).
+- Done this session (all built, `tools/build_native.sh test` passes: turf/stamina, progress, 875 effect strings):
+  ui.cpp: list_row (flat rows, amber cursor + diamond on the selection), section/label(rule), tab_strip (MHW tabs, Q/E),
+  foot strip (kFoot 56, BACK always right, Esc hint bottom-left), button heights 40/34/26, help_mark tooltips instead
+  of paragraphs, zenny_str, auto-select of the first row in every list; terminal slots grouped and 52 px, EQUIPPED grid
+  and vendor buttons by role; traits/prism/archetype/melder per scratchpad spec; HUD restyled (gun panel with the
+  accent bar, 60 px skill boxes, toast). NPC action button pinned under a scrolling detail. Preview screens: 0 terminal,
+  1 traits, 2 prism, 3 archetype, 4 melder, 5 HUD, 6 terminal with a slot picked, 7 smithy.
+  Core fixes from the review (scratchpad core_review.md): json_strings no longer loops on an unterminated string;
+  zero-sample animations rejected; save_write reports failures and keeps dirty; an unreadable save.json is copied to
+  save.json.bad before anything overwrites it; craft/buy/equip save at once; r2client never overwrites a text the
+  render thread may hold, caps replies at 64 MB and goes dead on a short read; r2_stop kills r2read before locking;
+  texture size checked; DX12 make_targets retries after a failure; render3d stops leaking after a failed init; boss
+  consumable loot goes to stock; prism offer rows clamped; install_game_tick logs its reason; key-ups always reach the
+  game; weapon levels >= 0; reactions range-check actions; rand seeded; bounded resource-path read; 256 vtable slots.
+- TEMPORARY until dev_items.txt fills materials.json: recipe materials with mhw_item_id 0 are skipped (zenny still
+  charged) so crafting works at all. Remove the remove_if in remnant.cpp handle() and the have<0 rule in ui.cpp
+  recipe_box once the ids are in.
+- For Jalon to decide (not changed): the mod writes MHW's zenny and item counts when crafting (inventory.cpp), which is
+  the v0.2 design but not on the approved-writes list; the stamina offset comes from a heuristic scan and is written to;
+  mod_game_tick holds the Shared lock across I/O and one-time init (a Present hitch on first use).
+- Still not confirmed in game: everything since v0.2 (checklist above).

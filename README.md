@@ -105,7 +105,7 @@ irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 |
   53 consumables, 120 armor pieces, 43 traits, 7 prisms with 23 fusions and Remnant II's legendary
   prism bonuses.
 - **Remnant menus at MHW's own NPCs** in Astera and Seliana. Stand next to one and press **P**:
-  - **Smithy (McCabe):** guns, melee weapons, mods, mutators, armor and gun upgrades (+1 to +10).
+  - **Smithy (McCabe):** guns, melee weapons, mods, mutators, armor and gun upgrades (+1 to +20, or +10 for special weapons with a mod of their own).
   - **Elder Melder (Wallace):** archetype engrams, rings, amulets, relics and relic fragments.
   - **Provisions Manager (Brabus):** consumables for zenny.
   Crafting costs **MHW materials and zenny** from your item box, scaled by rank: starter gear takes low rank ores and
@@ -139,6 +139,24 @@ who all have the mod is planned, with joining through MHW's own sessions and SOS
   own functions. It never patches MHW's code.
 - `r2read.exe` is a separate helper that reads Remnant II's packages from your install, in memory, using the
   open-source ooz decoder. It never writes game files anywhere.
+
+## Building from source
+
+### Building on Windows (native)
+Builds with llvm-mingw and GNU make from Git Bash. No Wine needed.
+
+- Install the llvm-mingw Windows release **20261006** (ucrt, x86_64) into `C:\Users\<you>\tc\`.
+- Install GNU make with `winget install ezwinports.make`.
+- From the repo root, run:
+
+```bash
+tools/build_native.sh            # make -j8
+tools/build_native.sh test       # the logic tests, run natively
+tools/build_native.sh preview    # renders the screens to build/preview/screen_N.png
+```
+
+`preview` writes N = 0 terminal, 1 traits, 2 prism, 3 archetype, 4 melder, 5 HUD. Set `TC=<path to bin>` to use a
+toolchain somewhere else.
 
 ## Uninstall
 Run the setup again and press **Uninstall**, or delete `dinput8.dll` and the `remnant_hunt` folder from the

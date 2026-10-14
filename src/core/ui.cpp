@@ -107,12 +107,17 @@ static void image(const char* asset, int maxSide, ImVec2 size, ImU32 tint = IM_C
     ImGui::Dummy(size);
 }
 
-static void title(const char* s, ImU32 c = col::text) {
+static void title_text(const char* s, ImU32 c = col::text) {
     ImGui::PushFont(g_title, 34.0f);
     ImGui::PushStyleColor(ImGuiCol_Text, ImColor(c).Value);
     ImGui::TextUnformatted(s);
     ImGui::PopStyleColor();
     ImGui::PopFont();
+}
+// Every title carries its own rule, so no screen stacks two separators.
+static void title(const char* s, ImU32 c = col::text) {
+    title_text(s, c);
+    ImGui::Separator();
 }
 
 // A small gold diamond, MHW's list and header mark.
@@ -120,10 +125,9 @@ static void diamond(ImDrawList* dl, ImVec2 c, float r, ImU32 fill) {
     dl->AddQuadFilled(ImVec2(c.x, c.y - r), ImVec2(c.x + r, c.y), ImVec2(c.x, c.y + r), ImVec2(c.x - r, c.y), fill);
 }
 
-// Section heading, MHW style: a diamond, the words, a thin gold rule.
-static void label(const char* s, ImU32 c = col::dim) {
+// A diamond and the words, with a thin gold rule to the right edge when it heads a section.
+static void label(const char* s, ImU32 c = col::dim, bool rule = false) {
     ImGui::PushFont(g_bold, 14.0f);
-    bool heading = ImGui::GetCursorPosX() <= ImGui::GetStyle().WindowPadding.x + 2;  // at the start of a line
     ImVec2 p = ImGui::GetCursorScreenPos();
     float h = ImGui::GetTextLineHeight();
     ImDrawList* dl = ImGui::GetWindowDrawList();
@@ -133,19 +137,36 @@ static void label(const char* s, ImU32 c = col::dim) {
     ImGui::PushStyleColor(ImGuiCol_Text, ImColor(c).Value);
     ImGui::TextUnformatted(s);
     ImGui::PopStyleColor();
-    if (heading) {  // a rule to the right edge, for headings
+    if (rule) {
         ImVec2 e = ImGui::GetItemRectMax();
         float right = ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x;
         if (right - e.x > 40) dl->AddLine(ImVec2(e.x + 8, p.y + h * 0.5f), ImVec2(right, p.y + h * 0.5f), col::frameLo);
     }
     ImGui::PopFont();
 }
+static void section(const char* s, ImU32 c = col::dim) {
+    ImGui::Dummy(ImVec2(0, 4));
+    label(s, c, true);
+}
 
 static void quote(const std::string& s) {
     if (s.empty()) return;
+    ImGui::PushFont(g_body, 16.0f);
     ImGui::PushStyleColor(ImGuiCol_Text, ImColor(col::dim).Value);
     ImGui::TextWrapped("\"%s\"", s.c_str());
     ImGui::PopStyleColor();
+    ImGui::PopFont();
+}
+
+static std::string zenny_str(int z) {
+    char b[24];
+    snprintf(b, sizeof(b), "%d", z < 0 ? -z : z);
+    std::string d = b, o = z < 0 ? "-" : "";
+    for (size_t i = 0; i < d.size(); i++) {
+        if (i && (d.size() - i) % 3 == 0) o += ',';
+        o += d[i];
+    }
+    return o + " z";
 }
 
 // A button in MHW's style: a dark plate in a thin gold frame; the amber cursor (a lit frame and a diamond) on hover.
@@ -172,8 +193,120 @@ static bool remnant_button(const char* text, ImVec2 size = ImVec2(0, 0), bool en
     return r && enabled;
 }
 
+// Button heights, one set for every screen.
+constexpr float kBtnPrimary = 40, kBtnSecondary = 34, kBtnSmall = 26, kBtnBack = 38;
+constexpr float kFoot = 56;                      // the prompt band at the foot of every screen
+constexpr float kPadX = 28, kPadY = 24;          // the screen window's own padding
+constexpr float kRowPad = 24;                    // left edge of a row's content, clear of the cursor diamond
+
+static float text_w(ImFont* f, float size, const char* s) { return f->CalcTextSizeA(size, FLT_MAX, 0, s).x; }
+
+// Draws text at a point and returns its right edge, for rows that lay their pieces out by hand.
+static float put(ImFont* f, float size, ImVec2 p, ImU32 c, const char* s) {
+    ImGui::GetWindowDrawList()->AddText(f, size, p, c, s);
+    return p.x + text_w(f, size, s);
+}
+
+// A list row: a flat plate with a rule under it, and the amber cursor (lit frame, diamond) when selected. The
+// caller draws its content with row_at and put between list_row and end_list_row.
+struct RowBox { ImVec2 a; float w, h; };
+static RowBox g_row;
+static bool list_row(const char* id, float h, bool selected, bool enabled = true) {
+    ImGuiStyle& st = ImGui::GetStyle();
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(st.ItemSpacing.x, 0));
+    ImVec2 a = ImGui::GetCursorScreenPos();
+    float w = ImGui::GetContentRegionAvail().x;
+    ImGui::SetNextItemAllowOverlap();  // buttons inside the row sit over it
+    bool clicked = ImGui::InvisibleButton(id, ImVec2(w, h));
+    ImGui::PopStyleVar();
+    ImVec2 b(a.x + w, a.y + h);
+    bool hov = enabled && ImGui::IsMouseHoveringRect(a, b);
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    if (selected) {
+        dl->AddRectFilledMultiColor(a, b, IM_COL32(74, 58, 32, 255), IM_COL32(74, 58, 32, 255), IM_COL32(52, 41, 24, 255),
+                                    IM_COL32(52, 41, 24, 255));
+        dl->AddRect(a, b, col::accent, 0, 0, 1.5f);
+        diamond(dl, ImVec2(a.x + 9, a.y + h * 0.5f), 4.0f, col::accent);
+    } else {
+        dl->AddRectFilled(a, b, hov ? IM_COL32(36, 33, 27, 255) : IM_COL32(26, 24, 20, 255));
+        dl->AddLine(ImVec2(a.x, b.y - 1), ImVec2(b.x, b.y - 1), col::frameLo);
+    }
+    dl->PushClipRect(a, b, true);
+    g_row = {a, w, h};
+    return clicked && enabled;
+}
+static void end_list_row() {
+    ImGui::GetWindowDrawList()->PopClipRect();
+    ImGuiStyle& st = ImGui::GetStyle();
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(st.ItemSpacing.x, 0));
+    ImGui::SetCursorScreenPos(ImVec2(g_row.a.x, g_row.a.y + g_row.h));
+    ImGui::Dummy(ImVec2(1, 0));
+    ImGui::PopStyleVar();
+}
+static void row_at(float x, float y) { ImGui::SetCursorScreenPos(ImVec2(g_row.a.x + x, g_row.a.y + y)); }
+
+// A dim "?" that explains itself on hover, so the screens keep one short line instead of a paragraph.
+static void help_mark(const char* tip) {
+    ImGui::SameLine(0, 10);
+    ImVec2 p = ImGui::GetCursorScreenPos();
+    float off = std::max(0.0f, (ImGui::GetTextLineHeight() - 18) * 0.5f);
+    ImGui::SetCursorScreenPos(ImVec2(p.x, p.y + off));
+    ImGui::PushID(tip);
+    ImGui::InvisibleButton("##help", ImVec2(18, 18));
+    ImGui::PopID();
+    bool hov = ImGui::IsItemHovered();
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    ImVec2 c(p.x + 9, p.y + off + 9);
+    dl->AddCircle(c, 9, hov ? col::gold : col::line, 20, 1.0f);
+    float w = text_w(g_bold, 13, "?");
+    dl->AddText(g_bold, 13, ImVec2(c.x - w * 0.5f, c.y - 8), hov ? col::gold : col::dim, "?");
+    if (hov) {
+        ImGui::BeginTooltip();
+        ImGui::PushTextWrapPos(520);
+        ImGui::TextUnformatted(tip);
+        ImGui::PopTextWrapPos();
+        ImGui::EndTooltip();
+    }
+}
+
+static void empty_hint(const char* s) {
+    ImVec2 av = ImGui::GetContentRegionAvail();
+    float w = ImGui::CalcTextSize(s).x;
+    ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + std::max(0.0f, (av.x - w) * 0.5f), ImGui::GetCursorPosY() + std::min(av.y * 0.35f, 140.0f)));
+    ImGui::TextColored(ImColor(col::dim).Value, "%s", s);
+}
+
+// MHW's tabs: flat plates; the active one has an amber diamond, amber words and an amber underline. Q/E and the
+// arrow keys cycle. Returns true when the active tab changed.
+static bool tab_strip(const std::vector<const char*>& names, int& active) {
+    int n = (int)names.size(), was = active;
+    ImGuiIO& io = ImGui::GetIO();
+    if (n > 1 && !io.WantTextInput) {
+        if (ImGui::IsKeyPressed(ImGuiKey_E) || ImGui::IsKeyPressed(ImGuiKey_RightArrow)) active = (active + 1) % n;
+        if (ImGui::IsKeyPressed(ImGuiKey_Q) || ImGui::IsKeyPressed(ImGuiKey_LeftArrow)) active = (active + n - 1) % n;
+    }
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    for (int i = 0; i < n; i++) {
+        if (i) ImGui::SameLine(0, 4);
+        ImGui::PushID(i);
+        float tw = text_w(g_bold, 15, names[i]);
+        float w = std::max(120.0f, tw + 44);
+        ImVec2 a = ImGui::GetCursorScreenPos(), b(a.x + w, a.y + 36);
+        if (ImGui::InvisibleButton("##tab", ImVec2(w, 36))) active = i;
+        bool on = i == active, hov = ImGui::IsItemHovered();
+        dl->AddRectFilled(a, b, on ? IM_COL32(44, 37, 26, 255) : hov ? IM_COL32(34, 31, 25, 255) : IM_COL32(24, 22, 18, 255));
+        dl->AddLine(ImVec2(a.x, b.y - 1), ImVec2(b.x, b.y - 1), on ? col::accent : col::frameLo, on ? 2.0f : 1.0f);
+        float tx = a.x + (w - tw) * 0.5f + (on ? 7 : 0);
+        if (on) diamond(dl, ImVec2(tx - 11, a.y + 18), 4.0f, col::accent);
+        dl->AddText(g_bold, 15, ImVec2(tx, a.y + 9), on ? col::accent : hov ? col::text : col::dim, names[i]);
+        ImGui::PopID();
+    }
+    ImGui::Dummy(ImVec2(0, 4));
+    return active != was;
+}
+
 // Full-screen Remnant window: darkened game behind, corner brackets.
-static bool begin_screen(const char* id, float wFrac, float hFrac) {
+static bool begin_screen(const char* id, float wFrac, float hFrac, bool hint = true) {
     ImGuiViewport* vp = ImGui::GetMainViewport();
     ImGui::GetBackgroundDrawList()->AddRectFilled(vp->Pos, ImVec2(vp->Pos.x + vp->Size.x, vp->Pos.y + vp->Size.y),
                                                   IM_COL32(0, 0, 0, 170));
@@ -181,13 +314,13 @@ static bool begin_screen(const char* id, float wFrac, float hFrac) {
     ImGui::SetNextWindowPos(ImVec2(vp->Pos.x + (vp->Size.x - size.x) / 2, vp->Pos.y + (vp->Size.y - size.y) / 2));
     ImGui::SetNextWindowSize(size);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImColor(col::bg).Value);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(28, 24));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(kPadX, kPadY));
     bool open = ImGui::Begin(id, nullptr,
                              ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
     ImGui::PopStyleVar();  // the wide padding is the screen's own; its rows and panels keep a small one
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 6));
     // MHW's menu frame: a darker band at the top, a double gold border with diamonds at its corners and on the top
-    // and bottom edges, and the back hint at the foot.
+    // and bottom edges, and below a rule the prompt band: the back hint bottom left, the buttons above it.
     ImVec2 p = ImGui::GetWindowPos(), s = ImGui::GetWindowSize();
     ImDrawList* dl = ImGui::GetWindowDrawList();
     ImVec2 q(p.x + s.x, p.y + s.y);
@@ -197,17 +330,30 @@ static bool begin_screen(const char* id, float wFrac, float hFrac) {
     dl->AddRect(ImVec2(p.x + 5, p.y + 5), ImVec2(q.x - 5, q.y - 5), col::frameLo, 0, 0, 1.0f);
     for (ImVec2 c : {p, ImVec2(q.x, p.y), ImVec2(p.x, q.y), q, ImVec2((p.x + q.x) * 0.5f, p.y), ImVec2((p.x + q.x) * 0.5f, q.y)})
         diamond(dl, c, 6.0f, col::frameHi);
-    ImGui::PushFont(g_body, 15.0f);
-    const char* hint = "[Esc]  Back";
-    ImVec2 hs = ImGui::CalcTextSize(hint);
-    dl->AddText(ImVec2(q.x - hs.x - 24, q.y - hs.y - 10), col::dim, hint);
-    ImGui::PopFont();
+    if (hint) {
+        float ry = q.y - kPadY - kFoot + 3;
+        dl->AddLine(ImVec2(p.x + 14, ry), ImVec2(q.x - 14, ry), col::frameLo);
+        dl->AddText(g_body, 15, ImVec2(p.x + kPadX, q.y - 27), col::dim, "[Esc]  Back");
+    }
     return open;
 }
 static void end_screen() {
     ImGui::End();
     ImGui::PopStyleVar();
     ImGui::PopStyleColor();
+}
+
+// The foot strip: primary buttons from the left edge, BACK at the right edge, all centred on one line.
+static void foot_at(float x, float h) {
+    ImGui::SetCursorPos(ImVec2(x, ImGui::GetWindowHeight() - kPadY - kFoot + 9 + (kBtnPrimary - h) * 0.5f));
+}
+static void foot_next(float h) { foot_at(ImGui::GetItemRectMax().x - ImGui::GetWindowPos().x + 10, h); }
+static bool foot_back(const char* text = "BACK") {
+    ImGui::PushFont(g_bold, 18.0f);
+    float w = std::max(200.0f, ImGui::CalcTextSize(text).x + 40);
+    ImGui::PopFont();
+    foot_at(ImGui::GetWindowWidth() - kPadX - w, kBtnBack);
+    return remnant_button(text, ImVec2(w, kBtnBack));
 }
 
 // ---------------------------------------------------------------- screens
@@ -268,13 +414,12 @@ static std::string text_or(const R2Text* t, const char* fallback = "...") {
 }
 
 static void screen_intro() {
-    if (!begin_screen("##intro", 0.56f, 0.62f)) return end_screen();
+    if (!begin_screen("##intro", 0.56f, 0.62f, false)) return end_screen();
     float w = ImGui::GetContentRegionAvail().x;
     ImGui::SetCursorPosX((w - 140) / 2 + 28);
     image(kUi[UI_INTRO].art, 256, ImVec2(140, 140));
     ImGui::Spacing();
     title("THE WORLDSTONE");
-    ImGui::Separator();
     ImGui::Spacing();
     double t = now_s() - g_screenOpened;
     const char* lines[] = {
@@ -289,9 +434,9 @@ static void screen_intro() {
         ImGui::PopStyleColor();
         ImGui::Spacing();
     }
-    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 70);
+    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - kPadY - kBtnPrimary - 6);
     bool ready = t > 3.0;  // the button is always submitted (ImGui needs an item after SetCursorPos)
-    if ((remnant_button("CONTINUE", ImVec2(200, 40), ready) || (ready && ImGui::IsKeyPressed(ImGuiKey_Enter))))
+    if ((remnant_button("CONTINUE", ImVec2(200, kBtnPrimary), ready) || (ready && ImGui::IsKeyPressed(ImGuiKey_Enter))))
         open(SCR_ARCHETYPE);
     end_screen();
 }
@@ -320,23 +465,26 @@ static const char* material_label(int m) {
 // Recipe in MHW materials and zenny, with what the hunter has. Returns true when it can be paid.
 static bool recipe_box(const char* recipe, int zenny) {
     bool ok = true;
-    label("COST");
+    section("COST");
     bool inv = mhw_inventory_ready();
+    float haveX = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x - 130;  // one column for "have N"
     for (const Need& n : recipe_of(recipe)) {
         int id = (int)kMaterials[n.material].mhw_item_id;
         int have = id > 0 && inv ? mhw_item_count(id) : -1;
-        bool enough = have >= n.count;
+        bool enough = have < 0 || have >= n.count;  // a material with no MHW id yet is not charged (remnant.cpp skips it too)
         ok &= enough;
         ImU32 c = have < 0 ? col::dim : enough ? col::text : col::red;
+        float y = ImGui::GetCursorScreenPos().y;
         ImGui::TextColored(ImColor(c).Value, "%d x %s", n.count, material_label(n.material));
-        ImGui::SameLine(ImGui::GetContentRegionAvail().x - 90);
+        ImGui::SameLine();
+        ImGui::SetCursorScreenPos(ImVec2(haveX, y));
         if (have >= 0) ImGui::TextColored(ImColor(col::dim).Value, "have %d", have);
-        else ImGui::TextColored(ImColor(col::dim).Value, "not found yet");
+        else ImGui::TextColored(ImColor(col::dim).Value, "not tracked yet");
     }
     int z = mhw_zenny();
     bool zok = z >= zenny;
     ok &= zok;
-    if (zenny > 0) ImGui::TextColored(ImColor(zok ? col::gold : col::red).Value, "%d zenny", zenny);
+    if (zenny > 0) ImGui::TextColored(ImColor(zok ? col::gold : col::red).Value, "%s", zenny_str(zenny).c_str());
     return ok;
 }
 
@@ -353,7 +501,7 @@ static void weapon_stats(const Weapons& w, int level) {
     stats_line("Critical chance", "%.0f%%", w.crit);
     stats_line("Weakspot", "x%.2f", w.weakspot_mult);
     if (w.mod >= 0) {
-        label("MOD");
+        section("MOD");
         image(kMods[w.mod].icon, 128, ImVec2(34, 34));
         ImGui::SameLine();
         ImGui::AlignTextToFramePadding();
@@ -397,16 +545,14 @@ static void level_line(const SaveData& s) {
 }
 
 // Ten pips: the archetypes' own points (dim gold), then the hunter's (gold), then empty.
-static void pips(int n, int of, int automatic = 0) {
+static void pips_at(ImVec2 p, int n, int of, int automatic = 0) {
     ImDrawList* dl = ImGui::GetWindowDrawList();
-    ImVec2 p = ImGui::GetCursorScreenPos();
     for (int i = 0; i < of; i++) {
-        ImVec2 a(p.x + i * 12.0f, p.y + 4), b(a.x + 9, a.y + 9);
+        ImVec2 a(p.x + i * 12.0f, p.y), b(a.x + 9, a.y + 9);
         if (i < automatic) dl->AddRectFilled(a, b, IM_COL32(150, 122, 70, 255));
         else if (i < n) dl->AddRectFilled(a, b, col::gold);
         else dl->AddRect(a, b, col::line);
     }
-    ImGui::Dummy(ImVec2(of * 12.0f, 16));
 }
 
 static const char* perk_kind_label(int perk) {
@@ -435,54 +581,76 @@ static void archetype_detail(int row, const SaveData& s, bool chooseSkill) {
         ImGui::TextColored(ImColor(col::dim).Value, "  mastered: its trait can be used with any archetype");
     }
     if (a.prime.asset) {
-        label("PRIME PERK");
+        section("PRIME PERK");
         ImGui::TextWrapped("%s", text_or(&a.prime).c_str());
     }
     std::vector<int> sk = skills_of(row);
-    label("SKILLS");
+    section("SKILLS");
     int open = skills_unlocked(level);
     static const int kSkillLevel[3] = {1, 5, 10};
     for (size_t i = 0; i < sk.size(); i++) {
         const Skills& k = kSkills[sk[i]];
         ImGui::PushID((int)i);
-        image(k.icon, 128, ImVec2(36, 36), (int)i < open ? IM_COL32_WHITE : IM_COL32(110, 110, 110, 200));
-        ImGui::SameLine();
-        ImGui::BeginGroup();
         bool chosen = slot >= 0 && skill_index(s, slot) == (int)i;
         bool unlocked = (int)i < open;
-        ImGui::TextColored(ImColor(!unlocked ? col::dim : chosen ? col::gold : col::text).Value, "%s  (cooldown %.0fs)%s",
-                           text_or(&k.name).c_str(), k.cooldown_s, chosen ? "  - in use" : "");
+        ImVec2 p = ImGui::GetCursorScreenPos();
+        float right = p.x + ImGui::GetContentRegionAvail().x;
+        image(k.icon, 128, ImVec2(40, 40), unlocked ? IM_COL32_WHITE : IM_COL32(110, 110, 110, 200));
+        ImGui::SameLine();
+        ImGui::BeginGroup();
+        ImVec2 g = ImGui::GetCursorScreenPos();
+        ImGui::TextColored(ImColor(!unlocked ? col::dim : chosen ? col::gold : col::text).Value, "%s", text_or(&k.name).c_str());
+        ImGui::SameLine(0, 12);
+        ImGui::PushFont(g_body, 14.0f);
+        ImGui::TextColored(ImColor(col::dim).Value, "cooldown %.0f s", k.cooldown_s);
+        ImGui::PopFont();
+        if (chosen) {
+            float w = text_w(g_bold, 14, "IN USE");
+            put(g_bold, 14, ImVec2(right - w - 8, g.y + 4), col::gold, "IN USE");
+        } else if (chooseSkill && slot >= 0 && unlocked) {
+            ImGui::SetCursorScreenPos(ImVec2(right - 160, g.y - 2));
+            if (remnant_button("USE THIS SKILL", ImVec2(160, kBtnSmall))) {
+                Shared& sh = S();
+                AcquireSRWLockExclusive(&sh.lock);
+                sh.save.skill[slot] = (int)i;
+                sh.live.dirty = true;
+                ReleaseSRWLockExclusive(&sh.lock);
+            }
+        }
+        ImGui::SetCursorScreenPos(ImVec2(g.x, g.y + 28));
         if (!unlocked) ImGui::TextColored(ImColor(col::dim).Value, "Unlocks at level %d", kSkillLevel[std::min<size_t>(2, i)]);
         effect_lines(k.effects);
-        if (chooseSkill && slot >= 0 && !chosen && unlocked && remnant_button("USE THIS SKILL", ImVec2(180, 28))) {
-            Shared& sh = S();
-            AcquireSRWLockExclusive(&sh.lock);
-            sh.save.skill[slot] = (int)i;
-            sh.live.dirty = true;
-            ReleaseSRWLockExclusive(&sh.lock);
-        }
         ImGui::EndGroup();
+        ImGui::Dummy(ImVec2(0, 4));
         ImGui::PopID();
     }
     std::vector<int> pk = perks_of(row);
-    label("PERKS");
+    section("PERKS");
     for (int p : pk) {
         float k = perk_scale(p, level);
         bool prime = kPerks[p].kind == PERKS_KIND_PRIME;
+        bool primaryOnly = prime && slot != 0 && !prime_time(s);
         bool active = k > 0 && (!prime || slot == 0 || (slot == 1 && prime_time(s)));
+        ImVec2 at = ImGui::GetCursorScreenPos();
         ImGui::TextColored(ImColor(active ? (prime ? col::gold : col::text) : col::dim).Value, "%s", text_or(&kPerks[p].name).c_str());
-        ImGui::SameLine();
-        char st[96];
-        if (k <= 0) snprintf(st, sizeof(st), "%s  -  unlocks at level %d", perk_kind_label(p), perk_unlock_level(p));
-        else if (prime && slot != 0 && !prime_time(s)) snprintf(st, sizeof(st), "%s  -  only as the primary archetype", perk_kind_label(p));
-        else snprintf(st, sizeof(st), "%s  -  %d%% strength%s", perk_kind_label(p), (int)lroundf(k * 100), k < 1 ? " (grows with level)" : "");
-        ImGui::TextColored(ImColor(col::dim).Value, "%s", st);
+        float x = put(g_bold, 13, ImVec2(at.x + 240, at.y + 4), col::dim, perk_kind_label(p)) + 14;
+        char st[64];
+        if (k <= 0) {
+            snprintf(st, sizeof(st), "unlocks at level %d", perk_unlock_level(p));
+            put(g_body, 14, ImVec2(x, at.y + 3), col::dim, st);
+        } else if (primaryOnly) {
+            put(g_body, 14, ImVec2(x, at.y + 3), col::dim, "only as the primary archetype");
+        } else {
+            snprintf(st, sizeof(st), "%d%%", (int)lroundf(k * 100));
+            x = put(g_bold, 14, ImVec2(x, at.y + 3), col::gold, st) + 10;
+            if (k < 1) put(g_body, 14, ImVec2(x, at.y + 3), col::dim, "grows with level");
+        }
         ImGui::Indent();
         effect_lines(kPerks[p].effects);
         ImGui::Unindent();
     }
     if (a.trait >= 0) {
-        label("ARCHETYPE TRAIT");
+        section("ARCHETYPE TRAIT");
         ImGui::TextUnformatted(text_or(&kTraits[a.trait].name).c_str());
         ImGui::SameLine();
         ImGui::TextColored(ImColor(col::dim).Value, "  level %d of 10 while equipped (one per archetype level)", level);
@@ -490,7 +658,7 @@ static void archetype_detail(int row, const SaveData& s, bool chooseSkill) {
         effect_lines(kTraits[a.trait].effects);
         ImGui::Unindent();
     }
-    label("CORE TRAITS AS PRIMARY");
+    section("CORE TRAITS AS PRIMARY");
     ImGui::TextColored(ImColor(col::dim).Value, "Vigor %d  -  Endurance %d  -  Spirit %d  -  Expertise %d", (int)a.core_vigor,
                        (int)a.core_endurance, (int)a.core_spirit, (int)a.core_expertise);
 }
@@ -522,11 +690,13 @@ static void item_detail(const ItemView& v, const SaveData& s) {
         archetype_detail(v.row, s, false);
         return;
     }
-    if (v.cat == CAT_PRISM)
-        dim_wrapped("A prism holds five relic fragments that grow as you hunt with it equipped, fuse in pairs and end "
-                    "in a legendary bonus. Equip it and choose its fragments in the PRISM screen at Ward 13.");
+    if (v.cat == CAT_PRISM) {
+        ImGui::TextColored(ImColor(col::dim).Value, "Equip it and choose its fragments in the PRISM screen at Ward 13.");
+        help_mark("A prism holds five relic fragments that grow as you hunt with it equipped, fuse in pairs and end "
+                  "in a legendary bonus.");
+    }
     if (v.effects && *v.effects) {
-        label(v.cat == CAT_TRAIT ? "AT LEVEL 10 (TRAIT POINTS FROM REMNANT LEVELS)" : "EFFECTS");
+        section(v.cat == CAT_TRAIT ? "AT LEVEL 10 (TRAIT POINTS FROM REMNANT LEVELS)" : "EFFECTS");
         effect_lines(v.effects);
     }
     if (v.cat == CAT_WEAPON) weapon_stats(kWeapons[v.row], s.level[v.row]);
@@ -539,11 +709,14 @@ static bool matches_filter(const ItemView& v) {
     return n.find(f) != std::string::npos;
 }
 
-// A list of rows; returns true when one was clicked.
+// The rows of one category; the first visible row is picked when nothing (visible) is.
 static void item_list(Cat c, int weaponSlot, const SaveData& s, bool ownedOnly, int menuRole) {
     ImGui::SetNextItemWidth(-1);
-    ImGui::InputTextWithHint("##filter", "Search", g_filter, sizeof(g_filter));
-    ImGui::BeginChild("rows", ImVec2(0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 8));
+    ImGui::InputTextWithHint("##filter", "Search", g_filter, sizeof(g_filter));  // 34 high
+    ImGui::PopStyleVar();
+    ImGui::Dummy(ImVec2(0, 2));
+    std::vector<int> rows;
     for (int i = 0; i < cat_count(c); i++) {
         ItemView v = item(c, i);
         // archetype engrams (menu "archetype") are the Elder Melder's; the free starting ones are given, not sold
@@ -553,19 +726,31 @@ static void item_list(Cat c, int weaponSlot, const SaveData& s, bool ownedOnly, 
         bool own = c == CAT_CONSUMABLE ? s.stock[i] > 0 : s.has(c, i);
         if (ownedOnly && !own) continue;
         if (!matches_filter(v)) continue;
+        rows.push_back(i);
+    }
+    bool picked = false;
+    for (int i : rows) picked |= g_pick.cat == c && g_pick.row == i;
+    if (!picked) g_pick = rows.empty() ? ItemView() : item(c, rows[0]);
+    ImGui::BeginChild("rows", ImVec2(0, 0));
+    if (rows.empty()) empty_hint("Nothing here yet");
+    for (int i : rows) {
+        ItemView v = item(c, i);
+        bool own = c == CAT_CONSUMABLE ? s.stock[i] > 0 : s.has(c, i);
         ImGui::PushID(i);
         bool sel = g_pick.cat == c && g_pick.row == i;
-        ImGui::BeginChild("r", ImVec2(0, 52), ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar);
-        image(v.icon, 128, ImVec2(c == CAT_WEAPON ? 90 : 40, 40));
-        ImGui::SameLine();
-        ImGui::BeginGroup();
-        ImGui::TextColored(ImColor(sel ? col::gold : col::text).Value, "%s", text_or(v.name).c_str());
-        if (c == CAT_CONSUMABLE) ImGui::TextColored(ImColor(col::dim).Value, "carried %d  -  %d zenny", s.stock[i], v.zenny);
-        else if (own) ImGui::TextColored(ImColor(col::dim).Value, "owned");
-        else ImGui::TextColored(ImColor(rarity_color(v.tier)).Value, "RARE %d", rarity_of(v.tier));
-        ImGui::EndGroup();
-        ImGui::EndChild();
-        if (ImGui::IsItemClicked()) g_pick = v;
+        if (list_row("r", 52, sel)) g_pick = v;
+        float iw = c == CAT_WEAPON ? 72 : 40;
+        row_at(kRowPad, 6);
+        image(v.icon, 128, ImVec2(iw, 40));
+        float x = g_row.a.x + kRowPad + iw + 10;
+        put(g_body, 18, ImVec2(x, g_row.a.y + 5), sel ? col::gold : col::text, text_or(v.name).c_str());
+        char sub[64];
+        ImU32 sc = col::dim;
+        if (c == CAT_CONSUMABLE) snprintf(sub, sizeof(sub), "carried %d  -  %s", s.stock[i], zenny_str(v.zenny).c_str());
+        else if (own) snprintf(sub, sizeof(sub), "owned");
+        else { snprintf(sub, sizeof(sub), "RARE %d", rarity_of(v.tier)); sc = rarity_color(v.tier); }
+        put(g_body, 14, ImVec2(x, g_row.a.y + 29), sc, sub);
+        end_list_row();
         ImGui::PopID();
     }
     ImGui::EndChild();
@@ -576,13 +761,17 @@ static void item_list(Cat c, int weaponSlot, const SaveData& s, bool ownedOnly, 
 static void screen_menu(const SaveData& s, const Live& l) {
     int hostRow = g_menu >= 0 ? kMenus[g_menu].host : host_of_role(g_menuRole);
     const Npcs& n = kNpcs[hostRow];
-    if (!begin_screen("##menu", 0.80f, 0.84f)) return end_screen();
+    if (!begin_screen("##menu", 0.80f, 0.86f)) return end_screen();
     if (g_npcSays.empty()) g_npcSays = r2_text(greet_of(n, g_greet));
-    title(upper(r2_name(n.name)).c_str(), col::gold);
-    ImGui::SameLine();
-    ImGui::TextColored(ImColor(col::dim).Value, "  at %s", role_place(g_menuRole));
-    ImGui::SameLine(ImGui::GetWindowWidth() - 260);
-    ImGui::TextColored(ImColor(col::gold).Value, "%d zenny", mhw_zenny());
+    float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
+    ImVec2 t0 = ImGui::GetCursorScreenPos();
+    title_text(upper(r2_name(n.name)).c_str(), col::gold);
+    float th = ImGui::GetItemRectSize().y, tw = ImGui::GetItemRectSize().x;
+    char at[64];
+    snprintf(at, sizeof(at), "at %s", role_place(g_menuRole));
+    put(g_body, 18, ImVec2(t0.x + tw + 14, t0.y + th - 29), col::dim, at);
+    std::string zen = zenny_str(mhw_zenny());
+    put(g_bold, 20, ImVec2(right - text_w(g_bold, 20, zen.c_str()), t0.y + th - 31), col::gold, zen.c_str());
     quote(g_npcSays);
     if (l.said[0] && strcmp(l.said, "done") != 0) ImGui::TextColored(ImColor(col::red).Value, "%s", l.said);
     ImGui::Separator();
@@ -599,66 +788,77 @@ static void screen_menu(const SaveData& s, const Live& l) {
                 {"PRISMS", CAT_PRISM, -1}};
     else
         tabs = {{"CONSUMABLES", CAT_CONSUMABLE, -1}};
-    float bottom = 52;
-    if (ImGui::BeginTabBar("tabs")) {
-        for (const Tab& tb : tabs) {
-            if (!ImGui::BeginTabItem(tb.name)) continue;
-            bool upgrades = tb.slot == -2;
-            float w = ImGui::GetContentRegionAvail().x;
-            ImGui::BeginChild("list", ImVec2(w * 0.42f, -bottom));
-            item_list(tb.cat, upgrades ? -1 : tb.slot, s, upgrades, upgrades ? -1 : g_menuRole);
-            ImGui::EndChild();
-            ImGui::SameLine(0, 20);
-            ImGui::BeginChild("detail", ImVec2(0, -bottom));
-            if (g_pick.row >= 0 && g_pick.cat == tb.cat) {
-                const ItemView& v = g_pick;
-                item_detail(v, s);
-                ImGui::Spacing();
-                ImGui::Separator();
-                Request r{Request::CRAFT, v.cat, v.row};
-                if (upgrades) {
-                    int lvl = s.level[v.row], top = weapon_max_level(v.row);
-                    if (lvl < top) {
-                        int zen = 0;
-                        std::string rec = upgrade_cost(v.row, lvl, &zen);
-                        ImGui::Text("+%d  ->  +%d of %d  (damage x%.2f -> x%.2f)", lvl, lvl + 1, top, upgrade_mult(v.row, lvl),
-                                    upgrade_mult(v.row, lvl + 1));
-                        bool ok = recipe_box(rec.c_str(), zen);
-                        char b[48];
-                        snprintf(b, sizeof(b), "UPGRADE TO +%d", lvl + 1);
-                        if (remnant_button(b, ImVec2(-1, 40), ok)) { r.kind = Request::UPGRADE; request(r); g_npcSays = r2_text(n.done_line); ui_sound("upgrade"); }
-                    } else {
-                        ImGui::TextColored(ImColor(col::gold).Value, "Fully upgraded (+%d)", lvl);
-                    }
-                } else if (v.cat == CAT_CONSUMABLE) {
-                    bool ok = recipe_box("", v.zenny);
-                    char b[48];
-                    snprintf(b, sizeof(b), "BUY  (%d ZENNY)", v.zenny);
-                    if (remnant_button(b, ImVec2(-1, 40), ok)) { r.kind = Request::BUY_CONSUMABLE; request(r); g_npcSays = r2_text(n.done_line); ui_sound("buy"); }
-                } else if (!s.has(v.cat, v.row)) {
-                    bool free = v.cat == CAT_ARCHETYPE && v.zenny <= 0;
-                    bool ok = free || recipe_box(v.recipe, v.zenny);
-                    if (remnant_button(free ? "TAKE" : "CRAFT", ImVec2(-1, 40), ok)) {
-                        if (free) choose_archetype(v.row, s.archetype < 0 ? 0 : 1);
-                        else request(r);
-                        g_npcSays = r2_text(n.done_line);
-                        ui_sound("craft");
-                    }
-                } else {
-                    ImGui::TextColored(ImColor(col::gold).Value, "Owned. Equip it at the Ward 13 terminal [%c].", (char)keys().terminal);
-                }
+    static int active[3] = {0, 0, 0};
+    int& cur = active[std::max(0, std::min(2, g_menuRole))];
+    std::vector<const char*> names;
+    for (const Tab& tb : tabs) names.push_back(tb.name);
+    cur = std::min(cur, (int)tabs.size() - 1);
+    if (tab_strip(names, cur)) { g_pick = ItemView(); g_filter[0] = 0; }
+    const Tab& tb = tabs[cur];
+    bool upgrades = tb.slot == -2;
+    float w = ImGui::GetContentRegionAvail().x;
+    ImGui::BeginChild("list", ImVec2(w * 0.42f, -kFoot));
+    item_list(tb.cat, upgrades ? -1 : tb.slot, s, upgrades, upgrades ? -1 : g_menuRole);
+    ImGui::EndChild();
+    ImGui::SameLine(0, 20);
+    ImGui::BeginChild("detail", ImVec2(0, -kFoot), ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar);
+    // The action button is pinned under a scrolling detail, MHW style: the cost is always one glance from the button.
+    const float actionH = kBtnPrimary + 12;
+    ImGui::BeginChild("detailscroll", ImVec2(0, -actionH));
+    char action[48] = {0};
+    bool actionOk = false;
+    int actionKind = -1;  // Request kind, or -2 = take a free archetype
+    if (g_pick.row >= 0 && g_pick.cat == tb.cat) {
+        const ItemView& v = g_pick;
+        item_detail(v, s);
+        ImGui::Spacing();
+        ImGui::Separator();
+        if (upgrades) {
+            int lvl = s.level[v.row], top = weapon_max_level(v.row);
+            if (lvl < top) {
+                int zen = 0;
+                std::string rec = upgrade_cost(v.row, lvl, &zen);
+                ImGui::Text("+%d  ->  +%d of %d  (damage x%.2f -> x%.2f)", lvl, lvl + 1, top, upgrade_mult(v.row, lvl),
+                            upgrade_mult(v.row, lvl + 1));
+                actionOk = recipe_box(rec.c_str(), zen);
+                snprintf(action, sizeof(action), "UPGRADE TO +%d", lvl + 1);
+                actionKind = Request::UPGRADE;
+            } else {
+                ImGui::TextColored(ImColor(col::gold).Value, "Fully upgraded (+%d)", lvl);
             }
-            ImGui::EndChild();
-            ImGui::EndTabItem();
+        } else if (v.cat == CAT_CONSUMABLE) {
+            actionOk = recipe_box("", v.zenny);
+            snprintf(action, sizeof(action), "BUY  (%s)", zenny_str(v.zenny).c_str());
+            actionKind = Request::BUY_CONSUMABLE;
+        } else if (!s.has(v.cat, v.row)) {
+            bool free = v.cat == CAT_ARCHETYPE && v.zenny <= 0;
+            actionOk = free || recipe_box(v.recipe, v.zenny);
+            snprintf(action, sizeof(action), "%s", free ? "TAKE" : "CRAFT");
+            actionKind = free ? -2 : Request::CRAFT;
+        } else {
+            ImGui::TextColored(ImColor(col::gold).Value, "Owned. Equip it at the Ward 13 terminal [%c].", (char)keys().terminal);
         }
-        ImGui::EndTabBar();
+    } else {
+        empty_hint("Select an item to see its details");
     }
-    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 62);
-    ImGui::Dummy(ImVec2(1, 1));
+    ImGui::EndChild();
+    if (action[0]) {
+        ImGui::SetCursorPosY(ImGui::GetWindowHeight() - kBtnPrimary - 4);
+        if (remnant_button(action, ImVec2(-1, kBtnPrimary), actionOk)) {
+            const ItemView& v = g_pick;
+            if (actionKind == -2) choose_archetype(v.row, s.archetype < 0 ? 0 : 1);
+            else request(Request{(Request::Kind)actionKind, v.cat, v.row});
+            g_npcSays = r2_text(n.done_line);
+            ui_sound(actionKind == Request::UPGRADE ? "upgrade" : actionKind == Request::BUY_CONSUMABLE ? "buy" : "craft");
+        }
+    }
+    ImGui::EndChild();
     std::string leave = r2_text(n.leave_option);
+    ImGui::PushFont(g_bold, 18.0f);
     float lw = std::max(240.0f, ImGui::CalcTextSize(leave.c_str()).x + 40);  // a long farewell still fits its button
-    ImGui::SameLine(ImGui::GetWindowWidth() - 60 - lw);
-    if (remnant_button(leave.c_str(), ImVec2(lw, 38))) open(SCR_NONE);
+    ImGui::PopFont();
+    foot_at(ImGui::GetWindowWidth() - kPadX - lw, kBtnBack);
+    if (remnant_button(leave.c_str(), ImVec2(lw, kBtnBack))) open(SCR_NONE);
     end_screen();
 }
 
@@ -691,95 +891,114 @@ static int slot_row(const SaveData& s, const Slot& sl) {
     }
 }
 
+static const char* role_label(int role) {
+    return role == MENUS_ROLE_SMITHY ? "SMITHY" : role == MENUS_ROLE_MELDER ? "ELDER MELDER" : "PROVISIONS";
+}
+
 static void screen_terminal(const SaveData& s, const Live& l) {
-    if (!begin_screen("##terminal", 0.84f, 0.86f)) return end_screen();
+    if (!begin_screen("##terminal", 0.84f, 0.92f)) return end_screen();
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("left", ImVec2(w * 0.40f, 0));
-    image(kUi[UI_WARD13_TERMINAL].art, 1024, ImVec2(ImGui::GetContentRegionAvail().x, 110));
+    ImGui::BeginChild("left", ImVec2(w * 0.40f, -kFoot));
+    image(kUi[UI_WARD13_TERMINAL].art, 1024, ImVec2(ImGui::GetContentRegionAvail().x, 72));
     title("WARD 13");
-    ImGui::Separator();
+    section("ARCHETYPES");
     for (int slot = 0; slot < 2; slot++) {
         int a = slot == 0 ? s.archetype : s.archetype2;
         ImGui::PushID(100 + slot);
-        label(slot == 0 ? "ARCHETYPE" : "SECOND ARCHETYPE");
+        if (list_row("a", 52, false)) open(SCR_ARCHETYPE);
         if (a >= 0) {
+            row_at(kRowPad, 6);
             image(kArchetypes[a].emblem, 128, ImVec2(40, 40));
-            ImGui::SameLine();
-            ImGui::BeginGroup();
-            ImGui::TextUnformatted(text_or(&kArchetypes[a].name).c_str());
-            ImGui::SameLine();
-            ImGui::TextColored(ImColor(col::gold).Value, "  Lv %d", archetype_level(s, a));
+            float x = g_row.a.x + kRowPad + 50;
+            float e = put(g_body, 18, ImVec2(x, g_row.a.y + 5), col::text, text_or(&kArchetypes[a].name).c_str());
+            char lv[16];
+            snprintf(lv, sizeof(lv), "Lv %d", archetype_level(s, a));
+            put(g_bold, 14, ImVec2(e + 10, g_row.a.y + 9), col::gold, lv);
             std::vector<int> sk = skills_of(a);
             if (!sk.empty()) {
-                const Skills& k = kSkills[sk[skill_index(s, slot)]];
-                ImGui::TextColored(ImColor(col::dim).Value, "[%c] %s", (char)(slot == 0 ? keys().skill : keys().skill2),
-                                   text_or(&k.name).c_str());
+                char b[96];
+                snprintf(b, sizeof(b), "[%c] %s", (char)(slot == 0 ? keys().skill : keys().skill2), text_or(&kSkills[sk[skill_index(s, slot)]].name).c_str());
+                put(g_body, 14, ImVec2(x, g_row.a.y + 29), col::dim, b);
             }
-            ImGui::EndGroup();
         } else {
-            ImGui::TextColored(ImColor(col::dim).Value, slot == 0 ? "none" : "none (craft engrams at the Elder Melder)");
+            put(g_body, 16, ImVec2(g_row.a.x + kRowPad, g_row.a.y + 16), col::dim, slot == 0 ? "none" : "none (craft engrams at the Elder Melder)");
         }
+        end_list_row();
         ImGui::PopID();
     }
-    if (remnant_button("ARCHETYPES AND SKILLS", ImVec2(-1, 34))) open(SCR_ARCHETYPE);
-    ImGui::Spacing();
-    ImGui::BeginChild("slots", ImVec2(0, -150));
+    ImGui::Dummy(ImVec2(0, 4));
+    if (remnant_button("ARCHETYPES AND SKILLS", ImVec2(-1, kBtnSecondary))) open(SCR_ARCHETYPE);
+    int vendors = 0;
+    for (int role = 0; role < 3; role++) vendors += !role_has_spot(role);  // visit them in person once their spot is known
+    ImGui::BeginChild("slots", ImVec2(0, vendors ? -(26 + vendors * (kBtnSecondary + 4) + 8) : 0));
     for (int i = 0; i < (int)(sizeof(kSlots) / sizeof(kSlots[0])); i++) {
         const Slot& sl = kSlots[i];
+        if (i == 0) section("WEAPONS");
+        else if (sl.cat == CAT_RELIC) section("RELIC");
+        else if (sl.cat == CAT_AMULET) section("ACCESSORIES");
+        else if (sl.cat == CAT_ARMOR && sl.sub == 0) section("ARMOR");
         int row = slot_row(s, sl);
         ImGui::PushID(i);
         bool sel = g_slotPick == i;
-        ImGui::BeginChild("s", ImVec2(0, 44), ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar);
+        if (list_row("s", 52, sel)) { g_slotPick = i; g_pick = ItemView(); g_filter[0] = 0; }
         ItemView v = row >= 0 ? item(sl.cat, row) : ItemView();
-        image(v.icon, 128, ImVec2(sl.cat == CAT_WEAPON ? 80 : 32, 32));
-        ImGui::SameLine();
-        ImGui::BeginGroup();
-        label(sl.label, sel ? col::gold : col::dim);
+        row_at(kRowPad, 6);
+        image(v.icon, 128, ImVec2(40, 40));
+        float x = g_row.a.x + kRowPad + 50;
+        put(g_bold, 14, ImVec2(x, g_row.a.y + 5), sel ? col::gold : col::dim, sl.label);
         if (row >= 0) {
             bool fixed = sl.cat == CAT_MOD && kWeapons[sl.sub == 0 ? std::max(0, s.longGun) : std::max(0, s.handGun)].mod >= 0;
-            ImGui::Text("%s%s", text_or(v.name).c_str(), fixed ? "  (built in)" : "");
-            if (sl.cat == CAT_WEAPON && s.level[row]) { ImGui::SameLine(); ImGui::TextColored(ImColor(col::gold).Value, "+%d", s.level[row]); }
+            float e = put(g_body, 18, ImVec2(x, g_row.a.y + 25), col::text, text_or(v.name).c_str());
+            if (sl.cat == CAT_WEAPON && s.level[row]) {
+                char lv[16];
+                snprintf(lv, sizeof(lv), "+%d", s.level[row]);
+                e = put(g_bold, 16, ImVec2(e + 8, g_row.a.y + 27), col::gold, lv);
+            }
+            if (fixed) put(g_body, 14, ImVec2(e + 8, g_row.a.y + 29), col::dim, "(built in)");
         } else {
-            ImGui::TextColored(ImColor(col::dim).Value, "empty");
+            put(g_body, 16, ImVec2(x, g_row.a.y + 27), col::dim, "empty");
         }
-        ImGui::EndGroup();
-        ImGui::EndChild();
-        if (ImGui::IsItemClicked()) { g_slotPick = i; g_pick = ItemView(); g_filter[0] = 0; }
+        end_list_row();
         ImGui::PopID();
     }
     ImGui::EndChild();
-    ImGui::TextColored(ImColor(col::gold).Value, "Relic charges %d   -   %d zenny", s.relicCharges, mhw_zenny());
-    for (int role = 0; role < 3; role++) {
-        if (role_has_spot(role)) continue;  // visit them in person once their spot is known
-        ImGui::PushID(200 + role);
-        std::string b = "VISIT " + upper(r2_name(kNpcs[host_of_role(role)].name));
-        if (remnant_button(b.c_str(), ImVec2(-1, 30))) open_menu(-1, role);
-        ImGui::PopID();
+    if (vendors) {
+        section("REMNANT VENDORS");
+        for (int role = 0; role < 3; role++) {
+            if (role_has_spot(role)) continue;
+            ImGui::PushID(200 + role);
+            std::string b = std::string(role_label(role)) + "  -  " + r2_name(kNpcs[host_of_role(role)].name);
+            if (remnant_button(b.c_str(), ImVec2(-1, kBtnSecondary))) open_menu(-1, role);
+            ImGui::PopID();
+        }
     }
     ImGui::EndChild();
     ImGui::SameLine(0, 24);
-    ImGui::BeginChild("right", ImVec2(0, 0));
+    ImGui::BeginChild("right", ImVec2(0, -kFoot));
     if (g_slotPick >= 0) {
         const Slot& sl = kSlots[g_slotPick];
         title(sl.label);
         float rw = ImGui::GetContentRegionAvail().x;
-        ImGui::BeginChild("choices", ImVec2(rw * 0.45f, -50));
+        ImGui::BeginChild("choices", ImVec2(rw * 0.45f, 0));
         item_list(sl.cat, sl.cat == CAT_WEAPON ? sl.sub : -1, s, true, -1);
         ImGui::EndChild();
         ImGui::SameLine(0, 16);
-        ImGui::BeginChild("pick", ImVec2(0, -50));
-        if (g_pick.row >= 0 && g_pick.cat == sl.cat) {
-            item_detail(g_pick, s);
-            bool okHere = can_equip_here(l);
-            if (remnant_button("EQUIP", ImVec2(-1, 38), okHere)) {
-                equip(sl.cat, g_pick.row, sl.sub);
-                ui_sound(sl.cat == CAT_FRAGMENT ? "socket" : "equip");
-            }
-        }
+        ImGui::BeginChild("pick", ImVec2(0, 0));
+        if (g_pick.row >= 0 && g_pick.cat == sl.cat) item_detail(g_pick, s);
+        else empty_hint("Select an item to see its details");
         ImGui::EndChild();
-        if (slot_row(s, sl) >= 0 && sl.cat != CAT_WEAPON && remnant_button("REMOVE", ImVec2(200, 36))) equip(sl.cat, -1, sl.sub);
     } else {
-        title("HUNTER");
+        float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
+        ImVec2 t0 = ImGui::GetCursorScreenPos();
+        title_text("HUNTER");
+        float th = ImGui::GetItemRectSize().y;
+        std::string zen = zenny_str(mhw_zenny());
+        char rc[32];
+        snprintf(rc, sizeof(rc), "RELIC CHARGES  %d", s.relicCharges);
+        float zx = right - text_w(g_bold, 18, zen.c_str());
+        put(g_bold, 18, ImVec2(zx, t0.y + th - 29), col::gold, zen.c_str());
+        put(g_bold, 14, ImVec2(zx - 28 - text_w(g_bold, 14, rc), t0.y + th - 27), col::dim, rc);
+        ImGui::Separator();
         level_line(s);
         {
             int free = trait_points(s) - trait_points_spent(s);
@@ -788,19 +1007,19 @@ static void screen_terminal(const SaveData& s, const Live& l) {
             snprintf(tb, sizeof(tb), free > 0 ? "TRAITS (%d)" : "TRAITS", free);
             snprintf(pb, sizeof(pb), ready ? "PRISM (LEVEL UP)" : "PRISM");
             float half = (ImGui::GetContentRegionAvail().x - 8) / 2;
-            if (remnant_button(tb, ImVec2(half, 30))) open(SCR_TRAITS);
+            if (remnant_button(tb, ImVec2(half, kBtnSecondary))) open(SCR_TRAITS);
             ImGui::SameLine(0, 8);
-            if (remnant_button(pb, ImVec2(half, 30))) open(SCR_PRISM);
+            if (remnant_button(pb, ImVec2(half, kBtnSecondary))) open(SCR_PRISM);
         }
         // Remnant II's difficulty for the Remnant monsters met from now on
-        label("REMNANT DIFFICULTY");
+        section("REMNANT DIFFICULTY");
         {
             float bw = (ImGui::GetContentRegionAvail().x - 3 * 6) / kDifficultiesCount;
             for (int i = 0; i < kDifficultiesCount; i++) {
                 ImGui::PushID(400 + i);
                 if (i) ImGui::SameLine(0, 6);
                 bool on = s.difficulty == i;
-                if (remnant_button(kDifficulties[i].label, ImVec2(bw, 30), true, on) && !on)
+                if (remnant_button(kDifficulties[i].label, ImVec2(bw, kBtnSecondary), true, on) && !on)
                     change_save([i](SaveData& d) { d.difficulty = i; return true; });
                 if (ImGui::IsItemHovered()) {
                     const Difficulties& d = kDifficulties[i];
@@ -810,21 +1029,41 @@ static void screen_terminal(const SaveData& s, const Live& l) {
                 ImGui::PopID();
             }
         }
-        ImGui::Spacing();
-        title("CONSUMABLES");
+        section("EQUIPPED");
+        {
+            ImVec2 g0 = ImGui::GetCursorScreenPos();
+            float cw = ImGui::GetContentRegionAvail().x / 2;
+            int cnt = (int)(sizeof(kSlots) / sizeof(kSlots[0]));
+            for (int i = 0; i < cnt; i++) {
+                const Slot& sl = kSlots[i];
+                int row = slot_row(s, sl);
+                ImVec2 at(g0.x + (i % 2) * cw, g0.y + (i / 2) * 38.0f);
+                put(g_body, 14, at, col::dim, sl.label);
+                std::string nm = row >= 0 ? text_or(item(sl.cat, row).name) : "empty";
+                if (nm.size() > 30) nm = nm.substr(0, 28) + "..";
+                put(g_body, 16, ImVec2(at.x, at.y + 16), row >= 0 ? col::text : IM_COL32(110, 102, 88, 255), nm.c_str());
+            }
+            ImGui::Dummy(ImVec2(1, ((cnt + 1) / 2) * 38.0f));
+        }
+        section("CONSUMABLES");
         bool any = false;
         for (int i = 0; i < kConsumablesCount; i++) {
             if (s.stock[i] <= 0) continue;
             any = true;
             ImGui::PushID(i);
+            list_row("c", 50, false);
+            row_at(kRowPad, 7);
             image(kConsumables[i].icon, 128, ImVec2(36, 36));
-            ImGui::SameLine();
-            ImGui::BeginGroup();
-            ImGui::Text("%s  x%d%s", text_or(&kConsumables[i].name).c_str(), s.stock[i], s.concoction == i ? "  (active)" : "");
-            effect_lines(kConsumables[i].effects);
-            ImGui::EndGroup();
-            ImGui::SameLine(ImGui::GetContentRegionAvail().x - 100);
-            if (remnant_button("USE", ImVec2(90, 30))) use_consumable(i);
+            float x = g_row.a.x + kRowPad + 46;
+            float e = put(g_body, 18, ImVec2(x, g_row.a.y + 4), col::text, text_or(&kConsumables[i].name).c_str());
+            char q[32];
+            snprintf(q, sizeof(q), "x%d%s", s.stock[i], s.concoction == i ? "  (active)" : "");
+            put(g_bold, 14, ImVec2(e + 10, g_row.a.y + 8), col::gold, q);
+            std::vector<Effect> fx = effects_of(kConsumables[i].effects);
+            if (!fx.empty()) put(g_body, 14, ImVec2(x, g_row.a.y + 28), col::dim, describe(fx[0]).c_str());
+            ImGui::SetCursorScreenPos(ImVec2(g_row.a.x + g_row.w - 8 - 90, g_row.a.y + (50 - kBtnSmall) * 0.5f));
+            if (remnant_button("USE", ImVec2(90, kBtnSmall))) use_consumable(i);
+            end_list_row();
             ImGui::PopID();
         }
         if (!any) ImGui::TextColored(ImColor(col::dim).Value, "None carried. %s sells them at %s.",
@@ -833,6 +1072,25 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         ImGui::TextColored(ImColor(col::dim).Value, "Pick a slot on the left to change it.");
     }
     ImGui::EndChild();
+    if (g_slotPick >= 0) {
+        const Slot& sl = kSlots[g_slotPick];
+        float nx = kPadX;
+        if (g_pick.row >= 0 && g_pick.cat == sl.cat) {
+            foot_at(kPadX, kBtnPrimary);
+            if (remnant_button("EQUIP", ImVec2(200, kBtnPrimary), can_equip_here(l))) {
+                equip(sl.cat, g_pick.row, sl.sub);
+                ui_sound(sl.cat == CAT_FRAGMENT ? "socket" : "equip");
+            }
+            nx = ImGui::GetItemRectMax().x - ImGui::GetWindowPos().x + 10;
+        }
+        if (slot_row(s, sl) >= 0 && sl.cat != CAT_WEAPON) {
+            foot_at(nx, kBtnSecondary);
+            if (remnant_button("REMOVE", ImVec2(200, kBtnSecondary))) equip(sl.cat, -1, sl.sub);
+        }
+        if (foot_back("BACK TO HUNTER")) { g_slotPick = -1; g_pick = ItemView(); }
+    } else if (foot_back("CLOSE")) {
+        open(SCR_NONE);
+    }
     end_screen();
 }
 
@@ -847,68 +1105,67 @@ static void screen_traits(const SaveData& s) {
     int earned = trait_points(s), spent = trait_points_spent(s);
     ImGui::TextColored(ImColor(spent < earned ? col::gold : col::dim).Value, "%d trait point%s to spend   (%d of %d used)",
                        earned - spent, earned - spent == 1 ? "" : "s", spent, earned);
-    dim_wrapped("As in Remnant II: your primary archetype puts 5 points into the core traits, each equipped archetype "
-                "raises its own trait by one per archetype level, and every Remnant level earns a trait point to spend "
-                "(85 at most). A trait goes up to 10. Your own points can be taken back here at any time. Learn more "
-                "traits from the Elder Melder or from Remnant bosses.");
-    ImGui::Separator();
+    ImGui::TextColored(ImColor(col::dim).Value, "A trait goes up to 10. Your own points can be taken back here at any time.");
+    help_mark("As in Remnant II: your primary archetype puts 5 points into the core traits, each equipped archetype "
+              "raises its own trait by one per archetype level, and every Remnant level earns a trait point to spend "
+              "(85 at most). A trait goes up to 10. Your own points can be taken back here at any time. Learn more "
+              "traits from the Elder Melder or from Remnant bosses.");
+    ImGui::Spacing();
+    static const char* kPass[4] = {"CORE TRAITS", "ARCHETYPE TRAITS", "LEARNED TRAITS", "NOT LEARNED YET"};
+    std::vector<int> order[4];  // core, archetype, learned, not yet learned
+    for (int i = 0; i < kTraitsCount; i++) {
+        const Traits& t = kTraits[i];
+        bool known = trait_known(s, i);
+        int want = t.kind == TRAITS_KIND_CORE ? 0 : t.kind == TRAITS_KIND_ARCHETYPE ? (known ? 1 : -1) : known ? 2 : 3;
+        if (want >= 0) order[want].push_back(i);
+    }
+    if (g_traitPick < 0 || g_traitPick >= kTraitsCount)
+        for (int pass = 0; pass < 4 && g_traitPick < 0; pass++)
+            if (!order[pass].empty()) g_traitPick = order[pass][0];
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("list", ImVec2(w * 0.52f, -46));
-    static const char* kPass[4] = {"CORE TRAITS", "ARCHETYPE TRAITS", "TRAITS", "NOT LEARNED YET"};
-    for (int pass = 0; pass < 4; pass++) {  // core, archetype, learned, not yet learned
-        bool header = false;
-        for (int i = 0; i < kTraitsCount; i++) {
+    ImGui::BeginChild("list", ImVec2(w * 0.52f, -kFoot));
+    for (int pass = 0; pass < 4; pass++) {
+        if (order[pass].empty()) continue;
+        section(kPass[pass]);
+        for (int i : order[pass]) {
             const Traits& t = kTraits[i];
             bool known = trait_known(s, i);
-            int want = t.kind == TRAITS_KIND_CORE ? 0 : t.kind == TRAITS_KIND_ARCHETYPE ? (known ? 1 : -1) : known ? 2 : 3;
-            if (want != pass) continue;
-            if (!header) { header = true; label(kPass[pass]); }
             ImGui::PushID(i);
             bool sel = g_traitPick == i;
-            ImGui::BeginChild("t", ImVec2(0, 34), ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar);
+            if (list_row("t", 36, sel)) g_traitPick = i;
             int lv = trait_level(s, i), au = std::min(10, trait_auto(s, i)), mine = i < (int)s.trait.size() ? s.trait[i] : 0;
-            ImU32 c = !known ? col::dim : sel ? col::gold : col::text;
-            ImGui::TextColored(ImColor(c).Value, "%s", text_or(&t.name).c_str());
-            ImGui::SameLine(ImGui::GetContentRegionAvail().x * 0.42f);
+            float y = g_row.a.y + 8;
+            put(g_body, 18, ImVec2(g_row.a.x + kRowPad, y - 1), !known ? col::dim : sel ? col::gold : col::text, text_or(&t.name).c_str());
+            float px = g_row.a.x + g_row.w * 0.46f;
             if (known) {
-                pips(lv, 10, au);
+                pips_at(ImVec2(px, g_row.a.y + 13), lv, 10, au);
                 bool spendable = trait_can_set(s, i, 1) || mine > 0;
+                float bx = g_row.a.x + g_row.w - 8 - kBtnSmall;
                 if (spendable) {
-                    ImGui::SameLine();
-                    if (remnant_button("-", ImVec2(26, 22), mine > 0)) change_save([i](SaveData& d) { return trait_set(d, i, -1); });
-                    ImGui::SameLine();
-                    if (remnant_button("+", ImVec2(26, 22), trait_can_set(s, i, 1)))
+                    ImGui::SetCursorScreenPos(ImVec2(bx - 4 - kBtnSmall, g_row.a.y + 5));
+                    if (remnant_button("-", ImVec2(kBtnSmall, kBtnSmall), mine > 0)) change_save([i](SaveData& d) { return trait_set(d, i, -1); });
+                    ImGui::SetCursorScreenPos(ImVec2(bx, g_row.a.y + 5));
+                    if (remnant_button("+", ImVec2(kBtnSmall, kBtnSmall), trait_can_set(s, i, 1)))
                         change_save([i](SaveData& d) { return trait_set(d, i, 1); });
                 } else if (t.kind == TRAITS_KIND_ARCHETYPE) {
-                    ImGui::SameLine();
-                    ImGui::TextColored(ImColor(col::dim).Value, "with its archetype");
+                    const char* m = "with its archetype";
+                    put(g_body, 14, ImVec2(g_row.a.x + g_row.w - 8 - text_w(g_body, 14, m), y + 2), col::dim, m);
                 }
             } else {
-                ImGui::TextColored(ImColor(col::dim).Value, "not learned yet");
+                put(g_body, 14, ImVec2(px, y + 2), col::dim, "not learned yet");
             }
-            ImGui::EndChild();
-            if (ImGui::IsItemClicked()) g_traitPick = i;
+            end_list_row();
             ImGui::PopID();
         }
     }
     ImGui::EndChild();
     ImGui::SameLine(0, 20);
-    ImGui::BeginChild("detail", ImVec2(0, -46));
-    if (s.archetype >= 0 && kArchetypes[s.archetype].trait >= 0) {
-        const Traits& at = kTraits[kArchetypes[s.archetype].trait];
-        label("ARCHETYPE TRAIT");
-        ImGui::TextColored(ImColor(col::gold).Value, "%s", text_or(&at.name).c_str());
-        dim_wrapped(("From your primary archetype, " + text_or(&kArchetypes[s.archetype].name) + ": one point per archetype level, "
-                     "free. Your second archetype's trait works the same way. Once an archetype reaches level 10, its "
-                     "trait can be used with any archetype for trait points.").c_str());
-        effect_lines(at.effects);
-        ImGui::Separator();
-    }
+    ImGui::BeginChild("detail", ImVec2(0, -kFoot));
     if (g_traitPick >= 0 && g_traitPick < kTraitsCount) {
         const Traits& t = kTraits[g_traitPick];
         title(upper(text_or(&t.name)).c_str());
         if (t.desc.asset) dim_wrapped(text_or(&t.desc).c_str());
-        label("AT LEVEL 10");
+        section("AT LEVEL 10");
         effect_lines(t.effects);
         int lv = trait_level(s, g_traitPick), au = std::min(10, trait_auto(s, g_traitPick));
         ImGui::TextColored(ImColor(col::dim).Value, "Now level %d: %d%% of that%s.", lv, lv * 10,
@@ -917,17 +1174,44 @@ static void screen_traits(const SaveData& s) {
             dim_wrapped(("Learn it from " + r2_name(kNpcs[host_of_role(MENUS_ROLE_MELDER)].name) + " (" +
                          role_place(MENUS_ROLE_MELDER) + "), or from a Remnant boss.").c_str());
     } else {
-        dim_wrapped("Pick a trait to see what it does.");
+        empty_hint("Pick a trait to see what it does");
+    }
+    if (s.archetype >= 0 && kArchetypes[s.archetype].trait >= 0) {
+        const Traits& at = kTraits[kArchetypes[s.archetype].trait];
+        ImGui::Spacing();
+        ImGui::Separator();
+        section("ARCHETYPE TRAIT");
+        ImGui::TextColored(ImColor(col::gold).Value, "%s", text_or(&at.name).c_str());
+        ImGui::SameLine(0, 12);
+        ImGui::TextColored(ImColor(col::dim).Value, "one point per archetype level, free");
+        help_mark(("From your primary archetype, " + text_or(&kArchetypes[s.archetype].name) + ": one point per archetype level, "
+                   "free. Your second archetype's trait works the same way. Once an archetype reaches level 10, its "
+                   "trait can be used with any archetype for trait points.").c_str());
+        effect_lines(at.effects);
     }
     ImGui::EndChild();
-    if (remnant_button("TAKE ALL POINTS BACK", ImVec2(260, 36), spent > 0)) change_save([](SaveData& d) { traits_reset(d); return true; });
-    ImGui::SameLine(ImGui::GetWindowWidth() - 250);
-    if (remnant_button("BACK", ImVec2(220, 36))) open(SCR_TERMINAL);
+    foot_at(kPadX, kBtnSecondary);
+    if (remnant_button("TAKE ALL POINTS BACK", ImVec2(260, kBtnSecondary), spent > 0)) change_save([](SaveData& d) { traits_reset(d); return true; });
+    if (foot_back()) open(SCR_TERMINAL);
     end_screen();
 }
 
 static int g_prismPick = -1;
 static double g_cleanseArmed = 0;
+
+// The effect lines of a fragment or fusion in a slot or offer.
+static void slot_effects(const SaveData::PSlot& sl) {
+    if (sl.kind == PS_FUSION) {
+        effect_lines(kFragments[kFusions[sl.row].a].effects);
+        effect_lines(kFragments[kFusions[sl.row].b].effects);
+    } else if (sl.kind == PS_FRAGMENT) {
+        effect_lines(kFragments[sl.row].effects);
+    }
+}
+
+static std::string slot_name(const SaveData::PSlot& sl) {
+    return sl.kind == PS_FUSION ? text_or(&kFusions[sl.row].name) : text_or(&kFragments[sl.row].name);
+}
 
 static void slot_line(const SaveData::PSlot& sl, int i) {
     if (sl.kind == PS_FRAGMENT) {
@@ -935,7 +1219,7 @@ static void slot_line(const SaveData::PSlot& sl, int i) {
         ImGui::SameLine();
         ImGui::TextColored(ImColor(col::gold).Value, "+%d", sl.lv);
         ImGui::Indent();
-        effect_lines(kFragments[sl.row].effects);
+        slot_effects(sl);
         ImGui::Unindent();
     } else if (sl.kind == PS_FUSION) {
         const Fusions& f = kFusions[sl.row];
@@ -945,15 +1229,42 @@ static void slot_line(const SaveData::PSlot& sl, int i) {
         ImGui::SameLine();
         ImGui::TextColored(ImColor(col::gold).Value, "+%d", sl.lv);
         ImGui::Indent();
-        effect_lines(kFragments[f.a].effects);
-        effect_lines(kFragments[f.b].effects);
+        slot_effects(sl);
         ImGui::Unindent();
-    } else {
-        ImGui::TextColored(ImColor(col::dim).Value, "%d.  empty", i + 1);
     }
 }
 
+// The five fixed slots of a prism as a row of cells.
+static void fragment_cells(const SaveData::Prism& p) {
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    ImVec2 o = ImGui::GetCursorScreenPos();
+    float cw = (ImGui::GetContentRegionAvail().x - 4 * 8) / 5;
+    for (int i = 0; i < 5; i++) {
+        const SaveData::PSlot& sl = p.slot[i];
+        ImVec2 a(o.x + i * (cw + 8), o.y), b(a.x + cw, a.y + 64);
+        bool full = sl.kind == PS_FRAGMENT || sl.kind == PS_FUSION;
+        dl->AddRectFilled(a, b, full ? IM_COL32(34, 31, 25, 255) : IM_COL32(20, 19, 16, 255));
+        dl->AddRect(a, b, full ? col::line : col::frameLo);
+        dl->PushClipRect(a, b, true);
+        char n[8];
+        snprintf(n, sizeof(n), "%d", i + 1);
+        dl->AddText(g_body, 13, ImVec2(a.x + 7, a.y + 4), col::dim, n);
+        if (full) {
+            dl->AddText(g_bold, 16, ImVec2(a.x + 10, a.y + 22), sl.kind == PS_FUSION ? col::gold : col::text, slot_name(sl).c_str());
+            char lv[8];
+            snprintf(lv, sizeof(lv), "+%d", sl.lv);
+            dl->AddText(g_bold, 14, ImVec2(b.x - 8 - text_w(g_bold, 14, lv), a.y + 4), col::gold, lv);
+        } else {
+            dl->AddText(g_body, 14, ImVec2(a.x + (cw - text_w(g_body, 14, "empty")) * 0.5f, a.y + 24), col::dim, "empty");
+        }
+        dl->PopClipRect();
+    }
+    ImGui::Dummy(ImVec2(1, 64));
+}
+
+// One of the three level-up cards: the same height and weight, the choice pinned at the foot.
 static void offer_card(const SaveData::Prism& p, const SaveData::PSlot& o) {
+    ImGui::PushFont(g_body, 16.0f);
     switch (o.kind) {
         case PS_FRAGMENT:
             label("NEW FRAGMENT", col::gold);
@@ -963,8 +1274,8 @@ static void offer_card(const SaveData::Prism& p, const SaveData::PSlot& o) {
         case PS_RAISE: {
             const SaveData::PSlot& sl = p.slot[o.row];
             label("STRENGTHEN", col::gold);
-            std::string n = sl.kind == PS_FUSION ? text_or(&kFusions[sl.row].name) : text_or(&kFragments[sl.row].name);
-            ImGui::TextWrapped("%s  +%d -> +%d", n.c_str(), sl.lv, sl.lv + 1);
+            ImGui::TextWrapped("%s  +%d -> +%d", slot_name(sl).c_str(), sl.lv, sl.lv + 1);
+            slot_effects(sl);
             break;
         }
         case PS_FUSION: {
@@ -982,31 +1293,36 @@ static void offer_card(const SaveData::Prism& p, const SaveData::PSlot& o) {
             break;
         default: break;
     }
+    ImGui::PopFont();
 }
 
 static void screen_prism(const SaveData& s) {
     if (!begin_screen("##prism", 0.82f, 0.86f)) return end_screen();
     title("PRISMS");
-    dim_wrapped("The equipped prism gains experience as you hunt. Each prism level offers three choices: a new relic "
-                "fragment for one of its five slots, one more level for a fragment (up to +10), or a fusion of two "
-                "fragments that are both +5 or more. With all five at +10 it offers a legendary bonus. Fragments show "
-                "their +10 values.");
-    ImGui::Separator();
+    ImGui::TextColored(ImColor(col::dim).Value, "The equipped prism gains experience as you hunt. Each level offers three choices.");
+    help_mark("The equipped prism gains experience as you hunt. Each prism level offers three choices: a new relic "
+              "fragment for one of its five slots, one more level for a fragment (up to +10), or a fusion of two "
+              "fragments that are both +5 or more. With all five at +10 it offers a legendary bonus. Fragments show "
+              "their +10 values.");
+    ImGui::Spacing();
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("owned", ImVec2(w * 0.28f, -46));
+    ImGui::BeginChild("owned", ImVec2(w * 0.28f, -kFoot));
     bool any = false;
     for (int i = 0; i < kPrismsCount; i++) {
         if (!s.has(CAT_PRISM, i)) continue;
         any = true;
         if (g_prismPick < 0 || !s.has(CAT_PRISM, g_prismPick)) g_prismPick = s.prismOn >= 0 ? s.prismOn : i;
         ImGui::PushID(i);
-        ImGui::BeginChild("p", ImVec2(0, 52), ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar);
-        ImGui::TextColored(ImColor(g_prismPick == i ? col::gold : col::text).Value, "%s", text_or(&kPrisms[i].name).c_str());
+        bool sel = g_prismPick == i;
+        if (list_row("p", 52, sel)) g_prismPick = i;
         const SaveData::Prism& p = s.prism[i];
-        ImGui::TextColored(ImColor(col::dim).Value, "+%d%s%s", prism_level(p), s.prismOn == i ? "   equipped" : "",
-                           p.offers > 0 ? "   level up!" : "");
-        ImGui::EndChild();
-        if (ImGui::IsItemClicked()) g_prismPick = i;
+        put(g_body, 18, ImVec2(g_row.a.x + kRowPad, g_row.a.y + 6), sel ? col::gold : col::text, text_or(&kPrisms[i].name).c_str());
+        char lv[16];
+        snprintf(lv, sizeof(lv), "+%d", prism_level(p));
+        float x = put(g_body, 14, ImVec2(g_row.a.x + kRowPad, g_row.a.y + 29), col::dim, lv);
+        if (s.prismOn == i) x = put(g_body, 14, ImVec2(x, g_row.a.y + 29), col::dim, "  |  equipped");
+        if (p.offers > 0) put(g_bold, 14, ImVec2(x, g_row.a.y + 29), col::accent, "  |  LEVEL UP");
+        end_list_row();
         ImGui::PopID();
     }
     if (!any)
@@ -1014,36 +1330,44 @@ static void screen_prism(const SaveData& s) {
                      " crafts them, and the first Remnant boss you defeat leaves one.").c_str());
     ImGui::EndChild();
     ImGui::SameLine(0, 20);
-    ImGui::BeginChild("detail", ImVec2(0, -46));
+    ImGui::BeginChild("detail", ImVec2(0, -kFoot));
     if (any && g_prismPick >= 0) {
         int row = g_prismPick;
         const SaveData::Prism& p = s.prism[row];
         int lv = prism_level(p);
         double need = prism_need(p);
         title(upper(text_or(&kPrisms[row].name)).c_str());
+        float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
+        ImVec2 l0 = ImGui::GetCursorScreenPos();
         ImGui::TextColored(ImColor(col::gold).Value, "+%d of 51", lv);
         if (need > 0) {
-            ImGui::SameLine();
-            ImGui::TextColored(ImColor(col::dim).Value, "   %.0f / %.0f experience", std::min(p.xp, need), need);
+            char xp[64];
+            snprintf(xp, sizeof(xp), "%.0f / %.0f experience", std::min(p.xp, need), need);
+            put(g_body, 18, ImVec2(right - text_w(g_body, 18, xp), l0.y), col::dim, xp);
             bar((float)(p.xp / need), col::accent);
         }
         if (s.prismOn != row) {
-            if (remnant_button("EQUIP THIS PRISM", ImVec2(260, 34)))
+            ImGui::Spacing();
+            if (remnant_button("EQUIP THIS PRISM", ImVec2(260, kBtnSecondary)))
                 change_save([row](SaveData& d) { d.prismOn = row; prism_offer(d.prism[row]); return true; });
         } else if (need > 0 && p.offers == 0) {
             dim_wrapped("Equipped: it gains experience as you hunt.");
         }
         if (p.offers > 0) {
-            ImGui::Spacing();
-            label("LEVEL UP: CHOOSE ONE", col::gold);
+            section("LEVEL UP: CHOOSE ONE", col::gold);
             float cw = (ImGui::GetContentRegionAvail().x - 24) / 3.0f;
             for (int k = 0; k < p.offers; k++) {
                 ImGui::PushID(300 + k);
                 if (k) ImGui::SameLine(0, 12);
-                ImGui::BeginChild("o", ImVec2(cw, 170), ImGuiChildFlags_Borders);
+                ImVec2 a = ImGui::GetCursorScreenPos();
+                ImGui::GetWindowDrawList()->AddRectFilled(a, ImVec2(a.x + cw, a.y + 190), IM_COL32(26, 24, 20, 255));
+                ImGui::GetWindowDrawList()->AddRect(a, ImVec2(a.x + cw, a.y + 190), col::line);
+                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10, 10));
+                ImGui::BeginChild("o", ImVec2(cw, 190), ImGuiChildFlags_AlwaysUseWindowPadding, ImGuiWindowFlags_NoScrollbar);
+                ImGui::PopStyleVar();
                 offer_card(p, p.offer[k]);
-                ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 40);
-                if (remnant_button("CHOOSE", ImVec2(-1, 30))) {
+                ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 10 - kBtnSecondary);
+                if (remnant_button("CHOOSE", ImVec2(-1, kBtnSecondary))) {
                     change_save([row, k](SaveData& d) { return prism_pick(d, row, k); });
                     ui_sound("socket");
                 }
@@ -1051,21 +1375,25 @@ static void screen_prism(const SaveData& s) {
                 ImGui::PopID();
             }
         }
+        section("FRAGMENTS");
+        fragment_cells(p);
         ImGui::Spacing();
-        label("FRAGMENTS");
         for (int i = 0; i < 5; i++) slot_line(p.slot[i], i);
         if (p.legendary >= 0) {
-            label("LEGENDARY", col::gold);
+            section("LEGENDARY", col::gold);
             ImGui::TextUnformatted(text_or(&kLegendaries[p.legendary].name).c_str());
             if (kLegendaries[p.legendary].desc.asset) dim_wrapped(text_or(&kLegendaries[p.legendary].desc).c_str());
             effect_lines(kLegendaries[p.legendary].effects);
         }
+    } else {
+        empty_hint("Select a prism to see its fragments");
     }
     ImGui::EndChild();
     if (any && g_prismPick >= 0) {
         bool armed = now_s() - g_cleanseArmed < 4.0;
         int row = g_prismPick;
-        if (remnant_button(armed ? "CLICK AGAIN TO CLEANSE" : "CLEANSE (from +10)", ImVec2(300, 36), prism_level(s.prism[row]) >= 10)) {
+        foot_at(kPadX, kBtnSecondary);
+        if (remnant_button(armed ? "CLICK AGAIN TO CLEANSE" : "CLEANSE (from +10)", ImVec2(300, kBtnSecondary), prism_level(s.prism[row]) >= 10)) {
             if (armed) {
                 change_save([row](SaveData& d) { return prism_cleanse(d, row); });
                 g_cleanseArmed = 0;
@@ -1073,73 +1401,78 @@ static void screen_prism(const SaveData& s) {
                 g_cleanseArmed = now_s();
             }
         }
-        ImGui::SameLine();
     }
-    ImGui::SameLine(ImGui::GetWindowWidth() - 250);
-    if (remnant_button("BACK", ImVec2(220, 36))) open(SCR_TERMINAL);
+    if (foot_back()) open(SCR_TERMINAL);
     end_screen();
 }
 
 // ---- archetypes
 
 static void screen_archetype(const SaveData& s) {
-    if (!begin_screen("##archetype", 0.84f, 0.86f)) return end_screen();
+    if (!begin_screen("##archetype", 0.84f, 0.86f, s.archetype >= 0)) return end_screen();
     title(s.archetype < 0 ? "CHOOSE YOUR ARCHETYPE" : "ARCHETYPES");
-    dim_wrapped("Your archetype brings its skills, perks and trait. Starting archetypes are free; the others are engrams the "
-          "Elder Melder's Remnant guest crafts from MHW materials. A second archetype adds its perks and a second skill.");
-    ImGui::Separator();
+    ImGui::TextColored(ImColor(col::dim).Value, "Your archetype brings its skills, perks and trait. Starting archetypes are free.");
+    help_mark("Your archetype brings its skills, perks and trait. Starting archetypes are free; the others are engrams the "
+              "Elder Melder's Remnant guest crafts from MHW materials. A second archetype adds its perks and a second skill.");
+    ImGui::Spacing();
+    std::vector<int> rows;
+    for (int i = 0; i < kArchetypesCount; i++)
+        if (!(s.archetype < 0 && kArchetypes[i].zenny > 0)) rows.push_back(i);  // first choice: the starting four
+    bool picked = false;
+    for (int i : rows) picked |= g_pick.cat == CAT_ARCHETYPE && g_pick.row == i;
+    if (!picked && !rows.empty()) g_pick = item(CAT_ARCHETYPE, rows[0]);
     float w = ImGui::GetContentRegionAvail().x;
-    ImGui::BeginChild("list", ImVec2(w * 0.30f, -50));
-    for (int i = 0; i < kArchetypesCount; i++) {
+    ImGui::BeginChild("list", ImVec2(w * 0.30f, -kFoot));
+    for (int i : rows) {
         const Archetypes& a = kArchetypes[i];
         bool own = s.has(CAT_ARCHETYPE, i) || a.zenny <= 0;
-        if (s.archetype < 0 && a.zenny > 0) continue;  // first choice: the starting four
         ImGui::PushID(i);
         bool sel = g_pick.cat == CAT_ARCHETYPE && g_pick.row == i;
-        ImGui::BeginChild("a", ImVec2(0, 58), ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar);
-        image(a.emblem, 128, ImVec2(46, 46), own ? IM_COL32_WHITE : IM_COL32(120, 115, 108, 255));
-        ImGui::SameLine();
-        ImGui::BeginGroup();
-        ImGui::TextColored(ImColor(sel ? col::gold : own ? col::text : col::dim).Value, "%s", upper(text_or(&a.name)).c_str());
-        const char* st = i == s.archetype ? "primary" : i == s.archetype2 ? "second" : own ? "available" : "craft at the Elder Melder";
-        ImGui::TextColored(ImColor(col::dim).Value, "%s", st);
-        ImGui::EndGroup();
-        ImGui::EndChild();
-        if (ImGui::IsItemClicked()) g_pick = item(CAT_ARCHETYPE, i);
+        if (list_row("a", 58, sel)) g_pick = item(CAT_ARCHETYPE, i);
+        row_at(kRowPad, 7);
+        image(a.emblem, 128, ImVec2(44, 44), own ? IM_COL32_WHITE : IM_COL32(120, 115, 108, 255));
+        float x = g_row.a.x + kRowPad + 54;
+        put(g_body, 18, ImVec2(x, g_row.a.y + 8), sel ? col::gold : own ? col::text : col::dim, upper(text_or(&a.name)).c_str());
+        const char* st = i == s.archetype ? "PRIMARY" : i == s.archetype2 ? "SECOND" : own ? "AVAILABLE" : "ENGRAM AT THE ELDER MELDER";
+        put(g_body, 13, ImVec2(x, g_row.a.y + 33), col::dim, st);
+        end_list_row();
         ImGui::PopID();
     }
     ImGui::EndChild();
     ImGui::SameLine(0, 20);
-    ImGui::BeginChild("detail", ImVec2(0, -50));
+    ImGui::BeginChild("detail", ImVec2(0, -kFoot));
     if (g_pick.cat == CAT_ARCHETYPE && g_pick.row >= 0) {
         const Archetypes& a = kArchetypes[g_pick.row];
-        image(a.emblem, 256, ImVec2(110, 110));
+        image(a.emblem, 256, ImVec2(96, 96));
         ImGui::SameLine();
         ImGui::BeginGroup();
         title(upper(text_or(&a.name)).c_str());
         ImGui::TextWrapped("%s", text_or(&a.desc).c_str());
         ImGui::EndGroup();
+        ImGui::Spacing();
         archetype_detail(g_pick.row, s, true);
+    } else {
+        empty_hint("Select an archetype to see its details");
     }
     ImGui::EndChild();
+    float nx = kPadX;
     if (g_pick.cat == CAT_ARCHETYPE && g_pick.row >= 0) {
         const Archetypes& a = kArchetypes[g_pick.row];
         bool own = s.has(CAT_ARCHETYPE, g_pick.row) || a.zenny <= 0;
-        if (remnant_button(s.archetype < 0 ? "CHOOSE" : "MAKE PRIMARY", ImVec2(220, 40), own && g_pick.row != s.archetype)) {
+        foot_at(kPadX, kBtnPrimary);
+        if (remnant_button(s.archetype < 0 ? "CHOOSE" : "MAKE PRIMARY", ImVec2(220, kBtnPrimary), own && g_pick.row != s.archetype)) {
             bool first = s.archetype < 0;
             choose_archetype(g_pick.row, 0);
             if (first) open(SCR_NONE);
         }
+        nx = ImGui::GetItemRectMax().x - ImGui::GetWindowPos().x + 10;
         if (s.archetype >= 0) {
-            ImGui::SameLine();
-            if (remnant_button("MAKE SECOND", ImVec2(220, 40), own && g_pick.row != s.archetype && g_pick.row != s.archetype2))
+            foot_at(nx, kBtnSecondary);
+            if (remnant_button("MAKE SECOND", ImVec2(220, kBtnSecondary), own && g_pick.row != s.archetype && g_pick.row != s.archetype2))
                 choose_archetype(g_pick.row, 1);
         }
     }
-    if (s.archetype >= 0) {
-        ImGui::SameLine(ImGui::GetWindowWidth() - 280);
-        if (remnant_button("BACK", ImVec2(220, 40))) open(SCR_TERMINAL);
-    }
+    if (s.archetype >= 0 && foot_back()) open(SCR_TERMINAL);
     end_screen();
 }
 
@@ -1162,13 +1495,15 @@ static void hud(const SaveData& s, const Live& l) {
     ImDrawList* fg = ImGui::GetForegroundDrawList();
     double t = now_s();
     float sc = vp->Size.y / 1080.0f;
-    // Toast.
+    // Toast: a dark band in a thin gold frame, a little below the top.
     if (t < l.toastUntil && l.toast[0]) {
-        ImVec2 ts = ImGui::CalcTextSize(l.toast);
+        float fs = 18 * sc;
+        ImVec2 ts = g_body->CalcTextSizeA(fs, FLT_MAX, 0, l.toast);
         ImVec2 p(vp->Pos.x + (vp->Size.x - ts.x) / 2, vp->Pos.y + vp->Size.y * 0.16f);
-        fg->AddRectFilled(ImVec2(p.x - 18, p.y - 8), ImVec2(p.x + ts.x + 18, p.y + ts.y + 8), col::mhwFrame);
-        fg->AddRect(ImVec2(p.x - 18, p.y - 8), ImVec2(p.x + ts.x + 18, p.y + ts.y + 8), col::mhwGold);
-        fg->AddText(p, col::mhwText, l.toast);
+        ImVec2 a(p.x - 22 * sc, p.y - 10 * sc), b(p.x + ts.x + 22 * sc, p.y + ts.y + 10 * sc);
+        fg->AddRectFilled(a, b, col::mhwFrame);
+        fg->AddRect(a, b, col::mhwGold, 0, 0, 1.0f);
+        fg->AddText(g_body, fs, p, col::mhwText, l.toast);
     }
     // At an MHW NPC with a Remnant menu: a Remnant-styled prompt.
     if (l.nearMenu >= 0 && g_screen == SCR_NONE) {
@@ -1212,77 +1547,92 @@ static void hud(const SaveData& s, const Live& l) {
         }
     }
     // Gun panel, bottom centre, clear of MHW's item bar and slinger (bottom right) until the guns live in the bar.
-    ImVec2 size(360 * sc, 132 * sc);
+    ImVec2 size(360 * sc, 120 * sc);
     ImVec2 p(vp->Pos.x + (vp->Size.x - size.x) / 2, vp->Pos.y + vp->Size.y - size.y - 36 * sc);
-    fg->AddRectFilled(p, ImVec2(p.x + size.x, p.y + size.y), col::mhwFrame);
-    fg->AddRect(p, ImVec2(p.x + size.x, p.y + size.y), col::mhwGold, 0, 0, 1.5f);
+    ImVec2 pe(p.x + size.x, p.y + size.y);
+    fg->AddRectFilled(p, pe, col::mhwFrame);
+    fg->AddRect(p, pe, col::mhwGold, 0, 0, 1.5f);
+    fg->AddRectFilled(p, ImVec2(p.x + 3 * sc, pe.y), col::accent);
+    float cx = p.x + 190 * sc;  // the right column: ammo, reload
     if (!l.gunMode) {
         char hint[64];
         snprintf(hint, sizeof(hint), "[%c] Remnant guns", (char)keys().gun);
-        fg->AddText(ImVec2(p.x + 14 * sc, p.y + 12 * sc), col::mhwText, hint);
+        fg->AddText(g_body, 14 * sc, ImVec2(cx, p.y + 96 * sc), col::mhwText, hint);
     }
     if (gun >= 0) {
         int w = 0, h = 0;
         void* tex = texture_for(kWeapons[gun].icon, 256, &w, &h);
         if (tex && w) {
-            float k = std::min(150 * sc / w, 60 * sc / h);
-            ImVec2 a0(p.x + 12 * sc, p.y + 40 * sc);
+            float k = std::min(160 * sc / w, 56 * sc / h);
+            ImVec2 a0(p.x + 16 * sc, p.y + 10 * sc);
             fg->AddImage((ImTextureID)(uintptr_t)tex, a0, ImVec2(a0.x + w * k, a0.y + h * k));
         }
-        fg->AddText(g_bold, 16 * sc, ImVec2(p.x + 14 * sc, p.y + size.y - 26 * sc), col::mhwText, r2_text(kWeapons[gun].name).c_str());
+        fg->AddText(g_bold, 16 * sc, ImVec2(p.x + 16 * sc, p.y + 70 * sc), col::mhwText, r2_text(kWeapons[gun].name).c_str());
         char ammo[32];
         snprintf(ammo, sizeof(ammo), "%d", l.mag[gun]);
-        fg->AddText(g_title, 44 * sc, ImVec2(p.x + 200 * sc, p.y + 30 * sc), col::mhwText, ammo);
+        fg->AddText(g_title, 40 * sc, ImVec2(cx, p.y + 8 * sc), col::mhwText, ammo);
+        float aw = g_title->CalcTextSizeA(40 * sc, FLT_MAX, 0, ammo).x;
         snprintf(ammo, sizeof(ammo), "/ %d", l.reserve[gun]);
-        fg->AddText(g_body, 20 * sc, ImVec2(p.x + 270 * sc, p.y + 52 * sc), col::mhwGold, ammo);
+        fg->AddText(g_body, 18 * sc, ImVec2(cx + aw + 10 * sc, p.y + 30 * sc), col::mhwGold, ammo);
         if (l.reloadDone > 0) {
             float k = (float)std::min(1.0, std::max(0.0, 1.0 - (l.reloadDone - t) / std::max(0.1f, kWeapons[gun].reload_s)));
-            ImVec2 b0(p.x + 200 * sc, p.y + 96 * sc);
+            ImVec2 b0(cx, p.y + 72 * sc);
+            fg->AddRectFilled(b0, ImVec2(b0.x + 140 * sc, b0.y + 5 * sc), IM_COL32(60, 52, 40, 255));
             fg->AddRectFilled(b0, ImVec2(b0.x + 140 * sc * k, b0.y + 5 * sc), col::mhwGold);
-            fg->AddText(ImVec2(b0.x, b0.y - 20 * sc), col::mhwText, "Reloading");
+            fg->AddText(g_bold, 13 * sc, ImVec2(b0.x, b0.y - 18 * sc), col::mhwText, "RELOADING");
         }
     }
-    // Mod meter.
+    // Mod meter, under the gun's name.
     int mod = gun_mod(s, gun);
     if (mod >= 0) {
-        ImVec2 m0(p.x + 200 * sc, p.y + size.y - 22 * sc);
+        ImVec2 m0(p.x + 46 * sc, p.y + 98 * sc);
         float k = t < l.modUntil ? 1.0f : std::min(1.0f, l.modCharge / std::max(1.0f, kMods[mod].charge_damage));
-        fg->AddRectFilled(m0, ImVec2(m0.x + 140 * sc, m0.y + 8 * sc), IM_COL32(60, 52, 40, 255));
-        fg->AddRectFilled(m0, ImVec2(m0.x + 140 * sc * k, m0.y + 8 * sc), k >= 1 ? col::accent : col::mhwGold);
+        fg->AddRectFilled(m0, ImVec2(m0.x + 140 * sc, m0.y + 6 * sc), IM_COL32(60, 52, 40, 255));
+        fg->AddRectFilled(m0, ImVec2(m0.x + 140 * sc * k, m0.y + 6 * sc), k >= 1 ? col::accent : col::mhwGold);
         int w = 0, h = 0;
         if (void* tex = texture_for(kMods[mod].icon, 128, &w, &h))
-            fg->AddImage((ImTextureID)(uintptr_t)tex, ImVec2(m0.x - 30 * sc, m0.y - 11 * sc), ImVec2(m0.x - 4 * sc, m0.y + 15 * sc));
+            fg->AddImage((ImTextureID)(uintptr_t)tex, ImVec2(p.x + 16 * sc, m0.y - 8 * sc), ImVec2(p.x + 38 * sc, m0.y + 14 * sc));
     }
-    // Skills and relic, bottom left above MHW's own panels.
+    // Skills and relic, bottom left above MHW's own panels: 60 px boxes, the key under each, seconds inside.
     ImVec2 q(vp->Pos.x + 40 * sc, vp->Pos.y + vp->Size.y - 300 * sc);
-    auto icon_box = [&](const char* asset, ImVec2 at, float frac, const char* tag) {
-        ImVec2 e(at.x + 64 * sc, at.y + 64 * sc);
+    auto icon_box = [&](const char* asset, ImVec2 at, float frac, const char* key, const char* inside, ImU32 insideCol) {
+        float bs = 60 * sc;
+        ImVec2 e(at.x + bs, at.y + bs);
         fg->AddRectFilled(at, e, col::mhwFrame);
         int w = 0, h = 0;
         if (void* tex = texture_for(asset, 128, &w, &h)) fg->AddImage((ImTextureID)(uintptr_t)tex, at, e);
-        if (frac < 1) fg->AddRectFilled(ImVec2(at.x, at.y + 64 * sc * frac), e, IM_COL32(0, 0, 0, 160));
+        if (frac < 1) fg->AddRectFilled(at, ImVec2(e.x, at.y + bs * (1 - frac)), IM_COL32(0, 0, 0, 170));
         fg->AddRect(at, e, col::mhwGold, 0, 0, 1.5f);
-        if (tag) fg->AddText(g_bold, 16 * sc, ImVec2(at.x + 4 * sc, e.y + 2 * sc), col::mhwText, tag);
+        if (inside && inside[0]) {
+            float fs = 16 * sc;
+            ImVec2 ts = g_bold->CalcTextSizeA(fs, FLT_MAX, 0, inside);
+            fg->AddText(g_bold, fs, ImVec2(at.x + (bs - ts.x) / 2, at.y + (bs - ts.y) / 2), insideCol, inside);
+        }
+        float fs = 14 * sc;
+        ImVec2 ks = g_bold->CalcTextSizeA(fs, FLT_MAX, 0, key);
+        fg->AddText(g_bold, fs, ImVec2(at.x + (bs - ks.x) / 2, e.y + 4 * sc), col::mhwText, key);
     };
-    char tag[48];
+    char tag[48], key[16], in[24];
     float x = q.x;
     for (int slot = 0; slot < 2; slot++) {
         int ar = slot == 0 ? s.archetype : s.archetype2;
         std::vector<int> sk = skills_of(ar);
         if (sk.empty()) continue;
         const Skills& k = kSkills[sk[skill_index(s, slot)]];
-        int key = slot == 0 ? keys().skill : keys().skill2;
         float cd = std::max(1.0f, k.cooldown_s);
         float sf = t >= l.skillReady[slot] ? 1.0f : (float)std::max(0.0, 1.0 - (l.skillReady[slot] - t) / cd);
-        if (t < l.skillUntil[slot]) snprintf(tag, sizeof(tag), "[%c] %.0fs", (char)key, l.skillUntil[slot] - t);
-        else if (t < l.skillReady[slot]) snprintf(tag, sizeof(tag), "%.0fs", l.skillReady[slot] - t);
-        else snprintf(tag, sizeof(tag), "[%c]", (char)key);
-        icon_box(k.icon, ImVec2(x, q.y), sf, tag);
+        snprintf(key, sizeof(key), "[%c]", (char)(slot == 0 ? keys().skill : keys().skill2));
+        in[0] = 0;
+        ImU32 ic = col::mhwText;
+        if (t < l.skillUntil[slot]) { snprintf(in, sizeof(in), "%.0fs", l.skillUntil[slot] - t); ic = col::accent; }
+        else if (t < l.skillReady[slot]) snprintf(in, sizeof(in), "%.0fs", l.skillReady[slot] - t);
+        icon_box(k.icon, ImVec2(x, q.y), sf, key, in, ic);
         x += 80 * sc;
     }
     if (s.relic >= 0) {
-        snprintf(tag, sizeof(tag), "[%c] x%d", (char)keys().relic, s.relicCharges);
-        icon_box(kRelics[s.relic].icon, ImVec2(x, q.y), s.relicCharges > 0 ? 1.0f : 0.0f, tag);
+        snprintf(key, sizeof(key), "[%c]", (char)keys().relic);
+        snprintf(tag, sizeof(tag), "x%d", s.relicCharges);
+        icon_box(kRelics[s.relic].icon, ImVec2(x, q.y), s.relicCharges > 0 ? 1.0f : 0.0f, key, tag, col::mhwGold);
     }
     if (l.bonusMax > 0 || l.bonusHealth > 0) {
         float mx = std::max(l.bonusMax, l.bonusHealth);
@@ -1323,7 +1673,10 @@ void mod_frame() {
     bool settled = baseSince > 0 && now_s() - baseSince > 4.0 && viewValid && (moved || now_s() - baseSince > 90.0);
     if (g_screen == SCR_NONE && settled && !s.introDone && r2_ready()) open(SCR_INTRO);
     if (g_screen != SCR_NONE) {
-        if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen != SCR_INTRO && (g_screen != SCR_ARCHETYPE || s.archetype >= 0))
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen == SCR_TERMINAL && g_slotPick >= 0) {
+            g_slotPick = -1;
+            g_pick = ItemView();
+        } else if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen != SCR_INTRO && (g_screen != SCR_ARCHETYPE || s.archetype >= 0))
             open(g_screen == SCR_ARCHETYPE || g_screen == SCR_TRAITS || g_screen == SCR_PRISM ? SCR_TERMINAL : SCR_NONE);
         if (!inGame) open(SCR_NONE);
     } else if (inGame) {
@@ -1394,6 +1747,9 @@ void ui_preview(int which, const SaveData& s, const Live& l) {
         case 1: screen_traits(s); break;
         case 2: screen_prism(s); break;
         case 3: g_pick = item(CAT_ARCHETYPE, s.archetype); screen_archetype(s); break;
+        case 5: hud(s, l); break;
+        case 6: g_slotPick = 0; screen_terminal(s, l); break;
+        case 7: g_menuRole = MENUS_ROLE_SMITHY; g_menu = -1; screen_menu(s, l); break;
         default: g_menuRole = MENUS_ROLE_MELDER; g_menu = -1; screen_menu(s, l); break;
     }
 }

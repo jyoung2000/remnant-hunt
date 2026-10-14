@@ -18,6 +18,7 @@ static HANDLE g_proc = nullptr, g_in = nullptr, g_out = nullptr;
 static std::mutex g_pipeLock;
 static char g_status[256] = "not started";
 static volatile bool g_ready = false;
+static volatile bool g_dead = false;  // the pipe went out of step: never talk to r2read again
 static std::string g_dir;
 
 const char* r2_status() { return g_status; }
@@ -120,7 +121,7 @@ static bool read_line(std::string* out) {
 // One request/answer. Worker threads only (never the render or game thread).
 static bool ask(const std::string& req, std::string* head, std::vector<uint8_t>* body) {
     std::lock_guard<std::mutex> l(g_pipeLock);
-    if (!g_proc) return false;
+    if (!g_proc || g_dead) return false;
     if (!write_all(req + "\n") || !read_line(head)) {
         snprintf(g_status, sizeof(g_status), "r2read stopped answering");
         g_ready = false;
@@ -131,8 +132,23 @@ static bool ask(const std::string& req, std::string* head, std::vector<uint8_t>*
     size_t sp = head->find_last_of(' ');
     size_t n = strtoull(head->c_str() + sp + 1, nullptr, 10);
     if (head->compare(0, 11, "OK r2read 1") == 0) return true;
+    if (n > (64u << 20)) {  // a garbage length: the pipe is out of step, stop using it
+        snprintf(g_status, sizeof(g_status), "r2read sent a bad reply length");
+        log("r2: reply length %zu is too big, giving up on r2read", n);
+        g_ready = false;
+        g_dead = true;
+        return false;
+    }
     body->resize(n);
-    return read_exact(body->data(), n);
+    if (!read_exact(body->data(), n)) {  // short read: the next reply would be parsed against the wrong request
+        snprintf(g_status, sizeof(g_status), "r2read stopped mid-reply");
+        log("r2: short read (%zu bytes expected), giving up on r2read", n);
+        g_ready = false;
+        g_dead = true;
+        body->clear();
+        return false;
+    }
+    return true;
 }
 
 // ---------------------------------------------------------------- caches
@@ -169,7 +185,7 @@ static void fetch_text(const std::string& asset, const std::string& key) {
     if (ask("TEXT\t" + id, &head, &body)) val = strip_markup(std::string(body.begin(), body.end()));
     else log("r2: text %s %.8s... unavailable (%s)", asset.c_str(), key.c_str(), head.c_str());
     std::lock_guard<std::mutex> l(g_cacheLock);
-    g_text[id] = val;
+    g_text.emplace(id, val);  // never assign: the render thread may hold a reference to an existing entry
 }
 
 static std::string camel_split(const std::string& s) {
@@ -190,7 +206,7 @@ static void fetch_name(const std::string& asset, const std::string& pattern) {
     std::string val;
     if (ask("NAME\t" + asset + "\t" + pattern, &head, &body)) val = camel_split(std::string(body.begin(), body.end()));
     std::lock_guard<std::mutex> l(g_cacheLock);
-    g_text[id] = val;
+    g_text.emplace(id, val);  // see fetch_text
 }
 
 static void fetch_image(const std::string& asset, int maxSide) {
@@ -414,7 +430,7 @@ static DWORD WINAPI worker(LPVOID) {
     }
     log("r2: %s (%s)", head.c_str(), g_dir.c_str());
     prefetch_all();
-    g_ready = true;
+    g_ready = !g_dead;
     snprintf(g_status, sizeof(g_status), "reading Remnant II from your install");
     int bad = 0, ok = r2_cells_checked(&bad);
     log("r2: %d text cells resolved, %d unavailable", ok, bad);
@@ -483,6 +499,9 @@ bool r2_start() {
 }
 
 void r2_stop() {
+    // Kill r2read before taking the lock: ask() holds it across a blocking ReadFile, and the broken pipe frees it.
+    HANDLE proc = g_proc;
+    if (proc) TerminateProcess(proc, 0);
     std::lock_guard<std::mutex> l(g_pipeLock);
     if (g_proc) {
         DWORD w;

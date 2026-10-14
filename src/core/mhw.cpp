@@ -192,7 +192,17 @@ void snapshot(GameSnapshot* s) {
         uint8_t* res = rd_ptr((uintptr_t)em + HOOKV_ENEMY_PATH);
         m.large = true;
         if (res && mem_readable(res + 0x0C, 8)) {
-            const char* p = (const char*)res + 0x0C;
+            // Bounded copy of the path: read page by page, never past a terminator or the readable range.
+            char pathBuf[160];
+            size_t pn = 0;
+            for (; pn + 1 < sizeof(pathBuf); pn++) {
+                const uint8_t* a = res + 0x0C + pn;
+                if ((pn == 0 || ((uintptr_t)a & 0xFFF) == 0) && !mem_readable(a, 1)) break;
+                pathBuf[pn] = (char)*a;
+                if (!pathBuf[pn]) break;
+            }
+            pathBuf[pn] = 0;
+            const char* p = pathBuf;
             const char* b = strchr(p, '\\');
             m.large = !(b && strncmp(b + 1, "ems", 3) == 0);
             // "em\\em101\\00\\..." -> "em101_00"
@@ -406,7 +416,7 @@ static uint8_t* g_camObj = nullptr;
 static uintptr_t g_origVt = 0;
 static volatile LONG g_inTick = 0;
 static DWORD g_gameThread = 0;
-constexpr int kVtSlots = 64;
+constexpr int kVtSlotsMin = 64, kVtSlotsWide = 256;
 
 static void __fastcall tick_move(void* self) {
     InterlockedIncrement(&g_inTick);
@@ -434,14 +444,25 @@ bool game_tick_installed() { return g_camObj != nullptr && g_gameThread != 0; }
 
 bool install_game_tick() {
     if (g_camObj) return true;
-    if (!hook_ok(HOOKS_S_MH_CAMERA) || !hook_ok(HOOKS_CAM_MOVE_SLOT)) return false;
+    // Called every 250 ms until it works: say why once per distinct reason.
+    static int lastWhy = 0;
+    auto fail = [&](int why, const char* text) {
+        if (why != lastWhy) { lastWhy = why; log("game tick: not installed yet, %s", text); }
+        return false;
+    };
+    if (!hook_ok(HOOKS_S_MH_CAMERA) || !hook_ok(HOOKS_CAM_MOVE_SLOT)) return fail(1, "the camera hooks are not verified");
     uint8_t* obj = rd_ptr(HOOKV_S_MH_CAMERA);
-    if (!obj) return false;
+    if (!obj) return fail(2, "the sMhCamera singleton does not exist yet");
     uintptr_t vt = *(uintptr_t*)obj;
-    if (vt != strtoull(after(kHooks[HOOKS_S_MH_CAMERA].check, "vt:"), nullptr, 16)) return false;
+    if (vt != strtoull(after(kHooks[HOOKS_S_MH_CAMERA].check, "vt:"), nullptr, 16))
+        return fail(3, "the sMhCamera vtable is not the expected one");
+    // 256 slots when that much is readable (the class may have more than 64 virtuals), else 64.
+    int kVtSlots = mem_readable((void*)(vt - 8), sizeof(uintptr_t) * (kVtSlotsWide + 1)) ? kVtSlotsWide : kVtSlotsMin;
     g_vtCopy = (uintptr_t*)VirtualAlloc(nullptr, sizeof(uintptr_t) * (kVtSlots + 1), MEM_COMMIT | MEM_RESERVE,
                                         PAGE_READWRITE);
-    if (!g_vtCopy) return false;
+    if (!g_vtCopy) return fail(4, "VirtualAlloc for the vtable copy failed");
+    lastWhy = -1;
+    log("game tick: copying %d vtable slots", kVtSlots);
     // Keep the slot before the vtable (MSVC RTTI locator) so anything reading it still works.
     memcpy(g_vtCopy, (void*)(vt - 8), sizeof(uintptr_t) * (kVtSlots + 1));
     uintptr_t* slots = g_vtCopy + 1;

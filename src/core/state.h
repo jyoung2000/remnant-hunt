@@ -182,7 +182,7 @@ void request(const Request& r);  // takes the lock
 
 // Save/load.
 void save_load();
-void save_write(const SaveData& s);
+bool save_write(const SaveData& s);
 
 // Archetype and loadout helpers.
 const Archetypes* archetype();

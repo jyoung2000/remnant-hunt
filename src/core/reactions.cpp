@@ -39,6 +39,9 @@ int g_watchSet = -1, g_watchId = -1, g_watchHeavy = 0, g_watchWeapon = -1;
 double g_lastPlayed = 0;
 int g_prevSet = -1, g_prevId = -1;
 
+// The same range check as turf.cpp: item-use or status animations and corrupt files are not hit reactions.
+bool plausible_action(int set, int id) { return set >= 0 && set <= 15 && id >= 0 && id < 4096; }
+
 std::string path() {
     char p[MAX_PATH];
     snprintf(p, sizeof(p), "%s\\learned_reactions.txt", mod_dir());
@@ -50,7 +53,8 @@ void load() {
     FILE* f = fopen(path().c_str(), "rb");
     if (!f) return;
     int w, h, s, i, c;
-    while (fscanf(f, "%d %d %d %d %d", &w, &h, &s, &i, &c) == 5) g_learned[{w, h}].push_back({s, i, c});
+    while (fscanf(f, "%d %d %d %d %d", &w, &h, &s, &i, &c) == 5)
+        if (w >= 0 && plausible_action(s, i)) g_learned[{w, h}].push_back({s, i, c});
     fclose(f);
     log("reactions: %zu learned hit reactions loaded", g_learned.size());
 }
@@ -102,13 +106,15 @@ double reactions_own_damage_at() { return g_ownHurtAt; }
 // Plays an action through the unit's own ActionController (the hunter's, or a monster's: the turf wars).
 bool mhw_do_action(uint8_t* unit, int set, int id) {
     if (!g_searched) find_do_action();
-    if (!g_doAction || !unit || !mem_readable(unit + kActionController + kCurrentAction, 8)) return false;
+    if (!g_doAction || !unit || !plausible_action(set, id) || !mem_readable(unit + kActionController + kCurrentAction, 8))
+        return false;
     int action[2] = {set, id};
     return g_doAction(unit + kActionController, action);
 }
 
 // Game thread: watch MHW's own hits on the hunter and learn the reactions they start.
 static void learn(int weapon, int heavy, int set, int id) {
+    if (weapon < 0 || !plausible_action(set, id)) return;  // unknown weapon type, or not a hit reaction
     auto& v = g_learned[{weapon, heavy}];
     auto it = std::find_if(v.begin(), v.end(), [&](const Seen& s) { return s.set == set && s.id == id; });
     if (it == v.end()) v.push_back({set, id, 1});

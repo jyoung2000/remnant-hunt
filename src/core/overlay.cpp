@@ -275,10 +275,11 @@ static LRESULT CALLBACK wndproc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
         bool keyMsg = msg >= WM_KEYFIRST && msg <= WM_KEYLAST;
         if (b.mouse && mouseMsg) return 0;
         if (b.mouseButtons && buttonMsg) return 0;
-        if (keyMsg && (msg == WM_KEYDOWN || msg == WM_KEYUP || msg == WM_SYSKEYDOWN || msg == WM_SYSKEYUP) &&
-            vk_blocked(b, (int)wp))
+        // Key-ups always reach the game, or a key held while a screen opens stays latched.
+        bool keyUp = msg == WM_KEYUP || msg == WM_SYSKEYUP;
+        if (keyMsg && !keyUp && (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) && vk_blocked(b, (int)wp))
             return 0;
-        if (keyMsg && b.keyboard) return 0;
+        if (keyMsg && !keyUp && b.keyboard) return 0;
         if (b.mouse && msg == WM_SETCURSOR) return TRUE;
     }
     return CallWindowProcW(g_origWndProc, h, msg, wp, lp);
@@ -316,8 +317,11 @@ void* texture_for(const char* asset, int maxSide, int* w, int* h) {
     Tex t;
     int bb = 0;
     DXGI_FORMAT fmt = dxgi_format(img->format, &bb);
-    if (img->failed || fmt == DXGI_FORMAT_UNKNOWN || img->w <= 0) {
+    size_t want = bb ? (size_t)((img->w + 3) / 4) * (size_t)((img->h + 3) / 4) * bb : (size_t)img->w * img->h * 4;
+    if (img->failed || fmt == DXGI_FORMAT_UNKNOWN || img->w <= 0 || img->h <= 0 || img->pixels.size() < want) {
         t.failed = true;
+        if (!img->failed && fmt != DXGI_FORMAT_UNKNOWN)
+            log("overlay: image %s has %zu bytes, %zu needed", asset, img->pixels.size(), want);
     } else {
         D3D11_TEXTURE2D_DESC d = {};
         d.Width = img->w;
@@ -492,12 +496,19 @@ static bool make_targets(IDXGISwapChain* sc) {
     D3D11_RESOURCE_FLAGS fl = {D3D11_BIND_RENDER_TARGET, 0, 0, 0};
     for (UINT i = 0; i < g_bufferCount; i++) {
         ID3D12Resource* res = nullptr;
-        if (FAILED(sc->GetBuffer(i, IID_ID3D12Resource, (void**)&res)) || !res) return false;
-        HRESULT hr = g_on12->CreateWrappedResource(res, &fl, D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_PRESENT,
-                                                   IID_ID3D11Resource, (void**)&g_wrapped[i]);
-        res->Release();
-        if (FAILED(hr)) { log("overlay: wrapping back buffer %u failed (0x%08lx)", i, hr); return false; }
-        g_dev->CreateRenderTargetView(g_wrapped[i], nullptr, &g_wrappedRtv[i]);
+        HRESULT hr = sc->GetBuffer(i, IID_ID3D12Resource, (void**)&res);
+        if (SUCCEEDED(hr) && res) {
+            hr = g_on12->CreateWrappedResource(res, &fl, D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_PRESENT,
+                                               IID_ID3D11Resource, (void**)&g_wrapped[i]);
+            res->Release();
+        }
+        if (SUCCEEDED(hr)) hr = g_dev->CreateRenderTargetView(g_wrapped[i], nullptr, &g_wrappedRtv[i]);
+        if (FAILED(hr) || !g_wrappedRtv[i]) {
+            static bool logged = false;  // render() retries every frame; say it once
+            if (!logged) { logged = true; log("overlay: back buffer %u target failed (0x%08lx), will retry", i, (unsigned long)hr); }
+            release_targets();  // leaves g_bufferCount at 0 so render() tries again
+            return false;
+        }
     }
     return true;
 }

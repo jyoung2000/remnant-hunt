@@ -107,6 +107,8 @@ static bool init(ID3D11Device* dev) {
         FAILED(D3DCompile(kShader, strlen(kShader), "remnant3d", nullptr, nullptr, "ps_main", "ps_5_0", 0, 0, &psb, &errb))) {
         log("render3d: shader compile failed: %s", errb ? (const char*)errb->GetBufferPointer() : "?");
         if (errb) errb->Release();
+        if (vsb) vsb->Release();
+        if (psb) psb->Release();
         g_failed = true;
         return false;
     }
@@ -168,8 +170,18 @@ static bool init(ID3D11Device* dev) {
         dev->CreateShaderResourceView(t, nullptr, &g_white);
         t->Release();
     }
+    if (!(g_vs && g_ps && g_layout && g_cbFrame && g_cbBones && g_samp && g_rs && g_dssLess && g_dssGreater && g_blend)) {
+        // Give up for good and free what was made, or every frame would leak a dozen objects.
+        log("render3d: creating the pipeline objects failed, bosses will not be drawn");
+#define RH_REL(p) if (p) { p->Release(); p = nullptr; }
+        RH_REL(g_vs) RH_REL(g_ps) RH_REL(g_layout) RH_REL(g_cbFrame) RH_REL(g_cbBones) RH_REL(g_samp) RH_REL(g_rs)
+        RH_REL(g_dssLess) RH_REL(g_dssGreater) RH_REL(g_blend) RH_REL(g_white)
+#undef RH_REL
+        g_failed = true;
+        return false;
+    }
     log("render3d: ready");
-    return g_vs && g_ps && g_layout && g_cbFrame && g_cbBones;
+    return true;
 }
 
 static GpuModel* gpu(const Model* m) {

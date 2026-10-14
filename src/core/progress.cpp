@@ -249,7 +249,9 @@ bool prism_pick(SaveData& s, int prism, int offer) {
             for (SaveData::PSlot& sl : p.slot)
                 if (sl.kind == PS_NONE) { sl = {PS_FRAGMENT, o.row, 1}; break; }
             break;
-        case PS_RAISE: p.slot[o.row].lv = (int8_t)std::min(kTraitMax, p.slot[o.row].lv + 1); break;
+        case PS_RAISE:
+            if (o.row < 0 || o.row >= 5) return false;  // a corrupt offer must not index past the slots
+            p.slot[o.row].lv = (int8_t)std::min(kTraitMax, p.slot[o.row].lv + 1); break;
         case PS_FUSION: {
             int a = slot_of(p, kFusions[o.row].a), b = slot_of(p, kFusions[o.row].b);
             if (a < 0 || b < 0) return false;

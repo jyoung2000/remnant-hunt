@@ -180,7 +180,7 @@ const Anim* anim_get(const char* animAsset, const char* skelAsset, const Model* 
         a->samples = in.get<uint32_t>();
         a->rate = in.get<float>();
         size_t need = (size_t)a->tracks * 4 + (size_t)a->tracks * a->samples * 40;
-        ok = s.ok && in.ok && a->tracks > 0 && a->tracks <= 4096 && in.p + need <= ab->data.size();
+        ok = s.ok && in.ok && a->tracks > 0 && a->tracks <= 4096 && a->samples > 0 && a->rate > 0 && in.p + need <= ab->data.size();
         if (ok) {
             a->trackToSkelBone.resize(a->tracks);
             memcpy(a->trackToSkelBone.data(), ab->data.data() + in.p, (size_t)a->tracks * 4);

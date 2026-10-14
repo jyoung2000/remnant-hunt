@@ -5,6 +5,7 @@
 // Remnant loadout (archetypes, perks, traits, guns, mods, mutators, relic, fragments, amulet, rings, armor). MHW's own
 // weapons, armor and items keep working; their hits feed the same Remnant effects.
 #include <algorithm>
+#include <cerrno>
 #include <cmath>
 #include <cstdarg>
 #include <cstdio>
@@ -34,6 +35,7 @@ void toast(Live& l, const char* fmt, ...) {
 }
 
 static volatile LONG g_cmds = 0;
+static bool g_saveNow = false;  // a craft/buy/equip skips the 3 s save throttle once
 void post(Cmd c) { InterlockedOr(&g_cmds, 1 << c); }
 
 void request(const Request& r) {
@@ -220,6 +222,7 @@ void equip(Cat c, int row, int slot) {
     }
     sh.live.loadoutChanged = true;
     sh.live.dirty = true;
+    g_saveNow = true;
     ReleaseSRWLockExclusive(&sh.lock);
 }
 
@@ -653,9 +656,15 @@ static void handle(SaveData& s, Live& l, const Request& r, double t) {
         snprintf(l.said, sizeof(l.said), "Your item box can't be read yet, so nothing was taken or made.");
         return;
     }
+    // Temporary: materials without an MHW item id yet are skipped (zenny is still charged).
+    need.erase(std::remove_if(need.begin(), need.end(), [&](const Need& n) {
+        if ((int)kMaterials[n.material].mhw_item_id > 0) return false;
+        static bool said = false;
+        if (!said) { said = true; log("craft: materials are not mapped to MHW item ids yet, recipes skip them"); }
+        return true;
+    }), need.end());
     for (const Need& n : need) {
         int id = (int)kMaterials[n.material].mhw_item_id;
-        if (id <= 0) { snprintf(l.said, sizeof(l.said), "This recipe's MHW materials are not set up yet."); return; }
         if (mhw_item_count(id) < n.count) {
             snprintf(l.said, sizeof(l.said), "You need %d x %s.", n.count, material_name(n.material));
             return;
@@ -680,6 +689,7 @@ static void handle(SaveData& s, Live& l, const Request& r, double t) {
     }
     snprintf(l.said, sizeof(l.said), "done");
     l.dirty = true;
+    g_saveNow = true;
     log("craft: %s %s row %d (%d zenny)", r.kind == Request::UPGRADE ? "upgrade" : "made", cat_label(r.cat), r.row, zen);
 }
 
@@ -712,6 +722,13 @@ void use_consumable(int row) {
 static double g_lastTick = 0, g_lastSave = 0, g_lastMeleeHit = 0;
 
 void mod_game_tick() {
+    static bool seeded = false;  // rand() keeps its state per thread: seed it on the game thread, once
+    if (!seeded) {
+        seeded = true;
+        LARGE_INTEGER c;
+        QueryPerformanceCounter(&c);
+        srand((unsigned)(c.QuadPart ^ (c.QuadPart >> 32)));
+    }
     Shared& sh = S();
     double t = now_s();
     float dt = g_lastTick > 0 ? (float)std::min(0.25, t - g_lastTick) : 0.016f;
@@ -982,9 +999,9 @@ void mod_game_tick() {
             }
         }
     }
-    if (l.dirty && t - g_lastSave > 3.0) {
-        save_write(s);
-        l.dirty = false;
+    if (l.dirty && (g_saveNow || t - g_lastSave > 3.0)) {
+        g_saveNow = false;
+        if (save_write(s)) l.dirty = false;  // a failed write stays dirty and retries
         g_lastSave = t;
     }
     bool inGameNow = g.inGame, inBaseNow = g.inBase;
@@ -1066,7 +1083,7 @@ static void prism_parse(SaveData& s, const std::string& str) {
         if (k[0] == "f") x = {PS_FRAGMENT, (int16_t)fragments_index(k[1].c_str()), 0};
         else if (k[0] == "u") x = {PS_FUSION, (int16_t)fusions_index(k[1].c_str()), 0};
         else if (k[0] == "l") x = {PS_LEGENDARY, (int16_t)legendaries_index(k[1].c_str()), 0};
-        else if (k[0] == "r") x = {PS_RAISE, (int16_t)atoi(k[1].c_str()), 0};
+        else if (k[0] == "r") x = {PS_RAISE, (int16_t)std::max(0, std::min(4, atoi(k[1].c_str()))), 0};
         if (x.row >= 0) p.offer[p.offers++] = x;
     }
     s.prism[row] = p;
@@ -1075,7 +1092,7 @@ static void prism_parse(SaveData& s, const std::string& str) {
 static std::string q(const char* s) { return std::string("\"") + (s ? s : "") + "\""; }
 static std::string id_or_empty(Cat c, int row) { return q(row >= 0 ? item(c, row).id : ""); }
 
-void save_write(const SaveData& s) {
+bool save_write(const SaveData& s) {
     std::string j = "{\n  \"version\": 2,\n";
     j += std::string("  \"introDone\": ") + (s.introDone ? "true" : "false") + ",\n";
     j += "  \"archetype\": " + id_or_empty(CAT_ARCHETYPE, s.archetype) + ",\n";
@@ -1129,10 +1146,15 @@ void save_write(const SaveData& s) {
     j += "}\n}\n";
     std::string p = save_path(), tmp = p + ".tmp";
     FILE* f = fopen(tmp.c_str(), "wb");
-    if (!f) return;
-    fwrite(j.data(), 1, j.size(), f);
-    fclose(f);
-    MoveFileExA(tmp.c_str(), p.c_str(), MOVEFILE_REPLACE_EXISTING);
+    if (!f) { log("save: cannot open %s for writing (error %d)", tmp.c_str(), errno); return false; }
+    bool ok = fwrite(j.data(), 1, j.size(), f) == j.size();
+    ok = fclose(f) == 0 && ok;
+    if (!ok) { log("save: writing %s failed (disk full?)", tmp.c_str()); return false; }
+    if (!MoveFileExA(tmp.c_str(), p.c_str(), MOVEFILE_REPLACE_EXISTING)) {
+        log("save: replacing %s failed (error %lu)", p.c_str(), GetLastError());
+        return false;
+    }
+    return true;
 }
 
 // Tiny readers for the file we write ourselves.
@@ -1163,6 +1185,7 @@ static std::vector<std::string> json_strings(const std::string& j, const char* k
     size_t e = j.find(']', p);
     for (size_t a = j.find('"', p); a != std::string::npos && a < e;) {
         size_t b = j.find('"', a + 1);
+        if (b == std::string::npos || b > e) break;  // unterminated string: stop, do not loop
         out.push_back(j.substr(a + 1, b - a - 1));
         a = j.find('"', b + 1);
     }
@@ -1197,7 +1220,14 @@ void save_load() {
         char buf[4096];
         size_t n;
         while ((n = fread(buf, 1, sizeof(buf), f)) > 0) j.append(buf, n);
+        bool readErr = ferror(f) != 0;
         fclose(f);
+        if (readErr || value_at(j, "version") == std::string::npos) {
+            // Never let a fresh save silently replace a file we could not read: keep a copy first.
+            std::string bad = p + ".bad";
+            log("save: %s is unreadable or not a save (%zu bytes); copying it to %s", p.c_str(), j.size(), bad.c_str());
+            CopyFileA(p.c_str(), bad.c_str(), FALSE);
+        }
         int version = atoi(json_str(j, "version").c_str());
         s.introDone = json_str(j, "introDone") == "true";
         s.archetype = row_by_id(CAT_ARCHETYPE, json_str(j, "archetype"));
@@ -1230,7 +1260,7 @@ void save_load() {
             }
             for (auto& kv : json_counts(j, "levels")) {
                 int r = row_by_id(CAT_WEAPON, kv.first);
-                if (r >= 0) s.level[r] = std::min(weapon_max_level(r), kv.second);
+                if (r >= 0) s.level[r] = std::max(0, std::min(weapon_max_level(r), kv.second));
             }
             for (auto& kv : json_counts(j, "stock")) {
                 int r = row_by_id(CAT_CONSUMABLE, kv.first);

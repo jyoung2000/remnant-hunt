@@ -454,7 +454,8 @@ void loot(SaveData& s, Live& l, const Boss& b) {
         return;
     }
     auto pick = pool[rand() % pool.size()];
-    s.owned[pick.first][pick.second] = 1;
+    if (pick.first == CAT_CONSUMABLE) s.stock[pick.second]++;  // consumables are counted in the stock, not owned
+    else s.owned[pick.first][pick.second] = 1;
     l.dirty = true;
     ItemView v = item(pick.first, pick.second);
     const std::string& got = v.name ? r2_text(*v.name) : std::string();

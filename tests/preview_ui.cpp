@@ -1,5 +1,5 @@
 // Dev preview: draws one of the mod's screens with a sample save to a BMP (Dear ImGui, rendered in software), so the
-// look can be checked outside the game. build: make preview-ui; run (Wine): preview_ui.exe <screen 0-4> <dir with fonts\> <out.bmp>
+// look can be checked outside the game. build: make preview-ui; run (Wine): preview_ui.exe <screen 0-5> <dir with fonts\> <out.bmp>
 #include <windows.h>
 
 #include <cstdio>
@@ -33,7 +33,10 @@ void audio_play(const char*, float) {}
 void bosses_hud() {}
 void choose_archetype(int, int) {}
 int equipped_gun(const SaveData& s, const Live&) { return s.longGun; }
-int gun_mod(const SaveData&, int) { return -1; }
+int gun_mod(const SaveData& s, int gun) {
+    if (gun < 0) return -1;
+    return kWeapons[gun].mod >= 0 ? kWeapons[gun].mod : s.gunMod[kWeapons[gun].slot == WEAPONS_SLOT_HAND ? 1 : 0];
+}
 bool key_pressed(int) { return false; }
 const Keys& keys() { static Keys k; return k; }
 int mhw_zenny() { return 125400; }
@@ -212,6 +215,30 @@ int main(int argc, char** argv) {
     prism_offer(p);
     s.longGun = 0; s.owned[CAT_WEAPON][0] = 1;
     Live l;
+    if (which == 5) {  // the HUD: a long gun with a mod, mid-reload, one skill cooling, a toast
+        s.gunMod[0] = 0;
+        const Weapons& w = kWeapons[s.longGun];
+        double t = now_s();
+        l.snap.inGame = true;
+        l.snap.view.valid = false;
+        l.combatAllowed = true;
+        l.gunMode = true;
+        l.mag[s.longGun] = 7;
+        l.reserve[s.longGun] = 56;
+        l.reloadDone = t + 0.6 * w.reload_s;
+        l.skillReady[0] = t + 12;
+        l.skillReady[1] = 0;
+        s.relic = 0;
+        s.owned[CAT_RELIC][0] = 1;
+        s.relicCharges = 3;
+        snprintf(l.toast, sizeof(l.toast), "Prism of Voracity gained");
+        l.toastUntil = t + 5;
+        l.modCharge = 0.6f * kMods[gun_mod(s, s.longGun)].charge_damage;
+        l.bonusHealth = 40;
+        l.bonusMax = 60;
+        l.nearMenu = -1;
+    }
+    S().save = s;
     for (int frame = 0; frame < 4; frame++) {
         io.MousePos = ImVec2(-1, -1);
         ImGui::NewFrame();
