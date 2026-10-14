@@ -22,6 +22,7 @@
 #include <string>
 #include <vector>
 
+#ifndef RH_TERRAIN_ONLY
 #include "imgui.h"
 #include "hunter.h"
 #include "model.h"
@@ -95,6 +96,14 @@ struct Boss {
     uint8_t* foe = nullptr;
     double foeUntil = 0, foeNext = 0, foeHitAt = 0, foeCheck = 0, lastHunterHit = -100;
     float foeReach = 0, foeLost = 0, bossLost = 0, hunterDmg = 0;  // shares of max health lost in it
+    // Terrain from MHW's depth: the ground last probed under it, its tilt, and how often probes worked.
+    float groundY = 0;
+    bool groundKnown = false;
+    Vec3 up{0, 1, 0};
+    Vec3 prevPos{};
+    double outAt = 0;
+    int probes = 0, probesOk = 0;
+    bool groundLogged = false;
 };
 
 struct Proj {
@@ -385,9 +394,151 @@ bool ground(Vec3 p, float* y) {
     return false;
 }
 
-// Moves along the ground; false when a wall is in the way.
-bool move(Boss& b, Vec3 d, double t) {
+// ---------------------------------------------------------------- terrain from MHW's depth
+// MHW's scene depth (overlay.cpp) holds the level but not the bosses: a point projected into it and read back is the
+// ground or rock there. One frame per tick, so every probe of a tick sees the same camera.
+std::shared_ptr<const DepthFrame> g_depth;
+bool g_depthEver = false, g_noDepthLogged = false;
+
+void terrain_frame_tick() {
+    g_depth = nullptr;
+    if (!terrain_enabled()) return;
+    std::shared_ptr<const DepthFrame> f = depth_frame();
+    if (f) g_depthEver = true;
+    if (f && GetTickCount64() - f->tickMs < 1000) g_depth = f;  // a stale copy (menus, loading) says nothing
+}
+
+// The depth probe with what is not ground taken out: the hunter and MHW's monsters are in the depth too
+// (their hits come back as PROBE_SKY: no information there).
+ProbeResult probe(float x, float z, float yGuess, Vec3* hit) {
+    if (!g_depth) return PROBE_OFFSCREEN;
+    Vec3 h{x, yGuess, z};
+    ProbeResult r = depth_probe(*g_depth, x, z, yGuess, &h);
+    if (hit) *hit = h;
+    if ((r != PROBE_OK && r != PROBE_OCCLUDED) || !g_snap) return r;
+    const GameSnapshot& g = *g_snap;
+    if (hlen(sub(h, g.pos)) < 110 && h.y > g.pos.y - 60 && h.y < g.pos.y + 260) return PROBE_SKY;
+    for (const Monster& m : g.monsters) {
+        if (!m.obbOk || is_boss(m.em)) continue;
+        Vec3 d = sub(h, m.center);
+        const float hh[3] = {m.half.x, m.half.y, m.half.z};
+        bool in = true;
+        for (int k = 0; k < 3 && in; k++) in = fabsf(d.x * m.rot[k][0] + d.y * m.rot[k][1] + d.z * m.rot[k][2]) <= hh[k] + 60;
+        if (in) return PROBE_SKY;
+    }
+    return r;
+}
+
+// Where the feet are: four points around the body (front, back, right, left).
+void foot_points(const Boss& b, Vec3 out[4]) {
+    Vec3 f = fwd_of(b.yaw), r = right_of(b.yaw);
+    float fa = std::max(60.0f, b.fr.aMax * 0.6f), ba = std::min(-60.0f, b.fr.aMin * 0.6f);
+    float rc = std::max(60.0f, b.fr.cMax * 0.6f), lc = std::min(-60.0f, b.fr.cMin * 0.6f);
+    out[0] = add(b.pos, mul(f, fa));
+    out[1] = add(b.pos, mul(f, ba));
+    out[2] = add(b.pos, mul(r, rc));
+    out[3] = add(b.pos, mul(r, lc));
+}
+
+// The boss's height and tilt from the ground under it: the median of five probes (body and feet), eased; when none
+// is on screen, MHW's own ray, else the last ground (kept within 6 m of the hunter's height).
+void settle(Boss& b, const GameSnapshot& g, float dt, bool snap) {
+    float speed = dt > 0 ? hlen(sub(b.pos, b.prevPos)) / dt : 0;
+    if (snap) speed = 0;
+    b.prevPos = b.pos;
+    float yg = b.groundKnown ? b.groundY : b.pos.y;
+    Vec3 pts[5];
+    pts[0] = b.pos;
+    foot_points(b, pts + 1);
+    float ys[5];
+    bool ok[5];
+    int n = 0;
+    for (int k = 0; k < 5; k++) {
+        Vec3 h = pts[k];
+        ok[k] = g_depth && probe(pts[k].x, pts[k].z, yg + 50, &h) == PROBE_OK;
+        if (g_depth) {
+            b.probes++;
+            if (ok[k]) b.probesOk++;
+        }
+        pts[k].y = h.y;
+        if (ok[k]) ys[n++] = h.y;
+    }
+    float target, y;
+    if (n > 0) {
+        target = median_of(ys, n);
+        b.groundY = target;
+        b.groundKnown = true;
+    } else if (ground(b.pos, &y) && (!b.groundKnown || fabsf(y - b.groundY) < 400)) {
+        target = b.groundY = y;
+        b.groundKnown = true;
+    } else {
+        target = b.groundKnown ? b.groundY : b.pos.y;
+        target = std::max(g.pos.y - 600, std::min(g.pos.y + 600, target));
+    }
+    if (snap) {
+        b.pos.y = target;
+    } else {
+        float rate = 150.0f + 0.7f * speed;  // 150 cm/s, plus what walking up or down a 35 degree slope needs
+        float dy = target - b.pos.y, lim = rate * dt;
+        b.pos.y += std::max(-lim, std::min(lim, dy));
+    }
+    // Tilt: towards the plane through the feet, a little (a quadruped sits on a slope), at most 25 degrees.
+    Vec3 want{0, 1, 0};
+    if (ok[1] && ok[2] && ok[3] && ok[4]) {
+        Vec3 tf = sub(pts[1], pts[2]), tr = sub(pts[3], pts[4]);
+        Vec3 nrm = {tf.y * tr.z - tf.z * tr.y, tf.z * tr.x - tf.x * tr.z, tf.x * tr.y - tf.y * tr.x};
+        float nl = len3(nrm);
+        if (nl > 1e-3f) {
+            nrm = mul(nrm, (nrm.y < 0 ? -1.0f : 1.0f) / nl);
+            Vec3 m = add(mul(Vec3{0, 1, 0}, 0.5f), mul(nrm, 0.5f));
+            float ml = len3(m);
+            if (ml > 1e-3f) want = mul(m, 1.0f / ml);
+            const float c25 = cosf(25.0f * kPi / 180.0f), s25 = sinf(25.0f * kPi / 180.0f);
+            float hl = hlen(want);
+            if (want.y < c25 && hl > 1e-4f) want = {want.x / hl * s25, c25, want.z / hl * s25};
+        }
+    }
+    float k = snap ? 1.0f : std::min(1.0f, dt * 4);
+    Vec3 u = add(b.up, mul(sub(want, b.up), k));
+    float ul = len3(u);
+    b.up = ul > 1e-3f ? mul(u, 1.0f / ul) : Vec3{0, 1, 0};
+}
+
+// The step ahead along dir (unit, horizontal) against the probed ground: a wall, a ledge, a cliff or clear.
+StepVerdict step_check(const Boss& b, Vec3 dir) {
+    if (!g_depth) return STEP_OK;
+    float look = std::max(100.0f, std::min(400.0f, b.fr.aMax * 0.5f));
+    Vec3 dest = add(b.pos, mul(dir, look));
+    float cur = b.groundKnown ? b.groundY : b.pos.y;
+    Vec3 h = dest;
+    ProbeResult pr = probe(dest.x, dest.z, cur + 50, &h);
+    // an object between the camera and the destination, standing at the destination and taller than a step
+    bool blocker = pr == PROBE_OCCLUDED && hlen(sub(h, dest)) < look + 200 && h.y > cur + 120;
+    return step_verdict(cur, pr == PROBE_OK, h.y, look, blocker);
+}
+
+// Moves along the ground; false when a wall is in the way. With steer, a blocked step goes 45 or 90 degrees aside.
+bool move(Boss& b, Vec3 d, double t, bool steer = true) {
     if (hlen(d) < 0.01f) return true;
+    if (g_depth) {
+        float dl = hlen(d);
+        Vec3 dir = mul(d, 1.0f / dl);
+        if (step_check(b, dir) != STEP_OK) {
+            if (!steer) return false;
+            bool found = false;
+            const float tries[4] = {45, -45, 90, -90};
+            for (float a0 : tries) {
+                float a = a0 * b.orbitDir * kPi / 180.0f, c = cosf(a), sn = sinf(a);
+                Vec3 nd = {dir.x * c + dir.z * sn, 0, -dir.x * sn + dir.z * c};
+                if (step_check(b, nd) != STEP_OK) continue;
+                d = mul(nd, dl);
+                b.yaw = wrap(b.yaw + (a > 0 ? 1.0f : -1.0f) * std::min(fabsf(a), 0.05f));
+                found = true;
+                break;
+            }
+            if (!found) return false;
+        }
+    }
     Vec3 to = add(b.pos, d);
     if (t - b.lastWallCheck > 0.15) {
         b.lastWallCheck = t;
@@ -400,7 +551,7 @@ bool move(Boss& b, Vec3 d, double t) {
     float y;
     if (ground(to, &y)) {
         if (y - b.pos.y > 350) return false;  // a cliff up
-        to.y = y;
+        if (!g_depth) to.y = y;              // with the depth, settle() sets the height
     }
     b.pos = to;
     return true;
@@ -502,6 +653,21 @@ bool place_near(const GameSnapshot& g, float yaw, float dist, Vec3* out) {
     if (fabsf(y - g.pos.y) > 1500) return false;
     *out = {p.x, y, p.z};
     return true;
+}
+
+// A spawn point the depth confirms: eight directions around yaw0 (nearest first), 35-45 m out, on probed ground
+// within 4 m of the hunter's height (so a boss does not appear inside a hill). False without depth or when none fits.
+bool place_probed(const GameSnapshot& g, float yaw0, Vec3* out) {
+    if (!g_depth) return false;
+    const int order[8] = {0, 1, -1, 2, -2, 3, -3, 4};
+    for (int k : order) {
+        float yaw = yaw0 + k * kPi / 4, dist = 3500 + frand() * 1000;
+        Vec3 p = add(g.pos, mul(fwd_of(yaw), dist)), h;
+        if (probe(p.x, p.z, g.pos.y, &h) != PROBE_OK || fabsf(h.y - g.pos.y) > 400) continue;
+        *out = {p.x, h.y, p.z};
+        return true;
+    }
+    return false;
 }
 
 bool zone_listed(const Bosses& r, int zone) {
@@ -766,6 +932,7 @@ int hurt_hunter(Live& l, float dmg, int status, float statusTotal, double t) {
                     warned = true;
                     log("hunter: no faint_action set in the ini and none learned yet; HP is 0 but MHW only faints through its own hit path (record one normal faint in the diagnostic action log and set [bosses] faint_action=set:id)");
                 }
+                toast(l, "Faint not learned yet: get knocked out once by MHW (a barrel bomb at low HP works) to teach it");
             }
         }
         if (!lethal) {
@@ -1054,7 +1221,7 @@ int think(Boss& b, Live& l, double t, float dt) {
                 memcpy(b.root, rt, sizeof(rt));
                 float along = (dx * b.fr.f[0] + dy * b.fr.f[1]) * B(b).scale;
                 float across = (dx * b.fr.r[0] + dy * b.fr.r[1]) * B(b).scale;
-                if (mobile || fabsf(along) + fabsf(across) < 400) move(b, add(mul(fwd_of(b.yaw), along), mul(right_of(b.yaw), across)), t);
+                if (mobile || fabsf(along) + fabsf(across) < 400) move(b, add(mul(fwd_of(b.yaw), along), mul(right_of(b.yaw), across)), t, false);
             }
             if (a.kind == BOSS_ATTACKS_KIND_RANGED) {
                 if (!b.fired && frac >= first) {
@@ -1242,13 +1409,20 @@ void mhw_weapons(Live& l, double t) {
 
 void world_matrix(const Boss& b, float w[16]) {
     float s = B(b).scale;
-    Vec3 f = fwd_of(b.yaw), r = right_of(b.yaw);
+    Vec3 f = fwd_of(b.yaw), r = right_of(b.yaw), u = b.up;
+    if (u.y < 0.9999f) {  // tilted to the ground: forward and right leave the horizontal with it
+        auto dot = [](Vec3 a, Vec3 c) { return a.x * c.x + a.y * c.y + a.z * c.z; };
+        f = sub(f, mul(u, dot(f, u)));
+        f = mul(f, 1.0f / std::max(1e-4f, len3(f)));
+        r = sub(sub(r, mul(u, dot(r, u))), mul(f, dot(r, f)));
+        r = mul(r, 1.0f / std::max(1e-4f, len3(r)));
+    }
     const Frame& fr = b.fr;
     // model x and y go to forward / right by the boss's facing; model z is up
     Vec3 ix = add(mul(f, fr.f[0]), mul(r, fr.r[0])), iy = add(mul(f, fr.f[1]), mul(r, fr.r[1]));
     float rows[4][4] = {{ix.x * s, ix.y * s, ix.z * s, 0},
                         {iy.x * s, iy.y * s, iy.z * s, 0},
-                        {0, s, 0, 0},
+                        {u.x * s, u.y * s, u.z * s, 0},
                         {b.pos.x, b.pos.y - b.sink, b.pos.z, 1}};
     memcpy(w, rows, 64);
 }
@@ -1461,6 +1635,24 @@ void boss_turf(Boss& b, int i, Live& l, double t, float dt) {
 
 }  // namespace
 
+bool terrain_enabled() {
+    static std::atomic<int> on{-1};
+    if (on.load() < 0) {
+        char ini[MAX_PATH];
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
+        int v = GetPrivateProfileIntA("bosses", "terrain", 1, ini) != 0 ? 1 : 0;
+        if (on.exchange(v) < 0) log("bosses: terrain from MHW's depth %s ([bosses] terrain)", v ? "on" : "off");
+    }
+    return on.load() == 1;
+}
+
+bool ground_probe(float x, float z, float yGuess, float* yOut) {
+    Vec3 h;
+    if (probe(x, z, yGuess, &h) != PROBE_OK) return false;
+    if (yOut) *yOut = h.y;
+    return true;
+}
+
 bool is_boss(const uint8_t* em) { return em >= g_token && em < g_token + kMax; }
 
 bool boss_hit_ex(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak, float stagger) {
@@ -1480,6 +1672,7 @@ bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak) {
 int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     const GameSnapshot& g = l.snap;
     g_snap = &g;
+    terrain_frame_tick();
     g_difficulty = s.difficulty;
     if (g.view.valid) g_rh = g.view.proj[11] < 0;
     int ev = 0;
@@ -1531,7 +1724,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
                 if (frand() * total <= r.spawn_weight) pick = row;
             }
             Vec3 p;
-            bool placed = false;
+            bool placed = pick >= 0 && place_probed(g, frand() * 2 * kPi, &p);
             for (int k = 0; k < 10 && pick >= 0 && !placed; k++)  // 35-45 m out when the ground allows
                 placed = place_near(g, frand() * 2 * kPi, 3500 + frand() * 1000, &p);
             for (int k = 0; k < 10 && pick >= 0 && !placed; k++)
@@ -1547,7 +1740,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         Vec3 f = sub(g.view.camTarget, g.view.camPos);
         float yaw = atan2f(f.x, f.z);
         Vec3 p;
-        if (place_near(g, yaw, 3500 + frand() * 1000, &p) || place_near(g, yaw, 1500, &p) || place_near(g, yaw, 3000, &p) ||
+        if (place_probed(g, yaw, &p) || place_near(g, yaw, 3500 + frand() * 1000, &p) || place_near(g, yaw, 1500, &p) || place_near(g, yaw, 3000, &p) ||
             place_near(g, yaw, 800, &p)) {
             int row = g_nextDebugRow++ % kBossesCount;
             spawn(l, row, p, wrap(yaw + kPi), t);
@@ -1601,7 +1794,10 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             }
             make_frame(b);
             float y;
-            if (ground(b.pos, &y)) b.pos.y = y;
+            if (g_depth) settle(b, g, dt, true);  // on the probed ground at once
+            else if (ground(b.pos, &y)) b.pos.y = y;
+            b.prevPos = b.pos;
+            b.outAt = t;
             if (b.entrance) {  // the entrance: it turns to the hunter and roars before it engages
                 b.entrance = false;
                 b.yaw = yaw_to(b.pos, g.pos);
@@ -1636,7 +1832,16 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         boss_turf(b, i, l, t, bdt);
         ev |= think(b, l, t, bdt);
         float y;
-        if (ground(b.pos, &y) && fabsf(y - b.pos.y) < 400) b.pos.y += (y - b.pos.y) * std::min(1.0f, dt * 12);
+        if (g_depth) settle(b, g, dt, false);
+        else if (ground(b.pos, &y) && fabsf(y - b.pos.y) < 400) b.pos.y += (y - b.pos.y) * std::min(1.0f, dt * 12);
+        if (!b.groundLogged && b.outAt > 0 && t - b.outAt >= 2 && terrain_enabled()) {
+            b.groundLogged = true;
+            log("bosses: %s grounded (probe ok %d%%)", r.id, b.probes ? b.probesOk * 100 / b.probes : 0);
+            if (!g_depthEver && !g_noDepthLogged) {
+                g_noDepthLogged = true;
+                log("bosses: ground probe unavailable (no depth)");
+            }
+        }
     }
 
     // The bosses as monsters for the rest of the mod (guns, skills, effects, targeting).
@@ -2147,5 +2352,105 @@ void bosses_hud() {
     }
 }
 
+
+}  // namespace rh
+#endif  // RH_TERRAIN_ONLY
+
+// ---------------------------------------------------------------- terrain geometry from MHW's depth (pure)
+// No game data and no Direct3D here: tests/test_terrain.cpp builds this part alone (-DRH_TERRAIN_ONLY).
+namespace rh {
+
+void mat4_mul(const float a[16], const float b[16], float out[16]) {
+    float r[16];
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            float s = 0;
+            for (int k = 0; k < 4; k++) s += a[i * 4 + k] * b[k * 4 + j];
+            r[i * 4 + j] = s;
+        }
+    memcpy(out, r, sizeof(r));
+}
+
+bool mat4_inverse(const float m[16], float out[16]) {
+    double a[4][8];
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 8; j++) a[i][j] = j < 4 ? m[i * 4 + j] : (j - 4 == i ? 1.0 : 0.0);
+    for (int c = 0; c < 4; c++) {
+        int p = c;
+        for (int r = c + 1; r < 4; r++)
+            if (fabs(a[r][c]) > fabs(a[p][c])) p = r;
+        if (fabs(a[p][c]) < 1e-12) return false;
+        if (p != c)
+            for (int j = 0; j < 8; j++) std::swap(a[p][j], a[c][j]);
+        double k = 1.0 / a[c][c];
+        for (int j = 0; j < 8; j++) a[c][j] *= k;
+        for (int r = 0; r < 4; r++) {
+            if (r == c || a[r][c] == 0) continue;
+            double f = a[r][c];
+            for (int j = 0; j < 8; j++) a[r][j] -= f * a[c][j];
+        }
+    }
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) out[i * 4 + j] = (float)a[i][j + 4];
+    return true;
+}
+
+bool depth_project(const float vp[16], Vec3 p, float* nx, float* ny, float* ndcZ) {
+    float in[4] = {p.x, p.y, p.z, 1}, c[4];
+    for (int j = 0; j < 4; j++) c[j] = in[0] * vp[j] + in[1] * vp[4 + j] + in[2] * vp[8 + j] + in[3] * vp[12 + j];
+    if (c[3] <= 1.0f) return false;
+    *nx = c[0] / c[3] * 0.5f + 0.5f;
+    *ny = 0.5f - c[1] / c[3] * 0.5f;
+    if (ndcZ) *ndcZ = c[2] / c[3];
+    return true;
+}
+
+Vec3 depth_unproject(const float inv[16], float nx, float ny, float ndcZ) {
+    float in[4] = {nx * 2 - 1, 1 - ny * 2, ndcZ, 1}, w[4];
+    for (int j = 0; j < 4; j++) w[j] = in[0] * inv[j] + in[1] * inv[4 + j] + in[2] * inv[8 + j] + in[3] * inv[12 + j];
+    if (fabsf(w[3]) < 1e-12f) return {0, 0, 0};
+    return {w[0] / w[3], w[1] / w[3], w[2] / w[3]};
+}
+
+ProbeResult depth_probe(const DepthFrame& f, float x, float z, float yGuess, Vec3* hit) {
+    if (f.w <= 0 || f.h <= 0 || f.fullW <= 0 || f.fullH <= 0 || (int)f.ndcZ.size() < f.w * f.h) return PROBE_OFFSCREEN;
+    float y = yGuess;
+    Vec3 h{x, y, z};
+    for (int it = 0; it < 3; it++) {  // the guess, then twice again at the height found
+        float nx, ny;
+        if (!depth_project(f.viewProj, {x, y, z}, &nx, &ny, nullptr)) return PROBE_OFFSCREEN;
+        if (!(nx >= 0 && nx < 1 && ny >= 0 && ny < 1)) return PROBE_OFFSCREEN;
+        int cx = std::min(f.w - 1, (int)(nx * f.w)), cy = std::min(f.h - 1, (int)(ny * f.h));
+        float d = f.ndcZ[(size_t)cy * f.w + cx];
+        if (std::isnan(d)) return PROBE_SKY;
+        // the exact pixel the cell holds
+        float px = (float)std::min(cx * 4 + 2, f.fullW - 1) + 0.5f, py = (float)std::min(cy * 4 + 2, f.fullH - 1) + 0.5f;
+        h = depth_unproject(f.invViewProj, px / f.fullW, py / f.fullH, d);
+        float ex = h.x - f.eye.x, ey = h.y - f.eye.y, ez = h.z - f.eye.z;
+        if (ex * ex + ey * ey + ez * ez > 15000.0f * 15000.0f) return PROBE_FAR;
+        y = h.y;
+    }
+    if (hit) *hit = h;
+    // Converged on the ground under (x, z), or stopped on something nearer the camera.
+    float dx = h.x - x, dz = h.z - z;
+    float ex = x - f.eye.x, ey = y - f.eye.y, ez = z - f.eye.z;
+    float tol = std::max(150.0f, 0.03f * sqrtf(ex * ex + ey * ey + ez * ez));
+    return dx * dx + dz * dz > tol * tol ? PROBE_OCCLUDED : PROBE_OK;
+}
+
+float median_of(float* v, int n) {
+    if (n <= 0) return 0;
+    std::sort(v, v + n);
+    return n % 2 ? v[n / 2] : 0.5f * (v[n / 2 - 1] + v[n / 2]);
+}
+
+StepVerdict step_verdict(float curGround, bool destOk, float destGround, float lookahead, bool blocker) {
+    if (blocker) return STEP_WALL;
+    if (!destOk) return STEP_OK;  // nothing known there: the other checks decide
+    float L = std::max(0.0f, lookahead);
+    if (destGround - curGround > 120.0f + 0.7f * L) return STEP_WALL;   // tan 35
+    if (curGround - destGround > 300.0f + 1.0f * L) return STEP_CLIFF;  // tan 45
+    return STEP_OK;
+}
 
 }  // namespace rh

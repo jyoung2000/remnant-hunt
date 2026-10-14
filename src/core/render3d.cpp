@@ -139,6 +139,7 @@ static bool g_fitOk = false;
 static float g_sunCap = 1.0f, g_sunCapTarget = 1.0f;  // sun term scale: falls with the sampled ground luminance at night
 static float g_curSunY = 0.8f;               // y of the sun in use, for the gain calibration
 static float g_expo = 1.0f, g_expoTint[3] = {1, 1, 1};  // smoothed
+static float g_medLum = 0.0f;
 static float g_expoTarget = 1.0f, g_expoTargetTint[3] = {1, 1, 1};
 
 static float half_to_float(uint16_t h) {
@@ -184,7 +185,22 @@ static bool g_outEncode = true;   // ... and the render target view does not enc
 
 static float aces(float x) { return std::min(1.0f, std::max(0.0f, (x * (2.51f * x + 0.03f)) / (x * (2.43f * x + 0.59f) + 0.14f))); }
 
-// Gain that lands a mid-grey (albedo 0.5) facing the sun on the sampled ground luminance after the same tone curve.
+// [visuals] ground_albedo (default 0.25: real ground is dark, not mid-grey) and exposure_lock (0 = auto), re-read each sample.
+static float g_groundAlbedo = 0.25f, g_expoLock = 0.0f;
+static void read_visual_ini() {
+    char ini[MAX_PATH];
+    snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+    auto fv = [&](const char* name, float def) {
+        char v[32] = {0};
+        GetPrivateProfileStringA("visuals", name, "", v, sizeof(v), ini);
+        return v[0] ? (float)atof(v) : def;
+    };
+    g_groundAlbedo = std::min(0.8f, std::max(0.05f, fv("ground_albedo", 0.25f)));
+    g_expoLock = std::max(0.0f, fv("exposure_lock", 0.0f));
+}
+
+// Gain that lands a reference ground albedo (ini ground_albedo, 0.25) facing the sun on the sampled ground luminance after
+// the same tone curve. Clamped to 0.6..1.8: the readback only nudges exposure, it can never crush it.
 static float calibrated_gain(float groundLumEnc) {
     float target = std::min(0.8f, std::max(0.02f, g_encodedFmt ? powf(groundLumEnc, 2.2f) : groundLumEnc));
     float lo = 0, hi = 64;
@@ -192,8 +208,8 @@ static float calibrated_gain(float groundLumEnc) {
     float x = 0.5f * (lo + hi);
     float sunLum = 0.953f * std::max(0.0f, g_sceneLight.sunStrength) * g_sunCapTarget;
     float hemiLum = (0.3856f + (0.793f - 0.3856f) * (g_curSunY * 0.5f + 0.5f)) * std::max(0.0f, g_sceneLight.ambient);
-    float lit = 0.5f * (sunLum * 0.85f + hemiLum);
-    return std::min(8.0f, std::max(0.2f, x / std::max(lit, 0.02f)));
+    float lit = g_groundAlbedo * (sunLum * 0.85f + hemiLum);
+    return std::min(1.8f, std::max(0.6f, x / std::max(lit, 0.02f)));
 }
 
 static ID3D11Texture2D* make_stage(UINT w, DXGI_FORMAT fmt) {
@@ -220,12 +236,35 @@ static void sample_scene(ID3D11DeviceContext* ctx, ID3D11RenderTargetView* rtv, 
         bool haveG = g_stageG && SUCCEEDED(ctx->Map(g_stageG, 0, D3D11_MAP_READ, D3D11_MAP_FLAG_DO_NOT_WAIT, &mg));
         if (g_stageG && !haveG) { ctx->Unmap(g_stage, 0); return; }  // the ground copy is still in flight: retry next frame
         g_stagePending = false;
-        float a[3];
-        if (average_block(ms, g_stageFmt, a)) {
+        read_visual_ini();
+        // median of the valid ground blocks (N/E/S/W); the boss's own pixel can be body or grass, not lit ground
+        float a[3] = {0, 0, 0};
+        int nGround = 0;
+        if (haveG) {
+            float gc[4][3];
+            for (int i = 0; i < 4; i++) {
+                float c[3];
+                if (!g_gvalid[i] || !average_block(mg, g_stageFmt, c, i * 8)) continue;
+                float l = 0.2126f * c[0] + 0.7152f * c[1] + 0.0722f * c[2];
+                if (l < 0.05f || l > 0.98f) continue;  // shadow / sky / UI
+                memcpy(gc[nGround++], c, sizeof(c));
+            }
+            if (nGround >= 2) {
+                for (int k = 0; k < 3; k++) {
+                    float v[4];
+                    for (int i = 0; i < nGround; i++) v[i] = gc[i][k];
+                    std::sort(v, v + nGround);
+                    a[k] = (nGround & 1) ? v[nGround / 2] : 0.5f * (v[nGround / 2 - 1] + v[nGround / 2]);
+                }
+            }
+        }
+        bool haveA = nGround >= 2 || average_block(ms, g_stageFmt, a);
+        if (haveA) {
             float lum = 0.2126f * a[0] + 0.7152f * a[1] + 0.0722f * a[2];
+            g_medLum = lum;
             bool night = lum < 0.25f;
             g_sunCapTarget = night ? std::min(1.0f, std::max(0.05f, lum / 0.25f)) : 1.0f;
-            g_expoTarget = calibrated_gain(lum);
+            g_expoTarget = g_expoLock > 0 ? g_expoLock : calibrated_gain(lum);
             for (int k = 0; k < 3; k++) {
                 float chroma = a[k] / std::max(lum, 0.02f);  // 1 = grey
                 float lo = night ? 0.4f : 0.6f, hi = night ? 1.6f : 1.4f;
@@ -237,9 +276,11 @@ static void sample_scene(ID3D11DeviceContext* ctx, ID3D11RenderTargetView* rtv, 
             static double lastLog = -100;
             if (t - lastLog >= 60.0) {
                 lastLog = t;
-                log("render3d: readback lum %.3f rgb (%.2f,%.2f,%.2f) tint (%.2f,%.2f,%.2f) gain target %.2f sun cap %.2f%s",
-                    0.2126f * a[0] + 0.7152f * a[1] + 0.0722f * a[2], a[0], a[1], a[2], g_expoTargetTint[0], g_expoTargetTint[1],
-                    g_expoTargetTint[2], g_expoTarget, g_sunCapTarget, g_encodedFmt ? "" : " (float target)");
+                log("render3d: readback median lum %.3f (%d ground samples%s) rgb (%.2f,%.2f,%.2f) tint (%.2f,%.2f,%.2f) "
+                    "final gain %.2f%s sun cap %.2f ground albedo %.2f%s",
+                    g_medLum, nGround, nGround >= 2 ? "" : ", centre block", a[0], a[1], a[2], g_expoTargetTint[0],
+                    g_expoTargetTint[1], g_expoTargetTint[2], g_expoTarget, g_expoLock > 0 ? " (locked)" : "", g_sunCapTarget,
+                    g_groundAlbedo, g_encodedFmt ? "" : " (float target)");
             }
         }
         ctx->Unmap(g_stage, 0);
@@ -314,6 +355,11 @@ static void sample_scene(ID3D11DeviceContext* ctx, ID3D11RenderTargetView* rtv, 
                 if (rvd.Format != DXGI_FORMAT_UNKNOWN) rf = rvd.Format;
                 bool srgbView = rf == DXGI_FORMAT_R8G8B8A8_UNORM_SRGB || rf == DXGI_FORMAT_B8G8R8A8_UNORM_SRGB || rf == DXGI_FORMAT_B8G8R8X8_UNORM_SRGB;
                 g_outEncode = g_encodedFmt && !srgbView;
+                static DXGI_FORMAT loggedFmt = DXGI_FORMAT_UNKNOWN;
+                if (loggedFmt != rf) {
+                    loggedFmt = rf;
+                    log("render3d: back buffer fmt %d, encode on write %s", (int)rf, g_outEncode ? "yes" : "no");
+                }
             }
         }
         bb->Release();
@@ -434,7 +480,7 @@ static bool init(ID3D11Device* dev) {
     D3D11_TEXTURE2D_DESC td = {};
     td.Width = td.Height = 1;
     td.MipLevels = td.ArraySize = 1;
-    td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    td.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;  // an albedo, like every other diffuse texture: decoded once by the sampler
     td.SampleDesc.Count = 1;
     td.Usage = D3D11_USAGE_IMMUTABLE;
     td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
@@ -624,7 +670,8 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
             break;
         }
         float k = 0.06f;  // eased toward the sampled values, a frame at a time
-        g_expo += (g_expoTarget - g_expo) * k;
+        if (g_expoLock > 0) g_expo = g_expoTarget = g_expoLock;
+        else g_expo += (g_expoTarget - g_expo) * k;
         g_sunCap += (g_sunCapTarget - g_sunCap) * k;
         for (int c = 0; c < 3; c++) g_expoTint[c] += (g_expoTargetTint[c] - g_expoTint[c]) * k;
     }

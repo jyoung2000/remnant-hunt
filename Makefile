@@ -9,7 +9,7 @@ TC      ?= $(HOME)/tc/llvm-mingw-20261006-ucrt-ubuntu-22.04-x86_64/bin
 CXX     := $(TC)/x86_64-w64-mingw32-clang++
 CC      := $(TC)/x86_64-w64-mingw32-clang
 WINDRES := $(TC)/x86_64-w64-mingw32-windres
-VERSION ?= 0.4.2
+VERSION ?= 0.4.3
 B       := build/win
 O       := build/obj
 
@@ -121,10 +121,12 @@ test-logic: src/core/gen/sheets.gen.h
 	    src/core/progress.cpp src/core/effects.cpp src/core/mem.cpp -static -o build/test_progress.exe
 	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core tests/test_craft.cpp 	    src/core/inventory.cpp src/core/mem.cpp -static -o build/test_craft.exe
 	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core tests/test_hunter.cpp src/core/hunter_rig.cpp -static -o build/test_hunter.exe
+	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core -DRH_TERRAIN_ONLY tests/test_terrain.cpp src/core/bosses.cpp -static -o build/test_terrain.exe
 	wine build/test_logic.exe
 	wine build/test_progress.exe
 	wine build/test_craft.exe
 	wine build/test_hunter.exe
+	wine build/test_terrain.exe
 
 # dev preview of the screens (no game needed): wine build/preview_ui.exe <screen 0-4> <dir with fonts\> <out.bmp>
 preview-ui: src/core/gen/sheets.gen.h

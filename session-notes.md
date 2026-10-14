@@ -425,3 +425,17 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   the rig aligns bind directions (twist not corrected yet).
 - Open after a play session: "hunter: N of 86 bones matched" line, whether entry 396 is a hand, pose_test outcome,
   armour fit, Dragon Heart animation visible.
+
+## 2026-10-14 (evening): 0.4.3 published; daytime exposure; terrain following
+- Melty 0.4.3 (package sha256 1034d964...ff4c, built from 00b9391 + VERSION bump): 2-run test passed every check,
+  published, in Melty's safety review. It replaces the live 0.4.2, which was the crash build (published 17:37 before
+  the fix). The dev build was reinstalled afterwards (Melty's test removes the loader).
+- Daytime screenshot: Ravager near-black beside a brightly lit hunter. Cause: the exposure gain was solved so that an
+  albedo-0.5 surface matched the ground luminance (real ground ~0.25) with a 0.2..8 clamp, and the sample block sat on
+  the boss's body. Now: reference ground albedo 0.25 ([visuals] ground_albedo), gain clamped 0.6..1.8, luminance/tint
+  from the median of the 4 ground samples, [visuals] exposure_lock=<gain> to tune by eye, back-buffer format logged.
+- 0 HP without faint: no faint action known yet. HUD toast now says so ("get knocked out once by MHW to teach it").
+- Terrain: bosses follow MHW's ground from the game's depth buffer (overlay.cpp terrain_capture: 1/16-size depth copy
+  per frame, ring of 3 staging textures; bosses.cpp ground_probe: project, read depth, unproject, iterate twice; median
+  of body + 4 feet; spawn moved to a probed point; walls/cliffs block steps with sidestep; tilt to the ground normal up
+  to 25°; [bosses] terrain=1; DX12 has no depth). Off-screen bosses keep their last height. tests/test_terrain.cpp.

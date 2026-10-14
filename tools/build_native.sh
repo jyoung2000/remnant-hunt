@@ -21,8 +21,10 @@ case "${1:-all}" in
     $CXX -std=c++17 -Isrc/core tests/test_effects.cpp src/core/effects.cpp -static -o build/test_effects.exe
     $CXX $F tests/test_craft.cpp src/core/inventory.cpp src/core/mem.cpp -static -o build/test_craft.exe
     $CXX $F tests/test_hunter.cpp src/core/hunter_rig.cpp -static -o build/test_hunter.exe
+    $CXX $F -DRH_TERRAIN_ONLY tests/test_terrain.cpp src/core/bosses.cpp -static -o build/test_terrain.exe
     ./build/test_logic.exe | tail -1 && ./build/test_progress.exe | tail -1 && ./build/test_effects.exe | tail -1 && ./build/test_craft.exe | tail -2
     ./build/test_hunter.exe | tail -6
+    ./build/test_terrain.exe | tail -1
     # nativePC writers against the extracted originals (tools/mhwchunk_notes.md); skipped where build/mhw/ is missing.
     if [ -f build/mhw/itemData.itm ] && [ -f build/mhw/item_eng.gmd ]; then
       $CXX $F tests/test_nativepc.cpp src/core/nativepc.cpp src/core/mem.cpp -static -o build/test_nativepc.exe

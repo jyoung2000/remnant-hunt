@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include <cstdint>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -88,6 +89,38 @@ float first_person_amount();                     // 0 third person .. 1 first pe
 bool camera_view(GameView* out);                  // any thread: MHW's camera right now (read-only)
 int player_weapon_type();                         // game thread: 0 great sword .. 13 light bowgun, -1 unknown
 bool zone_is_base(int zone);
+
+// ---------------------------------------------------------------- MHW's scene depth as the bosses' terrain
+// overlay.cpp (render thread, at Present, Direct3D 11): every 4th pixel of MHW's scene depth is copied into a small
+// staging texture each frame and read back without stalling (DO_NOT_WAIT); the last finished copy is kept with the
+// camera it was rendered with, so a probe reads one consistent frame. MHW's depth never holds the Remnant bosses.
+struct DepthFrame {
+    int w = 0, h = 0;              // cells
+    int fullW = 0, fullH = 0;      // the depth buffer; cell (x, y) is its pixel (min(4x+2, fullW-1), min(4y+2, fullH-1))
+    std::vector<float> ndcZ;       // per cell: the depth as this frame's projection's NDC z; NaN = sky / far plane
+    float viewProj[16] = {};       // row vectors: clip = world * view * proj
+    float invViewProj[16] = {};
+    Vec3 eye{};                    // the camera (cm)
+    uint64_t tickMs = 0;           // GetTickCount64 when it was rendered
+};
+std::shared_ptr<const DepthFrame> depth_frame();  // any thread: the latest finished copy, nullptr until one exists
+bool terrain_enabled();                           // [bosses] terrain=1 (default on)
+// Pure terrain geometry (bosses.cpp; host test tests/test_terrain.cpp).
+void mat4_mul(const float a[16], const float b[16], float out[16]);
+bool mat4_inverse(const float m[16], float out[16]);
+bool depth_project(const float vp[16], Vec3 p, float* nx, float* ny, float* ndcZ);  // false behind the camera
+Vec3 depth_unproject(const float inv[16], float nx, float ny, float ndcZ);
+enum ProbeResult { PROBE_OK, PROBE_OFFSCREEN, PROBE_SKY, PROBE_FAR, PROBE_OCCLUDED };
+// The terrain under (x, z): project at yGuess, read the depth there, unproject, re-project at the found height (twice).
+// OCCLUDED = the depth there belongs to something between the camera and the point (hit is that object).
+ProbeResult depth_probe(const DepthFrame& f, float x, float z, float yGuess, Vec3* hit);
+float median_of(float* v, int n);  // reorders v
+enum StepVerdict { STEP_OK, STEP_WALL, STEP_CLIFF };
+// A boss stepping from ground curGround towards a point lookahead cm ahead whose ground is destGround (when destOk):
+// a rise over 120 cm (+ a 35 degree slope over the lookahead) is a wall, a drop over 300 cm (+ 45 degrees) a cliff;
+// blocker = the probe hit an object standing at the destination.
+StepVerdict step_verdict(float curGround, bool destOk, float destGround, float lookahead, bool blocker);
+bool ground_probe(float x, float z, float yGuess, float* yOut);  // game thread (bosses.cpp): the depth probe, filtered
 
 // ---------------------------------------------------------------- Remnant II content (r2client.cpp)
 bool r2_start();  // finds the Remnant II folder, starts r2read.exe

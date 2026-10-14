@@ -10,12 +10,15 @@
 #include <d3d11on12.h>
 #include <d3d12.h>
 #include <dinput.h>
+#include <d3dcompiler.h>
 #include <dxgi1_4.h>
 
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <map>
+#include <memory>
+#include <mutex>
 #include <string>
 
 #include "MinHook.h"
@@ -490,9 +493,12 @@ static void STDMETHODCALLTYPE hkClearDSV(ID3D11DeviceContext* c, ID3D11DepthSten
     oClearDSV(c, dsv, flags, depth, stencil);
 }
 
+static void terrain_release();  // below: the terrain copy of the depth
+
 static void release_depth() {
     AcquireSRWLockExclusive(&g_depthLock);
     render3d_set_game_depth(nullptr, false, 0, 0);
+    terrain_release();
     if (g_depthSrv) { g_depthSrv->Release(); g_depthSrv = nullptr; }
     g_depthRes = nullptr;
     for (int i = 0; i < g_depthCount; i++) g_depthSeen[i].res->Release();
@@ -644,6 +650,241 @@ static void measure_depth() {
     }
 }
 
+// ---- the scene depth as terrain for the bosses (bosses.cpp ground_probe). Each frame a shader copies every 4th pixel
+// of MHW's depth (read-only, through the shader view above) into a small float target, which is copied into one of
+// three staging textures; the oldest is mapped with DO_NOT_WAIT, so the CPU never waits on the GPU. The finished copy
+// is kept with the camera of its frame, converted to that projection's NDC z (NaN where it is sky).
+static const char* kTerrainShader = R"(
+Texture2D<float> gd : register(t0);
+float4 vs_main(uint id : SV_VertexID) : SV_Position {
+    float2 uv = float2((id << 1) & 2, id & 2);
+    return float4(uv * float2(2, -2) + float2(-1, 1), 0, 1);
+}
+float ps_main(float4 p : SV_Position) : SV_Target {
+    uint w, h;
+    gd.GetDimensions(w, h);
+    int2 q = min(int2(p.xy) * 4 + 2, int2(w, h) - 1);
+    return gd.Load(int3(q, 0));
+}
+)";
+struct TerrainSlot { bool pending; float vp[16], inv[16]; Vec3 eye; bool flip, gameRev; float clear; ULONGLONG tick; };
+static ID3D11VertexShader* g_tdVs = nullptr;
+static ID3D11PixelShader* g_tdPs = nullptr;
+static bool g_tdFailed = false;
+static ID3D11Texture2D* g_tdRt = nullptr;
+static ID3D11RenderTargetView* g_tdRtv = nullptr;
+static ID3D11Texture2D* g_tdStage[3] = {};
+static TerrainSlot g_tdSlot[3];
+static int g_tdNext = 0;
+static UINT g_tdW = 0, g_tdH = 0, g_tdFullW = 0, g_tdFullH = 0;
+static std::mutex g_tdLock;
+static std::shared_ptr<const DepthFrame> g_tdFrame;
+
+std::shared_ptr<const DepthFrame> depth_frame() {
+    std::lock_guard<std::mutex> lk(g_tdLock);
+    return g_tdFrame;
+}
+
+static void terrain_release() {
+    if (g_tdRtv) { g_tdRtv->Release(); g_tdRtv = nullptr; }
+    if (g_tdRt) { g_tdRt->Release(); g_tdRt = nullptr; }
+    for (auto& s : g_tdStage)
+        if (s) { s->Release(); s = nullptr; }
+    for (auto& s : g_tdSlot) s.pending = false;
+    g_tdW = g_tdH = 0;
+}
+
+static bool terrain_targets(UINT fullW, UINT fullH) {
+    UINT w = (fullW + 3) / 4, h = (fullH + 3) / 4;
+    if (g_tdRt && w == g_tdW && h == g_tdH && fullW == g_tdFullW && fullH == g_tdFullH) return true;
+    terrain_release();
+    D3D11_TEXTURE2D_DESC td = {};
+    td.Width = w;
+    td.Height = h;
+    td.MipLevels = td.ArraySize = 1;
+    td.Format = DXGI_FORMAT_R32_FLOAT;
+    td.SampleDesc.Count = 1;
+    td.Usage = D3D11_USAGE_DEFAULT;
+    td.BindFlags = D3D11_BIND_RENDER_TARGET;
+    if (FAILED(g_dev->CreateTexture2D(&td, nullptr, &g_tdRt)) || !g_tdRt) return false;
+    if (FAILED(g_dev->CreateRenderTargetView(g_tdRt, nullptr, &g_tdRtv)) || !g_tdRtv) { terrain_release(); return false; }
+    td.Usage = D3D11_USAGE_STAGING;
+    td.BindFlags = 0;
+    td.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+    for (auto& s : g_tdStage)
+        if (FAILED(g_dev->CreateTexture2D(&td, nullptr, &s)) || !s) { terrain_release(); return false; }
+    g_tdW = w;
+    g_tdH = h;
+    g_tdFullW = fullW;
+    g_tdFullH = fullH;
+    return true;
+}
+
+static bool terrain_shaders() {
+    if (g_tdVs && g_tdPs) return true;
+    if (g_tdFailed) return false;
+    ID3DBlob *vsb = nullptr, *psb = nullptr, *errb = nullptr;
+    bool ok = SUCCEEDED(D3DCompile(kTerrainShader, strlen(kTerrainShader), "terrain", nullptr, nullptr, "vs_main", "vs_5_0", 0, 0, &vsb, &errb)) &&
+              SUCCEEDED(D3DCompile(kTerrainShader, strlen(kTerrainShader), "terrain", nullptr, nullptr, "ps_main", "ps_5_0", 0, 0, &psb, &errb));
+    if (ok) ok = SUCCEEDED(g_dev->CreateVertexShader(vsb->GetBufferPointer(), vsb->GetBufferSize(), nullptr, &g_tdVs)) &&
+                 SUCCEEDED(g_dev->CreatePixelShader(psb->GetBufferPointer(), psb->GetBufferSize(), nullptr, &g_tdPs));
+    if (!ok) {
+        g_tdFailed = true;
+        log("overlay: terrain depth copy shader failed: %s", errb ? (const char*)errb->GetBufferPointer() : "no device shader");
+    }
+    if (vsb) vsb->Release();
+    if (psb) psb->Release();
+    if (errb) errb->Release();
+    return ok;
+}
+
+// The oldest pending copy, if the GPU has finished it, becomes the frame the game thread probes.
+static void terrain_readback() {
+    for (int k = 0; k < 3; k++) {
+        int i = (g_tdNext + k) % 3;  // oldest first: g_tdNext is the one written three frames ago
+        TerrainSlot& sl = g_tdSlot[i];
+        if (!sl.pending) continue;
+        D3D11_MAPPED_SUBRESOURCE ms;
+        if (g_ctx->Map(g_tdStage[i], 0, D3D11_MAP_READ, D3D11_MAP_FLAG_DO_NOT_WAIT, &ms) != S_OK) return;
+        auto f = std::make_shared<DepthFrame>();
+        f->w = (int)g_tdW;
+        f->h = (int)g_tdH;
+        f->fullW = (int)g_tdFullW;
+        f->fullH = (int)g_tdFullH;
+        f->ndcZ.resize((size_t)g_tdW * g_tdH);
+        const float sky = sl.gameRev ? 0.0f : 1.0f;
+        for (UINT y = 0; y < g_tdH; y++) {
+            const float* row = (const float*)((const uint8_t*)ms.pData + (size_t)y * ms.RowPitch);
+            float* out = f->ndcZ.data() + (size_t)y * g_tdW;
+            for (UINT x = 0; x < g_tdW; x++) {
+                float v = row[x];
+                bool isSky = fabsf(v - sky) < 1e-6f || fabsf(v - sl.clear) < 1e-6f || !(v >= 0 && v <= 1);
+                out[x] = isSky ? NAN : (sl.flip ? 1.0f - v : v);
+            }
+        }
+        g_ctx->Unmap(g_tdStage[i], 0);
+        memcpy(f->viewProj, sl.vp, sizeof(sl.vp));
+        memcpy(f->invViewProj, sl.inv, sizeof(sl.inv));
+        f->eye = sl.eye;
+        f->tickMs = sl.tick;
+        sl.pending = false;
+        std::lock_guard<std::mutex> lk(g_tdLock);
+        g_tdFrame = std::move(f);
+        return;
+    }
+}
+
+// Render thread, at Present, under g_depthLock: one reduced copy of the scene depth (srv) per frame.
+static void terrain_capture(ID3D11ShaderResourceView* srv, bool gameRev, float clear, UINT fullW, UINT fullH) {
+    if (!srv || !fullW || !fullH || !terrain_enabled() || !terrain_shaders() || !terrain_targets(fullW, fullH)) return;
+    terrain_readback();
+    GameView v;
+    bool ok;
+    AcquireSRWLockExclusive(&S().lock);
+    ok = S().live.snap.inGame && S().live.snap.view.valid;
+    v = S().live.snap.view;
+    ReleaseSRWLockExclusive(&S().lock);
+    if (!ok) return;
+    TerrainSlot sl = {};
+    mat4_mul(v.view, v.proj, sl.vp);
+    float invView[16];
+    if (!mat4_inverse(sl.vp, sl.inv) || !mat4_inverse(v.view, invView)) return;
+    sl.eye = {invView[12], invView[13], invView[14]};
+    // Which way the projection runs (as hunter_clip decides): a near and a far point straight ahead.
+    float z[2] = {0, 0};
+    const float d[2] = {100.0f, 100000.0f};
+    for (int k = 0; k < 2; k++)
+        for (float sign : {-1.0f, 1.0f}) {
+            float cz = 0, cw = 0;
+            for (int i = 0; i < 4; i++) {
+                float vi[4] = {0, 0, sign * d[k], 1};
+                cz += vi[i] * v.proj[i * 4 + 2];
+                cw += vi[i] * v.proj[i * 4 + 3];
+            }
+            if (cw > 1e-6f) { z[k] = cz / cw; break; }
+        }
+    bool projRev = z[0] > z[1];
+    sl.gameRev = gameRev;
+    sl.flip = gameRev != projRev;
+    sl.clear = clear;
+    sl.tick = GetTickCount64();
+
+    // Draw the copy, leaving the context as MHW had it.
+    ID3D11RenderTargetView* oRtv[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT] = {};
+    ID3D11DepthStencilView* oDsv = nullptr;
+    D3D11_VIEWPORT oVp[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
+    UINT oVpN = D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE;
+    ID3D11VertexShader* oVs = nullptr;
+    ID3D11PixelShader* oPs = nullptr;
+    ID3D11GeometryShader* oGs = nullptr;
+    ID3D11HullShader* oHs = nullptr;
+    ID3D11DomainShader* oDs = nullptr;
+    ID3D11ShaderResourceView* oSrv = nullptr;
+    ID3D11InputLayout* oIl = nullptr;
+    D3D11_PRIMITIVE_TOPOLOGY oTopo;
+    ID3D11RasterizerState* oRs = nullptr;
+    ID3D11BlendState* oBs = nullptr;
+    float oBf[4];
+    UINT oMask;
+    ID3D11DepthStencilState* oDss = nullptr;
+    UINT oRef;
+    g_ctx->OMGetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT, oRtv, &oDsv);
+    g_ctx->RSGetViewports(&oVpN, oVp);
+    g_ctx->VSGetShader(&oVs, nullptr, nullptr);
+    g_ctx->PSGetShader(&oPs, nullptr, nullptr);
+    g_ctx->GSGetShader(&oGs, nullptr, nullptr);
+    g_ctx->HSGetShader(&oHs, nullptr, nullptr);
+    g_ctx->DSGetShader(&oDs, nullptr, nullptr);
+    g_ctx->PSGetShaderResources(0, 1, &oSrv);
+    g_ctx->IAGetInputLayout(&oIl);
+    g_ctx->IAGetPrimitiveTopology(&oTopo);
+    g_ctx->RSGetState(&oRs);
+    g_ctx->OMGetBlendState(&oBs, oBf, &oMask);
+    g_ctx->OMGetDepthStencilState(&oDss, &oRef);
+
+    D3D11_VIEWPORT vp = {0, 0, (float)g_tdW, (float)g_tdH, 0, 1};
+    g_ctx->OMSetRenderTargets(1, &g_tdRtv, nullptr);
+    g_ctx->RSSetViewports(1, &vp);
+    g_ctx->IASetInputLayout(nullptr);
+    g_ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    g_ctx->VSSetShader(g_tdVs, nullptr, 0);
+    g_ctx->PSSetShader(g_tdPs, nullptr, 0);
+    g_ctx->GSSetShader(nullptr, nullptr, 0);
+    g_ctx->HSSetShader(nullptr, nullptr, 0);
+    g_ctx->DSSetShader(nullptr, nullptr, 0);
+    g_ctx->PSSetShaderResources(0, 1, &srv);
+    g_ctx->RSSetState(nullptr);
+    g_ctx->OMSetBlendState(nullptr, nullptr, 0xFFFFFFFF);
+    g_ctx->OMSetDepthStencilState(nullptr, 0);
+    g_ctx->Draw(3, 0);
+    ID3D11ShaderResourceView* none = nullptr;
+    g_ctx->PSSetShaderResources(0, 1, &none);
+
+    g_ctx->OMSetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT, oRtv, oDsv);
+    g_ctx->RSSetViewports(oVpN, oVp);
+    g_ctx->VSSetShader(oVs, nullptr, 0);
+    g_ctx->PSSetShader(oPs, nullptr, 0);
+    g_ctx->GSSetShader(oGs, nullptr, 0);
+    g_ctx->HSSetShader(oHs, nullptr, 0);
+    g_ctx->DSSetShader(oDs, nullptr, 0);
+    g_ctx->PSSetShaderResources(0, 1, &oSrv);
+    g_ctx->IASetInputLayout(oIl);
+    g_ctx->IASetPrimitiveTopology(oTopo);
+    g_ctx->RSSetState(oRs);
+    g_ctx->OMSetBlendState(oBs, oBf, oMask);
+    g_ctx->OMSetDepthStencilState(oDss, oRef);
+    for (auto* r : oRtv)
+        if (r) r->Release();
+    for (IUnknown* u : {(IUnknown*)oDsv, (IUnknown*)oVs, (IUnknown*)oPs, (IUnknown*)oGs, (IUnknown*)oHs, (IUnknown*)oDs,
+                        (IUnknown*)oSrv, (IUnknown*)oIl, (IUnknown*)oRs, (IUnknown*)oBs, (IUnknown*)oDss})
+        if (u) u->Release();
+
+    g_ctx->CopyResource(g_tdStage[g_tdNext], g_tdRt);
+    g_tdSlot[g_tdNext] = sl;
+    g_tdSlot[g_tdNext].pending = true;
+    g_tdNext = (g_tdNext + 1) % 3;
+}
+
 // Render thread, at Present: the scene depth is the one measure_depth() confirmed, else the full-frame one MHW clears most.
 static void pick_depth() {
     if (!g_depthMode || !oClearDSV || !g_bbW || !g_bbH) return;
@@ -676,10 +917,11 @@ static void pick_depth() {
                 (int)g_depthSeen[best].fmt, g_depthSeen[best].clear, SUCCEEDED(hr) ? "in use" : "no shader view");
         }
     }
-    if (g_depthSrv)
-        render3d_set_game_depth(g_depthSrv, measured ? (g_measFlip ? !g_measProjRev : g_measProjRev) : g_depthSeen[best].clear < 0.5f,
-                                (int)g_depthSeen[best].w, (int)g_depthSeen[best].h);
-    else
+    if (g_depthSrv) {
+        bool rev = measured ? (g_measFlip ? !g_measProjRev : g_measProjRev) : g_depthSeen[best].clear < 0.5f;
+        render3d_set_game_depth(g_depthSrv, rev, (int)g_depthSeen[best].w, (int)g_depthSeen[best].h);
+        terrain_capture(g_depthSrv, rev, g_depthSeen[best].clear, g_depthSeen[best].w, g_depthSeen[best].h);
+    } else
         render3d_set_game_depth(nullptr, false, 0, 0);
     if (!g_depthLogged && g_frame > 900) {
         g_depthLogged = true;
