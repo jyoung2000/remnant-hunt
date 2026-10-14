@@ -213,7 +213,9 @@ static void fetch_image(const std::string& asset, int maxSide) {
     std::string head;
     std::vector<uint8_t> body;
     R2Image img;
-    if (ask("TEX\t" + asset + "\t" + std::to_string(maxSide), &head, &body)) {
+    std::string name = asset;  // TEX takes the package name without ".uasset"; sheets and code may carry it
+    if (name.size() > 7 && name.compare(name.size() - 7, 7, ".uasset") == 0) name.resize(name.size() - 7);
+    if (ask("TEX\t" + name + "\t" + std::to_string(maxSide), &head, &body)) {
         char fmt[16] = {0};
         sscanf(head.c_str(), "OK %15s %d %d", fmt, &img.w, &img.h);
         img.format = fmt;

@@ -114,17 +114,17 @@
   },
   {
    "id": "boss_hp_lr",
-   "value": 9000,
+   "value": 2500,
    "why": "Remnant boss HP in low-rank zones, times the boss sheet hp_mult (threat 1 = 0.85)"
   },
   {
    "id": "boss_hp_hr",
-   "value": 22000,
+   "value": 6000,
    "why": "Remnant boss HP in high-rank zones, times hp_mult"
   },
   {
    "id": "boss_hp_mr",
-   "value": 42000,
+   "value": 11000,
    "why": "Remnant boss HP in master-rank zones, times hp_mult"
   },
   {

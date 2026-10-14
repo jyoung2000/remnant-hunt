@@ -910,7 +910,7 @@ void mod_game_tick() {
         for (Active& ac : l.actives) {
             if (t >= ac.until) continue;
             if (ac.act == ACT_HEAL) {
-                if (g.playerHealth && hpNow > 0) add_hp(g.playerHealth, ac.perSec * dt * (1.0f + stat(l, ST_HEAL, t)));
+                if (g.playerHealth) add_hp(g.playerHealth, ac.perSec * dt * (1.0f + stat(l, ST_HEAL, t)));  // a relic or consumable the player chose heals even at 0
                 continue;
             }
             const Monster* m = ac.target ? find_monster(l, ac.target) : current_target(l);
