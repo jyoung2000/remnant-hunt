@@ -145,6 +145,23 @@ std::vector<uintptr_t> scan_text(const std::string& pattern, int max);
 uint32_t mt_crc(const char* s);
 void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3& pos);                             // game thread; read-only report when dev_diag exists
 
+// ---------------------------------------------------------------- real Remnant items in MHW's item bar (nativepc.cpp)
+// Reads MHW's loaded item table and item text, writes <game>/nativePC/common/item/itemData.itm and
+// .../common/text/steam/item_eng.gmd with extra rows, and remembers the new ids in <mod folder>/items.json.
+struct NpGmd {  // item_eng.gmd: header, one 32-byte entry per message (hash chain), 256 buckets, label text, message text
+    uint8_t head[20] = {};            // "GMD", version, language, 8 zero bytes
+    std::string name;                 // the file's own name ("item")
+    std::vector<std::string> labels, msgs;
+};
+bool np_gmd_parse(const uint8_t* d, size_t n, NpGmd* g);
+std::vector<uint8_t> np_gmd_write(const NpGmd& g);
+void np_gmd_add(NpGmd* g, const std::string& label, const std::string& text);
+// itemData.itm: 10-byte header (u16 count @6), then 32-byte rows. Appends n rows cloned from row cloneId; new ids follow the old count.
+bool np_itm_add(std::vector<uint8_t>* itm, int cloneId, int n);
+void nativepc_tick();                // init thread, until it has finished; reads game memory only
+int nativepc_item_id(int barRow);    // the real MHW item id of a bar item (kBar_items row), 0 = not loaded in this game session
+const char* nativepc_take_toast();   // a one-time message for the game thread to toast, or nullptr
+
 // Settings (remnant_hunt.ini in the mod folder).
 // Defaults avoid MHW's own default PC bindings (B, G, V, T, P are free or unused in solo play).
 struct Keys { int gun = 'B', reload = 'R', swap = 'X', mod = 'V', skill = 'G', skill2 = 'H', relic = 'T', terminal = 'P', boss = VK_F9; };

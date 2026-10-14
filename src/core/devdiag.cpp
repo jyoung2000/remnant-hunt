@@ -441,6 +441,46 @@ static void walk_dti(uint8_t* d, const char* const* filters, int depth, int* n) 
     }
 }
 
+// Time-scale hunt: floats == 1.0f stable over 2 s with a frame-delta-like float (0.001..0.1) within +-0x20.
+static void time_scale_candidates() {
+    outf("-- time scale candidates");
+    for (auto& kv : g_singletons) {
+        const std::string& n = kv.first;
+        for (const char* k : {"Time", "Main", "Scene", "Game", "Pause", "Step"})
+            if (n.find(k) != std::string::npos) { outf("time-ish singleton: %s static %p obj %p", n.c_str(), (void*)kv.second, (void*)rd_ptr(kv.second)); break; }
+    }
+    struct S { std::string name; uint8_t* o; std::vector<uint8_t> a; };
+    std::vector<S> v;
+    for (auto& kv : g_singletons) {
+        uint8_t* o = rd_ptr(kv.second);
+        if (!o || !mem_readable(o, 0x1000)) continue;
+        v.push_back({kv.first, o, std::vector<uint8_t>(o, o + 0x1000)});
+    }
+    Sleep(2000);
+    int printed = 0;
+    for (auto& s : v) {
+        if (!mem_readable(s.o, 0x1000)) continue;
+        const uint8_t* b = s.o;
+        for (size_t off = 0; off + 4 <= 0x1000 && printed < 40; off += 4) {
+            float f1, f2;
+            memcpy(&f1, &s.a[off], 4); memcpy(&f2, b + off, 4);
+            if (f1 != 1.0f || f2 != 1.0f) continue;
+            for (int d = -0x20; d <= 0x20; d += 4) {
+                long o2 = (long)off + d;
+                if (!d || o2 < 0 || o2 + 4 > 0x1000) continue;
+                float g;
+                memcpy(&g, b + o2, 4);
+                if (g >= 0.001f && g <= 0.1f) {
+                    outf("time scale candidate: %s +0x%zX (neighbour delta %g at +0x%lX)", s.name.c_str(), off, g, o2);
+                    printed++;
+                    break;
+                }
+            }
+        }
+    }
+    outf("time scale candidates printed: %d", printed);
+}
+
 static void report() {
     outf("== Remnant Hunt diagnostic (read-only) ==");
     outf("api %s", game_api_init() ? "ok" : "missing");
@@ -555,6 +595,7 @@ static void report() {
         outf("-- resource %s common\\item\\itemData = %p", *d, r);
         if (r) hexdump((uintptr_t)r, 0x100);
     }
+    time_scale_candidates();
     outf("== end ==");
 }
 

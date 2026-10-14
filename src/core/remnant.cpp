@@ -733,11 +733,19 @@ volatile long g_remnantScreenOpen = 0;
 
 static int g_barUseRow = -1;  // a consumable row to use once the lock is free (use_consumable takes it)
 
+// The MHW item that stands for bar item b: the real Remnant item once nativePC has them, else the stand-in of the sheet.
+static int bar_item_id(int b) {
+    int real = nativepc_item_id(b);
+    return real > 0 ? real : (int)kBar_items[b].mhw_item_id;
+}
+
 static void bar_tick(SaveData& s, Live& l, double t, LONG* cmds) {
+    if (const char* msg = nativepc_take_toast()) toast(l, "%s", msg);
     struct Item { int expected = -1, row = -1, total = 0; bool confirmed = false; double nextWrite = 0; };
     static Item items[kBar_itemsCount];
     const GameSnapshot& g = l.snap;
-    if (!bar_proxies()) {
+    bool real = nativepc_item_id(0) > 0;  // real items need no [bar] proxies=1; without them the stand-ins stay off
+    if (!bar_proxies() && !real) {
         static bool logged = false, cleared = false;
         if (!logged) {
             logged = true;
@@ -762,7 +770,7 @@ static void bar_tick(SaveData& s, Live& l, double t, LONG* cmds) {
     bool screen = g_remnantScreenOpen != 0;
     for (int b = 0; b < kBar_itemsCount; b++) {
         const Bar_items& bi = kBar_items[b];
-        int id = (int)bi.mhw_item_id;
+        int id = bar_item_id(b);
         if (id <= 0) continue;
         Item& it = items[b];
         int count = 0, row = -1;
@@ -827,6 +835,7 @@ void mod_game_tick() {
     float dt = g_lastTick > 0 ? (float)std::min(0.25, t - g_lastTick) : 0.016f;
     g_lastTick = t;
     inventory_tick();
+    nativepc_tick();  // game thread: get_resource is game-thread only; writes the Remnant item files once, then a no-op
     AcquireSRWLockExclusive(&sh.lock);
     SaveData& s = sh.save;
     Live& l = sh.live;

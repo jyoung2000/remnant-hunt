@@ -21,6 +21,13 @@ case "${1:-all}" in
     $CXX -std=c++17 -Isrc/core tests/test_effects.cpp src/core/effects.cpp -static -o build/test_effects.exe
     $CXX $F tests/test_craft.cpp src/core/inventory.cpp src/core/mem.cpp -static -o build/test_craft.exe
     ./build/test_logic.exe | tail -1 && ./build/test_progress.exe | tail -1 && ./build/test_effects.exe | tail -1 && ./build/test_craft.exe | tail -2
+    # nativePC writers against the extracted originals (tools/mhwchunk_notes.md); skipped where build/mhw/ is missing.
+    if [ -f build/mhw/itemData.itm ] && [ -f build/mhw/item_eng.gmd ]; then
+      $CXX $F tests/test_nativepc.cpp src/core/nativepc.cpp src/core/mem.cpp -static -o build/test_nativepc.exe
+      ./build/test_nativepc.exe build/mhw | tail -3
+    else
+      echo "nativepc: skipped (build/mhw/ not extracted)"
+    fi
     # The icon pipeline (real r2read + Direct3D 11) needs Remnant II installed; skipped where it is not.
     R2="${R2:-/c/Program Files (x86)/Steam/steamapps/common/Remnant2}"
     if [ -d "$R2" ] && [ -x build/win/r2read.exe ]; then
