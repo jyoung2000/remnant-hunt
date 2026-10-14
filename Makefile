@@ -117,7 +117,7 @@ test-logic: src/core/gen/sheets.gen.h
 # dev preview of the screens (no game needed): wine build/preview_ui.exe <screen 0-4> <dir with fonts\> <out.bmp>
 preview-ui: src/core/gen/sheets.gen.h
 	@mkdir -p build
-	$(CXX) -O2 -std=c++17 -DNOMINMAX -DRH_PREVIEW -DIMGUI_USER_CONFIG='"rh_imconfig.h"' -Ithird_party/imgui -Isrc/core \
+	$(CXX) -O2 -std=c++17 -DNOMINMAX -DRH_PREVIEW -DIMGUI_USER_CONFIG='"rh_imconfig.h"' -Ithird_party/imgui -Ithird_party/bcdec -Isrc/core \
 	    tests/preview_ui.cpp src/core/ui.cpp src/core/progress.cpp src/core/effects.cpp src/core/mem.cpp $(filter-out third_party/imgui/backends/%,$(IMGUI)) \
 	    -static -o build/preview_ui.exe
 

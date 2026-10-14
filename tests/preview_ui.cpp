@@ -64,7 +64,7 @@ const std::string& r2_text(const sheets::R2Text& t) {
 }
 const std::string& r2_name(const sheets::R2Name&) { static const std::string w = "Wallace"; return w; }
 void set_input_block(const InputBlock&) {}
-void* texture_for(const char*, int, int*, int*) { return nullptr; }
+void* texture_for(const char* asset, int maxSide, int* w, int* h);  // real icons through r2read, below
 void use_consumable(int) {}
 bool can_equip_here(const Live&) { return true; }
 void equip(Cat, int, int) {}
@@ -86,6 +86,141 @@ void rh_imgui_assert(const char*, const char*, int) {}
 struct Tex { int w = 0, h = 0; std::vector<uint8_t> rgba; };
 static std::map<ImTextureID, Tex> g_tex;
 static ImTextureID g_nextTex = 1;
+
+// Real icons: the preview starts the mod's own r2read.exe against the Remnant II install (argv[4] = folder holding
+// r2read.exe, argv[5] = Remnant II folder) and decodes the BC blocks on the CPU with bcdec, so the screenshots show
+// what the game draws. Without the install the icons stay outlined boxes.
+#define BCDEC_IMPLEMENTATION
+#include "bcdec.h"
+static HANDLE g_r2In = nullptr, g_r2Out = nullptr;
+static bool g_r2Tried = false;
+static char g_r2Dir[MAX_PATH], g_r2Game[MAX_PATH];
+static std::map<std::string, ImTextureID> g_r2Cache;
+
+static bool r2_write(const std::string& s) {
+    DWORD n = 0;
+    return WriteFile(g_r2In, s.data(), (DWORD)s.size(), &n, nullptr) && n == s.size();
+}
+static bool r2_read(void* buf, size_t n) {
+    uint8_t* p = (uint8_t*)buf;
+    while (n) {
+        DWORD got = 0;
+        if (!ReadFile(g_r2Out, p, (DWORD)n, &got, nullptr) || !got) return false;
+        p += got;
+        n -= got;
+    }
+    return true;
+}
+static bool r2_line(std::string* out) {
+    out->clear();
+    char c;
+    while (r2_read(&c, 1)) {
+        if (c == '\n') return true;
+        if (c != '\r') out->push_back(c);
+    }
+    return false;
+}
+static bool r2_preview_start() {
+    if (g_r2Tried) return g_r2In != nullptr;
+    g_r2Tried = true;
+    char exe[MAX_PATH];
+    snprintf(exe, sizeof(exe), "%s\\r2read.exe", g_r2Dir);
+    if (GetFileAttributesA(exe) == INVALID_FILE_ATTRIBUTES || GetFileAttributesA(g_r2Game) == INVALID_FILE_ATTRIBUTES) {
+        fprintf(stderr, "preview: no r2read.exe at %s or no Remnant II at %s: icons stay blank\n", exe, g_r2Game);
+        return false;
+    }
+    HANDLE inR, inW, outR, outW;
+    SECURITY_ATTRIBUTES sa = {sizeof(sa), nullptr, TRUE};
+    CreatePipe(&inR, &inW, &sa, 0);
+    CreatePipe(&outR, &outW, &sa, 0);
+    SetHandleInformation(inW, HANDLE_FLAG_INHERIT, 0);
+    SetHandleInformation(outR, HANDLE_FLAG_INHERIT, 0);
+    STARTUPINFOA si = {sizeof(si)};
+    si.dwFlags = STARTF_USESTDHANDLES;
+    si.hStdInput = inR;
+    si.hStdOutput = outW;
+    si.hStdError = GetStdHandle(STD_ERROR_HANDLE);
+    PROCESS_INFORMATION pi = {};
+    std::string cmd = std::string("\"") + exe + "\" \"" + g_r2Game + "\"";
+    if (!CreateProcessA(nullptr, &cmd[0], nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &si, &pi)) {
+        fprintf(stderr, "preview: r2read.exe did not start\n");
+        return false;
+    }
+    CloseHandle(inR);
+    CloseHandle(outW);
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+    g_r2In = inW;
+    g_r2Out = outR;
+    std::string head;
+    r2_write("HELLO\n");
+    return r2_line(&head) && head.rfind("OK", 0) == 0;
+}
+
+namespace rh {
+void* texture_for(const char* asset, int maxSide, int* w, int* h) {
+    if (!asset || !*asset) return nullptr;
+    std::string key = std::string(asset) + "|" + std::to_string(maxSide);
+    auto it = g_r2Cache.find(key);
+    if (it == g_r2Cache.end()) {
+        ImTextureID id = 0;
+        if (r2_preview_start()) {
+            std::string head;
+            char fmt[16] = {0};
+            int tw = 0, th = 0;
+            size_t n = 0;
+            if (r2_write("TEX\t" + std::string(asset) + "\t" + std::to_string(maxSide) + "\n") && r2_line(&head) &&
+                sscanf(head.c_str(), "OK %15s %d %d %zu", fmt, &tw, &th, &n) == 4 && tw > 0 && th > 0) {
+                std::vector<uint8_t> px(n);
+                if (r2_read(px.data(), n)) {
+                    Tex t;
+                    t.w = tw;
+                    t.h = th;
+                    t.rgba.assign((size_t)tw * th * 4, 0);
+                    std::string f = fmt;
+                    int bs = f == "BC7" || f == "BC3" ? 16 : f == "BC1" ? 8 : 0;
+                    if (bs) {
+                        int bw = (tw + 3) / 4, bh = (th + 3) / 4;
+                        std::vector<uint8_t> blk(16 * 4);
+                        for (int by = 0; by < bh; by++)
+                            for (int bx = 0; bx < bw; bx++) {
+                                const uint8_t* src = px.data() + ((size_t)by * bw + bx) * bs;
+                                if (src + bs > px.data() + px.size()) break;
+                                if (f == "BC7") bcdec_bc7(src, blk.data(), 16);
+                                else if (f == "BC3") bcdec_bc3(src, blk.data(), 16);
+                                else bcdec_bc1(src, blk.data(), 16);
+                                for (int y = 0; y < 4 && by * 4 + y < th; y++)
+                                    for (int x = 0; x < 4 && bx * 4 + x < tw; x++)
+                                        memcpy(&t.rgba[(((size_t)by * 4 + y) * tw + bx * 4 + x) * 4], &blk[(y * 4 + x) * 4], 4);
+                            }
+                    } else if (f == "BGRA8" && n >= (size_t)tw * th * 4) {
+                        for (size_t i = 0; i < (size_t)tw * th; i++) {
+                            t.rgba[i * 4] = px[i * 4 + 2];
+                            t.rgba[i * 4 + 1] = px[i * 4 + 1];
+                            t.rgba[i * 4 + 2] = px[i * 4];
+                            t.rgba[i * 4 + 3] = px[i * 4 + 3];
+                        }
+                    } else {
+                        bs = -1;
+                    }
+                    if (bs >= 0) {
+                        id = g_nextTex++;
+                        g_tex[id] = t;
+                    }
+                }
+            } else if (!head.empty()) {
+                fprintf(stderr, "preview: %s: %s\n", asset, head.c_str());
+            }
+        }
+        it = g_r2Cache.emplace(key, id).first;
+    }
+    if (!it->second) return nullptr;
+    const Tex& t = g_tex[it->second];
+    if (w) *w = t.w;
+    if (h) *h = t.h;
+    return (void*)(uintptr_t)it->second;
+}
+}  // namespace rh
 
 static void textures(ImDrawData* dd) {
     if (!dd->Textures) return;
@@ -185,6 +320,8 @@ int main(int argc, char** argv) {
     int which = argc > 1 ? atoi(argv[1]) : 0;
     snprintf(g_dir, sizeof(g_dir), "%s", argc > 2 ? argv[2] : ".");
     const char* out = argc > 3 ? argv[3] : "preview.bmp";
+    snprintf(g_r2Dir, sizeof(g_r2Dir), "%s", argc > 4 ? argv[4] : "build\\win");
+    snprintf(g_r2Game, sizeof(g_r2Game), "%s", argc > 5 ? argv[5] : "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Remnant2");
     const int W = 1600, H = 900;
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
