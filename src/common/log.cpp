@@ -44,11 +44,63 @@ void log(const char* fmt, ...) {
     va_end(ap);
 }
 
+// Melty test runs: while LOCALAPPDATA/Melty/test/remnant-hunt.json exists, each "check <name> ok|fail|partial ..."
+// line is also written as "pass <name>" / "fail <name>: ..." to the file that json names under "checks".
+static const char* melty_checks_path() {
+    static char path[MAX_PATH];
+    static int state = 0;  // 0 unknown, 1 found, -1 none
+    if (state) return state > 0 ? path : nullptr;
+    state = -1;
+    char json[MAX_PATH], buf[4096];
+    DWORD n = GetEnvironmentVariableA("LOCALAPPDATA", buf, sizeof(buf));
+    if (!n || n >= sizeof(buf)) return nullptr;
+    snprintf(json, sizeof(json), "%s\\Melty\\test\\remnant-hunt.json", buf);
+    HANDLE h = CreateFileA(json, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, nullptr);
+    if (h == INVALID_HANDLE_VALUE) return nullptr;
+    DWORD got = 0;
+    bool ok = ReadFile(h, buf, sizeof(buf) - 1, &got, nullptr);
+    CloseHandle(h);
+    if (!ok) return nullptr;
+    buf[got] = 0;
+    const char* k = strstr(buf, "\"checks\"");
+    if (!k) return nullptr;
+    k = strchr(k + 8, '"');
+    if (!k) return nullptr;
+    k++;
+    size_t o = 0;
+    for (; *k && *k != '"' && o + 1 < sizeof(path); k++) {
+        if (*k == '\\' && k[1]) k++;  // json escapes: \\ and \/
+        path[o++] = *k;
+    }
+    path[o] = 0;
+    if (!o) return nullptr;
+    state = 1;
+    return path;
+}
+
 void melty_log(const char* fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
     vline("melty.log", fmt, ap);
     va_end(ap);
+    char msg[512], name[64], verdict[16];
+    va_start(ap, fmt);
+    vsnprintf(msg, sizeof(msg), fmt, ap);
+    va_end(ap);
+    const char* checks = melty_checks_path();
+    if (!checks || sscanf(msg, "check %63s %15s", name, verdict) != 2) return;
+    char line[640];
+    if (strcmp(verdict, "ok") == 0) snprintf(line, sizeof(line), "pass %s\n", name);
+    else snprintf(line, sizeof(line), "fail %s: %s\n", name, msg);
+    AcquireSRWLockExclusive(&g_lock);
+    HANDLE h = CreateFileA(checks, FILE_APPEND_DATA, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr,
+                           OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (h != INVALID_HANDLE_VALUE) {
+        DWORD w;
+        WriteFile(h, line, (DWORD)strlen(line), &w, nullptr);
+        CloseHandle(h);
+    }
+    ReleaseSRWLockExclusive(&g_lock);
 }
 
 }  // namespace rh
