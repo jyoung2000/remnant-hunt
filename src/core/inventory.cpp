@@ -118,6 +118,57 @@ bool mhw_take_items(int id, int count) {
     return count == 0;
 }
 
+// The pouch only (what MHW's item bar shows). Any thread.
+int mhw_pouch_count(int id) {
+    if (id <= 0) return 0;
+    std::lock_guard<std::mutex> l(g_invLock);
+    if (!g_slot) return 0;
+    long long n = 0;
+    for (const Container& c : g_containers) {
+        if (!c.pouch) continue;
+        for (int i = 0; i < c.entries; i++) {
+            uint8_t* e = g_slot + c.off + (size_t)i * 16;
+            if (*(int*)(e + 8) == id) n += std::max(0, *(int*)(e + 12));
+        }
+    }
+    return (int)std::min<long long>(n, 1 << 30);
+}
+
+// Game thread. Sets the pouch's entry for the item to the count (a free slot when it has none); count 0 clears it.
+bool mhw_pouch_set(int id, int count) {
+    if (id <= 0 || count < 0) return false;
+    std::lock_guard<std::mutex> l(g_invLock);
+    if (!g_slot || !mem_readable(g_slot, kSlotSize)) return false;
+    uint8_t* have = nullptr;
+    uint8_t* freeSlot = nullptr;
+    int slotNo = 0;
+    for (const Container& c : g_containers) {
+        if (!c.pouch) continue;
+        for (int i = 0; i < c.entries; i++) {
+            uint8_t* e = g_slot + c.off + (size_t)i * 16;
+            int eid = *(int*)(e + 8);
+            if (eid == id && !have) have = e;
+            else if (eid == 0 && !freeSlot) { freeSlot = e; slotNo = i; }
+        }
+    }
+    uint8_t* e = have ? have : freeSlot;
+    if (!e) return false;
+    if (!have && count == 0) return true;
+    if (count == 0) { *(int*)(e + 8) = 0; *(int*)(e + 12) = 0; return true; }
+    *(int*)(e + 8) = id;
+    *(int*)(e + 12) = count;
+    static std::map<int, bool> placed;
+    if (!placed[id]) {
+        placed[id] = true;
+        const char* bar = "?";
+        for (int i = 0; i < kBar_itemsCount; i++)
+            if ((int)kBar_items[i].mhw_item_id == id) bar = kBar_items[i].id;
+        if (have) for (const Container& c : g_containers) if (c.pouch) slotNo = (int)((have - (g_slot + c.off)) / 16);
+        log("inventory: pouch slot %d now holds item %d x %d for %s", slotNo, id, count, bar);
+    }
+    return true;
+}
+
 const char* mhw_item_name(int id) {
     std::lock_guard<std::mutex> l(g_invLock);
     auto it = g_names.find(id);

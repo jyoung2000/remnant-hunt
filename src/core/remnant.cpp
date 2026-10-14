@@ -717,6 +717,78 @@ void use_consumable(int row) {
     ReleaseSRWLockExclusive(&sh.lock);
 }
 
+// ---------------------------------------------------------------- Remnant items in MHW's own item bar
+//
+// Each bar item is stood in for by a harmless real MHW item in the pouch (sheets: bar_items.mhw_item_id). The pouch
+// count follows the Remnant count; when MHW consumes one outside a Remnant screen (pouch and box total both fell by
+// one) the Remnant action fires and the count is put back.
+
+volatile long g_remnantScreenOpen = 0;
+
+static int g_barUseRow = -1;  // a consumable row to use once the lock is free (use_consumable takes it)
+
+static void bar_tick(SaveData& s, Live& l, double t, LONG* cmds) {
+    struct Item { int expected = -1, row = -1, total = 0; bool confirmed = false; double nextWrite = 0; };
+    static Item items[kBar_itemsCount];
+    const GameSnapshot& g = l.snap;
+    if (!g.inGame || s.archetype < 0 || !mhw_inventory_ready()) return;
+    // the carried consumables, in row order, for consumable_1..4
+    std::vector<int> carried;
+    for (int i = 0; i < kConsumablesCount && carried.size() < 4; i++)
+        if (s.stock[i] > 0) carried.push_back(i);
+    int gun = equipped_gun(s, l);
+    int curMod = gun_mod(s, gun);
+    bool screen = g_remnantScreenOpen != 0;
+    for (int b = 0; b < kBar_itemsCount; b++) {
+        const Bar_items& bi = kBar_items[b];
+        int id = (int)bi.mhw_item_id;
+        if (id <= 0) continue;
+        Item& it = items[b];
+        int count = 0, row = -1;
+        if (b == BAR_ITEMS_DRAGON_HEART) count = s.relic >= 0 ? s.relicCharges : 0;
+        else if (b == BAR_ITEMS_ARCHETYPE_SKILL) {
+            std::vector<int> sk = skills_of(s.archetype);
+            count = !sk.empty() && t >= l.skillReady[0] ? 1 : 0;
+        } else if (b == BAR_ITEMS_LONG_GUN) count = s.longGun >= 0 ? 1 : 0;
+        else if (b == BAR_ITEMS_HAND_GUN) count = s.handGun >= 0 ? 1 : 0;
+        else if (b == BAR_ITEMS_WEAPON_MOD) count = curMod >= 0 && l.modCharge >= kMods[curMod].charge_damage && t >= l.modUntil ? 1 : 0;
+        else {
+            int n = b - BAR_ITEMS_CONSUMABLE_1;
+            if (n >= 0 && n < (int)carried.size()) { row = carried[n]; count = s.stock[row]; }
+        }
+        count = std::max(0, std::min(count, 99));
+        int cur = mhw_pouch_count(id), total = mhw_item_count(id);
+        bool used = it.confirmed && !screen && it.expected >= 1 && cur == it.expected - 1 && total == it.total - 1 &&
+                    row == it.row;
+        if (used) {
+            log("bar: used %s through MHW item %d", bi.id, id);
+            if (b == BAR_ITEMS_DRAGON_HEART) *cmds |= 1 << CMD_RELIC;
+            else if (b == BAR_ITEMS_ARCHETYPE_SKILL) *cmds |= 1 << CMD_SKILL;
+            else if (b == BAR_ITEMS_WEAPON_MOD) *cmds |= 1 << CMD_MOD;
+            else if (b == BAR_ITEMS_LONG_GUN || b == BAR_ITEMS_HAND_GUN) {
+                if (l.combatAllowed) { l.gunMode = true; l.usingLong = b == BAR_ITEMS_LONG_GUN; l.reloadDone = 0; }
+            } else if (row >= 0) g_barUseRow = row;
+            it.confirmed = false;
+            it.expected = -1;  // the effect lands later this tick: recompute next tick
+            it.nextWrite = 0;
+            continue;
+        }
+        if (cur == count && it.expected == count && row == it.row) {
+            it.confirmed = true;
+            it.total = total;
+            continue;
+        }
+        it.confirmed = false;
+        if (cur == count) { it.expected = count; it.row = row; it.confirmed = true; it.total = total; continue; }
+        if (t < it.nextWrite) continue;
+        it.nextWrite = t + 0.5;
+        if (mhw_pouch_set(id, count)) {
+            it.expected = count;
+            it.row = row;
+        }
+    }
+}
+
 // ---------------------------------------------------------------- the tick
 
 static double g_lastTick = 0, g_lastSave = 0, g_lastMeleeHit = 0;
@@ -800,6 +872,7 @@ void mod_game_tick() {
     }
 
     LONG cmds = InterlockedExchange(&g_cmds, 0);
+    bar_tick(s, l, t, &cmds);
     auto has = [&](Cmd c) { return (cmds & (1 << c)) != 0; };
 
     if (g.inGame && a) {
@@ -820,7 +893,7 @@ void mod_game_tick() {
                 float refund = drop * dr;
                 float absorbed = std::min(l.bonusHealth, drop - refund);
                 if (absorbed > 0) { refund += absorbed; l.bonusHealth -= absorbed; }
-                if (refund > 0) add_hp(g.playerHealth, refund);
+                if (refund > 0 && hpNow > 0) add_hp(g.playerHealth, refund);  // a lethal hit stays lethal
                 l.lastHurt = t;
                 trigger(l, TR_ON_HURT, t);
             }
@@ -828,7 +901,7 @@ void mod_game_tick() {
         float regen = stat(l, ST_REGEN, t);
         if (regen > 0 && g.playerHealth) {
             l.regenAcc += regen * dt;
-            if (l.regenAcc >= 1.0) { add_hp(g.playerHealth, (float)l.regenAcc); l.regenAcc = 0; }
+            if (l.regenAcc >= 1.0 && hpNow > 0) { add_hp(g.playerHealth, (float)l.regenAcc); l.regenAcc = 0; }
         }
         if (t - l.lastHurt > tune(TUNING_BONUS_HEALTH_REGEN_DELAY_S) && l.bonusHealth < l.bonusMax)
             l.bonusHealth = std::min(l.bonusMax, l.bonusHealth + tune(TUNING_BONUS_HEALTH_REGEN_PER_S) * dt);
@@ -837,7 +910,7 @@ void mod_game_tick() {
         for (Active& ac : l.actives) {
             if (t >= ac.until) continue;
             if (ac.act == ACT_HEAL) {
-                if (g.playerHealth) add_hp(g.playerHealth, ac.perSec * dt * (1.0f + stat(l, ST_HEAL, t)));
+                if (g.playerHealth && hpNow > 0) add_hp(g.playerHealth, ac.perSec * dt * (1.0f + stat(l, ST_HEAL, t)));
                 continue;
             }
             const Monster* m = ac.target ? find_monster(l, ac.target) : current_target(l);
@@ -1015,6 +1088,11 @@ void mod_game_tick() {
     Vec3 posNow = g.pos;
     ReleaseSRWLockExclusive(&sh.lock);
     devconsole_tick(t, inGameNow, inBaseNow, zoneNow, posNow);
+    if (g_barUseRow >= 0) {
+        int row = g_barUseRow;
+        g_barUseRow = -1;
+        use_consumable(row);
+    }
 }
 
 // ---------------------------------------------------------------- save file

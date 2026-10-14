@@ -70,6 +70,8 @@ bool can_equip_here(const Live&) { return true; }
 void equip(Cat, int, int) {}
 bool mhw_inventory_ready() { return true; }
 int mhw_item_count(int) { return 3; }
+int mhw_pouch_count(int) { return 2; }
+volatile long g_remnantScreenOpen = 0;
 const char* mhw_item_name(int) { return "Iron Ore"; }
 void request(const Request&) {}
 void toast(Live&, const char*, ...) {}

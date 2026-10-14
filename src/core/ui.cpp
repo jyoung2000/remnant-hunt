@@ -1675,6 +1675,58 @@ static void hud(const SaveData& s, const Live& l) {
         fg->AddRectFilled(ImVec2(p.x - 20, p.y - 10), ImVec2(p.x - 16, p.y + ts.y + 10), col::accent);
         fg->AddText(g_bold, 18 * sc, p, col::text, b);
     }
+    // Legend of the proxy items in MHW's item bar: which MHW item stands for which Remnant item.
+    if (g_screen == SCR_NONE && s.archetype >= 0) {
+        struct Line { std::string text; const char* icon; };
+        std::vector<Line> lines;
+        std::vector<int> carried;
+        for (int i = 0; i < kConsumablesCount && carried.size() < 4; i++)
+            if (s.stock[i] > 0) carried.push_back(i);
+        for (int b = 0; b < kBar_itemsCount; b++) {
+            int id = (int)kBar_items[b].mhw_item_id;
+            int n = id > 0 ? mhw_pouch_count(id) : 0;
+            if (n <= 0) continue;
+            std::string rn;
+            const char* icon = nullptr;
+            if (b == BAR_ITEMS_DRAGON_HEART && s.relic >= 0) { rn = r2_text(kRelics[s.relic].name); icon = kRelics[s.relic].icon; }
+            else if (b == BAR_ITEMS_ARCHETYPE_SKILL) {
+                std::vector<int> sk = skills_of(s.archetype);
+                if (!sk.empty()) { const Skills& k = kSkills[sk[skill_index(s, 0)]]; rn = r2_text(k.name); icon = k.icon; }
+            } else if (b == BAR_ITEMS_LONG_GUN && s.longGun >= 0) { rn = r2_text(kWeapons[s.longGun].name); icon = kWeapons[s.longGun].icon; }
+            else if (b == BAR_ITEMS_HAND_GUN && s.handGun >= 0) { rn = r2_text(kWeapons[s.handGun].name); icon = kWeapons[s.handGun].icon; }
+            else if (b == BAR_ITEMS_WEAPON_MOD) {
+                int md = gun_mod(s, equipped_gun(s, l) >= 0 ? equipped_gun(s, l) : s.longGun);
+                if (md >= 0) { rn = r2_text(kMods[md].name); icon = kMods[md].icon; }
+            } else if (b >= BAR_ITEMS_CONSUMABLE_1) {
+                int k = b - BAR_ITEMS_CONSUMABLE_1;
+                if (k < (int)carried.size()) { rn = r2_text(kConsumables[carried[k]].name); icon = kConsumables[carried[k]].icon; }
+            }
+            if (rn.empty()) continue;
+            const char* mn = mhw_item_name(id);
+            char buf[200];
+            snprintf(buf, sizeof(buf), "%s  =  %s x%d", mn ? mn : kBar_items[b].what, rn.c_str(), n);
+            lines.push_back({buf, icon});
+        }
+        if (!lines.empty()) {
+            float fs = 15 * sc, ih = 20 * sc, lh = 24 * sc, w = 0;
+            for (const Line& ln : lines) w = std::max(w, g_body->CalcTextSizeA(fs, FLT_MAX, 0, ln.text.c_str()).x);
+            w += ih + 8 * sc;
+            ImVec2 pe(vp->Pos.x + vp->Size.x - 40 * sc, vp->Pos.y + vp->Size.y - 230 * sc);
+            ImVec2 p(pe.x - w - 24 * sc, pe.y - lines.size() * lh - 12 * sc);
+            fg->AddRectFilled(p, pe, col::mhwFrame);
+            fg->AddRect(p, pe, col::mhwGold, 0, 0, 1.0f);
+            fg->AddRectFilled(p, ImVec2(p.x + 3 * sc, pe.y), col::accent);
+            float y = p.y + 6 * sc;
+            for (const Line& ln : lines) {
+                int tw = 0, th = 0;
+                if (ln.icon)
+                    if (void* tex = texture_for(ln.icon, 128, &tw, &th))
+                        fg->AddImage((ImTextureID)(uintptr_t)tex, ImVec2(p.x + 12 * sc, y), ImVec2(p.x + 12 * sc + ih, y + ih));
+                fg->AddText(g_body, fs, ImVec2(p.x + 12 * sc + ih + 8 * sc, y + (ih - fs) / 2), IM_COL32(200, 190, 170, 200), ln.text.c_str());
+                y += lh;
+            }
+        }
+    }
     if (!l.combatAllowed) return;
     ImVec2 c(vp->Pos.x + vp->Size.x / 2, vp->Pos.y + vp->Size.y / 2);
     int gun = equipped_gun(s, l);
@@ -1816,6 +1868,7 @@ void mod_frame() {
     int nearMenu = sh.live.nearMenu;
     ReleaseSRWLockShared(&sh.lock);
 
+    g_remnantScreenOpen = g_screen != SCR_NONE;  // for the game thread's item bar proxies (remnant.cpp)
     const Keys& k = keys();
     // First visit: wait until the hunter is really in town (zone settled and the hunter has moved), not while the
     // loading screen still shows.

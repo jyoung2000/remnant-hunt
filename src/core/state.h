@@ -204,6 +204,9 @@ int mhw_zenny();
 bool mhw_spend_zenny(int amount);
 int mhw_item_count(int itemId);
 bool mhw_take_items(int itemId, int count);
+int mhw_pouch_count(int itemId);        // the item pouch only (MHW's item bar)
+bool mhw_pouch_set(int itemId, int count);  // game thread: the pouch's entry for the item (a free slot if none); 0 clears
+extern volatile long g_remnantScreenOpen;  // a Remnant screen is open (set by the HUD, read by the game thread)
 const char* mhw_item_name(int itemId);  // MHW's own name for the item, or nullptr
 bool mhw_inventory_ready();
 void inventory_tick();                  // game thread: finds the containers, reads names

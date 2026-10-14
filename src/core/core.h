@@ -75,6 +75,7 @@ bool install_game_tick();
 void remove_game_tick();
 void snapshot(GameSnapshot* out);                 // fills from live memory
 bool add_hp(uint8_t* health, float delta);
+bool reactions_play(int set, int id);               // game thread: DoAction on the hunter (faint sequence)
 void show_damage(uint8_t* em, int amount, const Vec3& pos, bool crit);
 bool fire_slinger(const Vec3& origin, const Vec3& target);
 bool world_ray(const Vec3& from, const Vec3& to, Vec3* hit);  // true = blocked by level geometry

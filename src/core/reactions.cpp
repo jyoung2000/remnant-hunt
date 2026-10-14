@@ -112,6 +112,8 @@ bool mhw_do_action(uint8_t* unit, int set, int id) {
     return g_doAction(unit + kActionController, action);
 }
 
+bool reactions_play(int set, int id) { return mhw_do_action(player_ptr(), set, id); }
+
 // Game thread: watch MHW's own hits on the hunter and learn the reactions they start.
 static void learn(int weapon, int heavy, int set, int id) {
     if (weapon < 0 || !plausible_action(set, id)) return;  // unknown weapon type, or not a hit reaction

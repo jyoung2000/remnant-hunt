@@ -601,8 +601,43 @@ int hurt_hunter(Live& l, float dmg, int status, float statusTotal, double t) {
     if (t - g_dodgeAt < 0.45) return BOSS_EV_EVADE;
     if (status > 0) inflict_player(l, (Status)status, statusTotal, status_dur(status), t);
     reactions_note_own_damage(t);
-    if (g.playerHealth && add_hp(g.playerHealth, -dmg)) {
-        if (l.maxHp > 0) reactions_flinch(dmg / l.maxHp, t);  // MHW's own flinch / knock-back for the hit
+    if (g.playerHealth) {
+        const bool rd = mem_readable(g.playerHealth + 0x60, 8);
+        float before = rd ? *(float*)(g.playerHealth + 0x64) : -1.0f;
+        if (!add_hp(g.playerHealth, -dmg)) return 0;
+        float after = rd ? *(float*)(g.playerHealth + 0x64) : -1.0f;
+        float mx = rd ? *(float*)(g.playerHealth + 0x60) : 0.0f;
+        static double s_lastLog = -1;
+        if (rd && t - s_lastLog >= 0.5) {
+            s_lastLog = t;
+            log("hunter hit: %.0f dmg, hp %.0f -> %.0f of %.0f", dmg, before, after, mx);
+        }
+        bool lethal = rd && before > 0 && before - dmg <= 0;
+        if (lethal) {
+            if (after > 0) {
+                *(float*)(g.playerHealth + 0x64) = 0.0f;  // approved HP write: the clamp left the hunter standing
+                log("hunter: lethal Remnant hit, hp forced to 0");
+            }
+            static int s_set = -2, s_id = 0;
+            if (s_set == -2) {
+                char ini[MAX_PATH], v[64] = {0};
+                snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+                GetPrivateProfileStringA("bosses", "faint_action", "", v, sizeof(v), ini);
+                if (sscanf(v, "%d:%d", &s_set, &s_id) != 2) s_set = -1;
+            }
+            if (s_set >= 0) {
+                if (reactions_play(s_set, s_id)) log("hunter: faint action %d:%d played", s_set, s_id);
+            } else {
+                static bool warned = false;
+                if (!warned) {
+                    warned = true;
+                    log("hunter: no faint_action set in the ini; HP is 0 but MHW only faints through its own hit path (record one normal faint in the diagnostic action log and set [bosses] faint_action=set:id)");
+                }
+            }
+        }
+        if (!lethal) {
+            if (l.maxHp > 0) reactions_flinch(dmg / l.maxHp, t);  // MHW's own flinch / knock-back for the hit
+        }
         std::lock_guard<std::mutex> lk(g_lock);
         g_hurtAt = t;
         return BOSS_EV_HURT;
