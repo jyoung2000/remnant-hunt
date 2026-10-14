@@ -351,3 +351,10 @@ E. Remnant armour inside MHW's equipment menu: detect MHW's equipment screen (sM
    gear panel docked into it in the same look (the mod cannot add rows to MHW's own list; it overlays beside it);
    the loadout terminal stays reachable from there.
 Priority: C (self-contained, approved) and D (small) first, then B, then E, then A (largest).
+- 11:35 session (0.4.2 Melty test, FAILED): crash c0000005 in ucrtbase 12 s after entering zone 504: the joint-search
+  worker scanned candidate blocks freed by the zone load (readable length cached 60 s). Fixed in 85ff903
+  (mem_readable per block before each scan). nativepc found rItemData but no file image: the loaded resource holds
+  count 2775 at +0xB8 and the row pointer at +0xC8; find_itm now reads them (count + nearby pointer, ids checked).
+  GitHub v0.4.2 is published from 05bee77 (has the crash); Melty 0.4.2 is a DRAFT (test failed): rebuild 0.4.2 from
+  85ff903 or later, replace the GitHub assets, re-test on Melty, then publish. Installed in MHW: 85ff903 (verified).
+- Loader note: Melty test runs delete dinput8.dll when they finish; install_dev.sh now verifies both halves.
