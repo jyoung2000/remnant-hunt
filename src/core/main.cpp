@@ -105,6 +105,7 @@ extern "C" __declspec(dllexport) void rh_shutdown() {
     rh::remove_game_tick();
     rh::overlay_remove();
     rh::r2_stop();
+    rh::research_stop();
     rh::Shared& sh = rh::S();
     AcquireSRWLockExclusive(&sh.lock);
     rh::save_write(sh.save);

@@ -134,6 +134,7 @@ Shared& S();
 double now_s();
 void toast(Live& l, const char* fmt, ...);
 void research_tick(const Live& l, double now);
+void research_stop();
 // Progression (progress.cpp): experience, trait points, prisms. Under S().lock.
 enum PSKind : int8_t { PS_NONE, PS_FRAGMENT, PS_FUSION, PS_LEGENDARY, PS_RAISE };
 double level_xp(int level);                 // experience needed for a Remnant level, from zero

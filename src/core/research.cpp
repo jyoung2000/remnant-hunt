@@ -22,6 +22,7 @@ namespace {
 
 bool g_on = false, g_checked = false;
 std::string g_text;
+SRWLOCK g_textLock = SRWLOCK_INIT;  // outf/flush are called from the game thread and the joint worker
 
 void outf(const char* fmt, ...) __attribute__((format(printf, 1, 2)));
 void outf(const char* fmt, ...) {
@@ -30,10 +31,13 @@ void outf(const char* fmt, ...) {
     va_start(a, fmt);
     vsnprintf(b, sizeof(b), fmt, a);
     va_end(a);
+    AcquireSRWLockExclusive(&g_textLock);
     g_text += b;
     g_text += "\n";
+    ReleaseSRWLockExclusive(&g_textLock);
 }
 void flush() {
+    AcquireSRWLockExclusive(&g_textLock);
     char path[MAX_PATH];
     snprintf(path, sizeof(path), "%s\\dev_research.txt", mod_dir());
     if (FILE* f = fopen(path, "ab")) {
@@ -41,6 +45,7 @@ void flush() {
         fclose(f);
     }
     g_text.clear();
+    ReleaseSRWLockExclusive(&g_textLock);
 }
 
 // ---------------------------------------------------------------- the hunter's joints
@@ -51,11 +56,11 @@ void flush() {
 enum Layout { kRowVec = 0, kColVec = 1, k34 = 2 };
 const char* const kLayoutName[3] = {"rv", "cv", "34"};
 constexpr int kMaxBlocks = 4000, kMaxTrackers = 8000, kMaxEntries = 400;
-constexpr int kL1Bytes = 0x2000, kL2Bytes = 0x800, kBlocksPerTick = 250;
+constexpr int kL1Bytes = 0x2000, kL2Bytes = 0x800, kScanBudgetUs = 5000;
 constexpr double kJointSecs = 600, kJointStep = 0.25, kReportEvery = 30, kRescanEvery = 60;
 constexpr int kJointLineCap = 200;
 
-struct Block { uintptr_t p; int l1, l2; };  // l1/l2: offsets in the player / in the level-1 object (-1 = none)
+struct Block { uintptr_t p; int l1, l2; size_t readable; };  // readable: bytes readable from p (checked once, at build)  // l1/l2: offsets in the player / in the level-1 object (-1 = none)
 struct Tracker {
     uintptr_t addr = 0;
     int blk = 0, layout = 0, stride = 0, entry = 0;
@@ -78,7 +83,6 @@ std::vector<Block> g_blocks;
 std::vector<Tracker> g_trackers;
 std::vector<uint64_t> g_seenPtr, g_seenKey;
 std::vector<int> g_rank;
-bool g_jointInit = false;
 
 // Capped, per-zone log line.
 void jout(const char* fmt, ...) __attribute__((format(printf, 1, 2)));
@@ -120,11 +124,10 @@ bool rot_ok(const float* m, int rs) {
     return true;
 }
 
-// Reads a matrix of the given layout at addr; true with its translation when it is a clean transform.
+// Reads a matrix of the given layout at addr (the caller has established that the memory is readable); true with its translation when it is a clean transform.
 bool read_matrix(uintptr_t addr, int layout, float* t) {
     float m[16];
     size_t n = layout == k34 ? 12 : 16;
-    if (!mem_readable((void*)addr, n * 4)) return false;
     memcpy(m, (void*)addr, n * 4);
     for (size_t i = 0; i < n; i++)
         if (!std::isfinite(m[i])) return false;
@@ -147,13 +150,13 @@ bool read_matrix(uintptr_t addr, int layout, float* t) {
 void build_blocks(uint8_t* pl) {
     g_blocks.clear();
     g_seenPtr.clear();
-    g_blocks.push_back({(uintptr_t)pl, -1, -1});
+    g_blocks.push_back({(uintptr_t)pl, -1, -1, 0});
     seen_before(g_seenPtr, (uintptr_t)pl);
     for (int a = 0; a < kL1Bytes && (int)g_blocks.size() < kMaxBlocks; a += 8) {
         uintptr_t p;
         if (!rd((uintptr_t)pl + a, &p)) { a |= 0xFFF; continue; }
         if (p < 0x10000 || (p & 7) || !mem_readable((void*)p, 64) || seen_before(g_seenPtr, p)) continue;
-        g_blocks.push_back({p, a, -1});
+        g_blocks.push_back({p, a, -1, 0});
     }
     size_t l1End = g_blocks.size();
     for (size_t i = 1; i < l1End; i++) {
@@ -161,8 +164,15 @@ void build_blocks(uint8_t* pl) {
             uintptr_t p;
             if (!rd(g_blocks[i].p + b, &p)) break;
             if (p < 0x10000 || (p & 7) || !mem_readable((void*)p, 64) || seen_before(g_seenPtr, p)) continue;
-            g_blocks.push_back({p, g_blocks[i].l1, b});
+            g_blocks.push_back({p, g_blocks[i].l1, b, 0});
         }
+    }
+    // readability of each block's whole scan range, checked once here (page by page), never in the per-sample scan
+    const size_t want = (size_t)kMaxEntries * 0x40 + 0x40;
+    for (Block& bk : g_blocks) {
+        size_t readable = 0;
+        while (readable < want && mem_readable((void*)(bk.p + readable), 1)) readable += 0x1000 - ((bk.p + readable) & 0xFFF);
+        bk.readable = readable;
     }
     g_run.cursor = 0;
     g_run.built = true;
@@ -173,9 +183,7 @@ void build_blocks(uint8_t* pl) {
 // Adds a tracker for every clean matrix in the block that sits 50-250 cm from the hunter right now.
 void scan_block(int bi, const Vec3& root) {
     const Block& bk = g_blocks[bi];
-    // bytes readable from the block start, page by page, up to the largest scan
-    size_t readable = 0, want = (size_t)kMaxEntries * 0x40 + 0x40;
-    while (readable < want && mem_readable((void*)(bk.p + readable), 1)) readable += 0x1000 - ((bk.p + readable) & 0xFFF);
+    const size_t readable = bk.readable;
     for (int layout = 0; layout < 3; layout++) {
         for (int stride = 0x30; stride <= 0x40; stride += 0x10) {
             for (int e = 0; e < kMaxEntries; e++) {
@@ -233,16 +241,31 @@ void report_top() {
     }
 }
 
-// Game thread, every research tick; does its own 0.25 s pacing.
-void joint_tick(uint8_t* pl, const GameSnapshot& g, double now) {
-    if (!g_jointInit) {
-        g_jointInit = true;
-        g_blocks.reserve(kMaxBlocks);
-        g_trackers.reserve(kMaxTrackers);
-        g_seenPtr.reserve(kMaxBlocks);
-        g_seenKey.reserve(kMaxTrackers);
-        g_rank.reserve(kMaxTrackers);
-    }
+// Inputs copied from the game thread each research tick; the worker reads the copy.
+struct JointIn {
+    bool inGame = false;
+    uint8_t* pl = nullptr;
+    Vec3 pos{};
+    GameView view{};
+    int zone = -1;
+};
+SRWLOCK g_inLock = SRWLOCK_INIT;
+JointIn g_in;
+HANDLE g_jthread = nullptr, g_jevent = nullptr;
+volatile LONG g_jstop = 0;
+bool g_jstarted = false;
+
+double wall_secs() { return (double)GetTickCount64() / 1000.0; }
+long long qpc_us() {
+    LARGE_INTEGER f, c;
+    QueryPerformanceFrequency(&f);
+    QueryPerformanceCounter(&c);
+    return c.QuadPart * 1000000LL / f.QuadPart;
+}
+
+// Worker thread, one call per 0.25 s sample.
+void joint_step(uint8_t* pl, const JointIn& g, double now) {
+    if (pl && !mem_readable(pl, 0x2000)) return;  // the player object went away between samples: skip
     bool hunting = g.inGame && pl && g.view.valid && g.zone >= 0;  // any zone: the arms swing in town too, and the hub is where the search can run unattended
     if (!hunting) { g_run.zone = -2; return; }
     JointRun& r = g_run;
@@ -287,9 +310,16 @@ void joint_tick(uint8_t* pl, const GameSnapshot& g, double now) {
         if (r.built) r.nextRescan = now + kRescanEvery;
         build_blocks(pl);
     }
-    for (int k = 0; k < kBlocksPerTick && r.cursor < (int)g_blocks.size(); k++, r.cursor++) scan_block(r.cursor, g.pos);
+    long long t0 = qpc_us();
+    while (r.cursor < (int)g_blocks.size() && qpc_us() - t0 < kScanBudgetUs) scan_block(r.cursor++, g.pos);
 
+    // one readability check per block that has trackers, per sample (blocks can be freed between rebuilds)
+    static std::vector<char> blockOk;
+    blockOk.assign(g_blocks.size(), 0);
     for (Tracker& t : g_trackers) {
+        char& ok = blockOk[t.blk];
+        if (!ok) ok = mem_readable((void*)g_blocks[t.blk].p, g_blocks[t.blk].readable) ? 1 : 2;
+        if (ok != 1) { t.hasLast = false; continue; }
         float tr[3];
         if (!read_matrix(t.addr, t.layout, tr)) { t.hasLast = false; continue; }
         float d[3] = {tr[0] - g.pos.x, tr[1] - g.pos.y, tr[2] - g.pos.z};
@@ -395,7 +425,30 @@ void flinch_sample(const Monster& m, double dt) {
     }
 }
 
+DWORD WINAPI joint_worker(LPVOID) {
+    while (!g_jstop) {
+        JointIn in;
+        AcquireSRWLockShared(&g_inLock);
+        in = g_in;
+        ReleaseSRWLockShared(&g_inLock);
+        joint_step(in.pl, in, wall_secs());
+        WaitForSingleObject(g_jevent, 250);  // Sleep(250) that stop wakes at once
+    }
+    return 0;
+}
+
 }  // namespace
+
+// Called from main.cpp shutdown, before the DLL unloads.
+void research_stop() {
+    if (!g_jthread) return;
+    InterlockedExchange(&g_jstop, 1);
+    SetEvent(g_jevent);
+    WaitForSingleObject(g_jthread, 5000);
+    CloseHandle(g_jthread);
+    CloseHandle(g_jevent);
+    g_jthread = g_jevent = nullptr;
+}
 
 // Game thread, after the snapshot.
 void research_tick(const Live& l, double now) {
@@ -425,7 +478,21 @@ void research_tick(const Live& l, double now) {
         }
     }
     uint8_t* pl = player_ptr();
-    joint_tick(pl, g, now);
+    {
+        AcquireSRWLockExclusive(&g_inLock);
+        g_in.inGame = g.inGame; g_in.pl = pl; g_in.pos = g.pos; g_in.view = g.view; g_in.zone = g.zone;
+        ReleaseSRWLockExclusive(&g_inLock);
+        if (!g_jstarted) {
+            g_jstarted = true;
+            g_blocks.reserve(kMaxBlocks);
+            g_trackers.reserve(kMaxTrackers);
+            g_seenPtr.reserve(kMaxBlocks);
+            g_seenKey.reserve(kMaxTrackers);
+            g_rank.reserve(kMaxTrackers);
+            g_jevent = CreateEventA(nullptr, FALSE, FALSE, nullptr);
+            g_jthread = CreateThread(nullptr, 0, joint_worker, nullptr, 0, nullptr);
+        }
+    }
     // Flinch counters: the large MHW monster being fought, in hunting zones, up to three reports.
     if (g_flinchReports >= 3) return;
     const Monster* target = nullptr;
