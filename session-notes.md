@@ -358,3 +358,8 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   GitHub v0.4.2 is published from 05bee77 (has the crash); Melty 0.4.2 is a DRAFT (test failed): rebuild 0.4.2 from
   85ff903 or later, replace the GitHub assets, re-test on Melty, then publish. Installed in MHW: 85ff903 (verified).
 - Loader note: Melty test runs delete dinput8.dll when they finish; install_dev.sh now verifies both halves.
+- Boss assets (2026-10-14 ~12:30): every asset the sheets name loads from the install (3790/3790: all meshes,
+  skeletons, textures, 317 attack anims + sounds). tools/author_boss_gaps.py filled 8 missing run/turn clips; 60
+  optional fields stay empty because the install has no such clip or event (most bosses have no stun clip; shahala,
+  alepsis_taura, one_true_king, hatchery, shrewd have no run/turn; a few lack roar/death/step events). The code falls
+  back (run -> walk, stun -> flinch, missing sound -> silence). Amalgam's Voc_Enrage could stand in for its roar.
