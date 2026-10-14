@@ -275,3 +275,13 @@ What each needs, from the diagnostics so far:
   use a few items in a session so the diagnostic action log records them (dev_diag.txt "action" lines).
 - OPEN: in-game texture fate of virtual textures (gun body, bosses) is logged now ("overlay: texture ... -> ok|FAILED");
   read the next session's log.
+- Item bar (Jalon: the same bar as the potions): PROXY ITEMS. bar_items.json maps each Remnant bar item to a harmless
+  real MHW item kept in the pouch at the Remnant count (Dragon Heart = Antidote 5, skill = Energy Drink 8, long gun =
+  Hot Drink 1000, hand gun = Cool Drink 13, weapon mod = Dash Juice 18, carried consumables 1-4 = Nulberry 7 /
+  Herbal Medicine 6 / Immunizer 16 / Astera Jerky 17). remnant.cpp bar_tick: a pouch count one below the expected
+  count (box + pouch total also down by one, no Remnant screen open) = MHW consumed the proxy -> the Remnant action
+  runs and the count is put back (inventory.cpp mhw_pouch_count / mhw_pouch_set, approved inventory writes). The
+  HUD draws a legend by the bar ("Antidote = Dragon Heart x3"). The bar's own current-slot field is no longer needed.
+- Death: hurt_hunter logs "hunter hit: ... hp A -> B of M"; a lethal hit forces HP to 0 (approved write) and plays
+  [bosses] faint_action=S:I through DoAction when set; remnant.cpp regen/refund/heal skip while HP is 0. To find the
+  faint action id: faint once normally (any MHW monster) and read the "action S:I" lines around it in dev_diag.txt.
