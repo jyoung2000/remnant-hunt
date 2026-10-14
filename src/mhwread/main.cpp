@@ -104,11 +104,11 @@ struct Pkg {
         uint32_t np = rd<uint32_t>(&h[0x0C]), nc = rd<uint32_t>(&h[0x10]);
         if (np > 100000 || nc > 5000000) { fprintf(stderr, "%s: bad table counts (%u,%u): key/layout mismatch?\n", name.c_str(), np, nc); return false; }
         std::vector<byte> t; if (!read(0x100, (uint64_t)np * 0x54 + (uint64_t)nc * 0xB8, t)) return false;
-        fprintf(stderr,"np %u nc %u
-",np,nc); size_t p = 0;
+        size_t p = 0;
         for (uint32_t i = 0; i < np; i++) {
-            uint32_t cc = rd<uint32_t>(&t[p + 0x4C]); p += 0x54;
+            uint32_t cc = rd<uint32_t>(&t[p + 0x50]); p += 0x54;
             for (uint32_t j = 0; j < cc; j++) {
+                if (p + 0xB8 > t.size()) return false;
                 const byte* e = &t[p];
                 Ent en; en.size = rd<uint64_t>(e + 0xA0); en.off = rd<uint64_t>(e + 0xA8); en.type = rd<int32_t>(e + 0xB0);
                 size_t nl = en.type == 2 ? 0x50 : 0xA0;
@@ -138,8 +138,7 @@ static void scanDir(const std::string& dir, int group, std::vector<Pkg*>& out) {
     std::sort(fl.begin(), fl.end());
     for (size_t k = 0; k < fl.size(); k++) {
         Pkg* p = new Pkg; p->name = (group == 2 ? "chunkHiPC/" : "chunk/") + fl[k].second; p->prio = group * 1000 + fl[k].first;
-        fprintf(stderr,"open %s
-",p->name.c_str()); if (!p->open(dir + "/" + fl[k].second) || !p->parse()) { fprintf(stderr, "skip %s\n", p->name.c_str()); delete p; continue; }
+        if (!p->open(dir + "/" + fl[k].second) || !p->parse()) { fprintf(stderr, "skip %s\n", p->name.c_str()); delete p; continue; }
         out.push_back(p);
     }
 }
@@ -151,8 +150,7 @@ int main(int argc, char** argv) {
     { std::ifstream k(ks ? ks : "build/mhw/keyseq.key", std::ios::binary);
       gKeySeq.assign(std::istreambuf_iterator<char>(k), std::istreambuf_iterator<char>());
       if (gKeySeq.size() < 1000) { fprintf(stderr, "keyseq.key not found (set MHW_KEYSEQ)\n"); return 1; } }
-    fprintf(stderr,"keyseq %zu
-",gKeySeq.size()); std::vector<Pkg*> pk;
+    std::vector<Pkg*> pk;
     scanDir(game + "/chunk", 1, pk);
     scanDir(game + "/chunkHiPC", 2, pk);
     std::stable_sort(pk.begin(), pk.end(), [](Pkg* a, Pkg* b) { return a->prio < b->prio; });
@@ -162,6 +160,7 @@ int main(int argc, char** argv) {
             if (flt.empty() || lower(e.path).find(flt) != std::string::npos) printf("%10llu  %-18s  %s\n", (unsigned long long)e.size, p->name.c_str(), e.path.c_str());
     } else if (cmd == "GET" && argc >= 5) {
         std::string want = lower(argv[3]); std::replace(want.begin(), want.end(), '\\', '/');
+        if (want.empty() || want[0] != '/') want = "/" + want;
         for (size_t i = pk.size(); i-- > 0;) for (auto& e : pk[i]->ents) if (lower(e.path) == want) {
             std::vector<byte> d; if (!pk[i]->read(e.off, e.size, d)) { fprintf(stderr, "read failed\n"); return 1; }
             FILE* o = fopen(argv[4], "wb"); fwrite(d.data(), 1, d.size(), o); fclose(o);

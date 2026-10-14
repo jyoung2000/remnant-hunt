@@ -293,3 +293,18 @@ What each needs, from the diagnostics so far:
   drinking animation and no built-in effect. Spike started: src/mhwread (chunk reader: Blowfish + Oodle) to extract
   the three files; then an "nativePC writer" at install/first start. The proxy system stays as the fallback until the
   new items work (bar_items.json decides).
+- New items spike (src/mhwread, tools/mhwchunk_notes.md): the chunk format is public (8-byte header, Oodle Kraken
+  blocks of 0x40000 XORed with 16 fixed keys picked by WorldChunkTool's keyseq.key, PKG file table at 0x100; later
+  chunks override earlier). mhwread LIST/GET extracted itemData.itm (10-byte header, u16 count 2775, 32-byte records
+  whose first u16 is the id), item_eng.gmd (515 KB, chunkG8) and the icon atlas ui/common/tex/cmn_item00_ID.tex
+  (1024x1024, 192-byte header). Blocker: keyseq.key (1 MB, no licence) cannot ship. PLAN WITHOUT IT: the mod reads the
+  loaded rItemData and the item GMD from game memory (read-only, both already located) and writes
+  nativePC/common/item/itemData.itm + nativePC/common/text/steam/item_eng.gmd with appended rows (clones of a
+  cure-type item: drinking animation, no built-in effect) and names for the Remnant bar items; MHW loads them at the
+  next start; bar_items.json takes the generated ids. Icons: the appended rows point at existing icon ids first;
+  custom icons need an atlas .tex override (format known: 192-byte header) and a BC7 or uncompressed encoder.
+  Needs Jalon's go: it is a new kind of output (files in nativePC, generated on the player's PC from memory).
+- Session 09:14 evidence: suffixed texture paths FAILED in game (the strip was missing: restored, ca8a614), the gun
+  map loaded (BC7 1024), hitbox 191 bones, hand joint via the fallback chain player+0xA8 -> +0x310, depth candidate
+  flaps (matched then "no candidate"), the hunter sat at HP 0 alive (MHW does not faint from HP alone), boss HP
+  9000 LR too high for MHW hits (now 2500/6000/11000).
