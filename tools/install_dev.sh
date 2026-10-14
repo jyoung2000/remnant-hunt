@@ -18,4 +18,5 @@ cp third_party/ww2ogg/COPYING "$M/licenses/ww2ogg-BSD-3-Clause.txt"
 cp third_party/acl/LICENSE "$M/licenses/acl-MIT.txt"
 cp third_party/rtm/LICENSE "$M/licenses/rtm-MIT.txt"
 [ -e "$M/dev_reload" ] && mv -f "$M/dev_reload" "$M/dev_reload.off" || true  # no hot reload by default
-echo "installed into $G"
+# Melty's test runs install the release and remove it afterwards, taking dinput8.dll with them: verify both halves.
+cmp -s build/win/dinput8.dll "$G/dinput8.dll" && cmp -s build/win/remnant_hunt.dll "$M/remnant_hunt.dll"   && echo "installed into $G (loader + core verified)" || { echo "INSTALL INCOMPLETE: check $G/dinput8.dll and $M/remnant_hunt.dll"; exit 1; }
