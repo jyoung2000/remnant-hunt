@@ -403,6 +403,8 @@ static bool g_measFlip = false, g_measProjRev = false;
 static ID3D11Resource* g_measSig[8];
 static int g_measSigN = 0;
 static bool g_measNoneLogged = false;
+static int g_measFails = 0;
+static ULONGLONG g_measFailSince = 0, g_measDiagAt = 0;
 
 static bool hunter_clip(float* ndcZ, float* nx, float* ny, bool* projRev) {
     GameView v;
@@ -481,7 +483,8 @@ static void measure_depth() {
         g_measState = 0;
         g_measRes = nullptr;
         g_measNoneLogged = false;
-    } else if (dt < (g_measState == 1 ? 10000u : 1000u)) {
+        g_measFails = 0;
+    } else if (dt < (g_measState == 1 ? 2500u : 1000u)) {
         return;
     }
     g_measAt = now;
@@ -489,11 +492,17 @@ static void measure_depth() {
     bool projRev;
     if (!hunter_clip(&ez, &nx, &ny, &projRev)) return;  // hunter off-screen or not in a hunt: try again next second
     float aspect = (float)g_bbW / (float)g_bbH;
+    const bool holding = g_measState == 1;  // a matched candidate is kept; only it is re-checked
     for (int i = 0; i < g_depthCount; i++) {
         const DepthSeen& d = g_depthSeen[i];
+        if (holding && d.res != g_measRes) continue;
         if (g_frame - d.lastFrame > 2 || !d.h || d.w * 2 < g_bbW || fabsf((float)d.w / (float)d.h - aspect) > 0.03f) continue;
         float sv = sample_depth(d, nx, ny);
         if (sv < 0) continue;
+        if (now - g_measDiagAt >= 60000) {
+            g_measDiagAt = now;
+            log("overlay: depth check candidate %d: sampled %.4f, expected %.4f (plain) or %.4f (1-z)", i, sv, ez, 1.0f - ez);
+        }
         bool asIs = fabsf(sv - ez) < 0.02f, flipped = fabsf(sv - (1.0f - ez)) < 0.02f;
         if (!asIs && !flipped) continue;
         bool same = g_measState == 1 && g_measRes == d.res && g_measFlip == !asIs;
@@ -501,9 +510,21 @@ static void measure_depth() {
         g_measRes = d.res;
         g_measFlip = !asIs;  // when both agree (depth near 0.5) the plain reading wins
         g_measProjRev = projRev;
+        g_measFails = 0;
         if (!same)
             log("overlay: scene depth candidate %d matches the hunter (sampled %.4f, expected %.4f%s)", i, sv,
                 asIs ? ez : 1.0f - ez, asIs ? "" : ", reversed Z");
+        return;
+    }
+    if (holding) {
+        // a miss does not drop the matched candidate: 5 misses in a row spanning 10 s do
+        if (g_measFails++ == 0) g_measFailSince = now;
+        if (g_measFails >= 5 && now - g_measFailSince >= 10000) {
+            log("overlay: scene depth candidate stopped matching the hunter (%d checks); measuring again", g_measFails);
+            g_measState = 0;
+            g_measRes = nullptr;
+            g_measFails = 0;
+        }
         return;
     }
     if (g_depthCount && g_measState != 1) {
@@ -531,7 +552,7 @@ static void pick_depth() {
     bool measured = false;
     if (g_measState == 1 && g_measRes) {
         for (int i = 0; i < g_depthCount; i++)
-            if (g_depthSeen[i].res == g_measRes && g_frame - g_depthSeen[i].lastFrame <= 2) { best = i; measured = true; }
+            if (g_depthSeen[i].res == g_measRes && g_frame - g_depthSeen[i].lastFrame <= 60) { best = i; measured = true; }
     }
     ID3D11Resource* res = best >= 0 ? g_depthSeen[best].res : nullptr;
     if (res != g_depthRes) {

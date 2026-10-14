@@ -76,6 +76,7 @@ void remove_game_tick();
 void snapshot(GameSnapshot* out);                 // fills from live memory
 bool add_hp(uint8_t* health, float delta);
 bool reactions_play(int set, int id);               // game thread: DoAction on the hunter (faint sequence)
+bool reactions_faint(int* set, int* id);            // the faint action learned from MHW (false = none yet)
 void show_damage(uint8_t* em, int amount, const Vec3& pos, bool crit);
 bool fire_slinger(const Vec3& origin, const Vec3& target);
 bool world_ray(const Vec3& from, const Vec3& to, Vec3* hit);  // true = blocked by level geometry
@@ -151,6 +152,10 @@ const Keys& keys();
 // [gun] in the ini: where the hunter's hand joint is read from, and how the gun sits in it.
 struct GunCfg { int handL1 = 0x90, handL2 = 0x2B0, handEntry = 396, handStride = 0x40; float off[3] = {0, 0, 0}; int axis = 2; bool axisNeg = false; };
 const GunCfg& gun_cfg();
+// [actions] in the ini: an MHW action (set:id) played through DoAction when a Remnant item is used. set < 0 = none.
+struct ActionCfg { int set[3] = {-1, -1, -1}, id[3] = {0, 0, 0}; };  // 0 relic, 1 skill, 2 consumable
+const ActionCfg& action_cfg();
+bool bar_proxies();  // [bar] proxies=1: Remnant stand-ins in MHW's item bar (default off)
 bool test_mode();  // MELTY_TEST=1 or test=1 in the ini
 
 }  // namespace rh

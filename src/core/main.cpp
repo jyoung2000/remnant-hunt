@@ -9,12 +9,16 @@ namespace rh {
 
 static Keys g_keys;
 static GunCfg g_gun;
+static ActionCfg g_actions;
+static bool g_proxies = false;
 static bool g_test = false;
 static volatile bool g_stop = false;
 static HANDLE g_thread = nullptr;
 
 const Keys& keys() { return g_keys; }
 const GunCfg& gun_cfg() { return g_gun; }
+const ActionCfg& action_cfg() { return g_actions; }
+bool bar_proxies() { return g_proxies; }
 bool test_mode() { return g_test; }
 
 static int read_key(const char* ini, const char* name, int def) {
@@ -60,6 +64,8 @@ static void load_settings() {
                   "; let you align the gun in game\r\n"
                   "hand_l1=0x90\r\nhand_l2=0x2B0\r\nhand_entry=396\r\nhand_stride=0x40\r\n"
                   "hand_offset_x=0\r\nhand_offset_y=0\r\nhand_offset_z=0\r\nhand_axis=z\r\n"
+                  "[bar]\r\n; 1 puts Remnant stand-in items (Antidote etc.) in MHW's item bar\r\nproxies=0\r\n"
+                  "[actions]\r\n; MHW action (set:id) played when a Remnant item is used; empty = none\r\nrelic=\r\nskill=\r\nconsumable=\r\n"
                   "[visuals]\r\n; UI scale: 0 = automatic (screen height / 1080, at least 1), or e.g. 1.5\r\nui_scale=0\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
@@ -87,6 +93,15 @@ static void load_settings() {
     const char* a = ax;
     if (*a == '-') { g_gun.axisNeg = true; a++; }
     g_gun.axis = (*a == 'x' || *a == 'X') ? 0 : (*a == 'y' || *a == 'Y') ? 1 : 2;
+    g_proxies = GetPrivateProfileIntA("bar", "proxies", 0, ini) == 1;
+    static const char* const kActKeys[3] = {"relic", "skill", "consumable"};
+    for (int i = 0; i < 3; i++) {
+        char v[32] = {0};
+        GetPrivateProfileStringA("actions", kActKeys[i], "", v, sizeof(v), ini);
+        int s, d;
+        if (sscanf(v, "%d:%d", &s, &d) == 2 && s >= 0) { g_actions.set[i] = s; g_actions.id[i] = d; }
+        else log("actions: no [actions] %s action set; drink a potion with the diagnostic running to find the drinking action id", kActKeys[i]);
+    }
     char env[8];
     g_test = (GetEnvironmentVariableA("MELTY_TEST", env, sizeof(env)) && env[0] == '1') ||
              GetPrivateProfileIntA("test", "enabled", 0, ini) == 1;

@@ -621,17 +621,19 @@ int hurt_hunter(Live& l, float dmg, int status, float statusTotal, double t) {
             static int s_set = -2, s_id = 0;
             if (s_set == -2) {
                 char ini[MAX_PATH], v[64] = {0};
-                snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+                snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
                 GetPrivateProfileStringA("bosses", "faint_action", "", v, sizeof(v), ini);
                 if (sscanf(v, "%d:%d", &s_set, &s_id) != 2) s_set = -1;
             }
-            if (s_set >= 0) {
-                if (reactions_play(s_set, s_id)) log("hunter: faint action %d:%d played", s_set, s_id);
+            int f_set = s_set, f_id = s_id;
+            if (f_set < 0) reactions_faint(&f_set, &f_id);  // learned from MHW's own faint
+            if (f_set >= 0) {
+                if (reactions_play(f_set, f_id)) log("hunter: faint action %d:%d played", f_set, f_id);
             } else {
                 static bool warned = false;
                 if (!warned) {
                     warned = true;
-                    log("hunter: no faint_action set in the ini; HP is 0 but MHW only faints through its own hit path (record one normal faint in the diagnostic action log and set [bosses] faint_action=set:id)");
+                    log("hunter: no faint_action set in the ini and none learned yet; HP is 0 but MHW only faints through its own hit path (record one normal faint in the diagnostic action log and set [bosses] faint_action=set:id)");
                 }
             }
         }

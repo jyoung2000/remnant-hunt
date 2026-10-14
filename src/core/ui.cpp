@@ -1676,7 +1676,7 @@ static void hud(const SaveData& s, const Live& l) {
         fg->AddText(g_bold, 18 * sc, p, col::text, b);
     }
     // Legend of the proxy items in MHW's item bar: which MHW item stands for which Remnant item.
-    if (g_screen == SCR_NONE && s.archetype >= 0) {
+    if (g_screen == SCR_NONE && s.archetype >= 0 && bar_proxies()) {
         struct Line { std::string text; const char* icon; };
         std::vector<Line> lines;
         std::vector<int> carried;

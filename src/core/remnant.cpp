@@ -693,6 +693,11 @@ static void handle(SaveData& s, Live& l, const Request& r, double t) {
     log("craft: %s %s row %d (%d zenny)", r.kind == Request::UPGRADE ? "upgrade" : "made", cat_label(r.cat), r.row, zen);
 }
 
+static void play_use_action(int which) {
+    const ActionCfg& a = action_cfg();
+    if (a.set[which] >= 0) reactions_play(a.set[which], a.id[which]);
+}
+
 void use_consumable(int row) {
     Shared& sh = S();
     AcquireSRWLockExclusive(&sh.lock);
@@ -703,6 +708,7 @@ void use_consumable(int row) {
         s.stock[row]--;
         apply_use(l, kConsumables[row].effects, t, 1.0f, 0.0f, 10.0f, 1.0f);
         audio_play(kConsumables[row].snd_use);
+        play_use_action(2);
         bool concoction = false;
         for (const Effect& e : effects_of(kConsumables[row].effects))
             concoction |= e.act == ACT_BUFF;
@@ -731,6 +737,21 @@ static void bar_tick(SaveData& s, Live& l, double t, LONG* cmds) {
     struct Item { int expected = -1, row = -1, total = 0; bool confirmed = false; double nextWrite = 0; };
     static Item items[kBar_itemsCount];
     const GameSnapshot& g = l.snap;
+    if (!bar_proxies()) {
+        static bool logged = false, cleared = false;
+        if (!logged) {
+            logged = true;
+            log("bar: proxies off ([bar] proxies=1 to put Remnant stand-ins in the item bar)");
+        }
+        if (!cleared && g.inGame && mhw_inventory_ready()) {
+            cleared = true;  // take out stand-ins an earlier session put in the pouch
+            for (int b = 0; b < kBar_itemsCount; b++) {
+                int id = (int)kBar_items[b].mhw_item_id;
+                if (id > 0 && mhw_pouch_count(id) > 0 && mhw_pouch_set(id, 0)) log("bar: removed stand-in item %d from the pouch", id);
+            }
+        }
+        return;
+    }
     if (!g.inGame || s.archetype < 0 || !mhw_inventory_ready()) return;
     // the carried consumables, in row order, for consumable_1..4
     std::vector<int> carried;
@@ -935,6 +956,7 @@ void mod_game_tick() {
                           1.0f + stat(l, ST_RELIC_HEAL, t));
                 l.relicBusyUntil = t + 0.8 / speed;
                 audio_play(kRelics[s.relic].snd_use);
+                play_use_action(0);
                 trigger(l, TR_ON_RELIC, t);
                 l.dirty = true;
             } else if (s.relicCharges <= 0) {
@@ -956,6 +978,7 @@ void mod_game_tick() {
             l.skillReady[slot] = t + k.cooldown_s * (1.0f - cdr);
             apply_use(l, k.effects, t, durScale, stat(l, ST_DMG_SKILL, t), k.duration_s, 1.0f);
             audio_play(k.snd_use);
+            play_use_action(1);
             trigger(l, TR_ON_SKILL, t);
             log("skill %s", k.id);
         }

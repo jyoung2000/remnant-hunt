@@ -38,6 +38,10 @@ double g_watchUntil = 0;
 int g_watchSet = -1, g_watchId = -1, g_watchHeavy = 0, g_watchWeapon = -1;
 double g_lastPlayed = 0;
 int g_prevSet = -1, g_prevId = -1;
+// the faint action: learned from an HP drop to 0 that the mod did not cause
+int g_faintSet = -1, g_faintId = 0;
+double g_faintArmAt = -1, g_faintCandAt = -1;
+int g_faintCandSet = -1, g_faintCandId = -1;
 
 // The same range check as turf.cpp: item-use or status animations and corrupt files are not hit reactions.
 bool plausible_action(int set, int id) { return set >= 0 && set <= 15 && id >= 0 && id < 4096; }
@@ -52,11 +56,17 @@ void load() {
     g_loaded = true;
     FILE* f = fopen(path().c_str(), "rb");
     if (!f) return;
-    int w, h, s, i, c;
-    while (fscanf(f, "%d %d %d %d %d", &w, &h, &s, &i, &c) == 5)
-        if (w >= 0 && plausible_action(s, i)) g_learned[{w, h}].push_back({s, i, c});
+    char line[128];
+    while (fgets(line, sizeof(line), f)) {
+        int w, h, s, i, c;
+        if (strncmp(line, "faint ", 6) == 0) {
+            if (sscanf(line + 6, "%d %d", &s, &i) == 2 && plausible_action(s, i)) { g_faintSet = s; g_faintId = i; }
+        } else if (sscanf(line, "%d %d %d %d %d", &w, &h, &s, &i, &c) == 5 && w >= 0 && plausible_action(s, i)) {
+            g_learned[{w, h}].push_back({s, i, c});
+        }
+    }
     fclose(f);
-    log("reactions: %zu learned hit reactions loaded", g_learned.size());
+    log("reactions: %zu learned hit reactions loaded%s", g_learned.size(), g_faintSet >= 0 ? ", faint action known" : "");
 }
 
 void save() {
@@ -64,6 +74,7 @@ void save() {
     if (!f) return;
     for (auto& kv : g_learned)
         for (const Seen& s : kv.second) fprintf(f, "%d %d %d %d %d\n", kv.first.weapon, kv.first.heavy, s.set, s.id, s.count);
+    if (g_faintSet >= 0) fprintf(f, "faint %d %d\n", g_faintSet, g_faintId);
     fclose(f);
 }
 
@@ -101,6 +112,13 @@ const Seen* best(int weapon, int heavy) {
 }  // namespace
 
 void reactions_note_own_damage(double t) { g_ownHurtAt = t; }
+bool reactions_faint(int* set, int* id) {
+    if (!g_loaded) load();
+    if (g_faintSet < 0) return false;
+    *set = g_faintSet;
+    *id = g_faintId;
+    return true;
+}
 double reactions_own_damage_at() { return g_ownHurtAt; }
 
 // Plays an action through the unit's own ActionController (the hunter's, or a monster's: the turf wars).
@@ -151,6 +169,33 @@ void reactions_tick(const Live& l, double t) {
             g_watchId = id;
             g_watchHeavy = heavy;
             g_watchWeapon = weapon;
+        }
+    }
+    // Faint: HP went from > 0 to <= 0 without a hit of the mod's; the action that begins within 1.5 s and lasts 2 s is it.
+    if (g_lastHp > 0 && hp <= 0 && t - g_ownHurtAt > 0.3) {
+        g_faintArmAt = t;
+        g_faintCandAt = -1;
+    }
+    if (g_faintCandAt >= 0) {
+        if (set != g_faintCandSet || id != g_faintCandId) {
+            g_faintCandAt = -1;  // it ended too soon: a flinch, not the faint
+        } else if (t - g_faintCandAt >= 2.0) {
+            g_faintCandAt = -1;
+            if (g_faintSet != set || g_faintId != id) {
+                g_faintSet = set;
+                g_faintId = id;
+                save();
+                log("reactions: learned faint action %d:%d", set, id);
+            }
+        }
+    } else if (g_faintArmAt >= 0) {
+        if (t - g_faintArmAt > 1.5) {
+            g_faintArmAt = -1;
+        } else if (set != g_prevSet || id != g_prevId) {
+            g_faintArmAt = -1;
+            g_faintCandAt = t;
+            g_faintCandSet = set;
+            g_faintCandId = id;
         }
     }
     g_lastHp = hp;
