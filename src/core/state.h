@@ -204,6 +204,7 @@ int mhw_zenny();
 bool mhw_spend_zenny(int amount);
 int mhw_item_count(int itemId);
 bool mhw_take_items(int itemId, int count);
+bool reactions_drink(int* set, int* id);  // the item-drinking action learned from MHW (false = none yet)
 int mhw_pouch_count(int itemId);        // the item pouch only (MHW's item bar)
 bool mhw_pouch_set(int itemId, int count);  // game thread: the pouch's entry for the item (a free slot if none); 0 clears
 extern volatile long g_remnantScreenOpen;  // a Remnant screen is open (set by the HUD, read by the game thread)

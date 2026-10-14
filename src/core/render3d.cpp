@@ -7,6 +7,7 @@
 // what MHW's world puts in front.
 #include "render3d.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <map>
@@ -26,6 +27,9 @@ cbuffer Frame : register(b0) {
     float4 lightDir;   // world space, towards the light
     float4 tint;       // rgb multiply, a = emissive boost
     float4 depthInfo;  // x = 1 when MHW's depth is bound (2: and it runs opposite to this pass), y = this pass is reversed z, z/w = depth size / viewport size
+    float4 camPos;     // world space
+    float4 scene;      // x = sun strength, y = ambient, z = exposure (brightness matched to MHW's frame)
+    float4 ambTint;    // rgb = colour of MHW's frame under the boss, normalised
 };
 cbuffer Bones : register(b1) { float4 bones[3 * 1024]; };
 Texture2D diffuseTex : register(t0);
@@ -35,7 +39,7 @@ struct VSIn {
     float3 pos : POSITION; float4 nrm : NORMAL; float2 uv : TEXCOORD0;
     uint4 bi0 : BLENDINDICES0; uint4 bi1 : BLENDINDICES1; float4 bw0 : BLENDWEIGHT0; float4 bw1 : BLENDWEIGHT1;
 };
-struct PSIn { float4 pos : SV_Position; float3 nrm : NORMAL; float2 uv : TEXCOORD0; };
+struct PSIn { float4 pos : SV_Position; float3 nrm : NORMAL; float2 uv : TEXCOORD0; float3 wpos : TEXCOORD1; };
 void add(uint i, float w, float3 p, float3 n, inout float3 op, inout float3 on) {
     if (w <= 0) return;
     float3x4 B = float3x4(bones[i * 3], bones[i * 3 + 1], bones[i * 3 + 2]);
@@ -53,8 +57,9 @@ PSIn vs_main(VSIn v) {
     PSIn o;
     float4 wp = mul(float4(p, 1), world);
     o.pos = mul(wp, viewProj);
-    o.nrm = normalize(mul(n, (float3x3)world));
+    o.nrm = mul(n, (float3x3)world);  // normalised per pixel (zero = no normal in the mesh)
     o.uv = v.uv;
+    o.wpos = wp.xyz;
     return o;
 }
 float4 ps_main(PSIn i) : SV_Target {
@@ -65,9 +70,24 @@ float4 ps_main(PSIn i) : SV_Target {
         if (hidden) discard;
     }
     float4 c = diffuseTex.Sample(samp, i.uv);
-    float ndl = dot(normalize(i.nrm), lightDir.xyz);
-    float light = 0.38 + 0.62 * saturate(ndl * 0.5 + 0.5);
-    return float4(c.rgb * tint.rgb * light, 1);
+    // normal: the mesh's, or a flat one from the screen-space derivatives of the position
+    float3 n = i.nrm;
+    float3 fn = cross(ddx(i.wpos), ddy(i.wpos));  // outside the branch: derivatives need uniform flow
+    if (dot(n, n) < 1e-6) n = fn;
+    n = normalize(n);
+    float3 V = normalize(camPos.xyz - i.wpos);
+    if (dot(n, V) < 0) n = -n;  // two-sided: back faces are lit from their visible side
+    float3 L = normalize(lightDir.xyz);
+    float ndl = saturate(dot(n, L));
+    // sun: Lambert diffuse + a small Blinn-Phong highlight
+    float3 sunCol = float3(1.0, 0.95, 0.85) * scene.x;
+    float3 H = normalize(L + V);
+    float spec = pow(saturate(dot(n, H)), 48.0) * 0.22 * ndl;
+    // hemisphere ambient: sky from above, ground bounce from below, tinted by MHW's frame
+    float3 hemi = lerp(float3(0.42, 0.38, 0.34), float3(0.70, 0.80, 1.0), n.y * 0.5 + 0.5) * scene.y * ambTint.rgb;
+    float3 albedo = c.rgb * tint.rgb;
+    float3 col = (albedo * (sunCol * ndl * 0.85 + hemi) + sunCol * spec) * scene.z;
+    return float4(col, 1);
 }
 )";
 
@@ -98,7 +118,112 @@ static ID3D11ShaderResourceView* g_gameDepth = nullptr;  // MHW's scene depth, w
 static bool g_gameDepthReversed = false;
 static int g_gameDepthW = 0, g_gameDepthH = 0;
 
-struct FrameCB { float world[16], viewProj[16], lightDir[4], tint[4], depthInfo[4]; };
+struct FrameCB { float world[16], viewProj[16], lightDir[4], tint[4], depthInfo[4], camPos[4], scene[4], ambTint[4]; };
+
+SceneLight g_sceneLight;
+
+// Exposure matching: once per second the 8x8 block of the game's frame under the boss is copied (before the boss is
+// drawn) into a staging texture and mapped a frame or more later, without waiting for the GPU.
+static ID3D11Texture2D* g_stage = nullptr;
+static DXGI_FORMAT g_stageFmt = DXGI_FORMAT_UNKNOWN;
+static bool g_stagePending = false;
+static double g_lastCopy = -10;
+static float g_expo = 1.0f, g_expoTint[3] = {1, 1, 1};  // smoothed
+static float g_expoTarget = 1.0f, g_expoTargetTint[3] = {1, 1, 1};
+
+static float half_to_float(uint16_t h) {
+    int e = (h >> 10) & 31, m = h & 1023;
+    float v = e == 0 ? ldexpf((float)m, -24) : e == 31 ? 65504.0f : ldexpf((float)(m + 1024), e - 25);
+    return (h & 0x8000) ? -v : v;
+}
+
+// Average colour (0..1) of an 8x8 block of a mapped texture; false for formats not understood.
+static bool average_block(const D3D11_MAPPED_SUBRESOURCE& ms, DXGI_FORMAT fmt, float out[3]) {
+    double sum[3] = {0, 0, 0};
+    for (int y = 0; y < 8; y++) {
+        const uint8_t* row = (const uint8_t*)ms.pData + (size_t)y * ms.RowPitch;
+        for (int x = 0; x < 8; x++) {
+            float c[3];
+            switch (fmt) {
+                case DXGI_FORMAT_R8G8B8A8_UNORM: case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB: case DXGI_FORMAT_R8G8B8A8_TYPELESS:
+                    for (int k = 0; k < 3; k++) c[k] = row[x * 4 + k] / 255.0f;
+                    break;
+                case DXGI_FORMAT_B8G8R8A8_UNORM: case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB: case DXGI_FORMAT_B8G8R8A8_TYPELESS:
+                case DXGI_FORMAT_B8G8R8X8_UNORM: case DXGI_FORMAT_B8G8R8X8_UNORM_SRGB:
+                    for (int k = 0; k < 3; k++) c[k] = row[x * 4 + 2 - k] / 255.0f;
+                    break;
+                case DXGI_FORMAT_R10G10B10A2_UNORM: case DXGI_FORMAT_R10G10B10A2_TYPELESS: {
+                    uint32_t v = *(const uint32_t*)(row + x * 4);
+                    c[0] = (v & 1023) / 1023.0f; c[1] = ((v >> 10) & 1023) / 1023.0f; c[2] = ((v >> 20) & 1023) / 1023.0f;
+                    break;
+                }
+                case DXGI_FORMAT_R16G16B16A16_FLOAT: case DXGI_FORMAT_R16G16B16A16_TYPELESS:
+                    for (int k = 0; k < 3; k++) c[k] = std::min(1.0f, std::max(0.0f, half_to_float(((const uint16_t*)(row + x * 8))[k])));
+                    break;
+                default: return false;
+            }
+            for (int k = 0; k < 3; k++) sum[k] += c[k];
+        }
+    }
+    for (int k = 0; k < 3; k++) out[k] = (float)(sum[k] / 64.0);
+    return true;
+}
+
+// Called at the start of the pass with the first boss's screen position; updates the exposure targets.
+static void sample_scene(ID3D11DeviceContext* ctx, ID3D11RenderTargetView* rtv, float px, float py, double t) {
+    if (g_stagePending) {
+        D3D11_MAPPED_SUBRESOURCE ms;
+        HRESULT hr = ctx->Map(g_stage, 0, D3D11_MAP_READ, D3D11_MAP_FLAG_DO_NOT_WAIT, &ms);
+        if (hr == DXGI_ERROR_WAS_STILL_DRAWING) return;
+        g_stagePending = false;
+        if (SUCCEEDED(hr)) {
+            float a[3];
+            if (average_block(ms, g_stageFmt, a)) {
+                float lum = 0.2126f * a[0] + 0.7152f * a[1] + 0.0722f * a[2];
+                g_expoTarget = std::min(1.6f, std::max(0.35f, lum / 0.5f));
+                for (int k = 0; k < 3; k++) {
+                    float chroma = a[k] / std::max(lum, 0.02f);  // 1 = grey
+                    chroma = std::min(1.4f, std::max(0.6f, chroma));
+                    g_expoTargetTint[k] = 1.0f + 0.7f * (chroma - 1.0f);  // only part of the cast
+                }
+            }
+            ctx->Unmap(g_stage, 0);
+        }
+        return;
+    }
+    if (t - g_lastCopy < 1.0 || !rtv) return;
+    ID3D11Resource* res = nullptr;
+    rtv->GetResource(&res);
+    if (!res) return;
+    ID3D11Texture2D* bb = nullptr;
+    if (SUCCEEDED(res->QueryInterface(__uuidof(ID3D11Texture2D), (void**)&bb)) && bb) {
+        D3D11_TEXTURE2D_DESC d;
+        bb->GetDesc(&d);
+        if (d.SampleDesc.Count == 1 && d.Width >= 8 && d.Height >= 8) {
+            if (!g_stage || g_stageFmt != d.Format) {
+                if (g_stage) { g_stage->Release(); g_stage = nullptr; }
+                D3D11_TEXTURE2D_DESC sd = {};
+                sd.Width = sd.Height = 8;
+                sd.MipLevels = sd.ArraySize = 1;
+                sd.Format = d.Format;
+                sd.SampleDesc.Count = 1;
+                sd.Usage = D3D11_USAGE_STAGING;
+                sd.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+                if (SUCCEEDED(g_dev->CreateTexture2D(&sd, nullptr, &g_stage))) g_stageFmt = d.Format;
+            }
+            if (g_stage) {
+                int x = std::min<int>(std::max(0, (int)px - 4), (int)d.Width - 8);
+                int y = std::min<int>(std::max(0, (int)py - 4), (int)d.Height - 8);
+                D3D11_BOX box = {(UINT)x, (UINT)y, 0, (UINT)x + 8, (UINT)y + 8, 1};
+                ctx->CopySubresourceRegion(g_stage, 0, 0, 0, 0, bb, 0, &box);
+                g_stagePending = true;
+                g_lastCopy = t;
+            }
+        }
+        bb->Release();
+    }
+    res->Release();
+}
 
 static bool init(ID3D11Device* dev) {
     if (g_vs || g_failed) return !g_failed;
@@ -313,6 +438,37 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
         zf = ndc(100000.0f);
     }
     bool reversed = zn > zf;
+    float vpm[16];
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            float s = 0;
+            for (int k = 0; k < 4; k++) s += view[i * 4 + k] * proj[k * 4 + j];
+            vpm[i * 4 + j] = s;
+        }
+    {
+        // the game's frame under the first boss that is on screen (before anything is drawn into it)
+        LARGE_INTEGER fq, now;
+        QueryPerformanceFrequency(&fq);
+        QueryPerformanceCounter(&now);
+        double t = (double)now.QuadPart / (double)fq.QuadPart;
+        for (const DrawItem& it : items) {
+            float cx = 0, cy = 0, cw = 0;
+            for (int i = 0; i < 4; i++) {
+                float wv = i < 3 ? it.world[12 + i] : 1.0f;
+                cx += wv * vpm[i * 4 + 0];
+                cy += wv * vpm[i * 4 + 1];
+                cw += wv * vpm[i * 4 + 3];
+            }
+            if (cw <= 1e-4f) continue;
+            float sx = (cx / cw * 0.5f + 0.5f) * w, sy = (0.5f - cy / cw * 0.5f) * h;
+            if (sx < 0 || sy < 0 || sx >= w || sy >= h) continue;
+            sample_scene(ctx, rtv, sx, sy, t);
+            break;
+        }
+        float k = 0.06f;  // eased toward the sampled values, a frame at a time
+        g_expo += (g_expoTarget - g_expo) * k;
+        for (int c = 0; c < 3; c++) g_expoTint[c] += (g_expoTargetTint[c] - g_expoTint[c]) * k;
+    }
     Backup bk;
     bk.save(ctx);
     ctx->ClearDepthStencilView(g_dsv, D3D11_CLEAR_DEPTH, reversed ? 0.0f : 1.0f, 0);
@@ -331,13 +487,11 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
     ctx->VSSetConstantBuffers(0, 2, cbs);
     ctx->PSSetConstantBuffers(0, 2, cbs);
     ctx->PSSetSamplers(0, 1, &g_samp);
-    float vpm[16];
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++) {
-            float s = 0;
-            for (int k = 0; k < 4; k++) s += view[i * 4 + k] * proj[k * 4 + j];
-            vpm[i * 4 + j] = s;
-        }
+    // world-fixed sun and the camera position (the view matrix is rigid: camera = -t * R^T)
+    float yaw = g_sceneLight.sunYaw * 0.0174533f, pitch = g_sceneLight.sunPitch * 0.0174533f;
+    float sun[3] = {cosf(pitch) * sinf(yaw), sinf(pitch), cosf(pitch) * cosf(yaw)};
+    float cam[3];
+    for (int j = 0; j < 3; j++) cam[j] = -(view[12] * view[j * 4 + 0] + view[13] * view[j * 4 + 1] + view[14] * view[j * 4 + 2]);
     for (const DrawItem& it : items) {
         GpuModel* g = gpu(it.model);
         if (!g || it.palette.size() < it.model->bones.size() * 12) continue;
@@ -346,9 +500,14 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
             FrameCB* f = (FrameCB*)ms.pData;
             memcpy(f->world, it.world, 64);
             memcpy(f->viewProj, vpm, 64);
-            float L[3] = {0.35f, 0.85f, 0.25f};
-            float n = sqrtf(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]);
-            f->lightDir[0] = L[0] / n; f->lightDir[1] = L[1] / n; f->lightDir[2] = L[2] / n; f->lightDir[3] = 0;
+            f->lightDir[0] = sun[0]; f->lightDir[1] = sun[1]; f->lightDir[2] = sun[2]; f->lightDir[3] = 0;
+            f->camPos[0] = cam[0]; f->camPos[1] = cam[1]; f->camPos[2] = cam[2]; f->camPos[3] = 1;
+            f->scene[0] = std::max(0.0f, g_sceneLight.sunStrength);
+            f->scene[1] = std::max(0.0f, g_sceneLight.ambient);
+            f->scene[2] = g_expo;
+            f->scene[3] = 0;
+            for (int c = 0; c < 3; c++) f->ambTint[c] = g_expoTint[c];
+            f->ambTint[3] = 1;
             memcpy(f->tint, it.tint, 16);
             // MHW's buffer is compared in this pass's own convention: flipped when the two disagree.
             f->depthInfo[0] = g_gameDepth ? (g_gameDepthReversed != reversed ? 2.0f : 1.0f) : 0.0f;

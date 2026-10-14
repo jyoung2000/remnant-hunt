@@ -695,7 +695,17 @@ static void handle(SaveData& s, Live& l, const Request& r, double t) {
 
 static void play_use_action(int which) {
     const ActionCfg& a = action_cfg();
-    if (a.set[which] >= 0) reactions_play(a.set[which], a.id[which]);
+    if (a.set[which] >= 0) { reactions_play(a.set[which], a.id[which]); return; }
+    int s, d;
+    if (which != 1 && reactions_drink(&s, &d)) {  // relic / consumable: MHW's own drinking action
+        reactions_play(s, d);
+    } else if (which != 1) {
+        static bool said = false;
+        if (!said) {
+            said = true;
+            log("actions: drink action unknown; use any potion once so the mod can learn it");
+        }
+    }
 }
 
 void use_consumable(int row) {

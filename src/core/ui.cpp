@@ -5,6 +5,7 @@
 // Hunter: World's menu style: dark warm panels framed in gold, an amber cursor, cream text and MHW's rarity colours;
 // a small HUD in the same colours for the guns, skills and relic. Names, descriptions, lines and icons are read from the player's own
 // Remnant II install; effect lines are our own wording; MHW's own UI is left as it is.
+#include <atomic>
 #include <cfloat>
 #include <cmath>
 #include <cstdio>
@@ -447,6 +448,7 @@ static std::string g_npcSays;
 static ItemView g_pick;          // selected item in a list
 static int g_slotPick = -1;      // loadout slot being changed
 static char g_filter[64] = {0};
+static bool g_fromDock = false;   // opened from the Item Box dock: Esc returns to the dock, not to the terminal
 static bool g_itemsView = false;  // the terminal's right panel shows only the items (consumables), MHW's Item Box "Manage Items"
 
 static void ui_sound(const char* id) {
@@ -457,6 +459,7 @@ static void ui_sound(const char* id) {
 static void open(Screen s) {
     if (s != SCR_NONE && g_screen == SCR_NONE) ui_sound("open");
     g_screen = s;
+    if (s == SCR_NONE) g_fromDock = false;
     g_screenOpened = now_s();
     g_greet = (int)(GetTickCount() / 7) % 3;
     g_npcSays.clear();
@@ -1853,6 +1856,140 @@ static void hud(const SaveData& s, const Live& l) {
     }
 }
 
+// ---------------------------------------------------------------- the dock in MHW's Item Box > Change Equipment screen
+// The mod cannot add rows to Capcom's list, so while that menu is open in town a Remnant panel sits under it (left
+// column, below the armor rows): the Remnant equipment at a glance, a click opens the matching Remnant screen.
+// "Menu open" is the [menu] flag byte when the ini names one, else the input-rate heuristic: MHW stops polling
+// gameplay input while a menu is open, so the reads per second fall below 20% of their running maximum for 0.5 s.
+static std::atomic<bool> g_menuHeur{false};
+bool menu_heuristic_open() { return g_menuHeur.load(); }
+static bool g_dockShown = false, g_dockHover = false;
+
+static bool dock_enabled() {
+    static int on = -1;
+    if (on < 0) {
+        char ini[MAX_PATH];
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
+        on = GetPrivateProfileIntA("menu", "dock", 1, ini) != 0;
+    }
+    return on == 1;
+}
+
+// eligible: in town, settled, not loading. Called every frame (keeps the rate window moving while a screen is open).
+static bool menu_open_signal(bool eligible, double now) {
+    static double belowSince = 0;
+    static int maxRate = 0;
+    int rate = input_reads_per_second();
+    HWND fg = GetForegroundWindow();  // an alt-tab also silences the input
+    DWORD pid = 0;
+    if (fg) GetWindowThreadProcessId(fg, &pid);
+    bool mine = pid == GetCurrentProcessId();
+    if (g_screen != SCR_NONE) return g_menuHeur.load();  // our own screen is up: keep what we knew
+    if (!eligible || !mine) { belowSince = 0; g_menuHeur = false; return false; }
+    if (rate > maxRate) maxRate = rate;
+    bool low = maxRate >= 20 && rate < maxRate * 0.2f;
+    if (!low) {
+        belowSince = 0;
+        g_menuHeur = false;
+    } else {
+        if (belowSince == 0) belowSince = now;
+        if (now - belowSince >= 0.5) g_menuHeur = true;
+    }
+    return g_menuHeur.load();
+}
+
+static int slot_index(const char* label) {
+    for (int i = 0; i < (int)(sizeof(kSlots) / sizeof(kSlots[0])); i++)
+        if (strcmp(kSlots[i].label, label) == 0) return i;
+    return 0;
+}
+
+// A dock row opens the terminal on a slot (>= 0), or another screen.
+static void dock_go(Screen sc, int slot) {
+    open(sc);
+    g_slotPick = slot;
+    g_fromDock = true;
+}
+
+static std::string slot_name(const SaveData& s, int i) {
+    int row = slot_row(s, kSlots[i]);
+    if (row < 0) return "";
+    return text_or(item(kSlots[i].cat, row).name);
+}
+
+// Draws the dock; returns whether the pointer is over it.
+static bool dock_draw(const SaveData& s) {
+    ImGuiViewport* vp = ImGui::GetMainViewport();
+    float W = vp->Size.x, H = vp->Size.y;
+    ImVec2 pos(vp->Pos.x + W * 0.10f, vp->Pos.y + H * 0.52f), size(W * 0.36f, H * 0.38f);
+    ImGui::SetNextWindowPos(pos);
+    ImGui::SetNextWindowSize(size);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+    ImGui::Begin("##dock", nullptr,
+                 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings |
+                     ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav);
+    ImGui::PopStyleVar(2);
+    const float kHint = 26;
+    panel_begin("##dockpanel", "REMNANT EQUIPMENT", ImVec2(0, -kHint));
+    struct Row { const char* label; Screen sc; };
+    static const Row kRows[] = {{"LONG GUN", SCR_TERMINAL}, {"HAND GUN", SCR_TERMINAL}, {"MELEE", SCR_TERMINAL},
+                                {"HEAD", SCR_TERMINAL},     {"BODY", SCR_TERMINAL},     {"GLOVES", SCR_TERMINAL},
+                                {"LEGS", SCR_TERMINAL},     {"RELIC", SCR_TERMINAL},    {"AMULET", SCR_TERMINAL},
+                                {"RINGS", SCR_TERMINAL},    {"ARCHETYPES", SCR_ARCHETYPE}, {"TRAITS", SCR_TRAITS}};
+    const int n = (int)(sizeof(kRows) / sizeof(kRows[0]));
+    float rowH = std::min(30.0f, std::floor(ImGui::GetContentRegionAvail().y / n));
+    float fs = rowH >= 26 ? 16.0f : 14.0f;
+    for (int i = 0; i < n; i++) {
+        const Row& r = kRows[i];
+        bool rings = strcmp(r.label, "RINGS") == 0;
+        int slot = r.sc == SCR_TERMINAL ? slot_index(rings ? "RING 1" : r.label) : -1;
+        std::string txt;
+        ImU32 tc = col::text;
+        if (rings) {
+            for (const char* rl : {"RING 1", "RING 2", "RING 3", "RING 4"}) {
+                std::string rn = slot_name(s, slot_index(rl));
+                if (!rn.empty()) txt += (txt.empty() ? "" : ", ") + rn;
+            }
+        } else if (r.sc == SCR_TERMINAL) {
+            txt = slot_name(s, slot);
+            int row = slot_row(s, kSlots[slot]);
+            if (kSlots[slot].cat == CAT_WEAPON && row >= 0 && s.level[row]) txt += " +" + std::to_string(s.level[row]);
+        } else if (r.sc == SCR_ARCHETYPE) {
+            char b[160];
+            snprintf(b, sizeof(b), "%s Lv %d", text_or(&kArchetypes[s.archetype].name).c_str(), archetype_level(s, s.archetype));
+            txt = b;
+            if (s.archetype2 >= 0) {
+                snprintf(b, sizeof(b), " / %s Lv %d", text_or(&kArchetypes[s.archetype2].name).c_str(), archetype_level(s, s.archetype2));
+                txt += b;
+            }
+        } else {
+            int pts = 0;
+            for (uint8_t t : s.trait) pts += t;
+            txt = std::to_string(pts) + (pts == 1 ? " point spent" : " points spent");
+        }
+        if (txt.empty()) { txt = "empty"; tc = col::dim; }
+        ImGui::PushID(i);
+        if (list_row("d", rowH, false)) dock_go(r.sc, slot);
+        float ty = g_row.a.y + (rowH - fs) * 0.5f - 1;
+        put(g_bold, fs - 2, ImVec2(g_row.a.x + 12, ty + 1), col::dim, r.label);
+        put(g_body, fs, ImVec2(g_row.a.x + 12 + 100, ty), tc, txt.c_str());
+        end_list_row();
+        ImGui::PopID();
+    }
+    panel_end();
+    {  // the foot hint, in the same pill as the screens' foot line
+        const char* hint = "[9] Remnant equipment";
+        ImDrawList* dl = ImGui::GetWindowDrawList();
+        float tw = text_w(g_body, 15, hint), w = tw + 44, x = pos.x + (size.x - w) * 0.5f, y = pos.y + size.y - 24;
+        dl->AddRectFilled(ImVec2(x, y), ImVec2(x + w, y + 22), IM_COL32(20, 18, 15, 225), 11.0f);
+        dl->AddRect(ImVec2(x, y), ImVec2(x + w, y + 22), col::line, 11.0f);
+        dl->AddText(g_body, 15, ImVec2(x + 22, y + 2), col::dim, hint);
+    }
+    ImGui::End();
+    return ImGui::IsMouseHoveringRect(pos, ImVec2(pos.x + size.x, pos.y + size.y), false);
+}
+
 // ---------------------------------------------------------------- per frame
 
 void ui_draw() {}
@@ -1865,6 +2002,7 @@ void mod_frame() {
     Vec3 pos = sh.live.snap.pos;
     bool viewValid = sh.live.snap.view.valid;
     bool gunMode = sh.live.gunMode;
+    bool aiming = sh.live.aiming;  // down the sights: V goes to MHW (Aim Slinger / clutch claw), not the weapon mod
     int nearMenu = sh.live.nearMenu;
     ReleaseSRWLockShared(&sh.lock);
 
@@ -1883,16 +2021,24 @@ void mod_frame() {
         baseSince = 0;
     }
     bool settled = baseSince > 0 && now_s() - baseSince > 4.0 && viewValid && (moved || now_s() - baseSince > 90.0);
+    // MHW's Item Box / Change Equipment menu: the ini's flag byte when set, else the input-rate heuristic.
+    bool heur = menu_open_signal(inGame && inBase && viewValid && baseSince > 0 && now_s() - baseSince > 4.0, now_s());
+    int flagByte = menu_flag_read();
+    bool menuOpen = flagByte >= 0 ? flagByte != 0 : heur;
+    bool dockOn = dock_enabled() && inGame && inBase && s.archetype >= 0 && menuOpen && g_screen == SCR_NONE;
     if (g_screen == SCR_NONE && settled && !s.introDone && r2_ready()) open(SCR_INTRO);
     if (g_screen != SCR_NONE) {
-        if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen == SCR_TERMINAL && g_slotPick >= 0) {
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_fromDock && g_screen != SCR_INTRO) {
+            open(SCR_NONE);  // back to the dock
+        } else if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen == SCR_TERMINAL && g_slotPick >= 0) {
             g_slotPick = -1;
             g_pick = ItemView();
         } else if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen != SCR_INTRO && (g_screen != SCR_ARCHETYPE || s.archetype >= 0))
             open(g_screen == SCR_ARCHETYPE || g_screen == SCR_TRAITS || g_screen == SCR_PRISM ? SCR_TERMINAL : SCR_NONE);
         if (!inGame) open(SCR_NONE);
     } else if (inGame) {
-        if (key_pressed(k.terminal) && inBase && s.archetype >= 0) {
+        if (g_dockShown && dockOn && key_pressed('9')) dock_go(SCR_TERMINAL, slot_index("LONG GUN"));
+        else if (key_pressed(k.terminal) && inBase && s.archetype >= 0) {
             if (nearMenu >= 0) open_menu(nearMenu, kMenus[nearMenu].role);
             else open(SCR_TERMINAL);
         }
@@ -1905,7 +2051,7 @@ void mod_frame() {
         if (key_pressed(k.skill)) post(CMD_SKILL);
         if (key_pressed(k.skill2)) post(CMD_SKILL2);
         if (key_pressed(k.relic)) post(CMD_RELIC);
-        if (key_pressed(k.mod)) post(CMD_MOD);
+        if (key_pressed(k.mod) && !(gunMode && aiming)) post(CMD_MOD);
         if (gunMode && key_pressed(k.reload)) post(CMD_RELOAD);
         if (gunMode && key_pressed(k.swap)) post(CMD_SWAP);
     }
@@ -1914,17 +2060,22 @@ void mod_frame() {
     if (g_screen != SCR_NONE) {
         b.keyboard = b.mouse = b.mouseButtons = true;
     } else if (inGame && s.archetype >= 0) {
-        b.keys[k.skill] = b.keys[k.relic] = b.keys[k.mod] = 1;
+        b.keys[k.skill] = b.keys[k.relic] = 1;
+        if (!(gunMode && aiming)) b.keys[k.mod] = 1;
         if (s.archetype2 >= 0) b.keys[k.skill2] = 1;
         if (combat) b.keys[k.gun] = 1;
         if (inBase) b.keys[k.terminal] = 1;
+        if (dockOn) {
+            b.keys['9'] = 1;
+            if (g_dockHover) b.mouseButtons = true;
+        }
         if (gunMode) {
             b.mouseButtons = true;
             b.keys[k.reload] = b.keys[k.swap] = 1;
         }
     }
     set_input_block(b);
-    ImGui::GetIO().MouseDrawCursor = g_screen != SCR_NONE;
+    ImGui::GetIO().MouseDrawCursor = g_screen != SCR_NONE || (dockOn && g_dockHover);
 
     if (g_screen == SCR_NONE) {
         AcquireSRWLockShared(&sh.lock);
@@ -1932,11 +2083,14 @@ void mod_frame() {
         ReleaseSRWLockShared(&sh.lock);
         hud(s, l);
         bosses_hud();
+        g_dockShown = dockOn;
+        g_dockHover = dockOn && dock_draw(s);
         return;
     }
     AcquireSRWLockShared(&sh.lock);
     Live l = sh.live;
     ReleaseSRWLockShared(&sh.lock);
+    g_dockShown = g_dockHover = false;
     switch (g_screen) {
         case SCR_INTRO: screen_intro(); break;
         case SCR_ARCHETYPE: screen_archetype(s); break;
@@ -1961,6 +2115,7 @@ void ui_preview(int which, const SaveData& s, const Live& l) {
         case 3: g_pick = item(CAT_ARCHETYPE, s.archetype); screen_archetype(s); break;
         case 5: hud(s, l); break;
         case 6: g_slotPick = 0; screen_terminal(s, l); break;
+        case 9: dock_draw(s); break;  // the dock under MHW's Item Box / Change Equipment screen
         case 7: g_menuRole = MENUS_ROLE_SMITHY; g_menu = -1; screen_menu(s, l); break;
         case 8: {  // a gun's diffuse map as the renderer sees it (virtual-texture stitching check)
             int w = weapons_index("huntmaster_m1");

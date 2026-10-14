@@ -14,6 +14,11 @@ struct DrawItem {
     float tint[4] = {1, 1, 1, 0};
 };
 
+// [visuals] sun_yaw / sun_pitch (degrees; the sun turns with the world, not the camera), sun_strength, ambient.
+// Filled once by main.cpp; read by the pass.
+struct SceneLight { float sunYaw = 35, sunPitch = 55, sunStrength = 1.0f, ambient = 0.45f; };
+extern SceneLight g_sceneLight;
+
 // Render thread, Direct3D 11 only: draws the items into rtv with MHW's view and projection (row-vector matrices).
 void render3d_frame(void* device, void* context, void* rtv, int width, int height, const float view[16],
                     const float proj[16], const std::vector<DrawItem>& items);

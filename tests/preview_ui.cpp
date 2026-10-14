@@ -38,6 +38,8 @@ int gun_mod(const SaveData& s, int gun) {
     return kWeapons[gun].mod >= 0 ? kWeapons[gun].mod : s.gunMod[kWeapons[gun].slot == WEAPONS_SLOT_HAND ? 1 : 0];
 }
 bool key_pressed(int) { return false; }
+int input_reads_per_second() { return 0; }
+int menu_flag_read() { return -1; }
 const Keys& keys() { static Keys k; return k; }
 int mhw_zenny() { return 125400; }
 void post(Cmd) {}

@@ -2,7 +2,7 @@
 # Native Windows build from Git Bash: llvm-mingw (Windows release) + GNU make, no Wine needed.
 #   tools/build_native.sh            -> make -j8
 #   tools/build_native.sh test       -> the three logic tests, run natively
-#   tools/build_native.sh preview    -> build/preview_ui.exe, renders screens 0-5 to build/preview/*.png
+#   tools/build_native.sh preview    -> build/preview_ui.exe, renders screens 0-9 to build/preview/*.png
 #   tools/build_native.sh <make args>
 set -eo pipefail
 cd "$(dirname "$0")/.."
@@ -41,7 +41,7 @@ case "${1:-all}" in
     [ -x build/preview_ui.exe ] || { echo "preview build failed"; exit 1; }
     mkdir -p build/preview
     R2W="$(cygpath -w "${R2:-/c/Program Files (x86)/Steam/steamapps/common/Remnant2}")"
-    for i in 0 1 2 3 4 5 6 7 8; do ./build/preview_ui.exe $i assets build/preview/screen_$i.bmp "$(cygpath -w "$PWD/build/win")" "$R2W" >/dev/null; done
+    for i in 0 1 2 3 4 5 6 7 8 9; do ./build/preview_ui.exe $i assets build/preview/screen_$i.bmp "$(cygpath -w "$PWD/build/win")" "$R2W" >/dev/null; done
     python tools/bmp2png.py build/preview/screen_*.bmp && ls build/preview/*.png ;;
   *) make -j8 TC="$TCB" "$@" ;;
 esac

@@ -799,10 +799,140 @@ static void track_session(double now, bool inBase, int zone, const Vec3& pos) {
     actionLines++;
 }
 
+// ---------------------------------------------------------------- menu flag ([menu] flag=) and the menu watch (read-only)
+// [menu] flag=<singleton>+0x<off> in the ini names one byte inside a singleton's object that is non-zero while MHW's
+// Item Box / equipment menu is open; ui.cpp then uses it instead of its input-rate heuristic.
+int menu_flag_read() {
+    static std::atomic<int> state{0};  // 0 not parsed, 1 unset, 2 set
+    static char name[64];
+    static size_t off = 0;
+    int st = state.load();
+    if (st == 0) {
+        char ini[MAX_PATH], v[128] = {0};
+        snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+        GetPrivateProfileStringA("menu", "flag", "", v, sizeof(v), ini);
+        char* plus = strchr(v, '+');
+        st = 1;
+        if (plus && plus > v && plus - v < (int)sizeof(name)) {
+            memcpy(name, v, plus - v);
+            name[plus - v] = 0;
+            off = (size_t)strtoul(plus + 1, nullptr, 0);
+            if (off < 0x100000) st = 2;
+        }
+        state.store(st);
+    }
+    if (st != 2 || !game_api_ready()) return -1;
+    uintptr_t stc = singleton_static(name);
+    if (!stc) return -1;
+    uint8_t* obj = rd_ptr(stc);
+    if (!obj || !mem_readable(obj + off, 1)) return -1;
+    return obj[off];
+}
+
+// For 120 s after the hunter stands still in town (and dev_diag exists), the first 0x4000 bytes of every singleton with
+// GUI, Menu, Gui, Pad, Cursor or Item in its name are sampled every 0.25 s. Bytes that were 0 in every sample taken
+// while ui.cpp's input-rate heuristic said "no menu" and 1 in every sample taken while it said "menu open" are printed
+// as "menu flag candidate: <singleton> +0x<off>"; open and close the Item Box a few times while it runs.
+struct MenuWatch {
+    uint8_t* base = nullptr;
+    size_t size = 0;
+    std::string name;
+    std::vector<uint8_t> badClosed, badOpen;   // 1 = seen non-zero while closed / seen not 1 while open
+    std::vector<uint16_t> nClosed, nOpen;
+};
+static std::vector<MenuWatch> g_mw;
+static double g_mwUntil = 0, g_mwNext = 0, g_mwStable = 0;
+static bool g_mwDone = false, g_mwLastOpen = false;
+
+static bool mw_name_ok(const std::string& n) {
+    for (const char* k : {"GUI", "Menu", "Gui", "Pad", "Cursor", "Item"})
+        if (n.find(k) != std::string::npos) return true;
+    return false;
+}
+
+static void menu_watch_tick(double now, bool inGame, bool inBase, const Vec3& pos) {
+    static double stillSince = 0, flagChecked = 0;
+    static bool flagFile = false;
+    static Vec3 still{};
+    if (g_mwDone) return;
+    if (now - flagChecked > 5.0) {
+        flagChecked = now;
+        char f[MAX_PATH];
+        snprintf(f, sizeof(f), "%s\dev_diag", mod_dir());
+        flagFile = GetFileAttributesA(f) != INVALID_FILE_ATTRIBUTES;
+    }
+    if (!flagFile) return;
+    if (g_mwUntil > 0) {
+        bool open = menu_heuristic_open();
+        if (open != g_mwLastOpen) { g_mwLastOpen = open; g_mwStable = now + 1.0; }   // skip the swing right after a change
+        if (now >= g_mwUntil) {
+            g_mwDone = true;
+            g_mwUntil = 0;
+            g_out.clear();
+            outf("== menu watch ==");
+            int shown = 0;
+            for (const MenuWatch& w : g_mw)
+                for (size_t i = 0; i < w.size; i++)
+                    if (w.nClosed[i] >= 4 && w.nOpen[i] >= 4 && !w.badClosed[i] && !w.badOpen[i] && shown++ < 60)
+                        outf("menu flag candidate: %s +0x%zX", w.name.c_str(), i);
+            outf("menu watch: %d candidates (a field needs 4+ samples closed and open; open and close the Item Box a few times)", shown);
+            outf("== end menu watch ==");
+            append_out();
+            log("diagnostic menu watch written (%d candidates)", shown);
+            std::vector<MenuWatch>().swap(g_mw);
+        } else if (now >= g_mwNext) {
+            g_mwNext = now + 0.25;
+            if (now < g_mwStable) return;
+            for (MenuWatch& w : g_mw) {
+                if (!mem_readable(w.base, w.size)) continue;
+                for (size_t i = 0; i < w.size; i++) {
+                    uint8_t v = w.base[i];
+                    if (open) { if (w.nOpen[i] < 60000) w.nOpen[i]++; if (v != 1) w.badOpen[i] = 1; }
+                    else { if (w.nClosed[i] < 60000) w.nClosed[i]++; if (v != 0) w.badClosed[i] = 1; }
+                }
+            }
+        }
+        return;
+    }
+    if (!inGame || !inBase) { stillSince = 0; return; }
+    float dx = pos.x - still.x, dy = pos.y - still.y, dz = pos.z - still.z;
+    if (stillSince == 0 || dx * dx + dy * dy + dz * dz > 40.0f * 40.0f) { stillSince = now; still = pos; return; }
+    if (now - stillSince < 4.0) return;
+    game_api_start();
+    if (!game_api_ready()) return;
+    size_t total = 0;
+    for (auto& kv : g_singletons) {
+        if (!mw_name_ok(kv.first)) continue;
+        uint8_t* b = rd_ptr(kv.second);
+        if (!b || !mem_readable(b, 0x4000) || total + 0x4000 > (2u << 20)) continue;
+        MenuWatch w;
+        w.base = b;
+        w.size = 0x4000;
+        w.name = kv.first;
+        w.badClosed.assign(w.size, 0);
+        w.badOpen.assign(w.size, 0);
+        w.nClosed.assign(w.size, 0);
+        w.nOpen.assign(w.size, 0);
+        total += w.size;
+        g_mw.push_back(std::move(w));
+    }
+    g_mwUntil = now + 120.0;
+    g_mwNext = now + 0.25;
+    g_mwStable = now + 1.0;
+    g_mwLastOpen = menu_heuristic_open();
+    log("diagnostic menu watch: %zu singletons, %zu bytes, 120 s", g_mw.size(), total);
+    Shared& sh = S();
+    AcquireSRWLockExclusive(&sh.lock);
+    toast(sh.live, "Remnant Hunt diagnostic: open and close the Item Box menu a few times (2 minutes)");
+    sh.live.toastUntil = now + 15.0;
+    ReleaseSRWLockExclusive(&sh.lock);
+}
+
 // Game thread, from mod_game_tick.
 
 void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3& pos) {
     static double inGameSince = 0;
+    menu_watch_tick(now, inGame, inBase, pos);
     if (g_reported && inGame) track_session(now, inBase, zone, pos);
     if (g_watchUntil > 0) {
         if (now >= g_watchUntil) {

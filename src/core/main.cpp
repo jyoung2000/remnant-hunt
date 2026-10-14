@@ -3,6 +3,7 @@
 #include <cstring>
 
 #include "core.h"
+#include "render3d.h"
 #include "state.h"
 
 namespace rh {
@@ -67,6 +68,8 @@ static void load_settings() {
                   "[bar]\r\n; 1 puts Remnant stand-in items (Antidote etc.) in MHW's item bar\r\nproxies=0\r\n"
                   "[actions]\r\n; MHW action (set:id) played when a Remnant item is used; empty = none\r\nrelic=\r\nskill=\r\nconsumable=\r\n"
                   "[visuals]\r\n; UI scale: 0 = automatic (screen height / 1080, at least 1), or e.g. 1.5\r\nui_scale=0\r\n"
+                  "; Remnant bosses: sun direction in degrees (fixed in the world), sun strength, ambient light\r\n"
+                  "sun_yaw=35\r\nsun_pitch=55\r\nsun_strength=1.0\r\nambient=0.45\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);
@@ -94,6 +97,17 @@ static void load_settings() {
     if (*a == '-') { g_gun.axisNeg = true; a++; }
     g_gun.axis = (*a == 'x' || *a == 'X') ? 0 : (*a == 'y' || *a == 'Y') ? 1 : 2;
     g_proxies = GetPrivateProfileIntA("bar", "proxies", 0, ini) == 1;
+    {
+        auto fv = [&](const char* name, float def) {
+            char v[32] = {0};
+            GetPrivateProfileStringA("visuals", name, "", v, sizeof(v), ini);
+            return v[0] ? (float)atof(v) : def;
+        };
+        g_sceneLight.sunYaw = fv("sun_yaw", 35.0f);
+        g_sceneLight.sunPitch = fv("sun_pitch", 55.0f);
+        g_sceneLight.sunStrength = fv("sun_strength", 1.0f);
+        g_sceneLight.ambient = fv("ambient", 0.45f);
+    }
     static const char* const kActKeys[3] = {"relic", "skill", "consumable"};
     for (int i = 0; i < 3; i++) {
         char v[32] = {0};

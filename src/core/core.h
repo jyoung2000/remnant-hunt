@@ -122,6 +122,7 @@ struct InputBlock { bool keyboard = false, mouse = false, mouseButtons = false; 
 void set_input_block(const InputBlock& b);
 bool key_down(int vk);       // reads the physical key state while the game window has focus
 bool key_pressed(int vk);    // edge, once per press (render-thread frame)
+int input_reads_per_second();  // input reads the game made in the last 0.25 s windows, per second (render thread)
 
 // ---------------------------------------------------------------- the mod (remnant.cpp / ui.cpp)
 void mod_init();
@@ -138,6 +139,8 @@ bool game_api_ready();
 void* find_dti(const char* name);
 void* get_resource(const char* dtiName, const char* path);  // game thread
 const char* dti_name_of(const void* obj);                     // class name of an MtObject (read-only)
+int menu_flag_read();      // [menu] flag=<singleton>+0x<off>: that byte (0..255), or -1 when not set or unreadable (any thread)
+bool menu_heuristic_open();  // ui.cpp: the input-rate signal says an MHW menu is open
 uintptr_t singleton_static(const char* name);                 // static holding a singleton, after game_api_init
 uint8_t* user_data(); uint8_t* player_ptr();                                         // current save slot's cUserData
 const char* gmd_message(void* gmd, int id);

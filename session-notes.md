@@ -368,3 +368,11 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   other 23 use STATIC meshes (SM_*) that r2read cannot decode yet (it reads skeletal meshes only): next r2read step is
   UStaticMesh. Corpses stay 90 s; E within 3 m carves up to 3 times (1-3 rank materials into the pouch via
   mhw_pouch_add + one Remnant drop), then the corpse sinks. Not yet run in game.
+- 13:30: Remnant equipment DOCK inside MHW's Item Box > Change Equipment screen (ui.cpp: panel at x 0.10-0.46,
+  y 0.52-0.90, 12 rows, click or 9 opens the editor, Esc returns); menu-open detection = the game's input reads
+  dropping below 20% of their peak for 0.5 s in base ([menu] dock, [menu] flag=<singleton>+0x<off> once the devdiag
+  "menu flag candidate" lines name the real byte; the menu watch runs when a dev_diag file exists). Bosses lit by a
+  world sun + hemisphere ambient + specular, exposure/tint read back from the frame under the boss ([visuals]
+  sun_yaw/sun_pitch/sun_strength/ambient). Drink action learned from the first potion use (learned_reactions.txt
+  "drink S I") and played for the Dragon Heart and consumables. V passes to MHW while aiming a Remnant gun (slinger /
+  clutch claw); the weapon mod key is ignored in ADS.

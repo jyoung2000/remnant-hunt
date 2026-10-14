@@ -109,6 +109,23 @@ static bool vk_blocked(const InputBlock& b, int vk) {
 // Which input paths the game uses (logged once, so the in-game test shows what was filtered).
 static volatile LONG g_cntDiState = 0, g_cntDiData = 0, g_cntRaw = 0, g_cntRawBuf = 0, g_cntAsync = 0;
 
+// Input reads the game makes per second, over 0.25 s windows (render thread). MHW stops polling gameplay input while
+// a menu is open, so ui.cpp reads a drop in this rate as "a menu is open".
+int input_reads_per_second() {
+    static double lastT = 0;
+    static long lastN = 0;
+    static int rate = 0;
+    double t = GetTickCount64() / 1000.0;
+    long n = g_cntDiState + g_cntDiData + g_cntRaw + g_cntRawBuf + g_cntAsync;
+    if (lastT == 0) { lastT = t; lastN = n; return 0; }
+    if (t - lastT >= 0.25) {
+        rate = (int)((n - lastN) / (t - lastT));
+        lastT = t;
+        lastN = n;
+    }
+    return rate;
+}
+
 // --- DirectInput
 typedef HRESULT(WINAPI* GetState_t)(IDirectInputDevice8W*, DWORD, LPVOID);
 typedef HRESULT(WINAPI* GetData_t)(IDirectInputDevice8W*, DWORD, LPDIDEVICEOBJECTDATA, LPDWORD, DWORD);
