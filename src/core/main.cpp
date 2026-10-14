@@ -60,6 +60,7 @@ static void load_settings() {
                   "; let you align the gun in game\r\n"
                   "hand_l1=0x90\r\nhand_l2=0x2B0\r\nhand_entry=396\r\nhand_stride=0x40\r\n"
                   "hand_offset_x=0\r\nhand_offset_y=0\r\nhand_offset_z=0\r\nhand_axis=z\r\n"
+                  "[visuals]\r\n; UI scale: 0 = automatic (screen height / 1080, at least 1), or e.g. 1.5\r\nui_scale=0\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);

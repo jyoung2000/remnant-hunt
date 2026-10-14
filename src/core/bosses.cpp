@@ -47,8 +47,13 @@ struct Frame {
     float aMin = -200, aMax = 200, cMin = -100, cMax = 100, zMin = 0, zMax = 300;
 };
 
+// One sphere of a boss's whole-model hitbox: world position and radius (cm), and whether it is on the head.
+struct WSph { Vec3 c; float r; bool head; };
+
 struct Boss {
     bool used = false;
+    bool entrance = false;     // just spawned: it roars at the hunter before it engages
+    std::vector<WSph> sph;     // the posed hitbox spheres, placed once per tick (empty until the model is posed)
     int row = -1;
     St st = ST_LOADING;
     Vec3 pos{}, home{};
@@ -99,6 +104,10 @@ struct Proj {
     int boss = -1;
     float attackDmg = 0;
 };
+
+// Per bosses.json row, in the model's bind pose: the bounding sphere of the vertices skinned mostly to each bone.
+struct LSph { float c[3]; float r; int bone; bool head; };
+std::map<int, std::vector<LSph>> g_hitbox;  // game thread
 
 Boss g_boss[kMax];
 uint8_t g_token[kMax];  // the bosses' pseudo uEnemy pointers: never dereferenced, only compared
@@ -221,6 +230,102 @@ void make_frame(Boss& b) {
 Vec3 head_point(const Boss& b) { return add(b.pos, mul(fwd_of(b.yaw), std::max(100.0f, b.fr.aMax * 0.8f))); }
 float height_of(const Boss& b) { return std::max(150.0f, b.fr.zMax - std::max(0.0f, b.fr.zMin)); }
 
+// Weak spots are the head's bones (matched by name).
+bool head_bone(const std::string& n) {
+    std::string l = n;
+    for (char& c : l) c = (char)tolower((unsigned char)c);
+    return l.find("head") != std::string::npos || l.find("jaw") != std::string::npos || l.find("skull") != std::string::npos;
+}
+
+// The whole-model hitbox of a row: one bounding sphere per bone that has enough skinned vertices (each vertex goes to
+// its strongest bone), in the bind pose. Radius capped at 150 cm, bones with under 20 vertices or under 8 cm left out.
+const std::vector<LSph>& hitbox_of(int row, const Model& m) {
+    auto it = g_hitbox.find(row);
+    if (it != g_hitbox.end()) return it->second;
+    size_t nb = m.bones.size();
+    std::vector<float> lo(nb * 3, 1e30f), hi(nb * 3, -1e30f);
+    std::vector<int> cnt(nb, 0);
+    std::vector<int> owner(m.vertices.size(), -1);
+    for (size_t i = 0; i < m.vertices.size(); i++) {
+        const ModelVertex& v = m.vertices[i];
+        int best = -1, bw = 0;
+        for (int k = 0; k < 8; k++)
+            if (v.weights[k] > bw && v.bones[k] < nb) { bw = v.weights[k]; best = v.bones[k]; }
+        if (best < 0) continue;
+        owner[i] = best;
+        cnt[best]++;
+        for (int c = 0; c < 3; c++) {
+            lo[best * 3 + c] = std::min(lo[best * 3 + c], v.pos[c]);
+            hi[best * 3 + c] = std::max(hi[best * 3 + c], v.pos[c]);
+        }
+    }
+    std::vector<LSph> out;
+    std::vector<float> rad2(nb, 0.0f);
+    for (size_t i = 0; i < m.vertices.size(); i++) {
+        int b = owner[i];
+        if (b < 0 || cnt[b] < 20) continue;
+        float d2 = 0;
+        for (int c = 0; c < 3; c++) {
+            float d = m.vertices[i].pos[c] - (lo[b * 3 + c] + hi[b * 3 + c]) * 0.5f;
+            d2 += d * d;
+        }
+        rad2[b] = std::max(rad2[b], d2);
+    }
+    float s = kBosses[row].scale;
+    for (size_t b = 0; b < nb; b++) {
+        if (cnt[b] < 20) continue;
+        float r = std::min(sqrtf(rad2[b]), 150.0f / std::max(0.01f, s));
+        if (r * s < 8.0f) continue;
+        LSph l;
+        for (int c = 0; c < 3; c++) l.c[c] = (lo[b * 3 + c] + hi[b * 3 + c]) * 0.5f;
+        l.r = r;
+        l.bone = (int)b;
+        l.head = head_bone(m.bones[b].name);
+        out.push_back(l);
+    }
+    log("bosses: %s hitbox from %d bones", kBosses[row].id, (int)out.size());
+    return g_hitbox[row] = std::move(out);
+}
+
+// Places a boss's spheres: the posed bone palette (as render3d draws it) times the boss's world matrix.
+void place_hitbox(Boss& b, const std::vector<float>& pal, const float w[16]) {
+    const Model* m = model_of(b.row);
+    b.sph.clear();
+    if (!m || pal.size() < m->bones.size() * 12) return;
+    const std::vector<LSph>& hb = hitbox_of(b.row, *m);
+    float s = B(b).scale;
+    for (const LSph& l : hb) {
+        const float* q = &pal[(size_t)l.bone * 12];
+        float x = q[0] * l.c[0] + q[1] * l.c[1] + q[2] * l.c[2] + q[3];
+        float y = q[4] * l.c[0] + q[5] * l.c[1] + q[6] * l.c[2] + q[7];
+        float z = q[8] * l.c[0] + q[9] * l.c[1] + q[10] * l.c[2] + q[11];
+        Vec3 c = {x * w[0] + y * w[4] + z * w[8] + w[12], x * w[1] + y * w[5] + z * w[9] + w[13],
+                  x * w[2] + y * w[6] + z * w[10] + w[14]};
+        b.sph.push_back({c, l.r * s, l.head});
+    }
+}
+
+// The nearest sphere a ray passes within the radius of (dir is a unit vector); false when it misses them all.
+bool ray_spheres(const Boss& b, Vec3 o, Vec3 dir, float maxT, float* tHit, bool* head) {
+    bool any = false;
+    float best = maxT;
+    for (const WSph& s : b.sph) {
+        Vec3 oc = sub(s.c, o);
+        float tc = oc.x * dir.x + oc.y * dir.y + oc.z * dir.z;
+        float d2 = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - tc * tc, r2 = s.r * s.r;
+        if (d2 > r2) continue;
+        float half = sqrtf(r2 - d2);
+        if (tc + half < 0) continue;
+        float t0 = std::max(0.0f, tc - half);
+        if (t0 >= best) continue;
+        best = t0;
+        *head = s.head;
+        any = true;
+    }
+    if (any) *tHit = best;
+    return any;
+}
+
 void play(const char* event, Vec3 at, float loud) {
     if (!has(event) || !g_snap) return;
     float d = hlen(sub(at, g_snap->pos));
@@ -248,7 +353,11 @@ void go(Boss& b, St st, double t) {
     switch (st) {
         case ST_IDLE: set_anim(b, anim_path(b.row, r.anim_idle), true); break;
         case ST_WALK: set_anim(b, anim_path(b.row, has(r.anim_walk) ? r.anim_walk : r.anim_idle), true); break;
-        case ST_ROAR: set_anim(b, anim_path(b.row, r.anim_roar), false); play(r.snd_roar, b.pos, 1.2f); break;
+        case ST_ROAR:
+            // no roar animation: it stands in its idle for a moment (think() times it)
+            set_anim(b, anim_path(b.row, has(r.anim_roar) ? r.anim_roar : r.anim_idle), !has(r.anim_roar));
+            play(r.snd_roar, b.pos, 1.2f);
+            break;
         case ST_FLINCH: set_anim(b, anim_path(b.row, r.anim_flinch), false); play(r.snd_pain, b.pos, 1.0f); break;
         case ST_STUN:
             set_anim(b, anim_path(b.row, has(r.anim_stun) ? r.anim_stun : r.anim_flinch), false);
@@ -343,6 +452,8 @@ void spawn(Live& l, int row, Vec3 at, float yaw, double t) {
     b.row = row;
     b.pos = b.home = at;
     b.yaw = yaw;
+    b.entrance = true;
+    if (hlen(sub(l.snap.pos, at)) > 1) b.yaw = yaw_to(at, l.snap.pos);
     float largest = 0;
     b.rank = area_rank(l.snap, &largest);
     const Bosses& r = kBosses[row];
@@ -646,8 +757,9 @@ int think(Boss& b, Live& l, double t, float dt) {
         }
         case ST_ROAR: {
             turn_towards(b, toHunter, r.turn_dps, dt);
-            if (b.at >= state_len(b, 1.5f)) {
+            if (has(r.anim_roar) ? b.at >= state_len(b, 1.5f) : t - b.stT0 >= 1.5) {
                 b.roared = true;
+                if (!b.aggro) { b.aggro = true; b.lastSeen = t; }  // the entrance is over: now it engages
                 b.nextAttack = t + 0.4 / b.tempo;
                 go(b, ST_CHASE, t);
             }
@@ -890,7 +1002,14 @@ void mhw_weapons(Live& l, double t) {
         int bi = -1;
         for (const Monster& m : g.monsters) {
             if (!is_boss(m.em)) continue;
-            Vec3 rel = sub(g.view.camPos, m.center);
+            const Boss& sb = g_boss[boss_index(m.em)];
+            if (!sb.sph.empty()) {  // the whole-model hitbox: the nearest bone sphere the line passes through
+                float th;
+                bool head;
+                if (ray_spheres(sb, g.view.camPos, dir, best, &th, &head)) { best = th; bi = boss_index(m.em); }
+                continue;
+            }
+            Vec3 rel = sub(g.view.camPos, m.center);  // fallback before the model is posed: the old volume
             float t0 = 0, t1 = 1e9f;
             bool ok = true;
             float h[3] = {m.half.x, m.half.y, m.half.z};
@@ -918,18 +1037,37 @@ void mhw_weapons(Live& l, double t) {
         Boss& b = g_boss[i];
         if (!b.used || b.st == ST_LOADING || b.st == ST_DEAD) continue;
         Vec3 to;
-        float gap = gap_to(b, g.pos, &to);
-        float dy = g.pos.y - b.pos.y;
-        if (gap > 380 || dy < -250 || dy > b.fr.zMax + 200) continue;
-        Vec3 dir = sub(to, g.pos);
-        float facing = (dir.x * look.x + dir.z * look.z) / std::max(1.0f, hlen(dir) * hlen(look));
-        if (gap > 120 && facing < 0.1f) continue;
-        // a hit high on the body counts as a weak spot when it lands at the head end
+        float gap;
+        bool headHit = false;
+        if (!b.sph.empty()) {  // the reach point (380 cm from the hunter's chest) inside any bone sphere
+            Vec3 chest = add(g.pos, {0, 110, 0});
+            float bestGap = 1e30f;
+            for (const WSph& s : b.sph) {
+                Vec3 d = sub(s.c, chest);
+                float dl = len3(d), gp = std::max(0.0f, dl - s.r);
+                if (gp >= bestGap) continue;
+                Vec3 at = dl > 0.01f ? add(chest, mul(d, gp / dl)) : chest;
+                bestGap = gp; to = at; headHit = s.head;
+            }
+            gap = bestGap;
+            if (gap > 380) continue;
+            Vec3 dir = sub(to, chest);
+            float facing = (dir.x * look.x + dir.z * look.z) / std::max(1.0f, hlen(dir) * hlen(look));
+            if (gap > 120 && facing < 0.1f) continue;
+        } else {  // fallback before the model is posed: the old volume
+            gap = gap_to(b, g.pos, &to);
+            float dy = g.pos.y - b.pos.y;
+            if (gap > 380 || dy < -250 || dy > b.fr.zMax + 200) continue;
+            Vec3 dir = sub(to, g.pos);
+            float facing = (dir.x * look.x + dir.z * look.z) / std::max(1.0f, hlen(dir) * hlen(look));
+            if (gap > 120 && facing < 0.1f) continue;
+        }
+        // a hit high on the body counts as a weak spot when it lands at the head end (or on a head bone)
         Vec3 f = fwd_of(b.yaw);
         float along = (to.x - b.pos.x) * f.x + (to.z - b.pos.z) * f.z;
-        bool weak = along > b.fr.aMax * 0.6f;
+        bool weak = headHit || along > b.fr.aMax * 0.6f;
         hit_boss(i, b.meleeHit * wf.dmg * (weak ? 1.3f : 1.0f) * (0.85f + 0.3f * frand()),
-                 {to.x, g.pos.y + 120, to.z}, false, weak, wf.stagger);
+                 {to.x, b.sph.empty() ? g.pos.y + 120 : to.y, to.z}, false, weak, wf.stagger);
         break;
     }
 }
@@ -1226,24 +1364,25 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             }
             Vec3 p;
             bool placed = false;
+            for (int k = 0; k < 10 && pick >= 0 && !placed; k++)  // 35-45 m out when the ground allows
+                placed = place_near(g, frand() * 2 * kPi, 3500 + frand() * 1000, &p);
             for (int k = 0; k < 10 && pick >= 0 && !placed; k++)
                 placed = place_near(g, frand() * 2 * kPi, 6000 + frand() * 5000, &p);
             if (placed) spawn(l, pick, p, frand() * 2 * kPi, t);
             else if (pick >= 0) g_rollAt = t + 20;  // try again from another spot
         }
     }
-    // Debug / training: the boss key brings the next boss 30 m in front of the hunter (any rank, to try them all).
+    // Debug / training: the boss key brings the next boss 35-45 m in front of the hunter (any rank, to try them all).
     bool key = key_down(keys().boss);
     if (key && !g_keyWas) log("boss key: view %s, zone %d, rank %d", g.view.valid ? "valid" : "not valid yet", g.zone, rank);
     if (key && !g_keyWas && kBossesCount > 0 && g.view.valid) {
         Vec3 f = sub(g.view.camTarget, g.view.camPos);
         float yaw = atan2f(f.x, f.z);
         Vec3 p;
-        if (place_near(g, yaw, 1500, &p) || place_near(g, yaw, 3000, &p) || place_near(g, yaw, 800, &p)) {
+        if (place_near(g, yaw, 3500 + frand() * 1000, &p) || place_near(g, yaw, 1500, &p) || place_near(g, yaw, 3000, &p) ||
+            place_near(g, yaw, 800, &p)) {
             int row = g_nextDebugRow++ % kBossesCount;
             spawn(l, row, p, wrap(yaw + kPi), t);
-            for (Boss& nb : g_bosses)  // a boss called by the key is here for the hunter: it engages at once
-                if (nb.row == row && t - nb.stT0 < 0.5) nb.aggro = true;
             toast(l, "%s approaches (%s)", display_name(row).c_str(), kRankName[rank]);
         } else {
             toast(l, "No ground there for a Remnant boss");
@@ -1290,7 +1429,13 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             make_frame(b);
             float y;
             if (ground(b.pos, &y)) b.pos.y = y;
-            go(b, ST_IDLE, t);
+            if (b.entrance) {  // the entrance: it turns to the hunter and roars before it engages
+                b.entrance = false;
+                b.yaw = yaw_to(b.pos, g.pos);
+                go(b, ST_ROAR, t);
+            } else {
+                go(b, ST_IDLE, t);
+            }
             b.goalUntil = t + 2;
             log("bosses: %s is out (%.0f hp, %.1f x %.1f x %.1f m)", r.id, b.maxHp, (b.fr.aMax - b.fr.aMin) / 100,
                 (b.fr.cMax - b.fr.cMin) / 100, (b.fr.zMax - b.fr.zMin) / 100);
@@ -1371,6 +1516,11 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         d.blend = b.fade;
         world_matrix(b, d.world);
         g_draw.push_back(d);
+        if (d.m) {  // the hitbox follows the pose the renderer will draw
+            std::vector<float> pal;
+            pose(*d.m, cur, d.at, true, pre, d.bt, pre ? d.blend : 0.0f, &pal);
+            place_hitbox(b, pal, d.world);
+        }
         // area attacks winding up: their reach on the ground
         if (b.st == ST_ATTACK && b.attack >= 0 && kBoss_attacks[b.attack].kind == BOSS_ATTACKS_KIND_AOE) {
             const Boss_attacks& a = kBoss_attacks[b.attack];

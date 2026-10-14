@@ -407,7 +407,7 @@ static bool parseVirtual(const Bytes& d, size_t p, const std::string& pf, const 
     if (!i32(&virt) || virt != 1 || !i32(&cooked) || !i32(&layers) || !i32(&wBlocks) || !i32(&hBlocks) ||
         !i32(&tile) || !i32(&border) || !arr(&layerOff) || !i32(&nm) || !i32(&w) || !i32(&h) ||
         !arr(&chunkOfMip) || !arr(&baseOfMip)) { *err = "bad virtual texture"; return false; }
-    if (layers != 1 || wBlocks != 1 || hBlocks != 1 || layerOff.size() != 1 || nm <= 0 || nm > 16 ||
+    if (layers < 1 || wBlocks < 1 || hBlocks < 1 || layerOff.size() != 1 || nm <= 0 || nm > 16 ||
         chunkOfMip.size() != (size_t)nm || baseOfMip.size() != (size_t)nm || tile <= 0 || tile % 4 || border % 4) {
         *err = "unsupported virtual texture";
         return false;

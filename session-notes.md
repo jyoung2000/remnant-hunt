@@ -254,3 +254,24 @@ What each needs, from the diagnostics so far:
   and the Training Area, first 10 min per zone, top candidates every 30 s in dev_research.txt, "[hand-like]" tag).
   Jalon's next session: Training Area, draw the weapon, swing it, walk; then send dev_research.txt and
   remnant_hunt.log ("boss key" line after F9).
+
+## 2026-10-14 morning: first driven sessions (Jalon playing, Claude reading the files)
+- Confirmed in game: hooks 0/25 failed, overlay DX11 2560x1440, r2read 282 cells, game tick, save slot (123
+  containers), gun mesh + reload anim decode, F9 spawns bosses (boss key line, Corrupted Ravager / Nightweaver out),
+  the boss bar shows once a boss has aggro (now also by proximity).
+- Hand joint: the threaded search found it: chain player+0x90 -> +0x210 or +0x2B0, 0x40-stride world matrices,
+  entry 396 (score 503, local offset (-32,105,-5) cm, spread 27) with a fallback chain player+0xA8 -> +0x310.
+  gunmodel draws the gun there ([gun] hand_l1/hand_l2/hand_entry/hand_stride, hand_axis, hand_offset_x/y/z in the
+  ini for in-game alignment; left/right hand sign not yet confirmed).
+- Freeze fixed: the joint search stalled the game thread (reports 1 s apart in 3 min); it runs on its own thread
+  with a 5 ms budget now. The item bar watch sampled during the stall is void; it needs a clean session where
+  Jalon scrolls the bar (Ctrl + wheel) in the first 150 s after the diagnostic report.
+- Fire sound piling up after release: audio cuts the previous voice of a rapidly repeated event and
+  audio_stop(snd_fire) runs when the trigger is released.
+- OPEN, needs research: Remnant bosses cannot kill the hunter. hurt_hunter uses the game's AddHP; MHW's faint is
+  triggered in its own damage handler, not by HP reaching 0. Need the hunter damage function (the one MHW's
+  monsters call) to route lethal Remnant damage through it; a devdiag hook/log on hunter hits is the next step.
+- OPEN: skill / Dragon Heart body animations need MHW action ids (drink item, gestures). Jalon: drink a potion and
+  use a few items in a session so the diagnostic action log records them (dev_diag.txt "action" lines).
+- OPEN: in-game texture fate of virtual textures (gun body, bosses) is logged now ("overlay: texture ... -> ok|FAILED");
+  read the next session's log.

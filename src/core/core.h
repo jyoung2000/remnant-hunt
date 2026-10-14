@@ -108,6 +108,7 @@ const R2Blob* r2_blob(const char* kind, const char* asset);
 // Remnant II sounds through the mod's own audio (audio.cpp, XAudio2). Any thread.
 void audio_play(const char* event, float volume = 1.0f);
 void audio_prefetch(const char* event);
+void audio_stop(const char* event);  // stops that event's playing voices (trigger released)
 
 // ---------------------------------------------------------------- overlay + input (overlay.cpp)
 bool overlay_install();

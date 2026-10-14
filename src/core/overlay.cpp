@@ -12,6 +12,7 @@
 #include <dinput.h>
 #include <dxgi1_4.h>
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <map>
@@ -21,6 +22,7 @@
 #include "bosses.h"
 #include "core.h"
 #include "render3d.h"
+#include "state.h"
 #include "imgui.h"
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
@@ -390,7 +392,130 @@ static void release_depth() {
     ReleaseSRWLockExclusive(&g_depthLock);
 }
 
-// Render thread, at Present: the scene depth is the full-frame one MHW clears most.
+// ---- depth self-check: measure instead of guess. Once a second the depth under the hunter's root is copied into a 1x1
+// staging texture (CopySubresourceRegion: read-only for the game's buffer) and compared with the depth the camera's
+// projection predicts for that point; the candidate that agrees is the scene depth, and whether it agrees as-is or as
+// 1 - expected says how its Z runs relative to the projection.
+static ULONGLONG g_measAt = 0;
+static int g_measState = 0;  // 0 not measured yet, 1 a candidate matched, 2 nothing matched
+static ID3D11Resource* g_measRes = nullptr;
+static bool g_measFlip = false, g_measProjRev = false;
+static ID3D11Resource* g_measSig[8];
+static int g_measSigN = 0;
+static bool g_measNoneLogged = false;
+
+static bool hunter_clip(float* ndcZ, float* nx, float* ny, bool* projRev) {
+    GameView v;
+    Vec3 p;
+    bool ok;
+    AcquireSRWLockExclusive(&S().lock);
+    ok = S().live.snap.inGame && S().live.snap.view.valid;
+    v = S().live.snap.view;
+    p = S().live.snap.pos;
+    ReleaseSRWLockExclusive(&S().lock);
+    if (!ok) return false;
+    float in[4] = {p.x, p.y, p.z, 1}, a[4], c[4];
+    for (int j = 0; j < 4; j++) a[j] = in[0] * v.view[j] + in[1] * v.view[4 + j] + in[2] * v.view[8 + j] + in[3] * v.view[12 + j];
+    for (int j = 0; j < 4; j++) c[j] = a[0] * v.proj[j] + a[1] * v.proj[4 + j] + a[2] * v.proj[8 + j] + a[3] * v.proj[12 + j];
+    if (c[3] <= 1.0f) return false;
+    *nx = c[0] / c[3] * 0.5f + 0.5f;
+    *ny = 0.5f - c[1] / c[3] * 0.5f;
+    *ndcZ = c[2] / c[3];
+    if (*nx < 0 || *nx >= 1 || *ny < 0 || *ny >= 1) return false;
+    // Which way the projection maps depth (as render3d decides): a near and a far point straight ahead.
+    float z[2] = {0, 0};
+    const float d[2] = {100.0f, 100000.0f};
+    for (int k = 0; k < 2; k++)
+        for (float sign : {-1.0f, 1.0f}) {
+            float cz = 0, cw = 0;
+            for (int i = 0; i < 4; i++) {
+                float vi[4] = {0, 0, sign * d[k], 1};
+                cz += vi[i] * v.proj[i * 4 + 2];
+                cw += vi[i] * v.proj[i * 4 + 3];
+            }
+            if (cw > 1e-6f) { z[k] = cz / cw; break; }
+        }
+    *projRev = z[0] > z[1];
+    return true;
+}
+
+// The depth value under (nx, ny) of a depth texture, or -1.
+static float sample_depth(const DepthSeen& d, float nx, float ny) {
+    D3D11_TEXTURE2D_DESC td = {};
+    td.Width = td.Height = 1;
+    td.MipLevels = td.ArraySize = 1;
+    td.Format = d.fmt;
+    td.SampleDesc.Count = 1;
+    td.Usage = D3D11_USAGE_STAGING;
+    td.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+    ID3D11Texture2D* st = nullptr;
+    if (FAILED(g_dev->CreateTexture2D(&td, nullptr, &st)) || !st) return -1;
+    UINT x = std::min((UINT)(nx * d.w), d.w - 1), y = std::min((UINT)(ny * d.h), d.h - 1);
+    D3D11_BOX box = {x, y, 0, x + 1, y + 1, 1};
+    g_ctx->CopySubresourceRegion(st, 0, 0, 0, 0, d.res, 0, &box);
+    float out = -1;
+    D3D11_MAPPED_SUBRESOURCE ms;
+    if (SUCCEEDED(g_ctx->Map(st, 0, D3D11_MAP_READ, 0, &ms))) {
+        switch (d.fmt) {
+            case DXGI_FORMAT_R24G8_TYPELESS: out = (float)(*(const uint32_t*)ms.pData & 0xFFFFFF) / 16777215.0f; break;
+            case DXGI_FORMAT_R32_TYPELESS:
+            case DXGI_FORMAT_R32G8X24_TYPELESS: out = *(const float*)ms.pData; break;
+            case DXGI_FORMAT_R16_TYPELESS: out = (float)*(const uint16_t*)ms.pData / 65535.0f; break;
+            default: break;
+        }
+        g_ctx->Unmap(st, 0);
+    }
+    st->Release();
+    return out;
+}
+
+// Under g_depthLock. Re-checks every second until a candidate matches, then every 10 s, and at once when the candidates change.
+static void measure_depth() {
+    ULONGLONG now = GetTickCount64();
+    bool changed = g_depthCount != g_measSigN;
+    for (int i = 0; !changed && i < g_depthCount; i++) changed = g_depthSeen[i].res != g_measSig[i];
+    ULONGLONG dt = now - g_measAt;
+    if (changed) {
+        g_measSigN = g_depthCount;
+        for (int i = 0; i < g_depthCount; i++) g_measSig[i] = g_depthSeen[i].res;
+        g_measState = 0;
+        g_measRes = nullptr;
+        g_measNoneLogged = false;
+    } else if (dt < (g_measState == 1 ? 10000u : 1000u)) {
+        return;
+    }
+    g_measAt = now;
+    float ez, nx, ny;
+    bool projRev;
+    if (!hunter_clip(&ez, &nx, &ny, &projRev)) return;  // hunter off-screen or not in a hunt: try again next second
+    float aspect = (float)g_bbW / (float)g_bbH;
+    for (int i = 0; i < g_depthCount; i++) {
+        const DepthSeen& d = g_depthSeen[i];
+        if (g_frame - d.lastFrame > 2 || !d.h || d.w * 2 < g_bbW || fabsf((float)d.w / (float)d.h - aspect) > 0.03f) continue;
+        float sv = sample_depth(d, nx, ny);
+        if (sv < 0) continue;
+        bool asIs = fabsf(sv - ez) < 0.02f, flipped = fabsf(sv - (1.0f - ez)) < 0.02f;
+        if (!asIs && !flipped) continue;
+        bool same = g_measState == 1 && g_measRes == d.res && g_measFlip == !asIs;
+        g_measState = 1;
+        g_measRes = d.res;
+        g_measFlip = !asIs;  // when both agree (depth near 0.5) the plain reading wins
+        g_measProjRev = projRev;
+        if (!same)
+            log("overlay: scene depth candidate %d matches the hunter (sampled %.4f, expected %.4f%s)", i, sv,
+                asIs ? ez : 1.0f - ez, asIs ? "" : ", reversed Z");
+        return;
+    }
+    if (g_depthCount && g_measState != 1) {
+        g_measState = 2;
+        if (!g_measNoneLogged) {
+            g_measNoneLogged = true;
+            log("overlay: no scene depth candidate matches the hunter (expected %.4f); keeping the one cleared most", ez);
+        }
+    }
+}
+
+// Render thread, at Present: the scene depth is the one measure_depth() confirmed, else the full-frame one MHW clears most.
 static void pick_depth() {
     if (!g_depthMode || !oClearDSV || !g_bbW || !g_bbH) return;
     AcquireSRWLockExclusive(&g_depthLock);
@@ -401,6 +526,12 @@ static void pick_depth() {
         if (g_frame - d.lastFrame > 2 || !d.h || d.w * 2 < g_bbW) continue;
         if (fabsf((float)d.w / (float)d.h - aspect) > 0.03f) continue;
         if (best < 0 || d.clears > g_depthSeen[best].clears) best = i;
+    }
+    measure_depth();
+    bool measured = false;
+    if (g_measState == 1 && g_measRes) {
+        for (int i = 0; i < g_depthCount; i++)
+            if (g_depthSeen[i].res == g_measRes && g_frame - g_depthSeen[i].lastFrame <= 2) { best = i; measured = true; }
     }
     ID3D11Resource* res = best >= 0 ? g_depthSeen[best].res : nullptr;
     if (res != g_depthRes) {
@@ -417,7 +548,8 @@ static void pick_depth() {
         }
     }
     if (g_depthSrv)
-        render3d_set_game_depth(g_depthSrv, g_depthSeen[best].clear < 0.5f, (int)g_depthSeen[best].w, (int)g_depthSeen[best].h);
+        render3d_set_game_depth(g_depthSrv, measured ? (g_measFlip ? !g_measProjRev : g_measProjRev) : g_depthSeen[best].clear < 0.5f,
+                                (int)g_depthSeen[best].w, (int)g_depthSeen[best].h);
     else
         render3d_set_game_depth(nullptr, false, 0, 0);
     if (!g_depthLogged && g_frame > 900) {
@@ -544,6 +676,8 @@ static bool init_imgui(IDXGISwapChain* sc) {
 }
 
 static double g_inputReportAt = 0;
+static float g_uiScaleIni = 0;  // [visuals] ui_scale; 0 = auto (framebuffer height / 1080, at least 1)
+static bool g_uiScaleRead = false;
 
 static void render(IDXGISwapChain* sc) {
     if (!g_imguiReady && !g_initFailed) init_imgui(sc);
@@ -552,6 +686,33 @@ static void render(IDXGISwapChain* sc) {
     poll_keys();
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
+    // The UI lays out at a logical resolution (about 1080p) and the framebuffer scale blows it up to the real one, so
+    // 1440p and 4K get proportionally larger text. Glyphs rasterise at the framebuffer scale by themselves (ImGui 1.92's
+    // font rasterizer density); FontScaleDpi stays 1 or text would scale twice.
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        if (!g_uiScaleRead) {
+            g_uiScaleRead = true;
+            char ini[MAX_PATH], v[32] = {0};
+            snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
+            GetPrivateProfileStringA("visuals", "ui_scale", "0", v, sizeof(v), ini);
+            g_uiScaleIni = (float)atof(v);
+        }
+        float scale = g_uiScaleIni > 0 ? g_uiScaleIni : std::max(1.0f, (float)g_bbH / 1080.0f);
+        if (scale > 8) scale = 8;
+        if (g_bbW && g_bbH) {
+            io.DisplaySize = ImVec2((float)g_bbW / scale, (float)g_bbH / scale);
+            io.DisplayFramebufferScale = ImVec2(scale, scale);
+        }
+        ImGui::GetStyle().FontScaleDpi = 1.0f;
+        if (scale != 1.0f && GetForegroundWindow() == g_hwnd) {
+            // The Win32 backend reports the mouse in framebuffer pixels; the last event of a frame wins.
+            POINT pt;
+            RECT rc;
+            if (GetCursorPos(&pt) && ScreenToClient(g_hwnd, &pt) && GetClientRect(g_hwnd, &rc) && PtInRect(&rc, pt))
+                io.AddMousePosEvent((float)pt.x / scale, (float)pt.y / scale);
+        }
+    }
     ImGui::NewFrame();
     mod_frame();
     ImGui::Render();

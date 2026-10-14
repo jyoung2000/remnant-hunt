@@ -982,6 +982,12 @@ void mod_game_tick() {
             } else if (l.baseFov > 5.0f) {
                 set_camera_fov(l.baseFov * tune(TUNING_ADS_FOV_MULT));
             }
+            {
+                static bool wasFiring = false;
+                bool firing = l.gunMode && key_down(VK_LBUTTON);
+                if (wasFiring && !firing && gun >= 0) audio_stop(kWeapons[gun].snd_fire);
+                wasFiring = firing;
+            }
             if (l.gunMode && g.view.valid && key_down(VK_LBUTTON) && l.reloadDone == 0 && t >= l.nextShot && l.mag[gun] > 0) {
                 int nacc_last = fire(s, l, gun, t);
                 l.mag[gun]--;

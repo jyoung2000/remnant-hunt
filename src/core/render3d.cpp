@@ -25,7 +25,7 @@ cbuffer Frame : register(b0) {
     row_major float4x4 viewProj;
     float4 lightDir;   // world space, towards the light
     float4 tint;       // rgb multiply, a = emissive boost
-    float4 depthInfo;  // x = 1 when MHW's depth is bound, y = reversed z, z/w = depth size / viewport size
+    float4 depthInfo;  // x = 1 when MHW's depth is bound (2: and it runs opposite to this pass), y = this pass is reversed z, z/w = depth size / viewport size
 };
 cbuffer Bones : register(b1) { float4 bones[3 * 1024]; };
 Texture2D diffuseTex : register(t0);
@@ -60,6 +60,7 @@ PSIn vs_main(VSIn v) {
 float4 ps_main(PSIn i) : SV_Target {
     if (depthInfo.x > 0.5) {
         float g = gameDepth.Load(int3(i.pos.xy * depthInfo.zw, 0)).r;
+        if (depthInfo.x > 1.5) g = 1.0 - g;  // MHW's buffer runs opposite to this pass's projection
         bool hidden = depthInfo.y > 0.5 ? (g > i.pos.z + 0.00002) : (g < i.pos.z - 0.00002);
         if (hidden) discard;
     }
@@ -349,8 +350,9 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
             float n = sqrtf(L[0] * L[0] + L[1] * L[1] + L[2] * L[2]);
             f->lightDir[0] = L[0] / n; f->lightDir[1] = L[1] / n; f->lightDir[2] = L[2] / n; f->lightDir[3] = 0;
             memcpy(f->tint, it.tint, 16);
-            f->depthInfo[0] = g_gameDepth ? 1.0f : 0.0f;
-            f->depthInfo[1] = g_gameDepthReversed ? 1.0f : 0.0f;
+            // MHW's buffer is compared in this pass's own convention: flipped when the two disagree.
+            f->depthInfo[0] = g_gameDepth ? (g_gameDepthReversed != reversed ? 2.0f : 1.0f) : 0.0f;
+            f->depthInfo[1] = reversed ? 1.0f : 0.0f;
             f->depthInfo[2] = g_gameDepthW > 0 ? (float)g_gameDepthW / (float)w : 1.0f;
             f->depthInfo[3] = g_gameDepthH > 0 ? (float)g_gameDepthH / (float)h : 1.0f;
             ctx->Unmap(g_cbFrame, 0);

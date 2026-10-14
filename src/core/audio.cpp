@@ -19,7 +19,7 @@ static IXAudio2* g_xa = nullptr;
 static IXAudio2MasteringVoice* g_master = nullptr;
 static bool g_tried = false;
 static float g_volume = 0.8f;
-struct Voice { IXAudio2SourceVoice* v; double started; };
+struct Voice { IXAudio2SourceVoice* v; double started; std::string event; };
 static std::vector<Voice> g_voices;
 static std::map<std::string, int> g_nextVariant;
 static std::map<std::string, double> g_lastPlay;
@@ -85,6 +85,10 @@ void audio_play(const char* event, float volume) {
     double t = GetTickCount64() / 1000.0;
     double& last = g_lastPlay[key];
     if (t - last < 0.045) return;  // very fast guns: one sound per frame or two is plenty
+    if (t - last < 0.35) {  // a gun firing again: cut the previous shot so sounds never pile up past the trigger
+        for (Voice& vc : g_voices)
+            if (vc.event == key) vc.v->Stop(0, 0);
+    }
     int& next = g_nextVariant[key];
     const R2Sound* s = r2_sound(event, next % kVariants);
     if (!s) {
@@ -113,8 +117,16 @@ void audio_play(const char* event, float volume) {
         v->DestroyVoice();
         return;
     }
-    g_voices.push_back({v, t});
+    g_voices.push_back({v, t, key});
     last = t;
+}
+
+// The trigger was released: whatever that event still plays stops now (a long fire sample would carry on otherwise).
+void audio_stop(const char* event) {
+    if (!event || !*event) return;
+    std::lock_guard<std::mutex> l(g_lock);
+    for (Voice& vc : g_voices)
+        if (vc.event == event) vc.v->Stop(0, 0);
 }
 
 }  // namespace rh
