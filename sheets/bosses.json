@@ -43,7 +43,8 @@
   "zones": "list",
   "spawn_weight": "num",
   "loot": "list",
-  "fx_color": "str"
+  "fx_color": "str",
+  "props": "list"
  },
  "rows": [
   {
@@ -106,7 +107,10 @@
    "fx_color": "#8CF06A",
    "style": "hunter",
    "prefer_m": 10,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "nightweaver",
@@ -167,7 +171,10 @@
    "fx_color": "#B072FF",
    "style": "caster",
    "prefer_m": 12,
-   "combo": 0.15
+   "combo": 0.15,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "faerin",
@@ -183,6 +190,7 @@
    "skeleton": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Skeleton.uasset",
    "forward": "px",
    "textures": [
+    "M_Sword_low=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Sword_Diff.uasset",
     "*=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Steel_Diff.uasset"
    ],
    "anim_dir": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/",
@@ -228,7 +236,10 @@
    "fx_color": "#B072FF",
    "style": "duelist",
    "prefer_m": 4,
-   "combo": 0.5
+   "combo": 0.5,
+   "props": [
+    "Bone_FN_Weapon_Sword=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Sword_Blade.uasset"
+   ]
   },
   {
    "id": "faelin",
@@ -244,6 +255,7 @@
    "skeleton": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Skeleton.uasset",
    "forward": "px",
    "textures": [
+    "M_Sword_low=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Sword_Diff.uasset",
     "*=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Golden_Diff.uasset"
    ],
    "anim_dir": "Remnant2/Content/World_Fae/Characters/Faelin_Faerin/",
@@ -289,7 +301,10 @@
    "fx_color": "#B072FF",
    "style": "duelist",
    "prefer_m": 4,
-   "combo": 0.5
+   "combo": 0.5,
+   "props": [
+    "Bone_FN_Weapon_Sword=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Sword_Blade.uasset"
+   ]
   },
   {
    "id": "shahala",
@@ -347,7 +362,10 @@
    "fx_color": "#4FD8FF",
    "style": "sentinel",
    "prefer_m": 0,
-   "combo": 0.35
+   "combo": 0.35,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "tal_ratha",
@@ -413,7 +431,10 @@
    "fx_color": "#4FD8FF",
    "style": "brute",
    "prefer_m": 2,
-   "combo": 0.2
+   "combo": 0.2,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "one_true_king",
@@ -474,7 +495,10 @@
    "fx_color": "#B072FF",
    "style": "duelist",
    "prefer_m": 4,
-   "combo": 0.5
+   "combo": 0.5,
+   "props": [
+    "Bone_TK_Weapon_TrueKing=Remnant2/Content/World_DLC1/Characters/True_Fae_King/Mesh/Fae_True_King_DLC_Weapon.uasset"
+   ]
   },
   {
    "id": "lydusa",
@@ -534,7 +558,10 @@
    "fx_color": "#8CF06A",
    "style": "hunter",
    "prefer_m": 10,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "alepsis_taura",
@@ -590,7 +617,10 @@
    "fx_color": "#4FD8FF",
    "style": "sentinel",
    "prefer_m": 0,
-   "combo": 0.35
+   "combo": 0.35,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "annihilation",
@@ -653,7 +683,10 @@
    "fx_color": "#FF4A2A",
    "style": "juggernaut",
    "prefer_m": 2,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "abomination",
@@ -716,7 +749,10 @@
    "fx_color": "#4FD8FF",
    "style": "juggernaut",
    "prefer_m": 2,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "amalgam",
@@ -777,7 +813,10 @@
    "fx_color": "#4FD8FF",
    "style": "brute",
    "prefer_m": 2,
-   "combo": 0.2
+   "combo": 0.2,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "bloat_king",
@@ -838,7 +877,10 @@
    "fx_color": "#B072FF",
    "style": "caster",
    "prefer_m": 12,
-   "combo": 0.15
+   "combo": 0.15,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "custodians_eye",
@@ -902,7 +944,10 @@
    "fx_color": "#4FD8FF",
    "style": "ranged",
    "prefer_m": 17,
-   "combo": 0.25
+   "combo": 0.25,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "fae_archon",
@@ -963,7 +1008,10 @@
    "fx_color": "#B072FF",
    "style": "duelist",
    "prefer_m": 4,
-   "combo": 0.5
+   "combo": 0.5,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "harvester",
@@ -1026,7 +1074,10 @@
    "fx_color": "#4FD8FF",
    "style": "brute",
    "prefer_m": 2,
-   "combo": 0.2
+   "combo": 0.2,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "hatchery",
@@ -1082,7 +1133,10 @@
    "fx_color": "#4FD8FF",
    "style": "caster",
    "prefer_m": 12,
-   "combo": 0.15
+   "combo": 0.15,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "impaler",
@@ -1143,7 +1197,10 @@
    "fx_color": "#B072FF",
    "style": "duelist",
    "prefer_m": 4,
-   "combo": 0.5
+   "combo": 0.5,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "kiln",
@@ -1203,7 +1260,10 @@
    "fx_color": "#8CF06A",
    "style": "juggernaut",
    "prefer_m": 2,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "phantom",
@@ -1264,7 +1324,10 @@
    "fx_color": "#4FD8FF",
    "style": "ranged",
    "prefer_m": 17,
-   "combo": 0.25
+   "combo": 0.25,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "root_horror",
@@ -1320,7 +1383,10 @@
    "fx_color": "#8CF06A",
    "style": "brute",
    "prefer_m": 2,
-   "combo": 0.2
+   "combo": 0.2,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "shifting_soldier",
@@ -1382,7 +1448,11 @@
    "fx_color": "#8CF06A",
    "style": "duelist",
    "prefer_m": 4,
-   "combo": 0.5
+   "combo": 0.5,
+   "props": [
+    "Bone_SS_Weapon_Axe=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Mesh/Pan_LivingStone_SS_MiniBoss_Pickaxe.uasset",
+    "Bone_SS_Hand_L=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Mesh/Pan_LivingStone_SS_MiniBoss_Shield.uasset"
+   ]
   },
   {
    "id": "shrewd",
@@ -1398,6 +1468,7 @@
    "skeleton": "Remnant2/Content/World_Jungle/Characters/Root_Wraith/Mesh/Root_Wraith_Skeleton.uasset",
    "forward": "nx",
    "textures": [
+    "M_Root_Wraith_Mini_Boss_Weapon=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Weapon_Diff.uasset",
     "M_Root_Wraith_Mini_Boss_Cape=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Cape_Diff.uasset",
     "M_Root_Wraith_Mini_Boss_Root=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Cape_Diff.uasset",
     "M_Root_Wraith_Mini_Boss_Robe=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Robe_Diff.uasset"
@@ -1439,7 +1510,10 @@
    "fx_color": "#8CF06A",
    "style": "hunter",
    "prefer_m": 10,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "Bone_WR_Weapon_Bow=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Mesh/Root_Wraith_MiniBoss_Bow.uasset"
+   ]
   },
   {
    "id": "sunken_witch",
@@ -1495,7 +1569,10 @@
    "fx_color": "#B072FF",
    "style": "caster",
    "prefer_m": 12,
-   "combo": 0.15
+   "combo": 0.15,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "mother_mind",
@@ -1555,7 +1632,10 @@
    "fx_color": "#8CF06A",
    "style": "ranged",
    "prefer_m": 17,
-   "combo": 0.25
+   "combo": 0.25,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "legion",
@@ -1615,7 +1695,10 @@
    "fx_color": "#8CF06A",
    "style": "caster",
    "prefer_m": 12,
-   "combo": 0.15
+   "combo": 0.15,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "gwendil",
@@ -1677,7 +1760,10 @@
    "fx_color": "#B072FF",
    "style": "duelist",
    "prefer_m": 4,
-   "combo": 0.5
+   "combo": 0.5,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "root_mantis",
@@ -1745,7 +1831,10 @@
    "fx_color": "#FF4A2A",
    "style": "hunter",
    "prefer_m": 10,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "none"
+   ]
   },
   {
    "id": "venom",
@@ -1761,6 +1850,8 @@
    "skeleton": "Remnant2/Content/World_Root/Characters/Root_Knight/Mesh/Root_Knight_Skeleton.uasset",
    "forward": "py",
    "textures": [
+    "m_Root_Knight_MiniBoss_Weapon_Dyn=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_MiniBoss_Weapon_Diff.uasset",
+    "M_Root_Knight_MiniBoss_Weapon=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_MiniBoss_Weapon_Diff.uasset",
     "m_Miniboss_Cape=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Cape_Diff.uasset",
     "m_Miniboss_Cape_Dyn=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Cape_Diff.uasset",
     "M_Root_Knight_Miniboss_Armor=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_MiniBoss_Armor_Diff.uasset",
@@ -1809,7 +1900,10 @@
    "fx_color": "#FF4A2A",
    "style": "hunter",
    "prefer_m": 10,
-   "combo": 0.3
+   "combo": 0.3,
+   "props": [
+    "Bone_RK_Weapon_Spear=Remnant2/Content/World_Root/Characters/Root_Knight/Mesh/Root_Knight_Miniboss_Weapon.uasset"
+   ]
   }
  ]
 }

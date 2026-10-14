@@ -169,6 +169,32 @@ bool mhw_pouch_set(int id, int count) {
     return true;
 }
 
+// Game thread. Gives the pouch count of the item: tops up its stacks (99 at most), then free slots. Returns how many fit.
+int mhw_pouch_add(int id, int count) {
+    if (id <= 0 || count <= 0) return 0;
+    std::lock_guard<std::mutex> l(g_invLock);
+    if (!g_slot || !mem_readable(g_slot, kSlotSize)) return 0;
+    constexpr int kStack = 99;
+    int left = count;
+    for (int pass = 0; pass < 2 && left > 0; pass++)  // pass 0: stacks of the item; pass 1: free slots
+        for (const Container& c : g_containers) {
+            if (!c.pouch) continue;
+            for (int i = 0; i < c.entries && left > 0; i++) {
+                uint8_t* e = g_slot + c.off + (size_t)i * 16;
+                int* eid = (int*)(e + 8);
+                int* cnt = (int*)(e + 12);
+                if (pass == 0 ? (*eid != id || *cnt >= kStack) : (*eid != 0)) continue;
+                int have = pass == 0 ? std::max(0, *cnt) : 0;
+                int put = std::min(left, kStack - have);
+                *eid = id;
+                *cnt = have + put;
+                left -= put;
+            }
+        }
+    if (left < count) log("inventory: pouch gained item %d x %d", id, count - left);
+    return count - left;
+}
+
 const char* mhw_item_name(int id) {
     std::lock_guard<std::mutex> l(g_invLock);
     auto it = g_names.find(id);

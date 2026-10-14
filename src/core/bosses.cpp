@@ -29,6 +29,7 @@
 namespace rh {
 
 ImFont* ui_font(int which);  // ui.cpp: 0 body, 1 bold, 2 title
+int mhw_pouch_add(int itemId, int count);  // inventory.cpp, game thread: gives the pouch the items; returns how many fit
 
 namespace {
 
@@ -75,6 +76,9 @@ struct Boss {
     float flinchAcc = 0, staggerAcc = 0, staggerNeed = 0;
     int staggers = 0, phases = 0;
     bool aggro = false, roared = false, looted = false;
+    int carvesLeft = 0;        // a corpse can be carved three times
+    double carveAt = 0;        // a carve in progress lands at this time (0 = none)
+    double sinkAt = 0;         // the corpse starts to sink at this time
     double lastSeen = 0, lastStep = 0, lastWallCheck = 0;
     float turnFrom = 0, turnBy = 0;
     float sink = 0;
@@ -117,7 +121,8 @@ int g_zone = -1, g_zoneRank = RANK_LR;
 double g_rollAt = 0;
 int g_rolls = 0;
 int g_nextDebugRow = 0;
-bool g_keyWas = false, g_lmbWas = false, g_rmbWas = false;
+bool g_keyWas = false, g_lmbWas = false, g_rmbWas = false, g_carveKeyWas = false;
+bool g_carvePrompt = false;  // the toast on screen is the carve prompt (so a carve's own toast is not overwritten)
 double g_swingAt = 0, g_dodgeAt = -10;
 int g_swingWeapon = -1;
 const GameSnapshot* g_snap = nullptr;
@@ -511,8 +516,8 @@ bool zone_listed(const Bosses& r, int zone) {
     return false;
 }
 
-// Loot: one Remnant item from the boss's list that the hunter does not own yet.
-void loot(SaveData& s, Live& l, const Boss& b) {
+// The Remnant items on the boss's loot list that the hunter does not own yet.
+std::vector<std::pair<Cat, int>> loot_pool(const SaveData& s, const Boss& b) {
     static const struct { const char* sheet; Cat cat; } kSheets[] = {
         {"weapons", CAT_WEAPON}, {"mods", CAT_MOD}, {"mutators", CAT_MUTATOR}, {"armor", CAT_ARMOR},
         {"archetypes", CAT_ARCHETYPE}, {"rings", CAT_RING}, {"amulets", CAT_AMULET}, {"relics", CAT_RELIC},
@@ -535,6 +540,26 @@ void loot(SaveData& s, Live& l, const Boss& b) {
                 }
         i = j + 1;
     }
+    return pool;
+}
+
+// Gives one of the pool's items; returns its name (empty when the pool is empty).
+std::string loot_grant(SaveData& s, Live& l, const std::vector<std::pair<Cat, int>>& pool, const char** id) {
+    if (pool.empty()) return std::string();
+    auto pick = pool[rand() % pool.size()];
+    if (pick.first == CAT_CONSUMABLE) s.stock[pick.second]++;  // consumables are counted in the stock, not owned
+    else s.owned[pick.first][pick.second] = 1;
+    l.dirty = true;
+    l.loadoutChanged = true;
+    ItemView v = item(pick.first, pick.second);
+    const std::string& got = v.name ? r2_text(*v.name) : std::string();
+    if (id) *id = v.id;
+    return got.empty() ? std::string(v.id) : got;
+}
+
+// Loot: one Remnant item from the boss's list that the hunter does not own yet.
+void loot(SaveData& s, Live& l, const Boss& b) {
+    std::vector<std::pair<Cat, int>> pool = loot_pool(s, b);
     std::string name = display_name(b.row);
     double t = now_s();
     const Difficulties& d = kDifficulties[b.diff];
@@ -564,14 +589,92 @@ void loot(SaveData& s, Live& l, const Boss& b) {
         toast(l, "%s defeated%s", name.c_str(), extra.c_str());
         return;
     }
-    auto pick = pool[rand() % pool.size()];
-    if (pick.first == CAT_CONSUMABLE) s.stock[pick.second]++;  // consumables are counted in the stock, not owned
-    else s.owned[pick.first][pick.second] = 1;
-    l.dirty = true;
-    ItemView v = item(pick.first, pick.second);
-    const std::string& got = v.name ? r2_text(*v.name) : std::string();
-    toast(l, "%s defeated: %s added to your Remnant gear%s", name.c_str(), got.empty() ? v.id : got.c_str(), extra.c_str());
-    log("bosses: %s defeated, loot %s", B(b).id, v.id);
+    const char* id = "?";
+    std::string got = loot_grant(s, l, pool, &id);
+    toast(l, "%s defeated: %s added to your Remnant gear%s", name.c_str(), got.c_str(), extra.c_str());
+    log("bosses: %s defeated, loot %s", B(b).id, id);
+}
+
+// ---------------------------------------------------------------- carving the corpse
+constexpr double kCorpseHold = 90.0, kCarveDelay = 1.2;
+constexpr float kCarveRange = 300.0f;  // cm from the corpse's hitbox
+constexpr int kCarves = 3;
+
+// The distance (cm) from p to the corpse's hitbox (its posed spheres), or to its position when it has none.
+float corpse_gap(const Boss& b, Vec3 p) {
+    float best = hlen(sub(p, b.pos));
+    for (const WSph& s : b.sph) {
+        Vec3 d = sub(p, s.c);
+        best = std::min(best, sqrtf(d.x * d.x + d.y * d.y + d.z * d.z) - s.r);
+    }
+    return best;
+}
+
+// The rank's ore or bone: one of the materials sheet's rows for it.
+int carve_material(const Boss& b) {
+    int want = b.rank == RANK_MR ? MATERIALS_RANK_MASTER : b.rank == RANK_HR ? MATERIALS_RANK_HIGH : MATERIALS_RANK_LOW;
+    std::vector<int> rows;
+    for (int i = 0; i < kMaterialsCount; i++)
+        if ((int)kMaterials[i].rank == want && (kMaterials[i].kind == MATERIALS_KIND_ORE || kMaterials[i].kind == MATERIALS_KIND_BONE) &&
+            kMaterials[i].mhw_item_id > 0)
+            rows.push_back(i);
+    return rows.empty() ? -1 : rows[rand() % rows.size()];
+}
+
+// One dead boss: the prompt when the hunter stands at it, and the carve that lands after its delay.
+// keyEdge is E pressed this tick (taken by the first corpse the hunter stands at).
+void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
+    const GameSnapshot& g = l.snap;
+    bool screen = g_remnantScreenOpen != 0;
+    bool atCorpse = b.carvesLeft > 0 && !screen && corpse_gap(b, g.pos) < kCarveRange;
+    std::string name = display_name(b.row);
+    if (b.carveAt > 0 && !atCorpse) {  // walked off, or a screen opened: the carve is dropped
+        b.carveAt = 0;
+        return;
+    }
+    if (!atCorpse) return;
+    if (b.carveAt > 0) {
+        if (t < b.carveAt) {
+            toast(l, "Carving %s...", name.c_str());
+            l.toastUntil = t + 0.3;
+            g_carvePrompt = true;
+            return;
+        }
+        b.carveAt = 0;
+        int row = carve_material(b);
+        int id = row >= 0 ? (int)kMaterials[row].mhw_item_id : 0;
+        int n = 1 + rand() % 3;
+        int gave = id > 0 ? mhw_pouch_add(id, n) : 0;
+        if (id > 0 && gave == 0) {  // no room in the pouch: nothing is carved yet
+            toast(l, "Your item pouch is full");
+            g_carvePrompt = false;
+            log("bosses: %s carve: pouch full (item %d)", B(b).id, id);
+            return;
+        }
+        b.carvesLeft--;
+        if (b.carvesLeft <= 0) b.sinkAt = std::min(b.sinkAt, t + 3.0);
+        const char* nm = id > 0 ? mhw_item_name(id) : nullptr;
+        std::string what = id > 0 ? std::string(nm ? nm : kMaterials[row].note) + " x" + std::to_string(gave) : std::string();
+        // the Remnant loot the boss drops: another piece of its list the hunter does not own yet
+        const char* rid = nullptr;
+        std::string gear = loot_grant(s, l, loot_pool(s, b), &rid);
+        if (!gear.empty()) what += (what.empty() ? "" : ", ") + gear;
+        toast(l, "Carved: %s", what.empty() ? "nothing" : what.c_str());
+        g_carvePrompt = false;
+        log("bosses: %s carved (%d left): item %d x %d%s%s", B(b).id, b.carvesLeft, id, gave, rid ? ", Remnant " : "", rid ? rid : "");
+        return;
+    }
+    if (*keyEdge) {
+        *keyEdge = false;
+        b.carveAt = t + kCarveDelay;
+        return;
+    }
+    // the prompt, unless another toast is showing
+    if (g_carvePrompt || t >= l.toastUntil) {
+        toast(l, "[E] Carve %s (%d left)", name.c_str(), b.carvesLeft);
+        l.toastUntil = t + 0.3;
+        g_carvePrompt = true;
+    }
 }
 
 // The hunter is inside an attack's reach and arc.
@@ -1443,6 +1546,11 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
 
     mhw_weapons(l, t);
     ev |= projectiles(l, t, dt);
+    // E carves a corpse the hunter stands at (read here as an edge; carve_tick checks the corpse and that no screen is open).
+    bool eDown = key_down('E');
+    bool carveKey = eDown && !g_carveKeyWas;
+    g_carveKeyWas = eDown;
+    if (g_carvePrompt && t >= l.toastUntil) g_carvePrompt = false;
 
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];
@@ -1489,9 +1597,11 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
                 ev |= BOSS_EV_KILL;
                 loot(s, l, b);
                 g_rollAt = t + 360 + frand() * 240;
+                b.carvesLeft = kCarves;
+                b.sinkAt = t + kCorpseHold;  // the death pose is held; the corpse can be carved meanwhile
             }
-            float hold = has(r.anim_death) ? 14.0f : 1.0f;
-            if (t - b.stT0 > hold) b.sink += dt * std::max(120.0f, height_of(b) * 0.4f);
+            carve_tick(s, l, b, &carveKey, t);
+            if (t > b.sinkAt) b.sink += dt * std::max(120.0f, height_of(b) * 0.4f);
             if (b.sink > height_of(b) + 300) b = Boss();
             continue;
         }
@@ -1583,6 +1693,92 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     return ev;
 }
 
+// Textures per material slot: "slot=asset" entries matched by slot name; "*=asset" for every other slot.
+static void assign_textures(const Model& m, const char* list, DrawItem* it) {
+    static std::set<std::string> keep;  // stable storage for the texture asset strings
+    size_t slots = m.materials.size();
+    for (const ModelSection& s : m.sections) slots = std::max(slots, (size_t)std::max<int16_t>(0, s.material) + 1);
+    it->diffuse.assign(slots, nullptr);
+    const char* fallback = nullptr;
+    std::string all = list ? list : "";
+    size_t i = 0;
+    while (i < all.size()) {
+        size_t j = all.find(',', i);
+        if (j == std::string::npos) j = all.size();
+        std::string e = all.substr(i, j - i);
+        size_t eq = e.find('=');
+        if (eq != std::string::npos) {
+            std::string slot = e.substr(0, eq), asset = e.substr(eq + 1);
+            const char* kept = keep.insert(asset).first->c_str();
+            if (slot == "*") fallback = kept;
+            for (size_t k = 0; k < m.materials.size() && slot != "*"; k++)
+                if (!it->diffuse[k] && m.materials[k].find(slot) != std::string::npos) it->diffuse[k] = kept;
+        }
+        i = j + 1;
+    }
+    for (auto& tx : it->diffuse)
+        if (!tx) tx = fallback;
+}
+
+// A bone's posed matrix in model space as {R | t} (3x4, row-major): the skin palette (bone * inverse bind) undone.
+static bool bone_model_matrix(const Model& m, const std::vector<float>& pal, int bone, float out[12]) {
+    if (bone < 0 || (size_t)(bone + 1) * 12 > pal.size() || (size_t)(bone + 1) * 12 > m.invBind.size()) return false;
+    const float* a = &m.invBind[(size_t)bone * 12];
+    const float* P = &pal[(size_t)bone * 12];
+    float A[9] = {a[0], a[1], a[2], a[4], a[5], a[6], a[8], a[9], a[10]}, t[3] = {a[3], a[7], a[11]};
+    float c00 = A[4] * A[8] - A[5] * A[7], c01 = A[5] * A[6] - A[3] * A[8], c02 = A[3] * A[7] - A[4] * A[6];
+    float det = A[0] * c00 + A[1] * c01 + A[2] * c02;
+    if (fabsf(det) < 1e-12f) return false;
+    float id = 1.0f / det;
+    float I[9] = {c00 * id, (A[2] * A[7] - A[1] * A[8]) * id, (A[1] * A[5] - A[2] * A[4]) * id,
+                  c01 * id, (A[0] * A[8] - A[2] * A[6]) * id, (A[2] * A[3] - A[0] * A[5]) * id,
+                  c02 * id, (A[1] * A[6] - A[0] * A[7]) * id, (A[0] * A[4] - A[1] * A[3]) * id};
+    float rt[3];  // the reference pose's translation: -inverse(A) * t
+    for (int r = 0; r < 3; r++) rt[r] = -(I[r * 3] * t[0] + I[r * 3 + 1] * t[1] + I[r * 3 + 2] * t[2]);
+    for (int r = 0; r < 3; r++) {
+        for (int c = 0; c < 3; c++)
+            out[r * 4 + c] = P[r * 4] * I[c] + P[r * 4 + 1] * I[3 + c] + P[r * 4 + 2] * I[6 + c];
+        out[r * 4 + 3] = P[r * 4] * rt[0] + P[r * 4 + 1] * rt[1] + P[r * 4 + 2] * rt[2] + P[r * 4 + 3];
+    }
+    return true;
+}
+
+// The boss's held props (bosses.json props, "bone=mesh"): each placed on its bone's posed matrix, in the boss's world.
+static void append_props(const Bosses& r, const Model& body, const std::vector<float>& pal, const float world[16],
+                         std::vector<DrawItem>* items) {
+    std::string all = r.props;
+    size_t i = 0;
+    while (i < all.size()) {
+        size_t j = all.find(',', i);
+        if (j == std::string::npos) j = all.size();
+        std::string e = all.substr(i, j - i);
+        i = j + 1;
+        size_t eq = e.find('=');
+        if (eq == std::string::npos) continue;
+        std::string bone = e.substr(0, eq), mesh = e.substr(eq + 1);
+        const Model* pm = model_get(mesh.c_str());
+        if (!pm) continue;
+        int bi = -1;
+        for (size_t k = 0; k < body.bones.size(); k++)
+            if (body.bones[k].name == bone) { bi = (int)k; break; }
+        float bw[12];
+        if (!bone_model_matrix(body, pal, bi, bw)) continue;
+        // row-vector 4x4 of the bone (model space), then the boss's world matrix
+        float M[16] = {bw[0], bw[4], bw[8], 0, bw[1], bw[5], bw[9], 0, bw[2], bw[6], bw[10], 0, bw[3], bw[7], bw[11], 1};
+        DrawItem pit;
+        pit.model = pm;
+        for (int rr = 0; rr < 4; rr++)
+            for (int cc = 0; cc < 4; cc++) {
+                float v = 0;
+                for (int k = 0; k < 4; k++) v += M[rr * 4 + k] * world[k * 4 + cc];
+                pit.world[rr * 4 + cc] = v;
+            }
+        pose(*pm, nullptr, 0, true, nullptr, 0, 0, &pit.palette);
+        assign_textures(*pm, r.textures, &pit);  // the prop's materials by slot name, the body's textures as the fallback
+        items->push_back(std::move(pit));
+    }
+}
+
 void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
     std::vector<DrawBoss> list;
     {
@@ -1593,7 +1789,6 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
     if (!camera_view(&v)) return;
     std::vector<DrawItem> items;
     items.reserve(list.size() + 1);
-    static std::set<std::string> keep;  // stable storage for the texture asset strings
     for (const DrawBoss& d : list) {
         if (!d.m) continue;
         const Bosses& r = kBosses[d.row];
@@ -1604,30 +1799,10 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
         const Anim* b = d.b.empty() ? nullptr : anim_get(d.b.c_str(), r.skeleton, d.m);
         // A one-shot animation's time is held at its end by the game thread; looping ones wrap here.
         pose(*d.m, a, d.at, true, b, d.bt, b ? d.blend : 0.0f, &it.palette);
-        // Textures per material slot: "slot=asset" entries matched by slot name; "*=asset" for every other slot.
-        size_t slots = d.m->materials.size();
-        for (const ModelSection& s : d.m->sections) slots = std::max(slots, (size_t)std::max<int16_t>(0, s.material) + 1);
-        it.diffuse.assign(slots, nullptr);
-        const char* fallback = nullptr;
-        std::string all = r.textures;
-        size_t i = 0;
-        while (i < all.size()) {
-            size_t j = all.find(',', i);
-            if (j == std::string::npos) j = all.size();
-            std::string e = all.substr(i, j - i);
-            size_t eq = e.find('=');
-            if (eq != std::string::npos) {
-                std::string slot = e.substr(0, eq), asset = e.substr(eq + 1);
-                const char* kept = keep.insert(asset).first->c_str();
-                if (slot == "*") fallback = kept;
-                for (size_t k = 0; k < d.m->materials.size() && slot != "*"; k++)
-                    if (!it.diffuse[k] && d.m->materials[k].find(slot) != std::string::npos) it.diffuse[k] = kept;
-            }
-            i = j + 1;
-        }
-        for (auto& tx : it.diffuse)
-            if (!tx) tx = fallback;
+        assign_textures(*d.m, r.textures, &it);
+        std::vector<float> bodyPal = it.palette;
         items.push_back(std::move(it));
+        append_props(r, *d.m, bodyPal, d.world, &items);
     }
     gunmodel_append(&items);
     if (items.empty()) return;

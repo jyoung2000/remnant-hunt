@@ -363,3 +363,8 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   optional fields stay empty because the install has no such clip or event (most bosses have no stun clip; shahala,
   alepsis_taura, one_true_king, hatchery, shrewd have no run/turn; a few lack roar/death/step events). The code falls
   back (run -> walk, stun -> flinch, missing sound -> silence). Amalgam's Voc_Enrage could stand in for its roar.
+- Weapons and corpses (2026-10-14 ~12:50): bosses.json `props` ("bone=mesh"): 6 bosses hold their weapons (faerin,
+  faelin sword; one_true_king; shifting_soldier axe + shield; shrewd bow; venom spear), drawn on the posed bone. The
+  other 23 use STATIC meshes (SM_*) that r2read cannot decode yet (it reads skeletal meshes only): next r2read step is
+  UStaticMesh. Corpses stay 90 s; E within 3 m carves up to 3 times (1-3 rank materials into the pouch via
+  mhw_pouch_add + one Remnant drop), then the corpse sinks. Not yet run in game.

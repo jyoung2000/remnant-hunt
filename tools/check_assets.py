@@ -4,7 +4,7 @@ install: texts, icons and art, names, meshes, skeletons, animations and sounds. 
 writes the failures to build/asset_check.txt. Never copies game data.
 usage: check_assets.py <r2read.exe> <Remnant2 install dir> [sheets dir]
 """
-import collections, json, os, subprocess, sys, time
+import collections, json, os, struct, subprocess, sys, time
 
 # Textures named in the code rather than the sheets (bosses.cpp status icons).
 CODE_TEXTURES = [
@@ -24,7 +24,22 @@ class Helper:
             return head, 0
         n = int(head.split()[-1])
         got = self.p.stdout.read(n)
+        self.last = got
         return head, len(got)
+
+    def bones(self, skeleton):
+        """Bone names of a skeleton asset (RSKL reply), or None."""
+        head, n = self.ask("SKEL", skeleton)
+        b = self.last if head.startswith("OK") and n else b""
+        if b[:4] != b"RSKL":
+            return None
+        cnt = struct.unpack_from("<I", b, 4)[0]
+        q, out = 8, set()
+        for _ in range(cnt):
+            ln = struct.unpack_from("<H", b, q)[0]
+            out.add(b[q + 2:q + 2 + ln].decode(errors="replace"))
+            q += 2 + ln + 44
+        return out
 
 
 def main():
@@ -35,6 +50,7 @@ def main():
     ok, bad = collections.Counter(), collections.Counter()
     fails = []
     seen = set()
+    skel_bones = {}
     t0 = time.time()
 
     def check(kind, where, *req):
@@ -66,6 +82,22 @@ def main():
                         check("texture", where + "." + col, "TEX", spec, "256")
                     elif kind == "r2name":
                         check("name", where + "." + col, "NAME", spec["asset"], spec.get("pattern", "^(" + spec.get("name", "") + ")$"))
+                elif col == "props" and isinstance(v, list):  # "bone=mesh": a skeletal mesh, held by a bone of the body's skeleton
+                    for e in v:
+                        if "=" in e:
+                            bone, mesh = e.split("=", 1)
+                            check("prop-mesh", where, "MESH", mesh)
+                            if r["skeleton"] not in skel_bones:
+                                skel_bones[r["skeleton"]] = h.bones(r["skeleton"])
+                            have = skel_bones[r["skeleton"]]
+                            key = ("bone", r["skeleton"], bone)
+                            if key not in seen:
+                                seen.add(key)
+                                if have is not None and bone in have:
+                                    ok["prop-bone"] += 1
+                                else:
+                                    bad["prop-bone"] += 1
+                                    fails.append(f"prop-bone {where} {bone} is not a bone of {r['skeleton']}")
                 elif col in ("mesh_tex", "textures") and isinstance(v, list):
                     for e in v:
                         if "=" in e:
