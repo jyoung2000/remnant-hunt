@@ -85,7 +85,11 @@ static void rebuild_sources(const SaveData& s, Live& l) {
             if (slot == 0 || kPerks[pk[i]].kind != PERKS_KIND_PRIME) fx.add_source(kPerks[pk[i]].effects);
         int tr = kArchetypes[a].trait;
         if (tr >= 0 && slot == 0) fx.add_source(kTraits[tr].effects);
+        if (slot == 1 && prime_time(s))  // the Prime Time legendary
+            for (int p : pk)
+                if (kPerks[p].kind == PERKS_KIND_PRIME) fx.add_source(kPerks[p].effects);
     }
+    progress_sources(s, fx);
     if (s.longGun >= 0) fx.add_source(kWeapons[s.longGun].effects, 1.0f, 1);
     if (s.handGun >= 0) fx.add_source(kWeapons[s.handGun].effects, 1.0f, 2);
     if (s.melee >= 0) fx.add_source(kWeapons[s.melee].effects);
@@ -881,7 +885,12 @@ void mod_game_tick() {
             if (!find_monster(l, it->first)) {
                 // A monster we fought left the list low on health: slain or captured.
                 const Live::Track& tr = it->second;
-                if (tr.fought && tr.max > 0 && tr.hp < 0.25f * tr.max) trigger(l, TR_ON_KILL, t);
+                if (tr.fought && tr.max > 0 && tr.hp < 0.25f * tr.max) {
+                    trigger(l, TR_ON_KILL, t);
+                    // experience by the monster's size; small monsters a little
+                    award_xp(s, l, std::max(60.0f, tr.max * tune(TUNING_XP_PER_HP) * (tr.large ? 1.0f : 0.5f)), t);
+                    l.loadoutChanged = true;  // a level or a prism choice may change the numbers
+                }
                 it = l.track.erase(it);
             } else {
                 ++it;
@@ -971,8 +980,73 @@ static std::string save_path() {
     return d + "\\save.json";
 }
 
-static const char* kCatKeys[CAT_COUNT] = {"weapons", "mods", "mutators", "armor", "archetypes",
-                                          "rings", "amulets", "relics", "fragments", "consumables"};
+static const char* kCatKeys[CAT_COUNT] = {"weapons", "mods", "mutators", "armor", "archetypes", "rings",
+                                          "amulets", "relics", "fragments", "consumables", "traits", "prisms"};
+
+// A prism in the save: "id|xp|legendary|slot,slot,...|offer,offer" with slots "f.fragment.lv" / "u.fusion.lv" / "-"
+// and offers "f.fragment" / "u.fusion" / "l.legendary" / "r.slot".
+static std::string prism_str(int row, const SaveData::Prism& p) {
+    char b[64];
+    snprintf(b, sizeof(b), "%s|%.0f|%s|", kPrisms[row].id, p.xp, p.legendary >= 0 ? kLegendaries[p.legendary].id : "");
+    std::string s = b;
+    for (int i = 0; i < 5; i++) {
+        const SaveData::PSlot& sl = p.slot[i];
+        if (i) s += ",";
+        if (sl.kind == PS_FRAGMENT) s += std::string("f.") + kFragments[sl.row].id + "." + std::to_string(sl.lv);
+        else if (sl.kind == PS_FUSION) s += std::string("u.") + kFusions[sl.row].id + "." + std::to_string(sl.lv);
+        else s += "-";
+    }
+    s += "|";
+    for (int i = 0; i < p.offers; i++) {
+        const SaveData::PSlot& o = p.offer[i];
+        if (i) s += ",";
+        if (o.kind == PS_FRAGMENT) s += std::string("f.") + kFragments[o.row].id;
+        else if (o.kind == PS_FUSION) s += std::string("u.") + kFusions[o.row].id;
+        else if (o.kind == PS_LEGENDARY) s += std::string("l.") + kLegendaries[o.row].id;
+        else s += "r." + std::to_string(o.row);
+    }
+    return s;
+}
+
+static std::vector<std::string> split(const std::string& s, char c) {
+    std::vector<std::string> out;
+    size_t a = 0;
+    while (true) {
+        size_t b = s.find(c, a);
+        out.push_back(s.substr(a, b == std::string::npos ? std::string::npos : b - a));
+        if (b == std::string::npos) break;
+        a = b + 1;
+    }
+    return out;
+}
+
+static void prism_parse(SaveData& s, const std::string& str) {
+    std::vector<std::string> f = split(str, '|');
+    if (f.size() < 5) return;
+    int row = prisms_index(f[0].c_str());
+    if (row < 0) return;
+    SaveData::Prism p;
+    p.xp = atof(f[1].c_str());
+    p.legendary = legendaries_index(f[2].c_str());
+    std::vector<std::string> sl = split(f[3], ',');
+    for (int i = 0; i < 5 && i < (int)sl.size(); i++) {
+        std::vector<std::string> k = split(sl[i], '.');
+        if (k.size() != 3) continue;
+        int r = k[0] == "f" ? fragments_index(k[1].c_str()) : k[0] == "u" ? fusions_index(k[1].c_str()) : -1;
+        if (r >= 0) p.slot[i] = {k[0] == "f" ? PS_FRAGMENT : PS_FUSION, (int16_t)r, (int8_t)std::max(1, std::min(10, atoi(k[2].c_str())))};
+    }
+    for (const std::string& o : split(f[4], ',')) {
+        std::vector<std::string> k = split(o, '.');
+        if (k.size() != 2 || p.offers >= 3) continue;
+        SaveData::PSlot x;
+        if (k[0] == "f") x = {PS_FRAGMENT, (int16_t)fragments_index(k[1].c_str()), 0};
+        else if (k[0] == "u") x = {PS_FUSION, (int16_t)fusions_index(k[1].c_str()), 0};
+        else if (k[0] == "l") x = {PS_LEGENDARY, (int16_t)legendaries_index(k[1].c_str()), 0};
+        else if (k[0] == "r") x = {PS_RAISE, (int16_t)atoi(k[1].c_str()), 0};
+        if (x.row >= 0) p.offer[p.offers++] = x;
+    }
+    s.prism[row] = p;
+}
 
 static std::string q(const char* s) { return std::string("\"") + (s ? s : "") + "\""; }
 static std::string id_or_empty(Cat c, int row) { return q(row >= 0 ? item(c, row).id : ""); }
@@ -984,6 +1058,16 @@ void save_write(const SaveData& s) {
     j += "  \"archetype2\": " + id_or_empty(CAT_ARCHETYPE, s.archetype2) + ",\n";
     j += "  \"skill\": " + std::to_string(s.skill[0]) + ",\n  \"skill2\": " + std::to_string(s.skill[1]) + ",\n";
     j += "  \"relicCharges\": " + std::to_string(s.relicCharges) + ",\n";
+    j += "  \"xp\": " + std::to_string((long long)s.xp) + ",\n";
+    j += "  \"difficulty\": " + q(kDifficulties[std::max(0, std::min(kDifficultiesCount - 1, s.difficulty))].id) + ",\n";
+    j += "  \"prismOn\": " + id_or_empty(CAT_PRISM, s.prismOn) + ",\n";
+    j += "  \"traitPoints\": {";
+    for (int i = 0, n = 0; i < kTraitsCount; i++)
+        if (s.trait[i]) j += (n++ ? ", " : "") + q(kTraits[i].id) + ": " + std::to_string(s.trait[i]);
+    j += "},\n  \"prisms\": [";
+    for (int i = 0, n = 0; i < kPrismsCount; i++)
+        if (s.has(CAT_PRISM, i)) j += (n++ ? ", " : "") + q(prism_str(i, s.prism[i]).c_str());
+    j += "],\n";
     j += "  \"long\": " + id_or_empty(CAT_WEAPON, s.longGun) + ",\n";
     j += "  \"hand\": " + id_or_empty(CAT_WEAPON, s.handGun) + ",\n";
     j += "  \"melee\": " + id_or_empty(CAT_WEAPON, s.melee) + ",\n";
@@ -1124,6 +1208,18 @@ void save_load() {
                 int r = row_by_id(CAT_CONSUMABLE, kv.first);
                 if (r >= 0) s.stock[r] = kv.second;
             }
+            s.xp = atof(json_str(j, "xp").c_str());
+            int dfc = difficulties_index(json_str(j, "difficulty").c_str());
+            if (dfc >= 0) s.difficulty = dfc;
+            s.prismOn = row_by_id(CAT_PRISM, json_str(j, "prismOn"));
+            for (auto& kv : json_counts(j, "traitPoints")) {
+                int r = row_by_id(CAT_TRAIT, kv.first);
+                if (r >= 0) s.trait[r] = (uint8_t)std::max(0, std::min(10, kv.second));
+            }
+            for (const std::string& p : json_strings(j, "prisms")) prism_parse(s, p);
+            for (int i = 0; i < kTraitsCount; i++)
+                if (kTraits[i].kind == TRAITS_KIND_CORE) s.owned[CAT_TRAIT][i] = 1;
+            while (trait_points_spent(s) > trait_points(s)) traits_reset(s);  // the rules changed: points back
         } else {
             // v0.1 save: guns with McCabe levels (v0.1 had 5; v0.2 keeps them), Dragon Heart charges.
             s.relicCharges = atoi(json_str(j, "relic").c_str());

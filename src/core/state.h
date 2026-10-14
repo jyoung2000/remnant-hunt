@@ -32,11 +32,23 @@ struct SaveData {
     int armor[4] = {-1, -1, -1, -1};      // head, body, gloves, legs
     int concoction = -1;                  // active concoction (consumables row), until the next rest
     int relicCharges = 0;
+    // Progression (progress.cpp): Remnant experience and levels, trait points, prisms.
+    double xp = 0;                        // all experience earned
+    std::vector<uint8_t> trait;           // points in each traits row (0..10)
+    struct PSlot { int8_t kind = 0; int16_t row = -1; int8_t lv = 0; };  // PS_*; PS_RAISE offers name a slot
+    struct Prism { double xp = 0; PSlot slot[5]; int legendary = -1; PSlot offer[3]; int offers = 0; };
+    std::vector<Prism> prism;             // per prisms row
+    int prismOn = -1;                     // the equipped prism
+    int difficulty = 1;                   // difficulties row for the Remnant monsters (Veteran), chosen at Ward 13
 
     SaveData() {
         for (int c = 0; c < CAT_COUNT; c++) owned[c].assign(cat_count((Cat)c), 0);
         stock.assign(kConsumablesCount, 0);
         level.assign(kWeaponsCount, 0);
+        trait.assign(kTraitsCount, 0);
+        prism.assign(kPrismsCount, Prism());
+        for (int i = 0; i < kTraitsCount; i++)
+            if (kTraits[i].kind == TRAITS_KIND_CORE) owned[CAT_TRAIT][i] = 1;  // core traits are known from the start
     }
     bool has(Cat c, int row) const { return row >= 0 && row < (int)owned[c].size() && owned[c][row]; }
 };
@@ -120,6 +132,23 @@ Shared& S();
 double now_s();
 void toast(Live& l, const char* fmt, ...);
 void research_tick(const Live& l, double now);
+// Progression (progress.cpp): experience, trait points, prisms. Under S().lock.
+enum PSKind : int8_t { PS_NONE, PS_FRAGMENT, PS_FUSION, PS_LEGENDARY, PS_RAISE };
+double level_xp(int level);                 // experience needed for a Remnant level, from zero
+int remnant_level(double xp);
+int trait_points(const SaveData& s);        // earned
+int trait_points_spent(const SaveData& s);
+bool trait_known(const SaveData& s, int row);
+bool trait_set(SaveData& s, int row, int delta);  // one point in (+1) or out (-1)
+void traits_reset(SaveData& s);
+int prism_level(const SaveData::Prism& p);  // 0..51
+double prism_need(const SaveData::Prism& p);  // experience for its next level, 0 at the top
+void prism_offer(SaveData::Prism& p);       // three choices once a level is due
+bool prism_pick(SaveData& s, int prism, int offer);
+bool prism_cleanse(SaveData& s, int prism);
+void award_xp(SaveData& s, Live& l, float xp, double t);
+void progress_sources(const SaveData& s, EffectState& fx);  // traits and the equipped prism
+bool prime_time(const SaveData& s);         // the Prime Time legendary: the second archetype's prime perk too
 // Remnant statuses (remnant.cpp). Game thread, under S().lock.
 uint32_t status_bits(const void* em);  // bit per Status active on a monster (uEnemy*), nullptr = the hunter
 void inflict_player(Live& l, Status st, float total, float dur, double t);  // total: hunter HP over dur

@@ -13,7 +13,7 @@ using namespace sheets;
 
 enum Cat : int {
     CAT_WEAPON, CAT_MOD, CAT_MUTATOR, CAT_ARMOR, CAT_ARCHETYPE, CAT_RING, CAT_AMULET, CAT_RELIC, CAT_FRAGMENT,
-    CAT_CONSUMABLE, CAT_COUNT
+    CAT_CONSUMABLE, CAT_TRAIT, CAT_PRISM, CAT_COUNT
 };
 
 struct ItemView {
@@ -42,6 +42,8 @@ inline int cat_count(Cat c) {
         case CAT_RELIC: return kRelicsCount;
         case CAT_FRAGMENT: return kFragmentsCount;
         case CAT_CONSUMABLE: return kConsumablesCount;
+        case CAT_TRAIT: return kTraitsCount;
+        case CAT_PRISM: return kPrismsCount;
         default: return 0;
     }
 }
@@ -74,6 +76,8 @@ inline ItemView item(Cat c, int row) {
         case CAT_RELIC: { const Relics& r = kRelics[row]; v = view_of(c, row, r); v.desc = &r.desc; v.icon = r.icon; v.effects = r.effects; break; }
         case CAT_FRAGMENT: { const Fragments& r = kFragments[row]; v = view_of(c, row, r); v.desc = &r.desc; v.icon = r.icon; v.effects = r.effects; break; }
         case CAT_CONSUMABLE: { const Consumables& r = kConsumables[row]; v = view_of(c, row, r); v.desc = &r.desc; v.icon = r.icon; v.effects = r.effects; break; }
+        case CAT_TRAIT: { const Traits& r = kTraits[row]; v = view_of(c, row, r); v.desc = &r.desc; v.icon = r.icon; v.effects = r.effects; break; }
+        case CAT_PRISM: { const Prisms& r = kPrisms[row]; v = view_of(c, row, r); v.icon = r.icon; break; }
         default: break;
     }
     return v;
@@ -81,7 +85,7 @@ inline ItemView item(Cat c, int row) {
 
 inline const char* cat_label(Cat c) {
     static const char* k[CAT_COUNT] = {"Weapons", "Mods", "Mutators", "Armor", "Archetypes", "Rings", "Amulets",
-                                       "Relics", "Relic Fragments", "Consumables"};
+                                       "Relics", "Relic Fragments", "Consumables", "Traits", "Prisms"};
     return c >= 0 && c < CAT_COUNT ? k[c] : "";
 }
 

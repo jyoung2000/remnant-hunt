@@ -78,3 +78,17 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   -> learned_stamina.txt; applies bonuses relative to MHW's own changes; Remnant evade = stamina spend >= 12.
 - Tests: make test-logic (Wine) passes; test_effects 846 parse; preflight clean. Version 0.4.0, commit 9a8b2ca.
 - Next: in-game logs to read: "turf:", "first person:", "stamina:" lines in remnant_hunt.log; learned_turf.txt.
+
+## 2026-10-13 19:19-19:29 requests: traits & prisms & skill points; difficulty; per-boss behaviour
+- "Skill points" read as Remnant II's trait points. progress.cpp: XP (MHW kills by max HP x xp_per_hp, small x0.5,
+  Remnant bosses x1.5 x difficulty xp_mult; Scholar = stat xp), Remnant level curve 3000 + 250n, trait points =
+  5 + level (cap 85); traits 0..10 points, scaled effects; prisms (R2 Dark Horizon rules: 3 offers per level, new
+  fragment / +1 / fusion of two >= +5, legendary at all-five +10, cleanse from +10; XP 5000 + 300L, 50000 for +51).
+- Sheets: traits.json rebuilt (42, kind core|archetype|trait, sold at the melder), prisms/fusions/legendaries.json
+  (tools/author_progression.py; names from PrismStone data tables via .check/prism_texts.json made on the device).
+  Legendaries with no MHW meaning have no effects and are not offered; Traitor / Prime Time handled in code.
+- Rewards: first Remnant boss -> Prism of Voracity; bosses teach a trait (loot_trait_chance). Melder tabs TRAITS, PRISMS.
+- Difficulty: difficulties.json (Survivor/Veteran/Nightmare/Apocalypse; hp, dmg, tempo, stagger, enrage, combo,
+  status, xp), chosen at Ward 13 (SaveData.difficulty), applied at spawn. Boss styles (bosses.json style/prefer_m/
+  combo via tools/author_boss_styles.py): brute, hunter, duelist, ranged, caster, juggernaut, sentinel; enrage roar.
+- Tests: make test-logic now also runs tests/test_progress.cpp (all pass).

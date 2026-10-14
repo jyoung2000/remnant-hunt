@@ -22,7 +22,9 @@ enum Stat : int {
     ST_REGEN, ST_STAMINA_MAX, ST_STAMINA_REGEN, ST_STAMINA_COST, ST_SHIELD,  // stamina: MHW's own stamina bar
     // Remnant statuses: resistances (percent less status damage taken) and damage against afflicted targets
     ST_RES_BLEED, ST_RES_FIRE, ST_RES_SHOCK, ST_RES_ACID, ST_VS_BLEEDING, ST_VS_BURNING, ST_VS_CORRODED, ST_VS_OVERLOADED,
-    ST_VS_EXPOSED, ST_VS_STATUS, ST_STATUS_DUR, ST_COUNT
+    ST_VS_EXPOSED, ST_VS_STATUS, ST_STATUS_DUR,
+    ST_XP,  // experience gain (Remnant levels, trait points, prisms)
+    ST_COUNT
 };
 enum Status : int { SS_NONE, SS_BLEEDING, SS_BURNING, SS_CORRODED, SS_OVERLOADED, SS_EXPOSED, SS_SLOWED, SS_MARKED, SS_COUNT };
 const char* status_key(Status s);    // "bleeding"

@@ -1,0 +1,265 @@
+{
+ "sheet": "fusions",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "a": "ref:fragments",
+  "b": "ref:fragments"
+ },
+ "rows": [
+  {
+   "id": "athletic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "A8F727C244A4876E2046578B4DE9F7A7"
+    }
+   },
+   "a": "movement_speed",
+   "b": "evade_speed"
+  },
+  {
+   "id": "capacitor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "3A127C644EBAF621CEBB0E843062CC3C"
+    }
+   },
+   "a": "ranged_charge_speed",
+   "b": "heat_gen_reduction"
+  },
+  {
+   "id": "cleric",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "539B03C74BAADA2AA890C2AF049E0A68"
+    }
+   },
+   "a": "healing_effectiveness",
+   "b": "consumable_speed"
+  },
+  {
+   "id": "flash",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "9C4F685D4D5EF9E8767D8A9B47054FC4"
+    }
+   },
+   "a": "cast_speed",
+   "b": "consumable_speed"
+  },
+  {
+   "id": "grip",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "0731026A4238F19FD41633AAE630EEF5"
+    }
+   },
+   "a": "weapon_spread",
+   "b": "weapon_swap_speed"
+  },
+  {
+   "id": "gunfighter",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "3DAFB3484807A3AFD10DB588CD1ABC1A"
+    }
+   },
+   "a": "ranged_fire_rate",
+   "b": "reload_speed"
+  },
+  {
+   "id": "hulk",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "88D29057429E37BEC80711AF46261436"
+    }
+   },
+   "a": "health",
+   "b": "stamina"
+  },
+  {
+   "id": "longevity",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "9C99513A40D2FD83B892C785B1E051C6"
+    }
+   },
+   "a": "mod_duration",
+   "b": "skill_duration"
+  },
+  {
+   "id": "mage",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "F9D8FF164FA7344B8667268DE7274959"
+    }
+   },
+   "a": "mod_damage",
+   "b": "mod_generation"
+  },
+  {
+   "id": "meta",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "DE625E2641E03A03EAC6CC824896CD0E"
+    }
+   },
+   "a": "weakspot_damage",
+   "b": "critical_damage"
+  },
+  {
+   "id": "munitions",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "69FC3A3246F3C847FA6C62B4994EDC0E"
+    }
+   },
+   "a": "ranged_crit_chance",
+   "b": "ammo_reserves"
+  },
+  {
+   "id": "pirate",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "C1E79FF14CD9583D531E398E88C75952"
+    }
+   },
+   "a": "ranged_damage",
+   "b": "melee_damage"
+  },
+  {
+   "id": "protected",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "07B70E51408AFE839B6CE487ACAA22AD"
+    }
+   },
+   "a": "shield_effectiveness",
+   "b": "armor_flat"
+  },
+  {
+   "id": "pugilist",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "9C6EFD094819247D4FCA3F959EE0E899"
+    }
+   },
+   "a": "melee_attack_speed",
+   "b": "stamina_flat"
+  },
+  {
+   "id": "revitalize",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "37F073E44A0460E695A2B6B9CBD16129"
+    }
+   },
+   "a": "health_regen",
+   "b": "skill_cooldown"
+  },
+  {
+   "id": "rogue",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "3A8763164299AF0C37F7A4B2062E4CF8"
+    }
+   },
+   "a": "melee_crit_chance",
+   "b": "evade_speed"
+  },
+  {
+   "id": "sapper",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "8DC5635740AFB115904E809B1D06C4BF"
+    }
+   },
+   "a": "explosive_damage",
+   "b": "damage_reduction"
+  },
+  {
+   "id": "selfless",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "A53C92EF4F2E70427D93E2A921F1334C"
+    }
+   },
+   "a": "revive_speed",
+   "b": "healing_effectiveness"
+  },
+  {
+   "id": "sniper",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "080DBF354866C6A4DDF5B1AD936098B9"
+    }
+   },
+   "a": "ranged_damage",
+   "b": "ideal_range"
+  },
+  {
+   "id": "tank",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "E75262DB4294A3CA7887F98914E2A88D"
+    }
+   },
+   "a": "damage_reduction",
+   "b": "armor_effectiveness"
+  },
+  {
+   "id": "threshold",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "F5A189E0443133320283BFB2F33A5D9D"
+    }
+   },
+   "a": "health",
+   "b": "grey_health_rate"
+  },
+  {
+   "id": "warrior",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "991CEA6648C2A35C5F704799BD65BF65"
+    }
+   },
+   "a": "melee_damage",
+   "b": "melee_attack_speed"
+  },
+  {
+   "id": "wizard",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneDataTable.uasset",
+     "key": "FA59A99B4EBECD0F8D2343A820A46DC7"
+    }
+   },
+   "a": "mod_crit_chance",
+   "b": "skill_crit_chance"
+  }
+ ]
+}

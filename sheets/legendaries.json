@@ -1,0 +1,770 @@
+{
+ "sheet": "legendaries",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "desc": "r2text|none",
+  "effects": "effects|none",
+  "fidelity": "enum:exact|approx|fallback",
+  "special": "enum:no|yes"
+ },
+ "rows": [
+  {
+   "id": "masterkiller",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "4CD01FFB491D5E60B7A51B8367E6A54C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "98AB7F4B4D80B579D928BF8C0EE2D000"
+    }
+   },
+   "effects": "weakspot+35%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "immovable",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "8F1326D94089F727F62385B58846F76C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "3A67236F45ADC615B2DDFDAF6303C1A6"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "fullhearted",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "6B72A4B848B9EEED38B0AD9B048E32E6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "B3492E23476E9389C1F5F198EF2484FF"
+    }
+   },
+   "effects": "relic_charges+3",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "allegiance",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "7367B2CC4036586377E2BA980FBF5FA7"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "81ADBC064FEBFC8DD119B0A3CB3CE37C"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "outlaw",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "BC0ED6884657A39647F939ACB442556B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "A6C84DDE4483792BA89CA8B64BA2ABE6"
+    }
+   },
+   "effects": "reload+50%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "soulmate",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "5E9129364A3DB0C36A0753A57611AB3A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "3FECC2904EB485B29252C298DC6D2915"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "heavydrinker",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "40100AD84A84FA5C15D4CCACB927A57A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "DF0236CF42FEF205F9324A8EFA47E0A2"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "boundlessenergy",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "77B89A0F4893B0609EC59AA8760D62B5"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "C90040674BD739837EF6E3848716E361"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "powertrip",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "0FFD90B14600F0770E9F0BB7432AB5EC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "E9FF33674D4B9FFB952CBD8A77C1EABE"
+    }
+   },
+   "effects": "mod_gen+50%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "fleetfooted",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "215B56464CCBAF3F6FA3BB976E9A1B6F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "B9B2B4A246BD6C06BAFDEC9DBB8083F7"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "luckofthedevil",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "72A57ABF498DFECCB6BC70B865405935"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "22C0D3424A3BFB696542CE82B7CB812B"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "sadistic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "8CC46B8C40A618BC01B7C6B0CE282A46"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "3AC6E95F4A1C26CC6A78389DF19BF3B2"
+    }
+   },
+   "effects": "dmg_status+50%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "unbridled",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "1CA2B2554C8BDBCAF776A687C886B1F0"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "718EFB4542AB86B0A20770A4BC17390C"
+    }
+   },
+   "effects": "cdr+50%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "defensemeasures",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "3B64D0464B506682C3DDB4B09652DFE4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "949E8BEF4B768AC578D5688411649DD7"
+    }
+   },
+   "effects": "shield+100%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "godtear",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "1C634CE04ABA632F60B0909B7E12C1E2"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "DDA756DE4641F5DB7B914BAF0825C70D"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "speeddemon",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "1EF307E24DB08C541957D8913E3AC7BD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "112E5C0C438BE573E7F745849E9A24B8"
+    }
+   },
+   "effects": "stamina_cost-30%",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "reverberation",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "543AC4314573847B2FACFB9DD9F47502"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "7B05790E42539B03D53FDD964C91189A"
+    }
+   },
+   "effects": "stamina_regen+300%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "hyperactive",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "217CC5494AF01E28D2F82195C1AFB938"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "1CB165284050530061F6509A1367FCCC"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "primetime",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "53360B6E42CB76D06A5897BA54698829"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "56B96A3643A6EB3810F70F87BE4C285A"
+    }
+   },
+   "effects": "none",
+   "fidelity": "exact",
+   "special": "yes"
+  },
+  {
+   "id": "exhausted",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "2E938F0A4B8D2377D2D431A3FC9DFB0C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "0F72285A4A094C280341C2878780B19D"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "overpowered",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "279D0DB04EF16995A655E8BF3BEF450E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "102A3C60471D1FC9AD891B871976AD75"
+    }
+   },
+   "effects": "mod_gen+50%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "gigantic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "3389A7EB4ABF45F20BB85785D2F41832"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "4B64E93D4AB75D51BABFBABE88FDE1B1"
+    }
+   },
+   "effects": "max_hp+50;stamina_max+50",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "traitor",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "59F410D04661B80695E81DAC14323AD4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "C6596DE14883179D873AEC862445920E"
+    }
+   },
+   "effects": "none",
+   "fidelity": "exact",
+   "special": "yes"
+  },
+  {
+   "id": "darkomen",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "C7D82A584A6B269D308B49A6D51BE71B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "18121D194C14409637521DB5D9263327"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "altruistic",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "3BF91C314976DE47485EBDAF02AB8ED4"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "9C5416294480259104CED286A33E9D66"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "unbreakable",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "C475FE7B4C386118FECA3D967A98F66C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "CC72BDBD451B8F3C588365AE33390A80"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "insulttoinjury",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "0791F1F44500A64A3D7521B4D3D937FA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "D477A61E461775B414CEA98AD618FCF5"
+    }
+   },
+   "effects": "on_hit:inflict:exposed 0 8s 20%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "brutality",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "4EB392374A1E6D52AEEF4D93639D1740"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "E19901224149FE314931C689AB7DCC8D"
+    }
+   },
+   "effects": "dmg+100%;dr-100%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "wreckingball",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "7235B9884E4BB87396ED4196023FFECD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "B68D2FBA4D731878F0ABD4B2D2E27ACB"
+    }
+   },
+   "effects": "dmg_explosive+50%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "steelplating",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "6B8682014FE5BFE7C454438D2286E93E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "6F58F6C64AFB2BC1944F85918A8D6903"
+    }
+   },
+   "effects": "dr+15%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "criticalsituation",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "571912084322B1213BEE3D82BF8E3C65"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "7A5560CB403C89373E7A0DBDCC0C2790"
+    }
+   },
+   "effects": "crit+25%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "sharpshooter",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "536A895D492366C38C08F2B10CE4045B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "5CF99349442D689ABC68B3891AF44244"
+    }
+   },
+   "effects": "dmg_ranged+60%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "jackofalltrades",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "D1B400C244135AFFB9BA558153C01CE9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "9125C907402783D19FDAD2955A44FEB1"
+    }
+   },
+   "effects": "dmg+40%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "vaccinated",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "C2E140C64FE8DE5A0ACDBC9493486510"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "7334C412484BF5DE8C594B900DC7C083"
+    }
+   },
+   "effects": "res_bleed+100%;res_fire+100%;res_shock+100%;res_acid+100%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "peakconditioning",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "CE918AB7464E32790D742EA269CFAF84"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "BD27F561494FCD39DC9E0FA904EA3987"
+    }
+   },
+   "effects": "stamina_cost-100%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "physician",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "7FCDAF8F4F192350CC3EE29E09544723"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "0DC4443C4622926C41D69998175CAFC9"
+    }
+   },
+   "effects": "heal+100%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "impervious",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "A63665AC4951879ADE3A5CAB5EEE2D3C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "B0E88E7F4A96350880EF72B9607BB24A"
+    }
+   },
+   "effects": "dr+30%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "spectrum",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "8FD94E214C5D3AF2BE173986B23DBFC3"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "AC8A17294B6EE255153AD2851AA878BA"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "artfuldodger",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "543D6FBA43B930E1C3A2DDB4855A4778"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "AC3E17B34EA5A2436CBDF4943AB95A64"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  },
+  {
+   "id": "powerfantasy",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "2045C1604F412DC068077CB75209C536"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "9BFB6B924E7969C5B38A0CA7709CB395"
+    }
+   },
+   "effects": "dmg_explosive+30%;crit_dmg+15%",
+   "fidelity": "approx",
+   "special": "no"
+  },
+  {
+   "id": "sizematters",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "09038E0344ABEF094FE6B2BBF778AA10"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "F2E123984DE2E5E420B681B5A5BDA4EA"
+    }
+   },
+   "effects": "mag+100%",
+   "fidelity": "exact",
+   "special": "no"
+  },
+  {
+   "id": "bodyguard",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "DAADDCEB44D85A3D034C439566C104CC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/PrismStoneMythicDataTable.uasset",
+     "key": "21D582074A1B0C4B2D0BCC887E3547AA"
+    }
+   },
+   "effects": "none",
+   "fidelity": "fallback",
+   "special": "no"
+  }
+ ]
+}

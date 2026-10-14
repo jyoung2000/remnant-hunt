@@ -37,6 +37,9 @@
   "snd_pain": "r2snd|none",
   "snd_death": "r2snd|none",
   "snd_step": "r2snd|none",
+  "style": "enum:brute|hunter|duelist|ranged|caster|juggernaut|sentinel",
+  "prefer_m": "num",
+  "combo": "num",
   "zones": "list",
   "spawn_weight": "num",
   "loot": "list",
@@ -100,7 +103,10 @@
     "weapons.merciless",
     "weapons.reddoestaff"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "hunter",
+   "prefer_m": 10,
+   "combo": 0.3
   },
   {
    "id": "nightweaver",
@@ -158,7 +164,10 @@
     "rings.booster_ring",
     "rings.ring_of_the_vain"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "caster",
+   "prefer_m": 12,
+   "combo": 0.15
   },
   {
    "id": "faerin",
@@ -216,7 +225,10 @@
     "amulets.one_eyed_joker_idol",
     "mutators.misfortune"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "duelist",
+   "prefer_m": 4,
+   "combo": 0.5
   },
   {
    "id": "faelin",
@@ -274,7 +286,10 @@
     "rings.faelins_sigil",
     "rings.catalogers_jewel"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "duelist",
+   "prefer_m": 4,
+   "combo": 0.5
   },
   {
    "id": "shahala",
@@ -329,7 +344,10 @@
    "loot": [
     "mods.prismatic_driver"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "sentinel",
+   "prefer_m": 0,
+   "combo": 0.35
   },
   {
    "id": "tal_ratha",
@@ -392,7 +410,10 @@
     "amulets.zero_divide",
     "rings.defensive_action_loop"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "brute",
+   "prefer_m": 2,
+   "combo": 0.2
   },
   {
    "id": "one_true_king",
@@ -450,7 +471,10 @@
     "rings.booster_ring",
     "rings.black_spinel"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "duelist",
+   "prefer_m": 4,
+   "combo": 0.5
   },
   {
    "id": "lydusa",
@@ -507,7 +531,10 @@
     "amulets.canine_keepsake",
     "amulets.sinister_totem"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "hunter",
+   "prefer_m": 10,
+   "combo": 0.3
   },
   {
    "id": "alepsis_taura",
@@ -560,7 +587,10 @@
    "loot": [
     "relics.void_heart"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "sentinel",
+   "prefer_m": 0,
+   "combo": 0.35
   },
   {
    "id": "annihilation",
@@ -620,7 +650,10 @@
    "loot": [
     "weapons.alphaomega"
    ],
-   "fx_color": "#FF4A2A"
+   "fx_color": "#FF4A2A",
+   "style": "juggernaut",
+   "prefer_m": 2,
+   "combo": 0.3
   },
   {
    "id": "abomination",
@@ -680,7 +713,10 @@
     "rings.feedback_loop",
     "rings.infinity_pocket"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "juggernaut",
+   "prefer_m": 2,
+   "combo": 0.3
   },
   {
    "id": "amalgam",
@@ -738,7 +774,10 @@
     "amulets.zero_hour",
     "rings.ring_of_restocking"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "brute",
+   "prefer_m": 2,
+   "combo": 0.2
   },
   {
    "id": "bloat_king",
@@ -796,7 +835,10 @@
     "mods.voltaic_rondure",
     "armor.legs_alchemist"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "caster",
+   "prefer_m": 12,
+   "combo": 0.15
   },
   {
    "id": "custodians_eye",
@@ -857,7 +899,10 @@
     "rings.impact_augment",
     "rings.ring_of_ordnance"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "ranged",
+   "prefer_m": 17,
+   "combo": 0.25
   },
   {
    "id": "fae_archon",
@@ -915,7 +960,10 @@
     "rings.wood_ring",
     "rings.booster_ring"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "duelist",
+   "prefer_m": 4,
+   "combo": 0.5
   },
   {
    "id": "harvester",
@@ -975,7 +1023,10 @@
     "rings.conservation_seal",
     "rings.detonating_cord"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "brute",
+   "prefer_m": 2,
+   "combo": 0.2
   },
   {
    "id": "hatchery",
@@ -1028,7 +1079,10 @@
    "loot": [
     "mods.space_crabs"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "caster",
+   "prefer_m": 12,
+   "combo": 0.15
   },
   {
    "id": "impaler",
@@ -1086,7 +1140,10 @@
     "rings.fae_hunter_ring",
     "amulets.weightless_weight"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "duelist",
+   "prefer_m": 4,
+   "combo": 0.5
   },
   {
    "id": "kiln",
@@ -1143,7 +1200,10 @@
     "rings.guardians_ring",
     "amulets.fragrant_thorn"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "juggernaut",
+   "prefer_m": 2,
+   "combo": 0.3
   },
   {
    "id": "phantom",
@@ -1201,7 +1261,10 @@
     "armor.gloves_spaceworker",
     "armor.legs_spaceworker"
    ],
-   "fx_color": "#4FD8FF"
+   "fx_color": "#4FD8FF",
+   "style": "ranged",
+   "prefer_m": 17,
+   "combo": 0.25
   },
   {
    "id": "root_horror",
@@ -1254,7 +1317,10 @@
     "rings.tear_of_kaeula",
     "mods.rootlash"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "brute",
+   "prefer_m": 2,
+   "combo": 0.2
   },
   {
    "id": "shifting_soldier",
@@ -1313,7 +1379,10 @@
     "amulets.reed_of_the_vaunnt",
     "rings.brawlers_pride"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "duelist",
+   "prefer_m": 4,
+   "combo": 0.5
   },
   {
    "id": "shrewd",
@@ -1367,7 +1436,10 @@
    "loot": [
     "mods.tremor"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "hunter",
+   "prefer_m": 10,
+   "combo": 0.3
   },
   {
    "id": "sunken_witch",
@@ -1420,7 +1492,10 @@
    "loot": [
     "mods.creeping_mist"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "caster",
+   "prefer_m": 12,
+   "combo": 0.15
   },
   {
    "id": "mother_mind",
@@ -1477,7 +1552,10 @@
     "amulets.stalkers_brand",
     "consumables.brightstone"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "ranged",
+   "prefer_m": 17,
+   "combo": 0.25
   },
   {
    "id": "legion",
@@ -1534,7 +1612,10 @@
     "rings.kolket_eyelet",
     "rings.empowering_loop"
    ],
-   "fx_color": "#8CF06A"
+   "fx_color": "#8CF06A",
+   "style": "caster",
+   "prefer_m": 12,
+   "combo": 0.15
   },
   {
    "id": "gwendil",
@@ -1593,7 +1674,10 @@
     "rings.stream_coupler",
     "amulets.weightless_weight"
    ],
-   "fx_color": "#B072FF"
+   "fx_color": "#B072FF",
+   "style": "duelist",
+   "prefer_m": 4,
+   "combo": 0.5
   },
   {
    "id": "root_mantis",
@@ -1658,7 +1742,10 @@
     "rings.reaping_stone",
     "amulets.ankh_of_power"
    ],
-   "fx_color": "#FF4A2A"
+   "fx_color": "#FF4A2A",
+   "style": "hunter",
+   "prefer_m": 10,
+   "combo": 0.3
   },
   {
    "id": "venom",
@@ -1719,7 +1806,10 @@
     "mods.skewer",
     "amulets.escalation_protocol"
    ],
-   "fx_color": "#FF4A2A"
+   "fx_color": "#FF4A2A",
+   "style": "hunter",
+   "prefer_m": 10,
+   "combo": 0.3
   }
  ]
 }

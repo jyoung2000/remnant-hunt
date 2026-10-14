@@ -3,167 +3,1112 @@
  "phase": "v0.2",
  "columns": {
   "id": "id",
+  "kind": "enum:core|archetype|trait",
   "name": "r2text",
+  "desc": "r2text|none",
   "icon": "r2tex|none",
   "effects": "effects",
-  "fidelity": "enum:exact|approx|fallback"
+  "fidelity": "enum:exact|approx|fallback",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
  },
  "rows": [
   {
-   "id": "potency",
-   "name": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Potency/Trait_Potency.uasset",
-     "key": "2A82AB9D45345E9F77E952A16876E28A"
-    }
-   },
-   "icon": "none",
-   "effects": "dmg+1%",
-   "fidelity": "fallback"
-  },
-  {
-   "id": "flashcaster",
-   "name": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/FlashCaster/Trait_FlashCaster.uasset",
-     "key": "51E92AB74F4B968B0142AE987FDBCF6E"
-    }
-   },
-   "icon": "none",
-   "effects": "dmg+1%",
-   "fidelity": "fallback"
-  },
-  {
-   "id": "strongback",
-   "name": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/StrongBack/Trait_StrongBack.uasset",
-     "key": "8AF34FBC4A101FA1875223B38F4DD3CD"
-    }
-   },
-   "icon": "none",
-   "effects": "on_evade:dmg+10% 10s",
-   "fidelity": "fallback"
-  },
-  {
-   "id": "fortify",
-   "name": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Fortify/Trait_Fortify.uasset",
-     "key": "68B50B194F708739867F75B09B2CAF59"
-    }
-   },
-   "icon": "none",
-   "effects": "dr+50%",
-   "fidelity": "exact"
-  },
-  {
-   "id": "swiftness",
-   "name": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Swiftness/Trait_Swiftness.uasset",
-     "key": "4BBB38204CDD7B6B37B33AB2C74CA670"
-    }
-   },
-   "icon": "none",
-   "effects": "stamina_cost-7.5%",
-   "fidelity": "exact"
-  },
-  {
    "id": "ammoreserves",
+   "kind": "archetype",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/AmmoReserves/Trait_AmmoReserves.uasset",
      "key": "0DBA4A014F91FBE167D27FAEB7B38A75"
     }
    },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/AmmoReserves/Trait_AmmoReserves.uasset",
+     "key": "DC4D14CA41ED195ECF372FB871D8B43D"
+    }
+   },
    "icon": "none",
    "effects": "ammo+50%",
-   "fidelity": "exact"
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "amplitude",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Amplitude/Trait_Amplitude.uasset",
+     "key": "82A72AEB40D121995C04DAB6098683C9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Amplitude/Trait_Amplitude.uasset",
+     "key": "82A85EC14235021EC7272696E6136998"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_skill+10%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "flashcaster",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/FlashCaster/Trait_FlashCaster.uasset",
+     "key": "51E92AB74F4B968B0142AE987FDBCF6E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/FlashCaster/Trait_FlashCaster.uasset",
+     "key": "15EA55AD4E8AE0BB09C0A89541C4287D"
+    }
+   },
+   "icon": "none",
+   "effects": "cdr+10%;mod_gen+10%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "fortify",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Fortify/Trait_Fortify.uasset",
+     "key": "68B50B194F708739867F75B09B2CAF59"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Fortify/Trait_Fortify.uasset",
+     "key": "08F722AD47058FE1D8E1838F14E662E1"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+10%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
   },
   {
    "id": "kinship",
+   "kind": "archetype",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Kinship/Trait_Kinship.uasset",
      "key": "0BC52F9C4EF640C0407E4F873378D397"
     }
    },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Kinship/Trait_Kinship.uasset",
+     "key": "9E807F834DB44B1D2D6C4B83FB1DE65E"
+    }
+   },
    "icon": "none",
-   "effects": "dmg_elem-80%",
-   "fidelity": "exact"
+   "effects": "dr+5%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
   },
   {
    "id": "longshot",
+   "kind": "archetype",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Longshot/Trait_Longshot.uasset",
      "key": "3708FACF4A4F961A9A088694AD856404"
     }
    },
-   "icon": "none",
-   "effects": "dmg+1%",
-   "fidelity": "fallback"
-  },
-  {
-   "id": "untouchable",
-   "name": {
+   "desc": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Untouchable/Trait_Untouchable.uasset",
-     "key": "EB2DF1F04CD4308E5878D9A9917CE5CC"
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Longshot/Trait_Longshot.uasset",
+     "key": "C97E194C42B26A47B23F5583F9E01C90"
     }
    },
    "icon": "none",
-   "effects": "on_evade:dmg+10% 10s",
-   "fidelity": "fallback"
+   "effects": "dmg_ranged+10%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
   },
   {
-   "id": "triage",
+   "id": "potency",
+   "kind": "archetype",
    "name": {
     "r2text": {
-     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Triage/Trait_Triage.uasset",
-     "key": "BFC85AB54CAC47A90382F395F497B002"
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Potency/Trait_Potency.uasset",
+     "key": "2A82AB9D45345E9F77E952A16876E28A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Potency/Trait_Potency.uasset",
+     "key": "7E9FB70E4A67A9949176F5BAC1A45249"
     }
    },
    "icon": "none",
-   "effects": "heal+50%",
-   "fidelity": "exact"
-  },
-  {
-   "id": "affliction",
-   "name": {
-    "r2text": {
-     "asset": "Remnant2/Content/World_DLC1/Items/Traits/Affliction/Trait_Affliction.uasset",
-     "key": "C2E86523425F80E8D8112DB74A8E60DA"
-    }
-   },
-   "icon": "none",
-   "effects": "dmg_status+10%",
-   "fidelity": "fallback"
+   "effects": "heal+20%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
   },
   {
    "id": "regrowth",
+   "kind": "archetype",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Regrowth/Trait_Regrowth.uasset",
      "key": "2773F7F940ABA9FDF19203903397609C"
     }
    },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Regrowth/Trait_Regrowth.uasset",
+     "key": "41A37D9C418D9C7E33E20E8CA4A6CAD9"
+    }
+   },
    "icon": "none",
-   "effects": "max_hp+0.15",
-   "fidelity": "exact"
+   "effects": "regen+1.5",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "strongback",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/StrongBack/Trait_StrongBack.uasset",
+     "key": "8AF34FBC4A101FA1875223B38F4DD3CD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/StrongBack/Trait_StrongBack.uasset",
+     "key": "C0502AF34B2589857DB9048409C48D4F"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina_cost-15%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "swiftness",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Swiftness/Trait_Swiftness.uasset",
+     "key": "4BBB38204CDD7B6B37B33AB2C74CA670"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Swiftness/Trait_Swiftness.uasset",
+     "key": "4D9E15194520EF583C20F6852B0E57CA"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina_cost-7.5%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "triage",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Triage/Trait_Triage.uasset",
+     "key": "BFC85AB54CAC47A90382F395F497B002"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Triage/Trait_Triage.uasset",
+     "key": "DA1F333447827D053042DA93FDA6A7C9"
+    }
+   },
+   "icon": "none",
+   "effects": "heal+50%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "untouchable",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Untouchable/Trait_Untouchable.uasset",
+     "key": "EB2DF1F04CD4308E5878D9A9917CE5CC"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Archetype/Untouchable/Trait_Untouchable.uasset",
+     "key": "0A31EA13420072CED02021A4B9176C75"
+    }
+   },
+   "icon": "none",
+   "effects": "on_evade:dr+30% 2s",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "arcanestrike",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/ArcaneStrike/Trait_ArcaneStrike.uasset",
+     "key": "B2C3CA94428F7AF0390A9FAFE95EB7A9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/ArcaneStrike/Trait_ArcaneStrike.uasset",
+     "key": "C8D5981E40942F216068C48DBADF19FF"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_gen+15%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "barkskin",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Barkskin/Trait_Barkskin.uasset",
+     "key": "34C1F5B4469FC6A432F6998040B69730"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Barkskin/Trait_Barkskin.uasset",
+     "key": "7C952ACB4E5FC5087D17139F942EE198"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+10%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "bloodbond",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/BloodBond/Trait_BloodBond.uasset",
+     "key": "1DC2476F4570775FE29CAE872B8B956E"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/BloodBond/Trait_BloodBond.uasset",
+     "key": "AB402B7D4D4A48AA96F75BB472BBFC0F"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+5%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "bloodstream",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Bloodstream/Trait_Bloodstream.uasset",
+     "key": "BA50292B4CAC5C639F1707B24316804A"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Bloodstream/Trait_Bloodstream.uasset",
+     "key": "B10DD363439E01F8DA29B58E1C3C0511"
+    }
+   },
+   "icon": "none",
+   "effects": "regen+1",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "chakra",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Chakra/Trait_Chakra.uasset",
+     "key": "D51BFD774A0D96611A0E77B7BA270CFA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Chakra/Trait_Chakra.uasset",
+     "key": "CC000FC4430AE3805A0F7D968B44D604"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_dur+30%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "endurance",
+   "kind": "core",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Endurance/Trait_Endurance.uasset",
+     "key": "903CF7D9428E18205D3F8E8AB88B9FBD"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Endurance/Trait_Endurance.uasset",
+     "key": "6371AC8042E760E0034CA7A350A3C786"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina_max+30",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "expertise",
+   "kind": "core",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Expertise/Trait_Expertise.uasset",
+     "key": "2058F0B542AAAA962BF04D952F35909C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Expertise/Trait_Expertise.uasset",
+     "key": "5D8C20E2430CA8FA51169C8B0D017610"
+    }
+   },
+   "icon": "none",
+   "effects": "cdr+20%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "fitness",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Fitness/Trait_Fitness.uasset",
+     "key": "A43AAAC74A119A2D25C0038B3E5A34A9"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Fitness/Trait_Fitness.uasset",
+     "key": "C86068F1433AE98A911EA58979EA19A5"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina_cost-10%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "footwork",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Footwork/Trait_Footwork.uasset",
+     "key": "FEC70C5845804275F42032AC444BE281"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Footwork/Trait_Footwork.uasset",
+     "key": "62BE51784F3E2481364854BAF501D018"
+    }
+   },
+   "icon": "none",
+   "effects": "accuracy+15%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "glutton",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Glutton/Trait_Glutton.uasset",
+     "key": "228E5A624CDC7E078C1FD9802ED81EEB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Glutton/Trait_Glutton.uasset",
+     "key": "9C17BA21452C609E4A149E87156B9D38"
+    }
+   },
+   "icon": "none",
+   "effects": "relic_speed+35%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "handling",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Handling/Trait_Handling.uasset",
+     "key": "C8892DCD4EA6272AA73E7C86669FFB8C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Handling/Trait_Handling.uasset",
+     "key": "5D46CDED49A6CA7A4B0C07A2EF6F71AB"
+    }
+   },
+   "icon": "none",
+   "effects": "accuracy+30%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "leech",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Leech/Trait_Leech.uasset",
+     "key": "9B5A782F43DA003281287489753E59B6"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Leech/Trait_Leech.uasset",
+     "key": "42C358DC46352E5A35F3D6A08C73F0D8"
+    }
+   },
+   "icon": "none",
+   "effects": "lifesteal+2%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "recovery",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Recovery/Trait_Recovery.uasset",
+     "key": "9C9FD4D347A22EB61889878CE176B72C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Recovery/Trait_Recovery.uasset",
+     "key": "97D0A84A4806F36866A10BBDA02E5C7A"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina_regen+90%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "resonance",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Resonance/Trait_Resonance.uasset",
+     "key": "D0F95F75485FB10E1CC69097329C1933"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Resonance/Trait_Resonance.uasset",
+     "key": "D766143F40B0E03EA9CD8EBA644D47CD"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_skill+5%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "revivalist",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Revivalist/Trait_Revivalist.uasset",
+     "key": "386046CB4FBAE0F5B38F19AA75F61F57"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Revivalist/Trait_Revivalist.uasset",
+     "key": "330344B94971FCB7799EB49BC96724E3"
+    }
+   },
+   "icon": "none",
+   "effects": "heal+10%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "rugged",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Rugged/Trait_Rugged.uasset",
+     "key": "6B44529E45B25DB0AB34D39671AC7673"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Rugged/Trait_Rugged.uasset",
+     "key": "D3398FFA4347946E6DBADA9383C42F17"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg_skill+10%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "scholar",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Scholar/Trait_Scholar.uasset",
+     "key": "E25CDDB9417AE1BDA125E895D9A75EEB"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Scholar/Trait_Scholar.uasset",
+     "key": "DC00136D4F49C91845E120A603A726D0"
+    }
+   },
+   "icon": "none",
+   "effects": "xp+15%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "shadeskin",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Shadeskin/Trait_Shadeskin.uasset",
+     "key": "399DC89E4BB4F8D5F64C42A3913300CA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Shadeskin/Trait_Shadeskin.uasset",
+     "key": "8B248E3D44819E01E055E89CF5091023"
+    }
+   },
+   "icon": "none",
+   "effects": "res_fire+20%;res_shock+20%;res_acid+20%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "siphoner",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Siphoner/Trait_Siphoner.uasset",
+     "key": "49D4221248156902CBA1C9AB9A59FE3B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Siphoner/Trait_Siphoner.uasset",
+     "key": "8558FC244489951468E8C7947A801B37"
+    }
+   },
+   "icon": "none",
+   "effects": "lifesteal+3%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "spirit",
+   "kind": "core",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Spirit/Trait_Spirit.uasset",
+     "key": "F6654FEF4B4875921C9DBD94C22B4B4D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Spirit/Trait_Spirit.uasset",
+     "key": "E07C65A2423B068720D1ECA8719A5DFA"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_gen+20%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "vigor",
+   "kind": "core",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Vigor/Trait_Vigor.uasset",
+     "key": "5E29E2294D390756AC7E2485E49CE80C"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Vigor/Trait_Vigor.uasset",
+     "key": "6A2A5EC845BB618B85162095C3ED829E"
+    }
+   },
+   "icon": "none",
+   "effects": "max_hp+30",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "wayfarer",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Wayfarer/Trait_Wayfarer.uasset",
+     "key": "815E8A844DA9D41A809C40A74A101420"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Core/Wayfarer/Trait_Wayfarer.uasset",
+     "key": "898D4334489A4A2641012BA641597447"
+    }
+   },
+   "icon": "none",
+   "effects": "stamina_cost-5%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "softbreak",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Extra/SoftBreak/Trait_SoftBreak.uasset",
+     "key": "83EC19014E6475DD5C9F7BBA53CAD56F"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_Base/Items/Traits/Extra/SoftBreak/Trait_SoftBreak.uasset",
+     "key": "DCD6E4F7407E6420C3D780A2088CA92E"
+    }
+   },
+   "icon": "none",
+   "effects": "dmg+3%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
+  },
+  {
+   "id": "affliction",
+   "kind": "archetype",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Traits/Affliction/Trait_Affliction.uasset",
+     "key": "C2E86523425F80E8D8112DB74A8E60DA"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Traits/Affliction/Trait_Affliction.uasset",
+     "key": "F43C02584E01914C7E4A9A869B8CFDEF"
+    }
+   },
+   "icon": "none",
+   "effects": "status_dur+100%",
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "darkpact",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Traits/DarkPact/Trait_DarkPact.uasset",
+     "key": "E3C1032B4BF1147BC77F99B85B4A2C6B"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC1/Items/Traits/DarkPact/Trait_DarkPact.uasset",
+     "key": "DBE7707A45DA802E74ED408B26A453A2"
+    }
+   },
+   "icon": "none",
+   "effects": "lifesteal+2%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "resolute",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Traits/Resolute/Trait_Resolute.uasset",
+     "key": "4DC214954E58D095B58F809F3D7E741D"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC2/Items/Traits/Resolute/Trait_Resolute.uasset",
+     "key": "C39DB57C4D40C077EA1EBF902B187B79"
+    }
+   },
+   "icon": "none",
+   "effects": "dr+3%",
+   "fidelity": "fallback",
+   "tier": 1,
+   "menu": "melder",
+   "zenny": 1500,
+   "recipe": [
+    "ore_low*3",
+    "bone_low*2"
+   ]
   },
   {
    "id": "barrier",
+   "kind": "archetype",
    "name": {
     "r2text": {
      "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Traits/Trait_Barrier.uasset",
      "key": "7C7323B24976434F76C17CA7E21CBDB8"
     }
    },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Archetypes/Warden/Traits/Trait_Barrier.uasset",
+     "key": "13B6E8174485FDBD7C961DBB0B15FA9F"
+    }
+   },
    "icon": "none",
    "effects": "shield+15%",
-   "fidelity": "exact"
+   "fidelity": "exact",
+   "tier": 2,
+   "menu": "archetype",
+   "zenny": 0,
+   "recipe": [
+    "none"
+   ]
+  },
+  {
+   "id": "insight",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Traits/Insight/Trait_Insight.uasset",
+     "key": "5071653D40EE85B408706F87CCEFC994"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Traits/Insight/Trait_Insight.uasset",
+     "key": "A0FC2DA64B1BE5CB7510409B03CAB78B"
+    }
+   },
+   "icon": "none",
+   "effects": "mod_gen+15%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "perception",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Traits/Perception/Trait_Perception.uasset",
+     "key": "92C59B5645AF9AE26DEF929A02BA9630"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Traits/Perception/Trait_Perception.uasset",
+     "key": "06D62DB24D79366EEDF0C6AE24DE8B00"
+    }
+   },
+   "icon": "none",
+   "effects": "fire_rate+3%;reload+3%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
+  },
+  {
+   "id": "preservation",
+   "kind": "trait",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Traits/Preservation/Trait_Preservation.uasset",
+     "key": "E15B65EA41CBC41FC311A5A5FE54D492"
+    }
+   },
+   "desc": {
+    "r2text": {
+     "asset": "Remnant2/Content/World_DLC3/Items/Traits/Preservation/Trait_Preservation.uasset",
+     "key": "E8BE982E401EE1158A1577896225D0DD"
+    }
+   },
+   "icon": "none",
+   "effects": "shield+10%",
+   "fidelity": "approx",
+   "tier": 2,
+   "menu": "melder",
+   "zenny": 4000,
+   "recipe": [
+    "ore_low2*4",
+    "bone_low2*3",
+    "crystal_low*2"
+   ]
   }
  ]
 }

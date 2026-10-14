@@ -201,6 +201,51 @@
    "id": "turf_range_m",
    "value": 9,
    "why": "how close two large MHW monsters must come for a turf war, metres between their bodies (their blows reach about that far)"
+  },
+  {
+   "id": "xp_per_hp",
+   "value": 0.6,
+   "why": "experience for a slain or captured monster, per point of its max health (small monsters half; Remnant bosses one and a half)"
+  },
+  {
+   "id": "xp_level_base",
+   "value": 3000,
+   "why": "experience for Remnant level 1; each level after needs xp_level_step more"
+  },
+  {
+   "id": "xp_level_step",
+   "value": 250,
+   "why": "how much more experience each Remnant level needs than the one before"
+  },
+  {
+   "id": "trait_points_start",
+   "value": 5,
+   "why": "trait points a new hunter starts with (each Remnant level adds one)"
+  },
+  {
+   "id": "trait_points_max",
+   "value": 85,
+   "why": "trait points earned from levels at most (Remnant II's cap)"
+  },
+  {
+   "id": "prism_xp_base",
+   "value": 5000,
+   "why": "experience for a prism's first level (Remnant II: 5,000)"
+  },
+  {
+   "id": "prism_xp_step",
+   "value": 300,
+   "why": "how much more experience each prism level needs (Remnant II: 300)"
+  },
+  {
+   "id": "prism_legend_xp",
+   "value": 50000,
+   "why": "experience for a prism's legendary level, after all five fragments are +10 (Remnant II: 50,000)"
+  },
+  {
+   "id": "loot_trait_chance",
+   "value": 0.35,
+   "why": "chance that a defeated Remnant boss also teaches a trait the hunter does not know"
   }
  ]
 }

@@ -150,7 +150,7 @@ static void end_screen() {
 
 // ---------------------------------------------------------------- screens
 
-enum Screen { SCR_NONE, SCR_INTRO, SCR_ARCHETYPE, SCR_TERMINAL, SCR_MENU };
+enum Screen { SCR_NONE, SCR_INTRO, SCR_ARCHETYPE, SCR_TERMINAL, SCR_MENU, SCR_TRAITS, SCR_PRISM };
 static Screen g_screen = SCR_NONE;
 static double g_screenOpened = 0;
 static int g_menu = -1;          // menus row (or -1 with g_menuRole set, opened from the terminal)
@@ -300,6 +300,51 @@ static void weapon_stats(const Weapons& w, int level) {
     }
 }
 
+// ---- small pieces for the progression screens
+
+template <class F>
+static void change_save(F f) {
+    Shared& sh = S();
+    AcquireSRWLockExclusive(&sh.lock);
+    if (f(sh.save)) {
+        sh.live.loadoutChanged = true;
+        sh.live.dirty = true;
+    }
+    ReleaseSRWLockExclusive(&sh.lock);
+}
+
+static void dim_wrapped(const char* s) {
+    ImGui::PushStyleColor(ImGuiCol_Text, ImColor(col::dim).Value);
+    ImGui::TextWrapped("%s", s);
+    ImGui::PopStyleColor();
+}
+
+static void bar(float k, ImU32 c) {
+    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImColor(c).Value);
+    ImGui::ProgressBar(std::max(0.0f, std::min(1.0f, k)), ImVec2(-1, 6), "");
+    ImGui::PopStyleColor();
+}
+
+static void level_line(const SaveData& s) {
+    int lv = remnant_level(s.xp);
+    double a = s.xp - level_xp(lv), b = level_xp(lv + 1) - level_xp(lv);
+    ImGui::TextColored(ImColor(col::gold).Value, "REMNANT LEVEL %d", lv);
+    ImGui::SameLine();
+    ImGui::TextColored(ImColor(col::dim).Value, "  %.0f / %.0f experience to the next", a, b);
+    bar((float)(a / std::max(1.0, b)), col::gold);
+}
+
+static void pips(int n, int of) {
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    ImVec2 p = ImGui::GetCursorScreenPos();
+    for (int i = 0; i < of; i++) {
+        ImVec2 a(p.x + i * 12.0f, p.y + 4), b(a.x + 9, a.y + 9);
+        if (i < n) dl->AddRectFilled(a, b, col::gold);
+        else dl->AddRect(a, b, col::line);
+    }
+    ImGui::Dummy(ImVec2(of * 12.0f, 16));
+}
+
 static void archetype_detail(int row, const SaveData& s, bool chooseSkill) {
     const Archetypes& a = kArchetypes[row];
     if (a.prime.asset) {
@@ -361,8 +406,11 @@ static void item_detail(const ItemView& v, const SaveData& s) {
         archetype_detail(v.row, s, false);
         return;
     }
+    if (v.cat == CAT_PRISM)
+        dim_wrapped("A prism holds five relic fragments that grow as you hunt with it equipped, fuse in pairs and end "
+                    "in a legendary bonus. Equip it and choose its fragments in the PRISM screen at Ward 13.");
     if (v.effects && *v.effects) {
-        label("EFFECTS");
+        label(v.cat == CAT_TRAIT ? "AT LEVEL 10 (TRAIT POINTS FROM REMNANT LEVELS)" : "EFFECTS");
         effect_lines(v.effects);
     }
     if (v.cat == CAT_WEAPON) weapon_stats(kWeapons[v.row], s.level[v.row]);
@@ -429,7 +477,8 @@ static void screen_menu(const SaveData& s, const Live& l) {
                 {"UPGRADES", CAT_WEAPON, -2}};
     else if (g_menuRole == MENUS_ROLE_MELDER)
         tabs = {{"ARCHETYPES", CAT_ARCHETYPE, -1}, {"RINGS", CAT_RING, -1}, {"AMULETS", CAT_AMULET, -1},
-                {"RELICS", CAT_RELIC, -1},         {"FRAGMENTS", CAT_FRAGMENT, -1}};
+                {"RELICS", CAT_RELIC, -1},         {"FRAGMENTS", CAT_FRAGMENT, -1}, {"TRAITS", CAT_TRAIT, -1},
+                {"PRISMS", CAT_PRISM, -1}};
     else
         tabs = {{"CONSUMABLES", CAT_CONSUMABLE, -1}};
     float bottom = 52;
@@ -549,6 +598,38 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         ImGui::PopID();
     }
     if (remnant_button("ARCHETYPES AND SKILLS", ImVec2(-1, 34))) open(SCR_ARCHETYPE);
+    level_line(s);
+    {
+        int free = trait_points(s) - trait_points_spent(s);
+        bool ready = s.prismOn >= 0 && s.prism[s.prismOn].offers > 0;
+        char tb[48], pb[48];
+        snprintf(tb, sizeof(tb), free > 0 ? "TRAITS (%d)" : "TRAITS", free);
+        snprintf(pb, sizeof(pb), ready ? "PRISM (LEVEL UP)" : "PRISM");
+        float half = (ImGui::GetContentRegionAvail().x - 8) / 2;
+        if (remnant_button(tb, ImVec2(half, 30))) open(SCR_TRAITS);
+        ImGui::SameLine(0, 8);
+        if (remnant_button(pb, ImVec2(half, 30))) open(SCR_PRISM);
+    }
+    // Remnant II's difficulty for the Remnant monsters met from now on
+    label("REMNANT DIFFICULTY");
+    {
+        float bw = (ImGui::GetContentRegionAvail().x - 3 * 6) / kDifficultiesCount;
+        for (int i = 0; i < kDifficultiesCount; i++) {
+            ImGui::PushID(400 + i);
+            if (i) ImGui::SameLine(0, 6);
+            bool on = s.difficulty == i;
+            if (on) ImGui::PushStyleColor(ImGuiCol_Button, ImColor(col::accent).Value);
+            if (remnant_button(kDifficulties[i].label, ImVec2(bw, 30)) && !on)
+                change_save([i](SaveData& d) { d.difficulty = i; return true; });
+            if (on) ImGui::PopStyleColor();
+            if (ImGui::IsItemHovered()) {
+                const Difficulties& d = kDifficulties[i];
+                ImGui::SetTooltip("Remnant monsters: health x%.2f, damage x%.2f, pace x%.2f%s; experience x%.1f", d.hp_mult,
+                                  d.dmg_mult, d.tempo, d.enrage_frac > 0 ? ", enraged sooner" : ", never enraged", d.xp_mult);
+            }
+            ImGui::PopID();
+        }
+    }
     ImGui::Spacing();
     ImGui::BeginChild("slots", ImVec2(0, -150));
     for (int i = 0; i < (int)(sizeof(kSlots) / sizeof(kSlots[0])); i++) {
@@ -628,6 +709,238 @@ static void screen_terminal(const SaveData& s, const Live& l) {
         ImGui::TextColored(ImColor(col::dim).Value, "Pick a slot on the left to change it.");
     }
     ImGui::EndChild();
+    end_screen();
+}
+
+// ---- traits and prisms (progress.cpp)
+
+static int g_traitPick = -1;
+
+static void screen_traits(const SaveData& s) {
+    if (!begin_screen("##traits", 0.80f, 0.86f)) return end_screen();
+    title("TRAITS");
+    level_line(s);
+    int earned = trait_points(s), spent = trait_points_spent(s);
+    ImGui::TextColored(ImColor(spent < earned ? col::gold : col::dim).Value, "%d trait point%s to spend   (%d of %d used)",
+                       earned - spent, earned - spent == 1 ? "" : "s", spent, earned);
+    dim_wrapped("Every Remnant level is a trait point. A trait takes up to 10 points, and points can be taken back here at "
+                "any time. Experience comes from slaying or capturing monsters and defeating Remnant bosses. Learn more "
+                "traits from the Elder Melder, or from Remnant bosses.");
+    ImGui::Separator();
+    float w = ImGui::GetContentRegionAvail().x;
+    ImGui::BeginChild("list", ImVec2(w * 0.52f, -46));
+    for (int pass = 0; pass < 3; pass++) {  // core, learned, not yet learned
+        for (int i = 0; i < kTraitsCount; i++) {
+            const Traits& t = kTraits[i];
+            if (t.kind == TRAITS_KIND_ARCHETYPE) continue;
+            bool known = trait_known(s, i);
+            int want = t.kind == TRAITS_KIND_CORE ? 0 : known ? 1 : 2;
+            if (want != pass) continue;
+            ImGui::PushID(i);
+            bool sel = g_traitPick == i;
+            ImGui::BeginChild("t", ImVec2(0, 34), ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar);
+            int lv = i < (int)s.trait.size() ? s.trait[i] : 0;
+            ImU32 c = !known ? col::dim : sel ? col::gold : col::text;
+            ImGui::TextColored(ImColor(c).Value, "%s", text_or(&t.name).c_str());
+            ImGui::SameLine(ImGui::GetContentRegionAvail().x * 0.42f);
+            if (known) {
+                pips(lv, 10);
+                ImGui::SameLine();
+                if (remnant_button("-", ImVec2(26, 22), lv > 0)) change_save([i](SaveData& d) { return trait_set(d, i, -1); });
+                ImGui::SameLine();
+                if (remnant_button("+", ImVec2(26, 22), lv < 10 && spent < earned))
+                    change_save([i](SaveData& d) { return trait_set(d, i, 1); });
+            } else {
+                ImGui::TextColored(ImColor(col::dim).Value, "not learned yet");
+            }
+            ImGui::EndChild();
+            if (ImGui::IsItemClicked()) g_traitPick = i;
+            ImGui::PopID();
+        }
+    }
+    ImGui::EndChild();
+    ImGui::SameLine(0, 20);
+    ImGui::BeginChild("detail", ImVec2(0, -46));
+    if (s.archetype >= 0 && kArchetypes[s.archetype].trait >= 0) {
+        const Traits& at = kTraits[kArchetypes[s.archetype].trait];
+        label("ARCHETYPE TRAIT");
+        ImGui::TextColored(ImColor(col::gold).Value, "%s", text_or(&at.name).c_str());
+        dim_wrapped(("From your primary archetype, " + text_or(&kArchetypes[s.archetype].name) + ", always at level 10.").c_str());
+        effect_lines(at.effects);
+        ImGui::Separator();
+    }
+    if (g_traitPick >= 0 && g_traitPick < kTraitsCount) {
+        const Traits& t = kTraits[g_traitPick];
+        title(upper(text_or(&t.name)).c_str());
+        if (t.desc.asset) dim_wrapped(text_or(&t.desc).c_str());
+        label("AT LEVEL 10");
+        effect_lines(t.effects);
+        int lv = s.trait[g_traitPick];
+        ImGui::TextColored(ImColor(col::dim).Value, "Now level %d: %d%% of that.", lv, lv * 10);
+        if (!trait_known(s, g_traitPick))
+            dim_wrapped(("Learn it from " + r2_name(kNpcs[host_of_role(MENUS_ROLE_MELDER)].name) + " (" +
+                         role_place(MENUS_ROLE_MELDER) + "), or from a Remnant boss.").c_str());
+    } else {
+        dim_wrapped("Pick a trait to see what it does.");
+    }
+    ImGui::EndChild();
+    if (remnant_button("TAKE ALL POINTS BACK", ImVec2(260, 36), spent > 0)) change_save([](SaveData& d) { traits_reset(d); return true; });
+    ImGui::SameLine(ImGui::GetWindowWidth() - 250);
+    if (remnant_button("BACK", ImVec2(220, 36))) open(SCR_TERMINAL);
+    end_screen();
+}
+
+static int g_prismPick = -1;
+static double g_cleanseArmed = 0;
+
+static void slot_line(const SaveData::PSlot& sl, int i) {
+    if (sl.kind == PS_FRAGMENT) {
+        ImGui::TextColored(ImColor(col::text).Value, "%d.  %s", i + 1, text_or(&kFragments[sl.row].name).c_str());
+        ImGui::SameLine();
+        ImGui::TextColored(ImColor(col::gold).Value, "+%d", sl.lv);
+        ImGui::Indent();
+        effect_lines(kFragments[sl.row].effects);
+        ImGui::Unindent();
+    } else if (sl.kind == PS_FUSION) {
+        const Fusions& f = kFusions[sl.row];
+        ImGui::TextColored(ImColor(col::gold).Value, "%d.  %s", i + 1, text_or(&f.name).c_str());
+        ImGui::SameLine();
+        ImGui::TextColored(ImColor(col::dim).Value, "(%s + %s)", text_or(&kFragments[f.a].name).c_str(), text_or(&kFragments[f.b].name).c_str());
+        ImGui::SameLine();
+        ImGui::TextColored(ImColor(col::gold).Value, "+%d", sl.lv);
+        ImGui::Indent();
+        effect_lines(kFragments[f.a].effects);
+        effect_lines(kFragments[f.b].effects);
+        ImGui::Unindent();
+    } else {
+        ImGui::TextColored(ImColor(col::dim).Value, "%d.  empty", i + 1);
+    }
+}
+
+static void offer_card(const SaveData::Prism& p, const SaveData::PSlot& o) {
+    switch (o.kind) {
+        case PS_FRAGMENT:
+            label("NEW FRAGMENT", col::gold);
+            ImGui::TextWrapped("%s  +1", text_or(&kFragments[o.row].name).c_str());
+            effect_lines(kFragments[o.row].effects);
+            break;
+        case PS_RAISE: {
+            const SaveData::PSlot& sl = p.slot[o.row];
+            label("STRENGTHEN", col::gold);
+            std::string n = sl.kind == PS_FUSION ? text_or(&kFusions[sl.row].name) : text_or(&kFragments[sl.row].name);
+            ImGui::TextWrapped("%s  +%d -> +%d", n.c_str(), sl.lv, sl.lv + 1);
+            break;
+        }
+        case PS_FUSION: {
+            const Fusions& f = kFusions[o.row];
+            label("FUSION", col::gold);
+            ImGui::TextWrapped("%s: %s and %s become one fragment (+1) with both", text_or(&f.name).c_str(),
+                               text_or(&kFragments[f.a].name).c_str(), text_or(&kFragments[f.b].name).c_str());
+            break;
+        }
+        case PS_LEGENDARY:
+            label("LEGENDARY", col::gold);
+            ImGui::TextWrapped("%s", text_or(&kLegendaries[o.row].name).c_str());
+            if (kLegendaries[o.row].desc.asset) dim_wrapped(text_or(&kLegendaries[o.row].desc).c_str());
+            effect_lines(kLegendaries[o.row].effects);
+            break;
+        default: break;
+    }
+}
+
+static void screen_prism(const SaveData& s) {
+    if (!begin_screen("##prism", 0.82f, 0.86f)) return end_screen();
+    title("PRISMS");
+    dim_wrapped("The equipped prism gains experience as you hunt. Each prism level offers three choices: a new relic "
+                "fragment for one of its five slots, one more level for a fragment (up to +10), or a fusion of two "
+                "fragments that are both +5 or more. With all five at +10 it offers a legendary bonus. Fragments show "
+                "their +10 values.");
+    ImGui::Separator();
+    float w = ImGui::GetContentRegionAvail().x;
+    ImGui::BeginChild("owned", ImVec2(w * 0.28f, -46));
+    bool any = false;
+    for (int i = 0; i < kPrismsCount; i++) {
+        if (!s.has(CAT_PRISM, i)) continue;
+        any = true;
+        if (g_prismPick < 0 || !s.has(CAT_PRISM, g_prismPick)) g_prismPick = s.prismOn >= 0 ? s.prismOn : i;
+        ImGui::PushID(i);
+        ImGui::BeginChild("p", ImVec2(0, 52), ImGuiChildFlags_Borders, ImGuiWindowFlags_NoScrollbar);
+        ImGui::TextColored(ImColor(g_prismPick == i ? col::gold : col::text).Value, "%s", text_or(&kPrisms[i].name).c_str());
+        const SaveData::Prism& p = s.prism[i];
+        ImGui::TextColored(ImColor(col::dim).Value, "+%d%s%s", prism_level(p), s.prismOn == i ? "   equipped" : "",
+                           p.offers > 0 ? "   level up!" : "");
+        ImGui::EndChild();
+        if (ImGui::IsItemClicked()) g_prismPick = i;
+        ImGui::PopID();
+    }
+    if (!any)
+        dim_wrapped(("No prism yet. " + r2_name(kNpcs[host_of_role(MENUS_ROLE_MELDER)].name) +
+                     " crafts them, and the first Remnant boss you defeat leaves one.").c_str());
+    ImGui::EndChild();
+    ImGui::SameLine(0, 20);
+    ImGui::BeginChild("detail", ImVec2(0, -46));
+    if (any && g_prismPick >= 0) {
+        int row = g_prismPick;
+        const SaveData::Prism& p = s.prism[row];
+        int lv = prism_level(p);
+        double need = prism_need(p);
+        title(upper(text_or(&kPrisms[row].name)).c_str());
+        ImGui::TextColored(ImColor(col::gold).Value, "+%d of 51", lv);
+        if (need > 0) {
+            ImGui::SameLine();
+            ImGui::TextColored(ImColor(col::dim).Value, "   %.0f / %.0f experience", std::min(p.xp, need), need);
+            bar((float)(p.xp / need), col::accent);
+        }
+        if (s.prismOn != row) {
+            if (remnant_button("EQUIP THIS PRISM", ImVec2(260, 34)))
+                change_save([row](SaveData& d) { d.prismOn = row; prism_offer(d.prism[row]); return true; });
+        } else if (need > 0 && p.offers == 0) {
+            dim_wrapped("Equipped: it gains experience as you hunt.");
+        }
+        if (p.offers > 0) {
+            ImGui::Spacing();
+            label("LEVEL UP: CHOOSE ONE", col::gold);
+            float cw = (ImGui::GetContentRegionAvail().x - 24) / 3.0f;
+            for (int k = 0; k < p.offers; k++) {
+                ImGui::PushID(300 + k);
+                if (k) ImGui::SameLine(0, 12);
+                ImGui::BeginChild("o", ImVec2(cw, 170), ImGuiChildFlags_Borders);
+                offer_card(p, p.offer[k]);
+                ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 40);
+                if (remnant_button("CHOOSE", ImVec2(-1, 30))) {
+                    change_save([row, k](SaveData& d) { return prism_pick(d, row, k); });
+                    ui_sound("socket");
+                }
+                ImGui::EndChild();
+                ImGui::PopID();
+            }
+        }
+        ImGui::Spacing();
+        label("FRAGMENTS");
+        for (int i = 0; i < 5; i++) slot_line(p.slot[i], i);
+        if (p.legendary >= 0) {
+            label("LEGENDARY", col::gold);
+            ImGui::TextUnformatted(text_or(&kLegendaries[p.legendary].name).c_str());
+            if (kLegendaries[p.legendary].desc.asset) dim_wrapped(text_or(&kLegendaries[p.legendary].desc).c_str());
+            effect_lines(kLegendaries[p.legendary].effects);
+        }
+    }
+    ImGui::EndChild();
+    if (any && g_prismPick >= 0) {
+        bool armed = now_s() - g_cleanseArmed < 4.0;
+        int row = g_prismPick;
+        if (remnant_button(armed ? "CLICK AGAIN TO CLEANSE" : "CLEANSE (from +10)", ImVec2(300, 36), prism_level(s.prism[row]) >= 10)) {
+            if (armed) {
+                change_save([row](SaveData& d) { return prism_cleanse(d, row); });
+                g_cleanseArmed = 0;
+            } else {
+                g_cleanseArmed = now_s();
+            }
+        }
+        ImGui::SameLine();
+    }
+    ImGui::SameLine(ImGui::GetWindowWidth() - 250);
+    if (remnant_button("BACK", ImVec2(220, 36))) open(SCR_TERMINAL);
     end_screen();
 }
 
@@ -875,7 +1188,7 @@ void mod_frame() {
     if (g_screen == SCR_NONE && settled && !s.introDone && r2_ready()) open(SCR_INTRO);
     if (g_screen != SCR_NONE) {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_screen != SCR_INTRO && (g_screen != SCR_ARCHETYPE || s.archetype >= 0))
-            open(g_screen == SCR_ARCHETYPE ? SCR_TERMINAL : SCR_NONE);
+            open(g_screen == SCR_ARCHETYPE || g_screen == SCR_TRAITS || g_screen == SCR_PRISM ? SCR_TERMINAL : SCR_NONE);
         if (!inGame) open(SCR_NONE);
     } else if (inGame) {
         if (key_pressed(k.terminal) && inBase && s.archetype >= 0) {
@@ -928,6 +1241,8 @@ void mod_frame() {
         case SCR_ARCHETYPE: screen_archetype(s); break;
         case SCR_TERMINAL: screen_terminal(s, l); break;
         case SCR_MENU: screen_menu(s, l); break;
+        case SCR_TRAITS: screen_traits(s); break;
+        case SCR_PRISM: screen_prism(s); break;
         default: break;
     }
 }

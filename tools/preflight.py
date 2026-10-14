@@ -19,7 +19,7 @@ BUILD_PHASES = ("v0.1", "v0.2")  # sheets the build generates code from; later p
 _STAT = (r"(?:proc|dmg|dmg_ranged|dmg_melee|dmg_mod|dmg_skill|dmg_elem|dmg_status|dmg_explosive|weakspot|crit|crit_dmg|"
          r"fire_rate|reload|mag|ammo|accuracy|mod_gen|mod_dur|cdr|skill_dur|relic_speed|relic_heal|relic_charges|heal|"
          r"lifesteal|dr|max_hp|regen|stamina_max|stamina_regen|stamina_cost|shield|res_bleed|res_fire|res_shock|res_acid|vs_bleeding|vs_burning|"
-         r"vs_corroded|vs_overloaded|vs_exposed|vs_status|status_dur)")
+         r"vs_corroded|vs_overloaded|vs_exposed|vs_status|status_dur|xp)")
 _STATUS = r"(?:bleeding|burning|corroded|overloaded|exposed|slowed|marked)"
 _N = r"\d+(?:\.\d+)?"
 _TRIG = r"(?:on_kill|on_crit|on_weakspot|on_hit|on_evade|on_relic|on_skill|on_mod|on_reload|on_hurt|low_hp\(\d+\)|high_hp\(\d+\))"

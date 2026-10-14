@@ -1,0 +1,141 @@
+{
+ "sheet": "prisms",
+ "phase": "v0.2",
+ "columns": {
+  "id": "id",
+  "name": "r2text",
+  "icon": "r2tex|none",
+  "tier": "num",
+  "menu": "enum:smithy|melder|provisions|archetype",
+  "zenny": "num",
+  "recipe": "recipe"
+ },
+ "rows": [
+  {
+   "id": "greed",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/UniquePrisms/PrismOfGreed.uasset",
+     "key": "A0654734474DF7BAB2CBF79F0AD13744"
+    }
+   },
+   "icon": "none",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "hatred",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/UniquePrisms/PrismOfHatred.uasset",
+     "key": "51CC083C4FACECE0D19C27895358FE74"
+    }
+   },
+   "icon": "none",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "jealousy",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/UniquePrisms/PrismOfJealousy.uasset",
+     "key": "821C46344A5B042C62CB27A6B55EF700"
+    }
+   },
+   "icon": "none",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "lethargy",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/UniquePrisms/PrismOfLethargy.uasset",
+     "key": "DA893B2E45CB4B0C2FCF458B317C2B03"
+    }
+   },
+   "icon": "none",
+   "tier": 3,
+   "menu": "melder",
+   "zenny": 12000,
+   "recipe": [
+    "ore_high*5",
+    "bone_high*4",
+    "part_high*2"
+   ]
+  },
+  {
+   "id": "passion",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/UniquePrisms/PrismOfPassion.uasset",
+     "key": "AB9420BB4304157402BE25A2F17549F9"
+    }
+   },
+   "icon": "none",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "pride",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/UniquePrisms/PrismOfPride.uasset",
+     "key": "666A12D64265A09FA57238A3894FAE63"
+    }
+   },
+   "icon": "none",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  },
+  {
+   "id": "voracity",
+   "name": {
+    "r2text": {
+     "asset": "Remnant2/Content/Events/Paragon/PrismStone/UniquePrisms/PrismOfVoracity.uasset",
+     "key": "60FC4D3F4D18B616C34E6EA0B3492A4A"
+    }
+   },
+   "icon": "none",
+   "tier": 4,
+   "menu": "melder",
+   "zenny": 25000,
+   "recipe": [
+    "ore_high2*6",
+    "elder_high*3",
+    "part_high2*3"
+   ]
+  }
+ ]
+}

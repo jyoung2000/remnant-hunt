@@ -47,6 +47,28 @@ irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 |
   stamina cost act on MHW's own stamina. Heavier Remnant armor makes stamina costs higher. A Remnant evade is a real
   dodge that spent stamina, so it now works on a gamepad too. The mod finds where MHW keeps your stamina during your
   first dodges in a hunt.
+- **Remnant levels, trait points and traits.** Slaying or capturing monsters and defeating Remnant bosses earns
+  experience. Each Remnant level is a trait point, and a new hunter starts with 5. Spend them in **TRAITS** at the
+  Ward 13 terminal: up to 10 points per trait, and you can take them back at any time. Core traits (Vigor, Endurance,
+  Spirit, Expertise) are known from the start. Learn the others from the Elder Melder or from Remnant bosses. Your
+  primary archetype's own trait is always at full strength.
+- **Prisms**, as in Remnant II's The Dark Horizon. Craft them at the Elder Melder; the first Remnant boss you defeat
+  also leaves one. The equipped prism gains experience as you hunt. Each prism level offers three choices: a new relic
+  fragment for one of its five slots, one more level for a fragment (up to +10), or a fusion of two fragments that are
+  both at +5 or higher. With all five fragments at +10, it offers a legendary bonus. A prism at +10 or higher can be
+  cleansed to start over.
+- **Difficulty for the Remnant monsters.** Pick Survivor, Veteran, Nightmare or Apocalypse at the Ward 13 terminal.
+  It changes their health, damage, pace and statuses, how hard they are to stagger, how soon they enrage and how
+  often they chain attacks. Harder difficulties give more experience.
+- **Each Remnant boss fights its own way:**
+  - Brutes close in and hit hard.
+  - Hunters (Ravager, Lydusa, Venom) circle you, pounce and back off.
+  - Duelists (Faerin, the One True King, Gwendil) stay close, chain attacks and step around you.
+  - Ranged bosses (Phantom, Mother Mind) keep their distance and back away when pressed.
+  - Casters (Nightweaver, Sunken Witch) hold a middle distance and favour area attacks.
+  - Juggernauts (Annihilation, Kiln) advance relentlessly and shrug off flinches.
+  - Sentinels hold their ground.
+  - All of them enrage at low health.
 - Settings in `remnant_hunt.ini`: `[turf] enabled`, `mhw_vs_mhw`, `facing`; `[visuals] first_person`,
   `fp_eye_height`; `[stamina] enabled`.
 
@@ -69,7 +91,8 @@ irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 |
   Medic), with their own names, emblems, skills and perks read from your install.
 - **The whole Remnant II arsenal**: all 14 archetypes with their skills, perks and traits, 112 weapons (long guns,
   hand guns and melee weapons), 36 mods, 66 mutators, 225 rings, 103 amulets, 27 relics, 44 relic fragments,
-  53 consumables and 120 armor pieces.
+  53 consumables, 120 armor pieces, 42 traits, 7 prisms with 23 fusions and Remnant II's legendary
+  prism bonuses.
 - **Remnant menus at MHW's own NPCs** in Astera and Seliana. Stand next to one and press **P**:
   - **Smithy (McCabe):** guns, melee weapons, mods, mutators, armor and gun upgrades (+1 to +10).
   - **Elder Melder (Wallace):** archetype engrams, rings, amulets, relics and relic fragments.
@@ -78,7 +101,8 @@ irm https://raw.githubusercontent.com/jyoung2000/remnant-hunt/main/install.ps1 |
   bones, the best gear takes master rank materials and elder dragon parts.
 - **Ward 13 terminal** (press **P** elsewhere in town): your Remnant loadout. Two archetypes (the second adds its
   perks and a second skill on **H**), long gun, hand gun and melee weapon with their mods and mutators, relic, three
-  fragments, amulet, four rings, four armor pieces, and consumables to use.
+  fragments, amulet, four rings, four armor pieces, and consumables to use. Your traits, your prism, and the
+  difficulty of the Remnant monsters are also set here.
 - **Remnant combat on a hunt** (solo):
   - **B** switches to your Remnant guns. Aim with the right mouse button, fire with the left, **R** reloads and
     **X** swaps guns. Shots hit the monster's body, with weak spots on the head and tail.

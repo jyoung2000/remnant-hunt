@@ -74,6 +74,13 @@ struct Boss {
     float turnFrom = 0, turnBy = 0;
     float sink = 0;
     Frame fr;
+    // How it fights (bosses.json style) and the difficulty it was made at.
+    int diff = 1;
+    float tempo = 1;           // the difficulty's pace, faster again when enraged
+    bool enraged = false;
+    int orbitDir = 1;          // which way it circles
+    float reachMax = 0;        // its longest attack, cm
+    double nextFlip = 0, retreatUntil = 0;
     // A turf war with an MHW monster: it takes the hunter's place as the target.
     uint8_t* foe = nullptr;
     double foeUntil = 0, foeNext = 0, foeHitAt = 0, foeCheck = 0, lastHunterHit = -100;
@@ -106,6 +113,7 @@ double g_swingAt = 0, g_dodgeAt = -10;
 int g_swingWeapon = -1;
 const GameSnapshot* g_snap = nullptr;
 std::map<const uint8_t*, double> g_foeCd;  // MHW monster -> no new turf war with a boss before
+int g_difficulty = 1;  // difficulties row, from the save (chosen at Ward 13)
 
 // Shared with the render thread.
 struct DrawBoss {
@@ -341,7 +349,15 @@ void spawn(Live& l, int row, Vec3 at, float yaw, double t) {
     b.maxHp = b.hp = std::max(rank_hp(b.rank) * r.hp_mult, 0.9f * largest);
     b.dmgMult = rank_dmg(b.rank) * (0.85f + 0.06f * r.threat);
     b.meleeHit = rank_hp(b.rank) / std::max(20.0f, r.melee_hits);
-    b.staggerNeed = r.stagger_frac * b.maxHp;
+    // Remnant II's difficulty (chosen at Ward 13): health, damage, pace, how hard it staggers.
+    b.diff = std::max(0, std::min(kDifficultiesCount - 1, g_difficulty));
+    const Difficulties& d = kDifficulties[b.diff];
+    b.maxHp = b.hp = b.maxHp * d.hp_mult;
+    b.dmgMult *= d.dmg_mult;
+    b.tempo = d.tempo;
+    b.staggerNeed = r.stagger_frac * b.maxHp * d.stagger_mult * (r.style == BOSSES_STYLE_JUGGERNAUT ? 1.4f : 1.0f);
+    b.orbitDir = rand() % 2 ? 1 : -1;
+    for (int k : attacks_of(row)) b.reachMax = std::max(b.reachMax, kBoss_attacks[k].max_m * 100.0f * r.scale);
     b.st = ST_LOADING;
     b.stT0 = t;
     // Ask r2read for everything now, so the first attack does not wait.
@@ -356,8 +372,8 @@ void spawn(Live& l, int row, Vec3 at, float yaw, double t) {
     for (const char* s : {r.snd_roar, r.snd_pain, r.snd_death, r.snd_step})
         if (has(s)) audio_prefetch(s);
     r2_text(r.name);  // resolved now, so the bar never waits for it
-    log("bosses: %s spawning at (%.0f, %.0f, %.0f), %s, %.0f hp, damage x%.2f", r.id, at.x, at.y, at.z,
-        kRankName[b.rank], b.maxHp, b.dmgMult);
+    log("bosses: %s spawning at (%.0f, %.0f, %.0f), %s, %s, %.0f hp, damage x%.2f", r.id, at.x, at.y, at.z,
+        kRankName[b.rank], d.label, b.maxHp, b.dmgMult);
 }
 
 // A place on the ground at a distance from the hunter, in a direction; false when there is none.
@@ -389,7 +405,7 @@ void loot(SaveData& s, Live& l, const Boss& b) {
     static const struct { const char* sheet; Cat cat; } kSheets[] = {
         {"weapons", CAT_WEAPON}, {"mods", CAT_MOD}, {"mutators", CAT_MUTATOR}, {"armor", CAT_ARMOR},
         {"archetypes", CAT_ARCHETYPE}, {"rings", CAT_RING}, {"amulets", CAT_AMULET}, {"relics", CAT_RELIC},
-        {"fragments", CAT_FRAGMENT}, {"consumables", CAT_CONSUMABLE}};
+        {"fragments", CAT_FRAGMENT}, {"consumables", CAT_CONSUMABLE}, {"traits", CAT_TRAIT}, {"prisms", CAT_PRISM}};
     std::vector<std::pair<Cat, int>> pool;
     std::string all = B(b).loot;
     size_t i = 0;
@@ -409,8 +425,32 @@ void loot(SaveData& s, Live& l, const Boss& b) {
         i = j + 1;
     }
     std::string name = display_name(b.row);
+    double t = now_s();
+    const Difficulties& d = kDifficulties[b.diff];
+    award_xp(s, l, b.maxHp / d.hp_mult * d.xp_mult * tune(TUNING_XP_PER_HP) * 1.5f, t);
+    // Remnant II's other rewards: the first boss brings a prism (Voracity, as a world boss's first kill does), and
+    // bosses may teach a trait the hunter does not know yet.
+    int voracity = prisms_index("voracity");
+    bool anyPrism = false;
+    for (int i = 0; i < kPrismsCount; i++) anyPrism |= s.has(CAT_PRISM, i);
+    std::string extra;
+    if (voracity >= 0 && !anyPrism) {
+        s.owned[CAT_PRISM][voracity] = 1;
+        if (s.prismOn < 0) s.prismOn = voracity;
+        extra = ", and a prism (choose its fragments at Ward 13)";
+    } else if (frand() < tune(TUNING_LOOT_TRAIT_CHANCE)) {
+        std::vector<int> unknown;
+        for (int i = 0; i < kTraitsCount; i++)
+            if (kTraits[i].kind == TRAITS_KIND_TRAIT && !s.has(CAT_TRAIT, i)) unknown.push_back(i);
+        if (!unknown.empty()) {
+            int tr = unknown[rand() % unknown.size()];
+            s.owned[CAT_TRAIT][tr] = 1;
+            extra = ", and the " + r2_text(kTraits[tr].name) + " trait";
+        }
+    }
+    l.loadoutChanged = true;
     if (pool.empty()) {
-        toast(l, "%s defeated", name.c_str());
+        toast(l, "%s defeated%s", name.c_str(), extra.c_str());
         return;
     }
     auto pick = pool[rand() % pool.size()];
@@ -418,7 +458,7 @@ void loot(SaveData& s, Live& l, const Boss& b) {
     l.dirty = true;
     ItemView v = item(pick.first, pick.second);
     const std::string& got = v.name ? r2_text(*v.name) : std::string();
-    toast(l, "%s defeated: %s added to your Remnant gear", name.c_str(), got.empty() ? v.id : got.c_str());
+    toast(l, "%s defeated: %s added to your Remnant gear%s", name.c_str(), got.empty() ? v.id : got.c_str(), extra.c_str());
     log("bosses: %s defeated, loot %s", B(b).id, v.id);
 }
 
@@ -563,6 +603,16 @@ int think(Boss& b, Live& l, double t, float dt) {
         go(b, ST_IDLE, t);
     }
     b.staggerAcc = std::max(0.0f, b.staggerAcc - b.staggerNeed * 0.02f * dt);
+    // Enraged below a share of its health that grows with the difficulty: a roar, then a faster pace.
+    const Difficulties& diff = kDifficulties[b.diff];
+    if (!b.enraged && diff.enrage_frac > 0 && b.hp < diff.enrage_frac * b.maxHp &&
+        (b.st == ST_CHASE || b.st == ST_IDLE || b.st == ST_WALK)) {
+        b.enraged = true;
+        b.tempo *= 1.25f;
+        log("bosses: %s is enraged", r.id);
+        if (has(r.anim_roar)) { go(b, ST_ROAR, t); return ev; }
+    }
+    float pace = std::sqrt(b.tempo);  // turning and moving: a little faster with the pace
 
     switch (b.st) {
         case ST_IDLE:
@@ -596,14 +646,44 @@ int think(Boss& b, Live& l, double t, float dt) {
             turn_towards(b, toHunter, r.turn_dps, dt);
             if (b.at >= state_len(b, 1.5f)) {
                 b.roared = true;
-                b.nextAttack = t + 0.4;
+                b.nextAttack = t + 0.4 / b.tempo;
                 go(b, ST_CHASE, t);
             }
             break;
         }
         case ST_CHASE: {
+            // Where it wants to be: each style keeps its own distance, and moves between attacks in its own way.
+            int style = r.style;
+            float prefer = std::min(r.prefer_m * 100.0f, b.reachMax * 0.75f);  // never further than its attacks reach
+            bool ready = t >= b.nextAttack && t >= b.retreatUntil;
+            if (t > b.nextFlip) {
+                b.nextFlip = t + 4 + frand() * 4;
+                if (frand() < 0.5f) b.orbitDir = -b.orbitDir;
+            }
+            Vec3 goal = hunter;
+            bool approach = true;  // heading for the target (else repositioning)
+            if (!mobile || style == BOSSES_STYLE_SENTINEL) {
+                approach = false;
+                goal = b.pos;
+            } else if (style == BOSSES_STYLE_RANGED || style == BOSSES_STYLE_CASTER) {
+                Vec3 away = sub(b.pos, hunter);
+                float n = std::max(1.0f, hlen(away));
+                if (dist < prefer * 0.55f) {  // pressed: back off
+                    goal = add(hunter, mul(Vec3{away.x / n, 0, away.z / n}, prefer));
+                    approach = false;
+                } else if (dist < prefer * 1.35f) {  // in its band: circle slowly
+                    float a = yaw_to(hunter, b.pos) + b.orbitDir * 0.5f;
+                    goal = add(hunter, mul(fwd_of(a), prefer));
+                    approach = false;
+                }
+            } else if (!ready && (style == BOSSES_STYLE_HUNTER || style == BOSSES_STYLE_DUELIST)) {
+                // between attacks: circle the target, the hunter further out than the duelist
+                float a = yaw_to(hunter, b.pos) + b.orbitDir * (style == BOSSES_STYLE_HUNTER ? 0.9f : 0.6f);
+                goal = add(hunter, mul(fwd_of(a), std::max(prefer, 300.0f)));
+                approach = false;
+            }
             bool turnAnims = has(r.anim_turn_l) && has(r.anim_turn_r);
-            if (fabsf(off) > 1.75f && dist < 2000 && turnAnims) {
+            if (approach && fabsf(off) > 1.75f && dist < 2000 && turnAnims) {
                 b.turnFrom = b.yaw;
                 b.turnBy = off > 0 ? std::min(off, kPi / 2) : std::max(off, -kPi / 2);
                 bool toRight = (off > 0) != g_rh;  // positive yaw turns towards +x
@@ -612,8 +692,8 @@ int think(Boss& b, Live& l, double t, float dt) {
                 set_anim(b, anim_path(b.row, toRight ? r.anim_turn_r : r.anim_turn_l), false);
                 break;
             }
-            turn_towards(b, toHunter, r.turn_dps, dt);
-            if (t >= b.nextAttack) {
+            if (ready) {
+                turn_towards(b, toHunter, r.turn_dps * pace, dt);
                 float total = 0;
                 int pick = -1;
                 for (int k : attacks_of(b.row)) {
@@ -623,8 +703,16 @@ int think(Boss& b, Live& l, double t, float dt) {
                     auto cd = b.cd.find(k);
                     if ((cd != b.cd.end() && t < cd->second) || !facing || range < a.min_m || range > a.max_m) continue;
                     if (!anim_of(b.row, anim_path(b.row, a.anim))) continue;
-                    total += a.weight;
-                    if (frand() * total <= a.weight) pick = k;
+                    // each style leans on its own kind of attack
+                    float w = a.weight;
+                    bool ranged = a.kind == BOSS_ATTACKS_KIND_RANGED, aoe = a.kind == BOSS_ATTACKS_KIND_AOE;
+                    if (style == BOSSES_STYLE_RANGED) w *= ranged ? 2.5f : aoe ? 1.2f : (dist < 600 ? 1.0f : 0.3f);
+                    else if (style == BOSSES_STYLE_CASTER) w *= aoe ? 2.5f : ranged ? 1.8f : (dist < 600 ? 1.0f : 0.4f);
+                    else if (style == BOSSES_STYLE_BRUTE || style == BOSSES_STYLE_JUGGERNAUT) w *= ranged ? 0.6f : aoe ? 1.4f : 1.5f;
+                    else if (style == BOSSES_STYLE_HUNTER) w *= (a.max_m > 8 && dist > 600) ? 2.0f : 1.0f;  // pounces
+                    else if (style == BOSSES_STYLE_DUELIST) w *= ranged ? 0.7f : 1.3f;
+                    total += w;
+                    if (frand() * total <= w) pick = k;
                 }
                 if (pick >= 0) {
                     const Boss_attacks& a = kBoss_attacks[pick];
@@ -634,19 +722,31 @@ int think(Boss& b, Live& l, double t, float dt) {
                     b.st = ST_ATTACK;
                     b.stT0 = t;
                     set_anim(b, anim_path(b.row, a.anim), false);
-                    b.cd[pick] = t + a.cooldown_s;
+                    b.cd[pick] = t + a.cooldown_s / b.tempo;
                     play(a.snd, b.pos, 1.0f);
                     break;
                 }
             }
             if (!mobile) {
                 set_anim(b, anim_path(b.row, r.anim_idle), true);
+                if (!ready) turn_towards(b, toHunter, r.turn_dps * pace, dt);
                 break;
             }
-            bool distant = dist > 1400 && has(r.anim_run);
-            set_anim(b, anim_path(b.row, distant ? r.anim_run : r.anim_walk), true);
-            if (dist > 350 && fabsf(off) < 1.0f)
-                move(b, mul(fwd_of(b.yaw), (distant ? r.run_mps : r.walk_mps) * 100.0f * B(b).scale * dt), t);
+            float toGoal = hlen(sub(goal, b.pos));
+            float stopAt = approach ? 350.0f : 250.0f;
+            bool going = approach ? dist > stopAt : toGoal > stopAt;
+            if (!going) {  // there: face the target and wait for the next attack
+                turn_towards(b, toHunter, r.turn_dps * pace, dt);
+                set_anim(b, anim_path(b.row, r.anim_idle), true);
+                break;
+            }
+            float want = approach ? toHunter : yaw_to(b.pos, goal);
+            turn_towards(b, want, r.turn_dps * pace, dt);
+            bool distant = (approach ? dist : toGoal) > 1400 && has(r.anim_run);
+            bool hurry = distant || (style == BOSSES_STYLE_HUNTER && has(r.anim_run));
+            set_anim(b, anim_path(b.row, hurry ? r.anim_run : r.anim_walk), true);
+            if (fabsf(wrap(want - b.yaw)) < 1.0f)
+                move(b, mul(fwd_of(b.yaw), (hurry ? r.run_mps : r.walk_mps) * 100.0f * B(b).scale * pace * dt), t);
             break;
         }
         case ST_TURN: {
@@ -692,12 +792,20 @@ int think(Boss& b, Live& l, double t, float dt) {
                     if (onHunter)
                         ev |= hurt_hunter(l, a.damage * b.dmgMult,
                                           frand() < (a.kind == BOSS_ATTACKS_KIND_AOE ? 0.8f : 0.4f) ? a.inflict : 0,
-                                          status_total(b), t);
+                                          status_total(b) * kDifficulties[b.diff].status_mult, t);
                 }
             }
             if (b.at >= len) {
                 b.attack = -1;
-                b.nextAttack = t + 0.5 + frand() * 1.2;
+                // a chained attack, or a pause (hunters and duelists step around the target in it)
+                float combo = r.combo + kDifficulties[b.diff].combo_bonus + (b.enraged ? 0.1f : 0.0f);
+                if (frand() < combo) {
+                    b.nextAttack = t + 0.12;
+                } else {
+                    b.nextAttack = t + (0.5 + frand() * 1.2) / b.tempo;
+                    if (r.style == BOSSES_STYLE_HUNTER || r.style == BOSSES_STYLE_DUELIST)
+                        b.retreatUntil = t + (1.0 + frand() * 1.2) / b.tempo;
+                }
                 go(b, ST_CHASE, t);
             }
             break;
@@ -944,7 +1052,8 @@ void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stag
         b.attack = -1;
         go(b, ST_STUN, t);
         log("bosses: %s staggered (%d)", r.id, b.staggers);
-    } else if (b.flinchAcc >= r.flinch_frac * b.maxHp && has(r.anim_flinch)) {
+    } else if (b.flinchAcc >= r.flinch_frac * b.maxHp * (r.style == BOSSES_STYLE_JUGGERNAUT ? 2.0f : 1.0f) &&
+               has(r.anim_flinch)) {
         b.flinchAcc = 0;
         b.attack = -1;
         go(b, ST_FLINCH, t);
@@ -1063,6 +1172,7 @@ bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak) {
 int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     const GameSnapshot& g = l.snap;
     g_snap = &g;
+    g_difficulty = s.difficulty;
     if (g.view.valid) g_rh = g.view.proj[11] < 0;
     int ev = 0;
     mhw_bars(l, t);
