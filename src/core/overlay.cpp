@@ -290,19 +290,6 @@ static LRESULT CALLBACK wndproc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
 struct Tex { ID3D11ShaderResourceView* srv = nullptr; int w = 0, h = 0; bool failed = false; };
 static std::map<std::string, Tex> g_tex;
 
-static DXGI_FORMAT dxgi_format(const std::string& f, int* blockBytes) {
-    *blockBytes = 16;
-    if (f == "BC7") return DXGI_FORMAT_BC7_UNORM;
-    if (f == "BC3") return DXGI_FORMAT_BC3_UNORM;
-    if (f == "BC5") return DXGI_FORMAT_BC5_UNORM;
-    *blockBytes = 8;
-    if (f == "BC1") return DXGI_FORMAT_BC1_UNORM;
-    if (f == "BC4") return DXGI_FORMAT_BC4_UNORM;
-    *blockBytes = 0;
-    if (f == "BGRA8") return DXGI_FORMAT_B8G8R8A8_UNORM;
-    return DXGI_FORMAT_UNKNOWN;
-}
-
 void* texture_for(const char* asset, int maxSide, int* w, int* h) {
     if (!asset || !g_dev) return nullptr;
     std::string k = std::string(asset) + "|" + std::to_string(maxSide);
@@ -315,36 +302,11 @@ void* texture_for(const char* asset, int maxSide, int* w, int* h) {
     const R2Image* img = r2_image(asset, maxSide);
     if (!img) return nullptr;
     Tex t;
-    int bb = 0;
-    DXGI_FORMAT fmt = dxgi_format(img->format, &bb);
-    size_t want = bb ? (size_t)((img->w + 3) / 4) * (size_t)((img->h + 3) / 4) * bb : (size_t)img->w * img->h * 4;
-    if (img->failed || fmt == DXGI_FORMAT_UNKNOWN || img->w <= 0 || img->h <= 0 || img->pixels.size() < want) {
-        t.failed = true;
-        if (!img->failed && fmt != DXGI_FORMAT_UNKNOWN)
-            log("overlay: image %s has %zu bytes, %zu needed", asset, img->pixels.size(), want);
+    if (r2_make_texture(g_dev, *img, asset, &t.srv)) {  // texture.cpp, shared with tests/test_textures.cpp
+        t.w = img->w;
+        t.h = img->h;
     } else {
-        D3D11_TEXTURE2D_DESC d = {};
-        d.Width = img->w;
-        d.Height = img->h;
-        d.MipLevels = 1;
-        d.ArraySize = 1;
-        d.Format = fmt;
-        d.SampleDesc.Count = 1;
-        d.Usage = D3D11_USAGE_IMMUTABLE;
-        d.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-        D3D11_SUBRESOURCE_DATA sd = {};
-        sd.pSysMem = img->pixels.data();
-        sd.SysMemPitch = bb ? ((img->w + 3) / 4) * bb : img->w * 4;
-        ID3D11Texture2D* tex = nullptr;
-        if (SUCCEEDED(g_dev->CreateTexture2D(&d, &sd, &tex))) {
-            g_dev->CreateShaderResourceView(tex, nullptr, &t.srv);
-            tex->Release();
-            t.w = img->w;
-            t.h = img->h;
-        } else {
-            t.failed = true;
-            log("overlay: texture %s could not be created", asset);
-        }
+        t.failed = true;
     }
     g_tex[k] = t;
     if (w) *w = t.w;

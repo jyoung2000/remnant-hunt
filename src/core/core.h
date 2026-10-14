@@ -11,6 +11,9 @@
 #include "../common/log.h"
 #include "gen/sheets.gen.h"
 
+struct ID3D11Device;
+struct ID3D11ShaderResourceView;
+
 namespace rh {
 
 // ---------------------------------------------------------------- memory (mem.cpp)
@@ -89,6 +92,7 @@ const std::string& r2_text(const sheets::R2Text& t);
 const std::string& r2_name(const sheets::R2Name& n);
 struct R2Image { int w = 0, h = 0; std::string format; std::vector<uint8_t> pixels; bool failed = false; };
 const R2Image* r2_image(const char* asset, int maxSide);  // nullptr until loaded (loads on a worker thread)
+bool r2_make_texture(ID3D11Device* dev, const R2Image& img, const char* asset, ID3D11ShaderResourceView** srv);  // texture.cpp
 int r2_cells_checked(int* failed);  // test mode: resolves every Remnant II cell of the sheets
 // A play of a Remnant II sound event (one variation of each layer), stereo 16-bit; nullptr until decoded.
 struct R2Sound { int rate = 0; std::vector<int16_t> pcm; bool failed = false; };

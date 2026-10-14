@@ -186,3 +186,12 @@ Remnant II at C:\Program Files (x86)\Steam\steamapps\common\Remnant2 (never copi
   item name (have-counts red when short), pill tabs, a centred hint pill at the foot with the prompts at the right,
   one thin frame line instead of the double frame, selection marked by World's small triangle. HUD unchanged.
   Jalon confirmed the target is Monster Hunter: World (not Wilds).
+- Icons end to end: src/core/texture.cpp now holds the Direct3D 11 upload (overlay.cpp calls it), and
+  tests/test_textures.cpp runs the real r2client + r2read.exe against the install and uploads 385 sampled icons
+  (archetypes, skills, traits, weapons at 128 and 512, mods, mutators, rings, amulets, relics, fragments,
+  consumables, armor, difficulties, UI art) to a real D3D11 device: 385/385, formats BC7/BC3/BC1. Runs from
+  `tools/build_native.sh test` when Remnant II is installed. Traits gained their Remnant II card icons (37 of 43;
+  fortify, untouchable, fitness, rugged, scholar, wayfarer have no card asset in the install) and show them in the
+  list and the detail. Asset check: 3647 load, 0 fail.
+- Release: `tools/build_native.sh package` and `... installer` rebuild out/remnant_hunt-0.4.0.zip and
+  out/RemnantHuntSetup-0.4.0.exe; sha256s in out/release-notes-0.4.0.md (out/ is gitignored).

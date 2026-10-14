@@ -1257,7 +1257,9 @@ static void screen_traits(const SaveData& s) {
             if (list_row("t", 36, sel)) g_traitPick = i;
             int lv = trait_level(s, i), au = std::min(10, trait_auto(s, i)), mine = i < (int)s.trait.size() ? s.trait[i] : 0;
             float y = g_row.a.y + 8;
-            put(g_body, 18, ImVec2(g_row.a.x + kRowPad, y - 1), !known ? col::dim : sel ? col::gold : col::text, text_or(&t.name).c_str());
+            ImGui::SetCursorScreenPos(ImVec2(g_row.a.x + kRowPad, g_row.a.y + 4));
+            image(t.icon, 128, ImVec2(28, 28), known ? IM_COL32_WHITE : IM_COL32(120, 115, 108, 255));
+            put(g_body, 18, ImVec2(g_row.a.x + kRowPad + 36, y - 1), !known ? col::dim : sel ? col::gold : col::text, text_or(&t.name).c_str());
             float px = g_row.a.x + g_row.w * 0.46f;
             if (known) {
                 pips_at(ImVec2(px, g_row.a.y + 13), lv, 10, au);
@@ -1286,8 +1288,12 @@ static void screen_traits(const SaveData& s) {
     panel_begin("detail", "TRAIT INFO", ImVec2(0, -kFoot));
     if (g_traitPick >= 0 && g_traitPick < kTraitsCount) {
         const Traits& t = kTraits[g_traitPick];
+        image(t.icon, 256, ImVec2(72, 72));
+        ImGui::SameLine();
+        ImGui::BeginGroup();
         title(upper(text_or(&t.name)).c_str());
         if (t.desc.asset) dim_wrapped(text_or(&t.desc).c_str());
+        ImGui::EndGroup();
         section("AT LEVEL 10");
         effect_lines(t.effects);
         int lv = trait_level(s, g_traitPick), au = std::min(10, trait_auto(s, g_traitPick));

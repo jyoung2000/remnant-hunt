@@ -30,7 +30,7 @@
      "key": "DC4D14CA41ED195ECF372FB871D8B43D"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_AmmoReserves"},
    "effects": "ammo+50%",
    "fidelity": "exact",
    "tier": 2,
@@ -55,7 +55,7 @@
      "key": "82A85EC14235021EC7272696E6136998"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Amplitude"},
    "effects": "dmg_skill+10%",
    "fidelity": "approx",
    "tier": 2,
@@ -82,7 +82,7 @@
      "key": "15EA55AD4E8AE0BB09C0A89541C4287D"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_FlashCaster"},
    "effects": "cdr+10%;mod_gen+10%",
    "fidelity": "approx",
    "tier": 2,
@@ -132,7 +132,7 @@
      "key": "9E807F834DB44B1D2D6C4B83FB1DE65E"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_Kinship"},
    "effects": "dr+5%",
    "fidelity": "fallback",
    "tier": 1,
@@ -157,7 +157,7 @@
      "key": "C97E194C42B26A47B23F5583F9E01C90"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_Longshot"},
    "effects": "dmg_ranged+10%",
    "fidelity": "approx",
    "tier": 2,
@@ -182,7 +182,7 @@
      "key": "7E9FB70E4A67A9949176F5BAC1A45249"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_Potency"},
    "effects": "heal+20%",
    "fidelity": "approx",
    "tier": 2,
@@ -207,7 +207,7 @@
      "key": "41A37D9C418D9C7E33E20E8CA4A6CAD9"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Regrowth"},
    "effects": "regen+1.5",
    "fidelity": "exact",
    "tier": 2,
@@ -232,7 +232,7 @@
      "key": "C0502AF34B2589857DB9048409C48D4F"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_StrongBack"},
    "effects": "stamina_cost-15%",
    "fidelity": "approx",
    "tier": 2,
@@ -257,7 +257,7 @@
      "key": "4D9E15194520EF583C20F6852B0E57CA"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_Swiftness"},
    "effects": "stamina_cost-7.5%",
    "fidelity": "approx",
    "tier": 2,
@@ -282,7 +282,7 @@
      "key": "DA1F333447827D053042DA93FDA6A7C9"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_Triage"},
    "effects": "heal+50%",
    "fidelity": "exact",
    "tier": 2,
@@ -332,7 +332,7 @@
      "key": "C8D5981E40942F216068C48DBADF19FF"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_ArcaneStrike"},
    "effects": "mod_gen+15%",
    "fidelity": "approx",
    "tier": 2,
@@ -359,7 +359,7 @@
      "key": "7C952ACB4E5FC5087D17139F942EE198"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Barkskin"},
    "effects": "dr+10%",
    "fidelity": "exact",
    "tier": 2,
@@ -386,7 +386,7 @@
      "key": "AB402B7D4D4A48AA96F75BB472BBFC0F"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_BloodBond"},
    "effects": "dr+5%",
    "fidelity": "approx",
    "tier": 2,
@@ -413,7 +413,7 @@
      "key": "B10DD363439E01F8DA29B58E1C3C0511"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Bloodstream"},
    "effects": "regen+1",
    "fidelity": "approx",
    "tier": 2,
@@ -440,7 +440,7 @@
      "key": "CC000FC4430AE3805A0F7D968B44D604"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Chakra"},
    "effects": "mod_dur+30%",
    "fidelity": "exact",
    "tier": 2,
@@ -467,7 +467,7 @@
      "key": "6371AC8042E760E0034CA7A350A3C786"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Endurance"},
    "effects": "stamina_max+30",
    "fidelity": "exact",
    "tier": 2,
@@ -492,7 +492,7 @@
      "key": "5D8C20E2430CA8FA51169C8B0D017610"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Expertise"},
    "effects": "cdr+20%",
    "fidelity": "exact",
    "tier": 2,
@@ -544,7 +544,7 @@
      "key": "62BE51784F3E2481364854BAF501D018"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Footwork"},
    "effects": "accuracy+15%",
    "fidelity": "approx",
    "tier": 2,
@@ -571,7 +571,7 @@
      "key": "9C17BA21452C609E4A149E87156B9D38"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Glutton"},
    "effects": "relic_speed+35%",
    "fidelity": "exact",
    "tier": 2,
@@ -598,7 +598,7 @@
      "key": "5D46CDED49A6CA7A4B0C07A2EF6F71AB"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Handling"},
    "effects": "accuracy+30%",
    "fidelity": "exact",
    "tier": 2,
@@ -625,7 +625,7 @@
      "key": "42C358DC46352E5A35F3D6A08C73F0D8"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Leech"},
    "effects": "lifesteal+2%",
    "fidelity": "approx",
    "tier": 2,
@@ -652,7 +652,7 @@
      "key": "97D0A84A4806F36866A10BBDA02E5C7A"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Recovery"},
    "effects": "stamina_regen+90%",
    "fidelity": "exact",
    "tier": 2,
@@ -679,7 +679,7 @@
      "key": "D766143F40B0E03EA9CD8EBA644D47CD"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Resonance"},
    "effects": "dmg_skill+5%",
    "fidelity": "fallback",
    "tier": 1,
@@ -705,7 +705,7 @@
      "key": "330344B94971FCB7799EB49BC96724E3"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Revivalist"},
    "effects": "heal+10%",
    "fidelity": "fallback",
    "tier": 1,
@@ -784,7 +784,7 @@
      "key": "8B248E3D44819E01E055E89CF5091023"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_ShadeSkin"},
    "effects": "res_fire+20%;res_shock+20%;res_acid+20%",
    "fidelity": "approx",
    "tier": 2,
@@ -811,7 +811,7 @@
      "key": "8558FC244489951468E8C7947A801B37"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Siphoner"},
    "effects": "lifesteal+3%",
    "fidelity": "exact",
    "tier": 2,
@@ -838,7 +838,7 @@
      "key": "E07C65A2423B068720D1ECA8719A5DFA"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Spirit"},
    "effects": "mod_gen+20%",
    "fidelity": "exact",
    "tier": 2,
@@ -863,7 +863,7 @@
      "key": "6A2A5EC845BB618B85162095C3ED829E"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Card_Vigor"},
    "effects": "max_hp+30",
    "fidelity": "exact",
    "tier": 2,
@@ -915,7 +915,7 @@
      "key": "DCD6E4F7407E6420C3D780A2088CA92E"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_SoftBreak"},
    "effects": "dmg+3%",
    "fidelity": "fallback",
    "tier": 1,
@@ -941,7 +941,7 @@
      "key": "F43C02584E01914C7E4A9A869B8CFDEF"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/UI2/UI_Icons/UI_Icons_Traits/UI_Icons_Traits_Cards/T_UI_Icon_Trait_Archetype_Card_Affliction"},
    "effects": "status_dur+100%",
    "fidelity": "exact",
    "tier": 2,
@@ -966,7 +966,7 @@
      "key": "DBE7707A45DA802E74ED408B26A453A2"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Traits/T_UI_Icon_Trait_Card_DarkPact"},
    "effects": "lifesteal+2%",
    "fidelity": "approx",
    "tier": 2,
@@ -993,7 +993,7 @@
      "key": "EC8D4E8F40EAC48A5E3481A28DE867FC"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/World_DLC2/UI_Icons/UI_Icons_Traits/T_UI_Icon_Trait_Archetype_Card_Gifted"},
    "effects": "skill_dur+30%",
    "fidelity": "exact",
    "tier": 2,
@@ -1018,7 +1018,7 @@
      "key": "C39DB57C4D40C077EA1EBF902B187B79"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/World_DLC1/UI_Icons/UI_Icons_Traits/T_UI_Icon_Trait_Card_Resolute"},
    "effects": "dr+3%",
    "fidelity": "fallback",
    "tier": 1,
@@ -1044,7 +1044,7 @@
      "key": "13B6E8174485FDBD7C961DBB0B15FA9F"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Traits/T_UI_Icon_Trait_Archetype_Card_Barrier"},
    "effects": "shield+15%",
    "fidelity": "exact",
    "tier": 2,
@@ -1069,7 +1069,7 @@
      "key": "A0FC2DA64B1BE5CB7510409B03CAB78B"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Traits/T_UI_Icon_Trait_Card_Insight"},
    "effects": "mod_gen+15%",
    "fidelity": "approx",
    "tier": 2,
@@ -1096,7 +1096,7 @@
      "key": "06D62DB24D79366EEDF0C6AE24DE8B00"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Traits/T_UI_Icon_Trait_Card_Perception"},
    "effects": "fire_rate+3%;reload+3%",
    "fidelity": "approx",
    "tier": 2,
@@ -1123,7 +1123,7 @@
      "key": "E8BE982E401EE1158A1577896225D0DD"
     }
    },
-   "icon": "none",
+   "icon": {"r2tex": "Remnant2/Content/World_DLC3/UI_Icons/UI_Icons_Traits/T_UI_Icon_Trait_Card_Preservation"},
    "effects": "shield+10%",
    "fidelity": "approx",
    "tier": 2,

@@ -20,7 +20,15 @@ case "${1:-all}" in
     $CXX $F tests/test_progress.cpp src/core/progress.cpp src/core/effects.cpp src/core/mem.cpp -static -o build/test_progress.exe
     $CXX -std=c++17 -Isrc/core tests/test_effects.cpp src/core/effects.cpp -static -o build/test_effects.exe
     $CXX $F tests/test_craft.cpp src/core/inventory.cpp src/core/mem.cpp -static -o build/test_craft.exe
-    ./build/test_logic.exe | tail -1 && ./build/test_progress.exe | tail -1 && ./build/test_effects.exe | tail -1 && ./build/test_craft.exe | tail -2 ;;
+    ./build/test_logic.exe | tail -1 && ./build/test_progress.exe | tail -1 && ./build/test_effects.exe | tail -1 && ./build/test_craft.exe | tail -2
+    # The icon pipeline (real r2read + Direct3D 11) needs Remnant II installed; skipped where it is not.
+    R2="${R2:-/c/Program Files (x86)/Steam/steamapps/common/Remnant2}"
+    if [ -d "$R2" ] && [ -x build/win/r2read.exe ]; then
+      $CXX $F tests/test_textures.cpp src/core/r2client.cpp src/core/texture.cpp src/core/mem.cpp -static -ld3d11 -o build/test_textures.exe
+      ./build/test_textures.exe "$(cygpath -w "$PWD/build/win")" | tail -22
+    else
+      echo "textures: skipped (Remnant II not found at $R2)"
+    fi ;;
   preview)
     make preview-ui TC="$TCB" 2>&1 | grep -E "error|Error" || true
     [ -x build/preview_ui.exe ] || { echo "preview build failed"; exit 1; }
