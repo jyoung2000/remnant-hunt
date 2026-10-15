@@ -24,6 +24,7 @@
 
 #ifndef RH_TERRAIN_ONLY
 #include "imgui.h"
+#include "host.h"
 #include "hunter.h"
 #include "model.h"
 #include "render3d.h"
@@ -39,7 +40,7 @@ constexpr float kPi = 3.14159265f;
 constexpr int kMax = 4;
 constexpr int kProj = 24;
 
-enum St { ST_LOADING, ST_IDLE, ST_WALK, ST_ROAR, ST_CHASE, ST_TURN, ST_ATTACK, ST_FLINCH, ST_STUN, ST_DEAD };
+enum St { ST_LOADING, ST_IDLE, ST_WALK, ST_ROAR, ST_CHASE, ST_TURN, ST_ATTACK, ST_FLINCH, ST_STUN, ST_MOUNTED, ST_DEAD };
 enum Rank { RANK_LR, RANK_HR, RANK_MR };
 const char* const kRankName[] = {"LOW RANK", "HIGH RANK", "MASTER RANK"};
 
@@ -51,7 +52,7 @@ struct Frame {
 };
 
 // One sphere of a boss's whole-model hitbox: world position and radius (cm), and whether it is on the head.
-struct WSph { Vec3 c; float r; bool head; };
+struct WSph { Vec3 c; float r; bool head; int bone; };
 
 struct Boss {
     bool used = false;
@@ -104,6 +105,9 @@ struct Boss {
     double outAt = 0;
     int probes = 0, probesOk = 0;
     bool groundLogged = false;
+    // The host World monster's results (host.cpp): a tenderised bone, a mounted stagger, props of broken parts.
+    HostBossFx hfx;
+    std::string broken;        // ",bone,bone," of props dropped by part breaks
 };
 
 struct Proj {
@@ -146,6 +150,7 @@ struct DrawBoss {
     std::string a, b;
     float at, bt, blend;
     float world[16];
+    std::string broken;  // props dropped by part breaks
 };
 struct Number { Vec3 at; int amount; bool crit, weak; double t; };
 struct HudBoss { int row; float hp, maxHp; bool show, dead; double deadAt; int rank; bool staggered; uint32_t status; };
@@ -316,7 +321,7 @@ void place_hitbox(Boss& b, const std::vector<float>& pal, const float w[16]) {
         float z = q[8] * l.c[0] + q[9] * l.c[1] + q[10] * l.c[2] + q[11];
         Vec3 c = {x * w[0] + y * w[4] + z * w[8] + w[12], x * w[1] + y * w[5] + z * w[9] + w[13],
                   x * w[2] + y * w[6] + z * w[10] + w[14]};
-        b.sph.push_back({c, l.r * s, l.head});
+        b.sph.push_back({c, l.r * s, l.head, l.bone});
     }
 }
 
@@ -376,6 +381,10 @@ void go(Boss& b, St st, double t) {
         case ST_FLINCH: set_anim(b, anim_path(b.row, r.anim_flinch), false); play(r.snd_pain, b.pos, 1.0f); break;
         case ST_STUN:
             set_anim(b, anim_path(b.row, has(r.anim_stun) ? r.anim_stun : r.anim_flinch), false);
+            play(r.snd_pain, b.pos, 1.15f);
+            break;
+        case ST_MOUNTED:  // a mount on its host: the stagger animation, looped while it lasts
+            set_anim(b, anim_path(b.row, has(r.anim_stun) ? r.anim_stun : r.anim_flinch), true);
             play(r.snd_pain, b.pos, 1.15f);
             break;
         case ST_DEAD: set_anim(b, anim_path(b.row, r.anim_death), false); play(r.snd_death, b.pos, 1.2f); break;
@@ -1261,6 +1270,12 @@ int think(Boss& b, Live& l, double t, float dt) {
             }
             break;
         }
+        case ST_MOUNTED:  // it stays where it is until the mount is over
+            if (!b.hfx.mounted(t)) {
+                b.nextAttack = t + 0.8;
+                go(b, b.aggro ? ST_CHASE : ST_IDLE, t);
+            }
+            break;
         case ST_FLINCH:
         case ST_STUN: {
             if (b.at >= state_len(b, b.st == ST_STUN ? 2.5f : 0.8f)) {
@@ -1500,11 +1515,66 @@ bool project(const GameView& v, const Vec3& p, ImVec2 vpPos, ImVec2 vpSize, ImVe
 }
 
 
+// The bone of the posed hitbox sphere nearest p (-1 when it has none).
+int nearest_bone(const Boss& b, Vec3 p) {
+    int best = -1;
+    float bd = 1e30f;
+    for (const WSph& s : b.sph) {
+        float d = len3(sub(s.c, p)) - s.r;
+        if (d < bd) { bd = d; best = s.bone; }
+    }
+    return best;
+}
+
+void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger, bool hunter);
+
+// What the hunter did to the boss's host World monster (host.cpp), as data on the Remnant side.
+void host_event(Boss& b, int i, const HostEvent& e, double t) {
+    const Bosses& r = B(b);
+    if (e.kind == HOST_EV_CLAW) {
+        int bone = nearest_bone(b, e.at);
+        hit_boss(i, kHostClawFrac * b.maxHp, e.at, false, false, 1.0f, true);
+        b.hfx.tenderise(bone, t);  // after the hit: the claw's own hit is not doubled
+        log("bosses: %s clawed: bone %d tenderised for %.0f s", r.id, bone, kHostTenderS);
+    } else if (e.kind == HOST_EV_MOUNT && b.st != ST_DEAD) {
+        b.hfx.mount(t);
+        b.attack = -1;
+        go(b, ST_MOUNTED, t);
+        log("bosses: %s mounted (%.0f s)", r.id, kHostMountS);
+    } else if (e.kind == HOST_EV_PART) {
+        // host part i -> the i-th largest of the boss's hitbox spheres
+        std::vector<float> rad;
+        for (const WSph& s : b.sph) rad.push_back(s.r);
+        int si = host_part_cluster(e.part, rad.data(), (int)rad.size());
+        int hb = si >= 0 ? b.sph[si].bone : nearest_bone(b, e.at);
+        const Model* md = model_of(b.row);
+        std::string hname = md && hb >= 0 && hb < (int)md->bones.size() ? md->bones[hb].name : std::string("?");
+        log("host: part %d broke -> boss bone %s", e.part, hname.c_str());
+        // the prop on that bone goes, else the first prop not dropped yet (props are "bone=mesh" entries)
+        std::string all = r.props, bone;
+        for (int pass = 0; pass < 2 && bone.empty(); pass++) {
+            size_t k = 0;
+            while (k < all.size() && bone.empty()) {
+                size_t j = all.find(',', k);
+                if (j == std::string::npos) j = all.size();
+                std::string ent = all.substr(k, j - k);
+                k = j + 1;
+                size_t eq = ent.find('=');
+                if (eq == std::string::npos || b.broken.find("," + ent.substr(0, eq) + ",") != std::string::npos) continue;
+                if (pass == 1 || ent.substr(0, eq) == hname) bone = ent.substr(0, eq);
+            }
+        }
+        if (!bone.empty()) b.broken += (b.broken.empty() ? "," : "") + bone + ",";
+        log("bosses: %s part broken%s%s", r.id, bone.empty() ? "" : ": dropped the prop on ", bone.c_str());
+    }
+}
+
 void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger, bool hunter) {
     if (i < 0 || i >= kMax) return;
     Boss& b = g_boss[i];
     if (!b.used || b.st == ST_LOADING || b.st == ST_DEAD || dmg <= 0) return;
     double t = now_s();
+    if (b.hfx.tenderBone >= 0) dmg *= b.hfx.mult(nearest_bone(b, at), t);  // a clutch-claw tenderised spot
     b.hp -= dmg;
     b.aggro = true;
     b.flinchAcc += dmg;
@@ -1522,7 +1592,7 @@ void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stag
         go(b, ST_DEAD, t);
         return;
     }
-    if (b.st == ST_ROAR || b.st == ST_STUN) return;
+    if (b.st == ST_ROAR || b.st == ST_STUN || b.st == ST_MOUNTED) return;
     // Stagger: the meter (weak spots and heavy weapons fill it faster) or a third of its health gone; each stagger
     // makes the next one harder, as Remnant's and MHW's bosses both do.
     int phase = b.hp < b.maxHp / 3 ? 2 : b.hp < 2 * b.maxHp / 3 ? 1 : 0;
@@ -1678,11 +1748,13 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     g_difficulty = s.difficulty;
     if (g.view.valid) g_rh = g.view.proj[11] < 0;
     int ev = 0;
+    host_tick(l.snap, t, dt);  // the host World monsters: pinned, hidden, disarmed, and out of l.snap.monsters
     mhw_bars(l, t);
     bool allowed = g.inGame && g.solo && (!g.inBase || g.zone == 504);
     if (!allowed || g.zone != g_zone) {
         for (Boss& b : g_boss)
             if (b.used) log("bosses: %s leaves (zone change)", B(b).id);
+        for (int i = 0; i < kMax; i++) host_release(i);
         for (Boss& b : g_boss) b = Boss();
         for (Proj& p : g_proj) p.live = false;
         if (g.zone != g_zone) {
@@ -1787,11 +1859,12 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             if (failed || af) {
                 toast(l, "Remnant II's %s could not be read", display_name(b.row).c_str());
                 log("bosses: %s: model or idle animation unreadable, removed", r.id);
+                host_release(i);
                 b = Boss();
                 continue;
             }
             if (!idle) {
-                if (t - b.stT0 > 120) { log("bosses: %s: still loading after 120 s, removed", r.id); b = Boss(); }
+                if (t - b.stT0 > 120) { log("bosses: %s: still loading after 120 s, removed", r.id); host_release(i); b = Boss(); }
                 continue;
             }
             make_frame(b);
@@ -1810,6 +1883,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             b.goalUntil = t + 2;
             log("bosses: %s is out (%.0f hp, %.1f x %.1f x %.1f m)", r.id, b.maxHp, (b.fr.aMax - b.fr.aMin) / 100,
                 (b.fr.cMax - b.fr.cMin) / 100, (b.fr.zMax - b.fr.zMin) / 100);
+            host_bind(i, r.id, b.pos, b.yaw);  // a World monster under it, for the clutch claw
         }
         // Animation clocks.
         float bdt = dt * boss_time_scale(&g_token[i]);  // SLOWED
@@ -1820,6 +1894,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         if (b.st == ST_DEAD) {
             if (!b.looted) {
                 b.looted = true;
+                host_release(i);  // the host is given back alive: it drops nothing; the Remnant corpse is carved
                 ev |= BOSS_EV_KILL;
                 loot(s, l, b);
                 g_rollAt = t + 360 + frand() * 240;
@@ -1828,14 +1903,17 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
             }
             carve_tick(s, l, b, &carveKey, t);
             if (t > b.sinkAt) b.sink += dt * std::max(120.0f, height_of(b) * 0.4f);
-            if (b.sink > height_of(b) + 300) b = Boss();
+            if (b.sink > height_of(b) + 300) { host_release(i); b = Boss(); }
             continue;
         }
         boss_turf(b, i, l, t, bdt);
+        HostEvent he;
+        while (host_take(i, &he)) host_event(b, i, he, t);
         ev |= think(b, l, t, bdt);
         float y;
         if (g_depth) settle(b, g, dt, false);
         else if (ground(b.pos, &y) && fabsf(y - b.pos.y) < 400) b.pos.y += (y - b.pos.y) * std::min(1.0f, dt * 12);
+        host_follow(i, b.pos, b.yaw);
         if (!b.groundLogged && b.outAt > 0 && t - b.outAt >= 2 && terrain_enabled()) {
             b.groundLogged = true;
             log("bosses: %s grounded (probe ok %d%%)", r.id, b.probes ? b.probesOk * 100 / b.probes : 0);
@@ -1897,6 +1975,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         d.bt = pre ? (b.ploop ? b.pt : std::min(b.pt, std::max(0.0f, pre->length() - 0.001f))) : 0;
         d.blend = b.fade;
         world_matrix(b, d.world);
+        d.broken = b.broken;
         g_draw.push_back(d);
         if (d.m) {  // the hitbox follows the pose the renderer will draw
             std::vector<float> pal;
@@ -1917,7 +1996,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         if (b.st != ST_DEAD) g_marks.push_back({b.pos, b.row, b.aggro});
         if (B(b).tier == BOSSES_TIER_BOSS) {
             g_hud.push_back({b.row, b.hp, b.maxHp, b.aggro || (b.st == ST_DEAD && dist < 8000), b.st == ST_DEAD, b.stT0,
-                             b.rank, b.st == ST_STUN, status_bits(&g_token[i])});
+                             b.rank, b.st == ST_STUN || b.st == ST_MOUNTED, status_bits(&g_token[i])});
         } else if (b.st != ST_DEAD && dist < 6000) {
             std::string nm = display_name(b.row);
             g_creatureBars.push_back({&g_token[i], B(b).tier == BOSSES_TIER_ELITE ? 1 : 0,
@@ -1980,7 +2059,7 @@ static bool bone_model_matrix(const Model& m, const std::vector<float>& pal, int
 
 // The boss's held props (bosses.json props, "bone=mesh"): each placed on its bone's posed matrix, in the boss's world.
 static void append_props(const Bosses& r, const Model& body, const std::vector<float>& pal, const float world[16],
-                         std::vector<DrawItem>* items) {
+                         const std::string& broken, std::vector<DrawItem>* items) {
     std::string all = r.props;
     size_t i = 0;
     while (i < all.size()) {
@@ -1991,6 +2070,7 @@ static void append_props(const Bosses& r, const Model& body, const std::vector<f
         size_t eq = e.find('=');
         if (eq == std::string::npos) continue;
         std::string bone = e.substr(0, eq), mesh = e.substr(eq + 1);
+        if (!broken.empty() && broken.find("," + bone + ",") != std::string::npos) continue;  // dropped by a part break
         const Model* pm = model_get(mesh.c_str());
         if (!pm) continue;
         int bi = -1;
@@ -2037,7 +2117,7 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
         assign_textures(*d.m, r.textures, &it);
         std::vector<float> bodyPal = it.palette;
         items.push_back(std::move(it));
-        append_props(r, *d.m, bodyPal, d.world, &items);
+        append_props(r, *d.m, bodyPal, d.world, d.broken, &items);
     }
     gunmodel_append(&items);
     hunter_append(&items);  // the Remnant armour on the hunter

@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "bosses.h"
+#include "host.h"
 
 namespace rh {
 
@@ -520,6 +521,10 @@ void watch(Live& l, double t) {
 // ---------------------------------------------------------------- shared with the bosses
 
 bool turf_enabled() { return cfg(0); }
+
+int turf_forward() { return g_fwd; }
+
+bool turf_is_attack(const char* kind, int set, int id) { return kind && is_attack(kind, set, id); }
 
 Vec3 turf_closest(const Monster& m, Vec3 p) { return closest(m, p); }
 

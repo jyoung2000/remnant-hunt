@@ -41,6 +41,9 @@ $(O)/%.cpp.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# host.cpp calls the game's spawn routine under SEH (__try / __except), which clang only takes with -fms-extensions
+$(O)/src/core/host.cpp.o: CXXFLAGS += -fms-extensions
+
 $(O)/%.c.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -122,11 +125,13 @@ test-logic: src/core/gen/sheets.gen.h
 	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core tests/test_craft.cpp 	    src/core/inventory.cpp src/core/mem.cpp -static -o build/test_craft.exe
 	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core tests/test_hunter.cpp src/core/hunter_rig.cpp -static -o build/test_hunter.exe
 	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core -DRH_TERRAIN_ONLY tests/test_terrain.cpp src/core/bosses.cpp -static -o build/test_terrain.exe
+	$(CXX) -O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core -DRH_HOST_PURE tests/test_host.cpp src/core/host.cpp -static -o build/test_host.exe
 	wine build/test_logic.exe
 	wine build/test_progress.exe
 	wine build/test_craft.exe
 	wine build/test_hunter.exe
 	wine build/test_terrain.exe
+	wine build/test_host.exe
 
 # dev preview of the screens (no game needed): wine build/preview_ui.exe <screen 0-4> <dir with fonts\> <out.bmp>
 preview-ui: src/core/gen/sheets.gen.h

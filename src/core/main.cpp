@@ -78,6 +78,18 @@ static void load_settings() {
                   "; Remnant bosses: sun direction in degrees (fixed in the world), sun strength, ambient light\r\n"
                   "sun_yaw=35\r\nsun_pitch=55\r\nsun_strength=1.0\r\nambient=0.45\r\n"
                   "; sun_from=<singleton>+0x<off>: MHW's own sun vector (see the diagnostic's light dir candidate lines); overrides the above\r\nsun_from=\r\n"
+                  "[host]\r\n; a hidden World monster under each Remnant boss, for the clutch claw, mounts and part breaks.\r\n"
+                  "; mode=borrow (a large monster of the zone) or spawn (the game's spawn routine at spawn_fn, see below)\r\n"
+                  "; hide=alpha (its transparency at 0), none, or for testing scale (breaks the claw: its hitboxes shrink)\r\n"
+                  "; or under (3 m below the boss)\r\n"
+                  "; disarm=both, target (its target cleared every tick), action (its attacks near you become its idle\r\n"
+                  "; action) or none (testing)\r\n"
+                  "; spawn_fn: the RVA (address - 0x140000000) of SpawnMonsterInit(sEnemy, em id, sub id, flag); 0 = off.\r\n"
+                  "; To find it, create an empty file named dev_diag next to this ini, load into a zone, and read the\r\n"
+                  "; 'host diag: call <fn> (rva) ...' lines in the log: each is a function called right after sEnemy is\r\n"
+                  "; loaded. Copy the rva of the one taking the em id (edx) and sub id (r8d) here, then set mode=spawn.\r\n"
+                  "; A wrong address is caught and switches spawning off for the session. spawn_em: the monster to spawn.\r\n"
+                  "enabled=1\r\nmode=borrow\r\nhide=alpha\r\ndisarm=both\r\nspawn_fn=0\r\nspawn_em=em001_00\r\nspawn_flag=0\r\n"
                   "[paths]\r\n; Only needed if Remnant II is not found automatically\r\nremnant2=\r\n",
                   f);
             fclose(f);

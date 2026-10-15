@@ -455,3 +455,22 @@ Priority: C (self-contained, approved) and D (small) first, then B, then E, then
   for carves, boss drops, crafting and shop grants (preview screen_5.png). tests/preview_ui.cpp stubs updated.
 - Still needs Jalon: approval for the hidden host monster position write (claw mount / part breaks on Remnant
   bosses); one MHW knockout and one MHW carve to teach the faint and carve actions.
+
+## 2026-10-14 (night): APPROVAL: host World monster for the clutch claw
+Jalon (verbatim): "spawn a new monster hunter monster that does no damage and drops no loot with the exact same model
+and position as the remnant boss so the clutch claw can be used". Approved writes implied: spawning a World monster
+by calling the game's spawn function, writing its position/facing every frame, hiding its model (scale/visibility),
+disabling its damage and loot (attack power / AI state / despawn on death). Design: the host's own model is hidden and
+the Remnant model is drawn over it (World cannot load Remnant meshes). Plan: research the spawn call, the monster
+position/rotation/scale offsets and the attack/loot controls (read-only diagnostic first), then implement.
+- Host layer built (host.cpp, research/host_monster.md): one host World monster per Remnant boss. mode=borrow (nearest
+  large monster; the training area has none) or mode=spawn (SpawnMonsterInit(sEnemy, emId, subId, flag) at ini
+  [host] spawn_fn=<RVA>, guarded: inside .text, prologue check, SEH; the dev_diag "host diag" listing names the routine
+  at runtime because the exe's .text is SteamStub-encrypted on disk). Pin: +0x160 position (+0xA50 collision),
+  +0x170 quaternion from the boss's facing. Hide: hide=alpha writes +0x314 (unverified; validated before writing);
+  scaling is NOT used by default because the claw latches on hit capsules that shrink with the model. Disarm: target
+  nulled ([[[em+0x12278]+0xAA8]+0x5D0], target_base=ai|monster) + DoAction back to the learned idle; HP refilled each
+  tick. No loot: never killed; on the boss's death sunk 3 m and frozen (+0x14 bit 0) 30 s, borrowed hosts restored.
+  Claw latch learned ("claw S I" in learned_host.txt) -> 3% boss HP + tenderised bone 90 s; mount -> ST_MOUNTED 8 s;
+  part breaks from the parts table [+0x1D058] -> boss bone + prop drop. devdiag path typos fixed (menu flag / dev_diag
+  trigger never read before). Unverified in game: +0x314, +0xA50, freeze bit, parts layout, spawn address and flag.

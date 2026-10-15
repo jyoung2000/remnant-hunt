@@ -850,7 +850,7 @@ int menu_flag_read() {
     int st = state.load();
     if (st == 0) {
         char ini[MAX_PATH], v[128] = {0};
-        snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
         GetPrivateProfileStringA("menu", "flag", "", v, sizeof(v), ini);
         char* plus = strchr(v, '+');
         st = 1;
@@ -899,7 +899,7 @@ static void menu_watch_tick(double now, bool inGame, bool inBase, const Vec3& po
     if (now - flagChecked > 5.0) {
         flagChecked = now;
         char f[MAX_PATH];
-        snprintf(f, sizeof(f), "%s\dev_diag", mod_dir());
+        snprintf(f, sizeof(f), "%s\\dev_diag", mod_dir());
         flagFile = GetFileAttributesA(f) != INVALID_FILE_ATTRIBUTES;
     }
     if (!flagFile) return;
@@ -969,10 +969,114 @@ static void menu_watch_tick(double now, bool inGame, bool inBase, const Vec3& po
     ReleaseSRWLockExclusive(&sh.lock);
 }
 
+// ---------------------------------------------------------------- host diag (read-only)
+// For the hidden "host" monster research (research/host_monster.md). While dev_diag exists, every 5 s each large
+// monster in sEnemy's list is logged: address, DTI class, model path, em id/variant, position (+0x160), rotation
+// quaternion (+0x170), the floats at +0x180..+0x1A0 (mScale is +0x180..+0x18B per the 15.11 DTI dump), the size
+// modifier (+0x7730), mTransparency (+0x314), the cUnit words at +0x08..+0x17, the ActionController's {set, id}
+// (+0x61C8+0xAC), HP, despawn timer, speed, enrage duration and the part table pointer. Once per session it also lists
+// the functions called right after `mov rcx, [sEnemy]` (spawn routine candidates). Nothing is written.
+static void host_diag_callers() {
+    module_range();
+    const uint8_t* b = (const uint8_t*)g_textBeg;
+    size_t n = g_textEnd - g_textBeg;
+    struct Hit { int count = 0; uint32_t edx = 0xFFFFFFFF, r8 = 0xFFFFFFFF; uintptr_t site = 0; };
+    std::map<uintptr_t, Hit> hits;
+    int loads = 0;
+    for (size_t i = 0; i + 64 < n; i++) {
+        // mov rcx, [rip+disp32] = 48 8B 0D disp32
+        if (b[i] != 0x48 || b[i + 1] != 0x8B || b[i + 2] != 0x0D) continue;
+        uintptr_t at = g_textBeg + i;
+        if (at + 7 + *(const int32_t*)(b + i + 3) != HOOKV_S_ENEMY) continue;
+        loads++;
+        uint32_t edx = 0xFFFFFFFF, r8 = 0xFFFFFFFF;
+        for (size_t k = i + 7; k < i + 48; k++) {
+            if (b[k] == 0xBA) edx = *(const uint32_t*)(b + k + 1);                                 // mov edx, imm32
+            if (b[k] == 0x41 && b[k + 1] == 0xB8) r8 = *(const uint32_t*)(b + k + 2);              // mov r8d, imm32
+            if (b[k] == 0xE8) {
+                uintptr_t t = g_textBeg + k + 5 + *(const int32_t*)(b + k + 1);
+                if (t < g_textBeg || t >= g_textEnd) break;
+                Hit& h = hits[t];
+                if (!h.count) { h.edx = edx; h.r8 = r8; h.site = at; }
+                h.count++;
+                break;
+            }
+            if (b[k] == 0xC3) break;
+        }
+    }
+    log("host diag: %d loads of sEnemy into rcx, %zu distinct call targets after them", loads, hits.size());
+    int shown = 0;
+    for (auto& kv : hits) {
+        if (shown++ >= 60) break;
+        char bytes[3 * 24 + 1] = {0};
+        if (mem_readable((void*)kv.first, 24))
+            for (int k = 0; k < 24; k++) snprintf(bytes + 3 * k, 4, "%02X ", ((const uint8_t*)kv.first)[k]);
+        log("host diag: call %p (rva 0x%llX) x%d first site %p edx=0x%X r8d=0x%X : %s", (void*)kv.first,
+            (unsigned long long)(kv.first - g_base), kv.second.count, (void*)kv.second.site, kv.second.edx,
+            kv.second.r8, bytes);
+    }
+}
+
+static void host_diag_tick(double now, bool inGame) {
+    static double flagChecked = 0, next = 0;
+    static bool flagFile = false, callersDone = false;
+    if (now - flagChecked > 5.0) {
+        flagChecked = now;
+        char f[MAX_PATH];
+        snprintf(f, sizeof(f), "%s\\dev_diag", mod_dir());
+        flagFile = GetFileAttributesA(f) != INVALID_FILE_ATTRIBUTES;
+    }
+    if (!flagFile || !inGame || now < next) return;
+    next = now + 5.0;
+    module_range();
+    if (!callersDone) { callersDone = true; host_diag_callers(); }
+    uint8_t* se = rd_ptr(HOOKV_S_ENEMY);
+    if (!se) return;
+    const char* sen = dti_name_of(se);
+    int large = 0;
+    for (int i = 0; i < 128; i++) {
+        uint8_t* ai = rd_ptr((uintptr_t)se + 0x38 + i * 8);
+        if (!ai || !mem_readable(ai + 0x0C, 1) || (ai[0x0C] & 0xE) == 0) continue;
+        uint8_t* em = rd_ptr((uintptr_t)ai + 0x138);
+        if (!em || !mem_readable(em, 0x1D8B0)) continue;
+        // Model path "em\emNNN\NN\..." (small monsters "em\ems...").
+        char path[64] = {0};
+        uint8_t* res = rd_ptr((uintptr_t)em + HOOKV_ENEMY_PATH);
+        if (res && mem_readable(res + 0x0C, sizeof(path) - 1)) memcpy(path, res + 0x0C, sizeof(path) - 1);
+        path[sizeof(path) - 1] = 0;
+        const char* bs = strchr(path, '\\');
+        if (bs && strncmp(bs + 1, "ems", 3) == 0) continue;
+        large++;
+        const float* p = (const float*)(em + 0x160);
+        const float* q = (const float*)(em + 0x170);
+        const float* s = (const float*)(em + 0x180);
+        const uint32_t* u = (const uint32_t*)(em + 0x08);
+        int set = *(const int*)(em + 0x61C8 + 0xAC), id = *(const int*)(em + 0x61C8 + 0xB0);
+        float hp = -1, maxHp = -1;
+        uint8_t* hm = rd_ptr((uintptr_t)em + HOOKV_ENEMY_HEALTH_MGR);
+        if (hm && mem_readable(hm + 0x60, 8)) { maxHp = *(float*)(hm + 0x60); hp = *(float*)(hm + 0x64); }
+        uint8_t* aid = rd_ptr((uintptr_t)em + 0x12278);
+        uint32_t dead = 0, diff = 0;
+        if (aid) { rd((uintptr_t)aid + HOOKV_ENEMY_DEAD_FLAG, &dead); rd((uintptr_t)aid + 0x8AC, &diff); }
+        const char* dn = dti_name_of(em);
+        log("host diag: [%d] %p %s path %.40s id %u var %u pos %.0f %.0f %.0f quat %.3f %.3f %.3f %.3f", i, (void*)em,
+            dn ? dn : "?", path, *(const uint32_t*)(em + 0x12280), *(const uint32_t*)(em + 0x12288), p[0], p[1], p[2],
+            q[0], q[1], q[2], q[3]);
+        log("host diag: [%d] +0x180..0x1A0 %.4f %.4f %.4f %.4f %.4f %.4f %.4f %.4f sizeMod(+0x7730) %.4f transp(+0x314) %.3f",
+            i, s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], *(const float*)(em + 0x7730), *(const float*)(em + 0x314));
+        log("host diag: [%d] unit +0x08 %08X %08X %08X %08X action %d:%d hp %.0f/%.0f deadflags %08X diffIdx %u "
+            "despawn(+0x1C3D4) %.1f speed(+0x1D8A8) %.2f enrage(+0x1BE30+0x24) %.1f parts(+0x1D058) %p",
+            i, u[0], u[1], u[2], u[3], set, id, hp, maxHp, dead, diff, *(const float*)(em + 0x1C3D4),
+            *(const float*)(em + 0x1D8A8), *(const float*)(em + 0x1BE30 + 0x24), (void*)rd_ptr((uintptr_t)em + 0x1D058));
+    }
+    log("host diag: sEnemy %p (%s), %d large monsters", (void*)se, sen ? sen : "?", large);
+}
+
 // Game thread, from mod_game_tick.
 
 void devconsole_tick(double now, bool inGame, bool inBase, int zone, const Vec3& pos) {
     static double inGameSince = 0;
+    host_diag_tick(now, inGame);
     menu_watch_tick(now, inGame, inBase, pos);
     if (g_reported && inGame) track_session(now, inBase, zone, pos);
     if (g_watchUntil > 0) {
