@@ -38,6 +38,11 @@ int check_hooks();  // returns how many hooks failed
 
 // ---------------------------------------------------------------- game state (mhw.cpp)
 struct Vec3 { float x, y, z; };
+// Remnant skeletal meshes are authored with +Z up; place their lowest bound on the MHW ground point.
+inline Vec3 boss_model_origin(Vec3 ground, Vec3 up, float modelMinZ, float sink = 0.0f) {
+    const float d = modelMinZ + sink;
+    return {ground.x - up.x * d, ground.y - up.y * d, ground.z - up.z * d};
+}
 struct Monster {
     uint8_t* em;          // uEnemy*
     uint8_t* health;      // cpHealthManager*
@@ -202,6 +207,7 @@ void np_gmd_add(NpGmd* g, const std::string& label, const std::string& text);
 bool np_itm_add(std::vector<uint8_t>* itm, int cloneId, int n);
 void nativepc_tick();                // init thread, until it has finished; reads game memory only
 int nativepc_item_id(int barRow);    // the real MHW item id of a bar item (kBar_items row), 0 = not loaded in this game session
+int nativepc_loot_id(int cat, int row);  // a boss loot catalog row, 0 until the extended item table is loaded
 const char* nativepc_take_toast();   // a one-time message for the game thread to toast, or nullptr
 
 // Settings (remnant_hunt.ini in the mod folder).

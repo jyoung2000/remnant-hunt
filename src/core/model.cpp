@@ -246,6 +246,12 @@ const Anim* anim_get(const char* animAsset, const char* skelAsset, const Model* 
             if (f != byName.end()) { a->trackToModelBone[t] = f->second; bound++; }
         }
     }
+    if (bound == 0) {
+        g_failed["A" + key] = true;
+        if (failed) *failed = true;
+        log("anim: %s has no tracks mapped to the requested skeleton", animAsset);
+        return nullptr;
+    }
     log("anim: %s: %u tracks (%d on the model), %u samples at %.0f fps", animAsset, a->tracks, bound, a->samples, a->rate);
     const Anim* r = a.get();
     g_anims[key] = std::move(a);

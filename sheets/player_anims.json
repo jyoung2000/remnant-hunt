@@ -6,7 +6,7 @@
   "id": "id",
   "use": "str",
   "asset": "str",
-  "frames": "num"
+  "frames": "num|none"
  },
  "rows": [
   {
@@ -50,6 +50,186 @@
    "use": "idle",
    "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Idle_Fidget_01.uasset",
    "frames": 373
+  },
+  {
+   "id": "player_m_un_alchemist_vial_hold_throw",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Alchemist_Vial_Hold_Throw.uasset",
+   "frames": 50
+  },
+  {
+   "id": "player_m_un_action_frenzy_dust",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_FrenzyDust.uasset",
+   "frames": 50
+  },
+  {
+   "id": "player_m_un_alchemist_vial_tap",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Alchemist_Vial_Tap.uasset",
+   "frames": 29
+  },
+  {
+   "id": "player_m_ba_action_skill_activate",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/BA/Player_M_BA_Action_Skill_Activate.uasset",
+   "frames": 13
+  },
+  {
+   "id": "player_m_un_ability_challenger_01",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Challenger_01.uasset",
+   "frames": 95
+  },
+  {
+   "id": "player_m_un_perk_juggernaut",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Perk_Juggernaut.uasset",
+   "frames": 71
+  },
+  {
+   "id": "player_m_un_skill_rage_start",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Skill_RageStart.uasset",
+   "frames": 26
+  },
+  {
+   "id": "player_m_hc_action_deploy_turret",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/HC/Player_M_HC_Action_Deploy_Turret.uasset",
+   "frames": 91
+  },
+  {
+   "id": "player_m_hc_action_deploy_turret_impact_cannon",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/HC/Player_M_HC_Action_Deploy_Turret_Impact_Cannon.uasset",
+   "frames": 101
+  },
+  {
+   "id": "player_m_un_ability_gold_digger_01",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Gold_Digger_01.uasset",
+   "frames": 69
+  },
+  {
+   "id": "player_m_1_r_gunslinger_flourish_quick",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/1R/Player_M_1R_Gunslinger_Flourish_Quick.uasset",
+   "frames": 34
+  },
+  {
+   "id": "player_m_1_r_gunslinger_flourish",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/Player_M_1R_Gunslinger_Flourish.uasset",
+   "frames": 46
+  },
+  {
+   "id": "player_m_un_ability_handler_go_01",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Handler_Go_01.uasset",
+   "frames": 56
+  },
+  {
+   "id": "player_m_un_ability_handler_command_01",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Handler_Command_01.uasset",
+   "frames": 47
+  },
+  {
+   "id": "player_m_un_action_dog_whistle",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Dog_Whistle.uasset",
+   "frames": 47
+  },
+  {
+   "id": "player_m_un_action_utility_hunters_mark",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Utility_HuntersMark.uasset",
+   "frames": 35
+  },
+  {
+   "id": "player_m_un_action_shade_cloak",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_ShadeCloak.uasset",
+   "frames": 61
+  },
+  {
+   "id": "player_m_un_invoker_water",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC2/Characters/PlayerDLC2/Male/Player_M_UN_Invoker_Water.uasset",
+   "frames": 75
+  },
+  {
+   "id": "player_m_un_invoker_forest",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC2/Characters/PlayerDLC2/Male/Player_M_UN_Invoker_Forest.uasset",
+   "frames": 85
+  },
+  {
+   "id": "player_m_un_invoker_sand",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC2/Characters/PlayerDLC2/Male/Player_M_UN_Invoker_Sand.uasset",
+   "frames": 73
+  },
+  {
+   "id": "player_m_un_ability_medic_sanctuary_start",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Medic_Sanctuary_Start.uasset",
+   "frames": 23
+  },
+  {
+   "id": "player_m_un_skill_sanctuary_start",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Skill_SanctuaryStart.uasset",
+   "frames": 26
+  },
+  {
+   "id": "player_m_un_ability_medic_sanctuary_charged_end",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Ability_Medic_Sanctuary_Charged_End.uasset",
+   "frames": 91
+  },
+  {
+   "id": "player_m_un_ritualist_eruption",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC1/Characters/PlayerDLC1/Male/Player_M_UN_Ritualist_Eruption.uasset",
+   "frames": 52
+  },
+  {
+   "id": "player_m_un_ritualist_miasma",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC1/Characters/PlayerDLC1/Male/Player_M_UN_Ritualist_Miasma.uasset",
+   "frames": 76
+  },
+  {
+   "id": "player_m_un_ritualist_death_wish",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC1/Characters/PlayerDLC1/Male/Player_M_UN_Ritualist_DeathWish.uasset",
+   "frames": 65
+  },
+  {
+   "id": "player_m_un_summoner_summon",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Summoner_Summon.uasset",
+   "frames": 87
+  },
+  {
+   "id": "player_m_un_summoner_sacrifice",
+   "use": "skill",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Summoner_Sacrifice.uasset",
+   "frames": 103
+  },
+  {
+   "id": "player_m_warden_drone_release",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC3/Characters/PlayerDLC3/Animations/Player_M_Warden_Drone_Release.uasset",
+   "frames": 106
+  },
+  {
+   "id": "player_m_warden_drone_send",
+   "use": "skill",
+   "asset": "Remnant2/Content/World_DLC3/Characters/PlayerDLC3/Animations/Player_M_Warden_Drone_Send.uasset",
+   "frames": 49
   }
  ]
 }

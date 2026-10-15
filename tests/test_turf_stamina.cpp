@@ -51,6 +51,17 @@ using namespace rh;
 static int g_fail = 0;
 #define EXPECT(c, ...) do { if (!(c)) { g_fail++; printf("FAIL %s:%d: ", __FILE__, __LINE__); printf(__VA_ARGS__); printf("\n"); } } while (0)
 
+static void test_boss_token_identity() {
+    uint8_t tokens[4] = {};
+    uint8_t gameEntity[4] = {};
+    EXPECT(rh::boss_token_index(nullptr, tokens, 4) == -1, "null entity was accepted as a boss token");
+    EXPECT(rh::boss_token_index(tokens, nullptr, 4) == -1, "null token storage was accepted");
+    for (int i = 0; i < 4; ++i)
+        EXPECT(rh::boss_token_index(&tokens[i], tokens, 4) == i, "boss token %d did not retain its exact index", i);
+    EXPECT(rh::boss_token_index(gameEntity, tokens, 4) == -1, "ordinary game entity was mistaken for a boss token");
+    EXPECT(rh::boss_token_index(tokens + 4, tokens, 4) == -1, "one-past token pointer was accepted as a boss");
+}
+
 static float yaw_of(const uint8_t* em) {
     const float* q = (const float*)(em + 0x170);
     // forward +z rotated by q
@@ -231,6 +242,7 @@ static void test_learning() {
 }
 
 int main() {
+    test_boss_token_identity();
     GetTempPathA(MAX_PATH, g_dir);
     size_t n = strlen(g_dir);
     if (n && g_dir[n - 1] == '\\') g_dir[n - 1] = 0;

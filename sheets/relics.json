@@ -13,7 +13,7 @@
   "zenny": "num",
   "recipe": "recipe",
   "snd_use": "r2snd|none",
-  "anim": "str"
+  "anim": "refasset:player_anims|none"
  },
  "rows": [
   {
@@ -42,7 +42,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "bloodless_heart",
@@ -72,7 +72,7 @@
     "part_high2*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "blooming_heart",
@@ -102,7 +102,7 @@
     "crystal_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "broken_heart",
@@ -132,7 +132,7 @@
     "part_high2*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "constrained_heart",
@@ -161,7 +161,7 @@
     "bone_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "crystal_heart",
@@ -191,7 +191,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "decayed_heart",
@@ -221,7 +221,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "diverting_heart",
@@ -250,7 +250,7 @@
     "bone_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "enlarged_heart",
@@ -279,7 +279,7 @@
     "bone_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "gossamer_heart",
@@ -310,7 +310,7 @@
     "gem_master*1"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "latent_heart",
@@ -341,7 +341,7 @@
     "gem_master*1"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "lifeless_heart",
@@ -371,7 +371,7 @@
     "crystal_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "paper_heart",
@@ -401,7 +401,7 @@
     "part_high2*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "profane_heart",
@@ -431,7 +431,7 @@
     "part_high2*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "pulsing_heart",
@@ -461,7 +461,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "quilted_heart",
@@ -491,7 +491,7 @@
     "crystal_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "reprocessed_heart",
@@ -521,7 +521,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "resonating_heart",
@@ -551,7 +551,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "ripened_heart",
@@ -581,7 +581,7 @@
     "crystal_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "runed_heart",
@@ -611,7 +611,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "salvaged_heart",
@@ -640,7 +640,7 @@
     "bone_low*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "shielded_heart",
@@ -670,7 +670,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "siphon_heart",
@@ -700,7 +700,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "tormented_heart",
@@ -730,7 +730,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "tranquil_heart",
@@ -760,7 +760,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "unsullied_heart",
@@ -790,7 +790,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   },
   {
    "id": "void_heart",
@@ -820,7 +820,7 @@
     "part_high*2"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Objects/Objects_Global/DragonHeart/DragonHeart_Absorb.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_DragonHeart.uasset"
+   "anim": "dragonheart"
   }
  ]
 }

@@ -5,9 +5,9 @@
 // start MHW knows the new items by itself. Nothing here is committed or shipped: the files are made on the player's PC.
 //
 // itemData.itm: 10-byte header {01 10 09 18, u16 @4 (0x00be), u16 count @6, u16 0}, then count rows of 32 bytes.
-//   Row: u16 id @0 (= row index), u8 @9 rarity-like, u8 @10/@11 carry limits, u16 icon id @12 (Potion 1, Antidote 5,
-//   Flamenut 106), u16 flags @14; @18..31 hold prices/sort values that were not identified. A clone of Antidote
-//   (id 5) with its own id keeps all of those, so MHW treats the new row as a drinkable Antidote.
+//   Row: u16 id @0 (= row index), u8 type @5, u8 rarity @9, u8 carry limits @10/@11, u16 sort order @12,
+//   u32 icon id @18, u16 icon colour @22, prices @24/@28. Action rows clone Antidote (id 5);
+//   boss loot rows clone Iron Ore (id 205) so they are inert MHW materials, not drinkable items.
 // item_eng.gmd: 20-byte head, u32 label count, u32 text count, u32 label bytes, u32 text bytes, u32 name length,
 //   name + NUL, then per message a 32-byte entry {u32 index, u32 hash1, u32 hash2, u32 0xCDCDCDCD, u64 label offset,
 //   u64 next entry in the hash chain (0 = end)}, 256 u64 chain heads (-1 = empty), the NUL-separated labels, the
@@ -15,10 +15,11 @@
 //   index; index 0 is never listed as a head (the original files do it that way and the writer copies that).
 #include <cstdio>
 #include <cstring>
+#include <algorithm>
 #include <string>
 #include <vector>
 
-#include "core.h"
+#include "catalog.h"
 
 namespace rh {
 using namespace sheets;
@@ -112,11 +113,9 @@ bool np_itm_add(std::vector<uint8_t>* itm, int cloneId, int n) {
     uint16_t count = get<uint16_t>(itm->data(), 6);
     if (itm->size() != 10 + (size_t)count * 32 || cloneId >= count || count + n > 0xFFFF) return false;
     std::vector<uint8_t> row(itm->begin() + 10 + cloneId * 32, itm->begin() + 10 + cloneId * 32 + 32);
-    uint16_t icon = get<uint16_t>(row.data(), 12);  // all bar items wear the Antidote icon until they get their own
     for (int i = 0; i < n; i++) {
         uint16_t id = (uint16_t)(count + i);
         memcpy(row.data(), &id, 2);
-        memcpy(row.data() + 12, &icon, 2);
         itm->insert(itm->end(), row.begin(), row.end());
     }
     uint16_t total = (uint16_t)(count + n);
@@ -191,6 +190,8 @@ static bool find_itm(void* res, int expect, std::vector<uint8_t>* out) {
 // ---------------------------------------------------------------- files and state
 static std::string g_game, g_realJson;
 static int g_ids[kBar_itemsCount] = {};
+static int g_lootBase = 0;
+static std::vector<std::pair<Cat, int>> g_loot;
 static bool g_present = false, g_done = false;
 static char g_toast[200] = {};
 static double g_nextTry = 0;
@@ -200,14 +201,32 @@ static void make_dirs(const std::string& file) {
         if (file[i] == '\\' || file[i] == '/') CreateDirectoryA(file.substr(0, i).c_str(), nullptr);
 }
 
+static bool exists(const std::string& p);
+
 static bool write_file(const std::string& path, const void* d, size_t n) {
     make_dirs(path);
-    std::string tmp = path + ".tmp";  // complete or absent, never half a file that MHW would then load
-    FILE* f = fopen(tmp.c_str(), "wb");
-    if (!f) return false;
-    bool ok = fwrite(d, 1, n, f) == n;
-    ok = fclose(f) == 0 && ok;
-    return ok && MoveFileExA(tmp.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING);
+    if (exists(path)) return false;
+    std::string tmp = path + ".remnant-hunt.tmp";
+    HANDLE f = CreateFileA(tmp.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_NEW,
+                           FILE_ATTRIBUTE_NORMAL | FILE_FLAG_WRITE_THROUGH, nullptr);
+    if (f == INVALID_HANDLE_VALUE) return false;
+    const uint8_t* bytes = (const uint8_t*)d;
+    size_t at = 0;
+    bool ok = true;
+    while (at < n) {
+        DWORD part = (DWORD)std::min<size_t>(n - at, 1u << 20), wrote = 0;
+        if (!WriteFile(f, bytes + at, part, &wrote, nullptr) || wrote != part) { ok = false; break; }
+        at += wrote;
+    }
+    ok = FlushFileBuffers(f) != 0 && ok;
+    CloseHandle(f);
+    if (!ok) { DeleteFileA(tmp.c_str()); return false; }
+    // No MOVEFILE_REPLACE_EXISTING: an install or another mod that appears concurrently is preserved.
+    if (!MoveFileExA(tmp.c_str(), path.c_str(), MOVEFILE_WRITE_THROUGH)) {
+        DeleteFileA(tmp.c_str());
+        return false;
+    }
+    return true;
 }
 
 static bool exists(const std::string& p) { return GetFileAttributesA(p.c_str()) != INVALID_FILE_ATTRIBUTES; }
@@ -215,80 +234,131 @@ static bool exists(const std::string& p) { return GetFileAttributesA(p.c_str()) 
 static bool read_text(const std::string& p, std::string* out) {
     FILE* f = fopen(p.c_str(), "rb");
     if (!f) return false;
-    char b[2048];
-    size_t n = fread(b, 1, sizeof(b) - 1, f);
+    if (fseek(f, 0, SEEK_END) != 0) { fclose(f); return false; }
+    long n = ftell(f);
+    if (n <= 0 || n > 65536 || fseek(f, 0, SEEK_SET) != 0) { fclose(f); return false; }
+    out->resize((size_t)n);
+    bool ok = fread(&(*out)[0], 1, (size_t)n, f) == (size_t)n;
     fclose(f);
-    out->assign(b, n);
-    return true;
+    return ok;
 }
 
 static int json_num(const std::string& j, const std::string& key) {
     size_t at = j.find("\"" + key + "\"");
-    return at == std::string::npos ? -1 : atoi(j.c_str() + j.find(':', at) + 1);
+    if (at == std::string::npos) return -1;
+    size_t colon = j.find(':', at + key.size() + 2);
+    return colon == std::string::npos ? -1 : atoi(j.c_str() + colon + 1);
 }
-
-static const char* const kNames[][2] = {
-    {"dragon_heart", "Dragon Heart"}, {"archetype_skill", "Remnant Skill"}, {"long_gun", "Long Gun"},
-    {"hand_gun", "Hand Gun"}, {"weapon_mod", "Weapon Mod"}, {"consumable_1", "Remnant Consumable 1"},
-    {"consumable_2", "Remnant Consumable 2"}, {"consumable_3", "Remnant Consumable 3"}, {"consumable_4", "Remnant Consumable 4"}};
-static const char* const kDescs[] = {
-    "Spends a charge of the equipped Dragon Heart relic.", "Uses your archetype skill.",
-    "Draws your equipped long gun.", "Draws your equipped hand gun.", "Fires your gun's weapon mod.",
-    "Uses the first Remnant consumable you carry.", "Uses the second Remnant consumable you carry.",
-    "Uses the third Remnant consumable you carry.", "Uses the fourth Remnant consumable you carry."};
 
 static void upper(std::string& s) { for (char& c : s) c = (char)toupper((unsigned char)c); }
 
-static void generate(void* res, void* gmd, int gmdCount) {
+// Boss loot references are authored in bosses.json; catalog rows supply their Remnant names and icons.
+static void collect_loot() {
+    if (!g_loot.empty()) return;
+    static const struct { const char* sheet; Cat cat; } types[] = {
+        {"weapons", CAT_WEAPON}, {"mods", CAT_MOD}, {"mutators", CAT_MUTATOR}, {"armor", CAT_ARMOR},
+        {"archetypes", CAT_ARCHETYPE}, {"rings", CAT_RING}, {"amulets", CAT_AMULET}, {"relics", CAT_RELIC},
+        {"fragments", CAT_FRAGMENT}, {"consumables", CAT_CONSUMABLE}, {"traits", CAT_TRAIT}, {"prisms", CAT_PRISM}};
+    for (const Bosses& boss : kBosses) {
+        std::string all = boss.loot;
+        size_t at = 0;
+        while (at < all.size()) {
+            size_t end = all.find(',', at);
+            if (end == std::string::npos) end = all.size();
+            std::string ref = all.substr(at, end - at);
+            size_t dot = ref.find('.');
+            if (dot != std::string::npos)
+                for (const auto& type : types)
+                    if (ref.compare(0, dot, type.sheet) == 0)
+                        for (int row = 0; row < cat_count(type.cat); row++)
+                            if (ref.compare(dot + 1, std::string::npos, item(type.cat, row).id) == 0)
+                                g_loot.push_back({type.cat, row});
+            at = end + 1;
+        }
+    }
+    std::sort(g_loot.begin(), g_loot.end());
+    g_loot.erase(std::unique(g_loot.begin(), g_loot.end()), g_loot.end());
+}
+
+static const char* loot_sheet(Cat cat) {
+    static const char* names[] = {"weapons", "mods", "mutators", "armor", "archetypes", "rings", "amulets",
+                                  "relics", "fragments", "consumables", "traits", "prisms"};
+    return cat >= 0 && cat < CAT_COUNT ? names[cat] : "unknown";
+}
+
+static bool generate(void* res, void* gmd, int gmdCount) {
+    std::string root = g_game + "\\nativePC\\common\\";
+    const std::string itmPath = root + "item\\itemData.itm";
+    const std::string gmdPath = root + "text\\steam\\item_eng.gmd";
+    if (exists(itmPath) || exists(gmdPath) || exists(g_realJson)) {
+        log("nativepc: an item table, item text, or items.json already exists; refusing to overwrite it");
+        return false;
+    }
+    collect_loot();
+    if (!r2_ready()) return false;
+    bool namesReady = true;
+    for (const auto& ref : g_loot) {
+        ItemView v = item(ref.first, ref.second);
+        if (!v.name || r2_text(*v.name).empty()) namesReady = false;
+    }
+    if (!namesReady) return false;  // all requests were queued; retry when the reader has filled its cache
     std::vector<uint8_t> itm, gmdImg;
-    if (!find_itm(res, gmdCount / 2, &itm)) { log("nativepc: item table not found in memory (rItemData %p); nothing written", res); return; }
-    int base = get<uint16_t>(itm.data(), 6), n = kBar_itemsCount;
+    if (!find_itm(res, gmdCount / 2, &itm)) { log("nativepc: item table not found in memory (rItemData %p); nothing written", res); return false; }
+    int base = get<uint16_t>(itm.data(), 6), n = kBar_itemsCount + (int)g_loot.size();
     NpGmd g;
     bool exact = find_gmd(gmd, gmdCount, &gmdImg);
-    if (exact) {
-        NpGmd chk;
-        if (!np_gmd_parse(gmdImg.data(), gmdImg.size(), &chk) || np_gmd_write(chk) != gmdImg) {  // our writer must reproduce MHW's file
-            log("nativepc: item_eng.gmd round trip differs; nothing written");
-            return;
-        }
-        g = chk;
-    } else {  // no file image found: rebuild from the message strings with made-up labels (MHW looks items up by index)
-        memcpy(g.head, "GMD\0\x02\x03\x01\x00\x01\x00\x00\x00\0\0\0\0\0\0\0\0", 20);
-        g.name = "item";
-        for (int i = 0; i < gmdCount; i++) {
-            const char* m = gmd_message(gmd, i);
-            g.msgs.push_back(m && readable((const uint8_t*)m, 1) ? std::string(m, strnlen(m, 4096)) : std::string());
-            char l[32];
-            snprintf(l, sizeof(l), "RH_ORIG_%d", i);
-            g.labels.push_back(l);
-        }
-        log("nativepc: item text image not found; rebuilt %d messages with generated labels", gmdCount);
+    if (!exact || !np_gmd_parse(gmdImg.data(), gmdImg.size(), &g) || np_gmd_write(g) != gmdImg) {
+        // Rebuilding old labels from message text would break other MHW text lookups by hash.
+        log("nativepc: could not round-trip MHW's exact item_eng.gmd image; nothing written");
+        return false;
     }
-    if ((int)g.msgs.size() != base * 2 || !np_itm_add(&itm, kClone, n)) { log("nativepc: item table (%d) and text (%zu) disagree; nothing written", base, g.msgs.size()); return; }
+    if ((int)g.msgs.size() != base * 2 || !np_itm_add(&itm, kClone, kBar_itemsCount) ||
+        !np_itm_add(&itm, 205, (int)g_loot.size())) {
+        log("nativepc: item table (%d) and text (%zu) disagree; nothing written", base, g.msgs.size()); return false;
+    }
     std::string ids = "{\n  \"base\": " + std::to_string(base) + ",\n  \"count\": " + std::to_string(n) + ",\n  \"items\": {\n";
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < kBar_itemsCount; i++) {
         std::string key = kBar_items[i].id, up = key;
         upper(up);
-        const char* name = "Remnant Item";
-        const char* desc = "A Remnant item.";
-        for (int k = 0; k < 9; k++)
-            if (key == kNames[k][0]) { name = kNames[k][1]; desc = kDescs[k]; }
-        np_gmd_add(&g, "REMNANT_" + up + "_NAME", name);
-        np_gmd_add(&g, "REMNANT_" + up + "_EXP", desc);
-        ids += "    \"" + key + "\": " + std::to_string(base + i) + (i + 1 < n ? ",\n" : "\n");
+        np_gmd_add(&g, "REMNANT_" + up + "_NAME", kBar_items[i].native_name);
+        np_gmd_add(&g, "REMNANT_" + up + "_EXP", kBar_items[i].native_desc);
+        ids += "    \"" + key + "\": " + std::to_string(base + i) + ",\n";
+    }
+    for (size_t i = 0; i < g_loot.size(); i++) {
+        const auto& ref = g_loot[i];
+        ItemView v = item(ref.first, ref.second);
+        std::string key = std::string(loot_sheet(ref.first)) + "." + v.id, up = key;
+        upper(up);
+        if (!v.name) { log("nativepc: %s has no name reference; waiting for sheet correction", key.c_str()); return false; }
+        const std::string& name = r2_text(*v.name);
+        if (name.empty()) return false;  // the Remnant reader fetches queued text on its worker thread
+        const std::string& desc = v.desc ? r2_text(*v.desc) : std::string();
+        np_gmd_add(&g, "REMNANT_LOOT_" + up + "_NAME", name);
+        np_gmd_add(&g, "REMNANT_LOOT_" + up + "_EXP", desc.empty() ? "Remnant II gear." : desc);
+        ids += "    \"" + key + "\": " + std::to_string(base + kBar_itemsCount + i) +
+               (i + 1 < g_loot.size() ? ",\n" : "\n");
     }
     ids += "  }\n}\n";
     std::vector<uint8_t> gmdOut = np_gmd_write(g);
-    std::string root = g_game + "\\nativePC\\common\\";
-    if (!write_file(root + "item\\itemData.itm", itm.data(), itm.size()) ||
-        !write_file(root + "text\\steam\\item_eng.gmd", gmdOut.data(), gmdOut.size()) ||
-        !write_file(g_realJson, ids.data(), ids.size())) {
-        log("nativepc: could not write the files under %s", g_game.c_str());
-        return;
+    if (!write_file(itmPath, itm.data(), itm.size())) {
+        log("nativepc: could not create %s without replacing an existing file", itmPath.c_str());
+        return false;
+    }
+    if (!write_file(gmdPath, gmdOut.data(), gmdOut.size())) {
+        DeleteFileA(itmPath.c_str());  // this call created it; leave any pre-existing path untouched
+        log("nativepc: could not create %s; rolled back our item table", gmdPath.c_str());
+        return false;
+    }
+    if (!write_file(g_realJson, ids.data(), ids.size())) {
+        DeleteFileA(gmdPath.c_str());
+        DeleteFileA(itmPath.c_str());
+        log("nativepc: could not create %s; rolled back our nativePC item files", g_realJson.c_str());
+        return false;
     }
     snprintf(g_toast, sizeof(g_toast), "nativepc: wrote itemData (+%d rows, ids %d..%d) and item_eng.gmd; restart the game for MHW to load them",
              n, base, base + n - 1);
     log("%s", g_toast);
+    return true;
 }
 
 void nativepc_tick() {
@@ -307,22 +377,51 @@ void nativepc_tick() {
     const uint8_t* gm = (const uint8_t*)gmd;
     if (!res || !gm || !readable(gm + 0xD8, 4)) return;  // not loaded yet: try again
     int gmdCount = *(const int*)(gm + 0xD8);
-    g_done = true;
+    if (gmdCount <= 0 || (gmdCount & 1)) return;
+    collect_loot();
     std::string root = g_game + "\\nativePC\\common\\", json;
-    bool files = exists(root + "item\\itemData.itm") && exists(root + "text\\steam\\item_eng.gmd");
+    bool itmFile = exists(root + "item\\itemData.itm");
+    bool gmdFile = exists(root + "text\\steam\\item_eng.gmd");
+    bool files = itmFile && gmdFile;
     if (read_text(g_realJson, &json)) {
         int base = json_num(json, "base"), count = json_num(json, "count");
-        if (base > 0 && count == kBar_itemsCount && gmdCount / 2 >= base + count) {
-            for (int i = 0; i < kBar_itemsCount; i++) g_ids[i] = json_num(json, kBar_items[i].id);
+        bool idsOk = base > 0 && (count == kBar_itemsCount || count == kBar_itemsCount + (int)g_loot.size());
+        for (int i = 0; idsOk && i < kBar_itemsCount; i++) idsOk = json_num(json, kBar_items[i].id) == base + i;
+        if (idsOk && count > kBar_itemsCount)
+            for (size_t i = 0; idsOk && i < g_loot.size(); i++) {
+                const auto& ref = g_loot[i];
+                std::string key = std::string(loot_sheet(ref.first)) + "." + item(ref.first, ref.second).id;
+                idsOk = json_num(json, key) == base + kBar_itemsCount + (int)i;
+            }
+        std::vector<uint8_t> loaded;
+        bool tableOk = idsOk && gmdCount / 2 >= base + count && find_itm(res, gmdCount / 2, &loaded) &&
+                       get<uint16_t>(loaded.data(), 6) >= base + count;
+        if (tableOk) {
+            for (int i = 0; i < kBar_itemsCount; i++) g_ids[i] = base + i;
+            g_lootBase = count > kBar_itemsCount ? base + kBar_itemsCount : 0;
             g_present = true;
+            g_done = true;
             log("nativepc: Remnant items present");
-        } else if (files) log("nativepc: files are written but MHW has not loaded them; restart the game");
-        else generate(res, gmd, gmdCount);  // someone deleted the files: write them again
-    } else if (files) log("nativepc: nativePC item files exist without items.json; delete them to write new ones");
-    else generate(res, gmd, gmdCount);
+        } else if (files) { g_done = true; log("nativepc: generated files exist but their rows are not loaded; restart the game"); }
+        else { g_done = true; log("nativepc: items.json exists without a matching loaded item table; refusing to regenerate files"); }
+    } else if (exists(g_realJson)) {
+        g_done = true;
+        log("nativepc: items.json exists but could not be read; refusing to overwrite nativePC files");
+    } else if (itmFile || gmdFile) {
+        g_done = true;
+        log("nativepc: an itemData.itm or item_eng.gmd already exists without matching metadata; leaving it untouched");
+    } else {
+        if (generate(res, gmd, gmdCount)) g_done = true;
+    }
 }
 
 int nativepc_item_id(int barRow) { return g_present && barRow >= 0 && barRow < kBar_itemsCount ? g_ids[barRow] : 0; }
+
+int nativepc_loot_id(int cat, int row) {
+    if (!g_present || !g_lootBase || cat < 0 || cat >= CAT_COUNT) return 0;
+    auto it = std::lower_bound(g_loot.begin(), g_loot.end(), std::make_pair((Cat)cat, row));
+    return it != g_loot.end() && *it == std::make_pair((Cat)cat, row) ? g_lootBase + (int)(it - g_loot.begin()) : 0;
+}
 
 const char* nativepc_take_toast() {
     static char out[200];

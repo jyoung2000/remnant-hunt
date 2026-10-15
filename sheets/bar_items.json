@@ -10,7 +10,9 @@
   "reusable": "enum:yes|no",
   "count_from": "str",
   "on_use": "str",
-  "icon": "str"
+  "icon": "str",
+  "native_name": "str",
+  "native_desc": "str"
  },
  "rows": [
   {
@@ -22,7 +24,9 @@
    "reusable": "no",
    "count_from": "save.relicCharges",
    "on_use": "relic heal (systems.relic)",
-   "icon": "relics.dragon_heart.icon over the slot"
+   "icon": "relics.dragon_heart.icon over the slot",
+   "native_name": "Dragon Heart",
+   "native_desc": "Spends a charge of the equipped Dragon Heart relic."
   },
   {
    "id": "archetype_skill",
@@ -33,7 +37,9 @@
    "reusable": "yes",
    "count_from": "1",
    "on_use": "skill (systems.skill)",
-   "icon": "skills.icon over the slot"
+   "icon": "skills.icon over the slot",
+   "native_name": "Remnant Skill",
+   "native_desc": "Uses your archetype skill."
   },
   {
    "id": "long_gun",
@@ -44,7 +50,9 @@
    "reusable": "yes",
    "count_from": "1",
    "on_use": "gun mode on with the long gun",
-   "icon": "weapons.icon over the slot"
+   "icon": "weapons.icon over the slot",
+   "native_name": "Long Gun",
+   "native_desc": "Draws your equipped long gun."
   },
   {
    "id": "hand_gun",
@@ -55,7 +63,9 @@
    "reusable": "yes",
    "count_from": "1",
    "on_use": "gun mode on with the hand gun",
-   "icon": "weapons.icon over the slot"
+   "icon": "weapons.icon over the slot",
+   "native_name": "Hand Gun",
+   "native_desc": "Draws your equipped hand gun."
   },
   {
    "id": "weapon_mod",
@@ -66,7 +76,9 @@
    "reusable": "yes",
    "count_from": "1 when charged",
    "on_use": "mod (systems.mod_charge)",
-   "icon": "mods.icon over the slot"
+   "icon": "mods.icon over the slot",
+   "native_name": "Weapon Mod",
+   "native_desc": "Fires your gun's weapon mod."
   },
   {
    "id": "consumable_1",
@@ -77,7 +89,9 @@
    "reusable": "no",
    "count_from": "save.stock of the 1-th carried consumable",
    "on_use": "use_consumable",
-   "icon": "consumables.icon over the slot"
+   "icon": "consumables.icon over the slot",
+   "native_name": "Remnant Consumable 1",
+   "native_desc": "Uses the first Remnant consumable you carry."
   },
   {
    "id": "consumable_2",
@@ -88,7 +102,9 @@
    "reusable": "no",
    "count_from": "save.stock of the 2-th carried consumable",
    "on_use": "use_consumable",
-   "icon": "consumables.icon over the slot"
+   "icon": "consumables.icon over the slot",
+   "native_name": "Remnant Consumable 2",
+   "native_desc": "Uses the second Remnant consumable you carry."
   },
   {
    "id": "consumable_3",
@@ -99,7 +115,9 @@
    "reusable": "no",
    "count_from": "save.stock of the 3-th carried consumable",
    "on_use": "use_consumable",
-   "icon": "consumables.icon over the slot"
+   "icon": "consumables.icon over the slot",
+   "native_name": "Remnant Consumable 3",
+   "native_desc": "Uses the third Remnant consumable you carry."
   },
   {
    "id": "consumable_4",
@@ -110,7 +128,9 @@
    "reusable": "no",
    "count_from": "save.stock of the 4-th carried consumable",
    "on_use": "use_consumable",
-   "icon": "consumables.icon over the slot"
+   "icon": "consumables.icon over the slot",
+   "native_name": "Remnant Consumable 4",
+   "native_desc": "Uses the fourth Remnant consumable you carry."
   }
  ]
 }

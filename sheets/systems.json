@@ -66,8 +66,8 @@
   },
   {
    "id": "r2_content",
-   "summary": "r2read helper reads Remnant II text/icons from the player's install on demand, cached in memory only",
-   "trigger": "UI needs a cell",
+   "summary": "r2read resolves Remnant II content from the player's install; boss meshes use their listed materials and request texture mips up to 4096px, cached with idle eviction",
+   "trigger": "UI needs catalog data or a Remnant boss is rendered",
    "reads": [
     "none"
    ],
@@ -81,9 +81,10 @@
     "mods",
     "relics",
     "npcs",
-    "ui"
+    "ui",
+    "bosses"
    ],
-   "test": "log: every r2 cell in sheets resolved"
+   "test": "all referenced boss meshes, skeletons and textures resolve; active boss texture logs use the highest available mip up to 4096px and show no FAILED assets"
   },
   {
    "id": "zone_watch",
@@ -118,7 +119,7 @@
   },
   {
    "id": "gun_mode",
-   "summary": "toggle Remnant gun mode; sheathes nothing itself, blocks MHW attack inputs while active",
+   "summary": "toggle Remnant gun mode; draw the Remnant firearm from the hunter's live matched right-hand joint rather than a guessed joint candidate; block MHW attack inputs while active",
    "trigger": "hotkey B (gun mode)",
    "reads": [
     "game_window"
@@ -130,7 +131,7 @@
     "weapons",
     "ui"
    ],
-   "test": "G toggles hud_gun; MHW attack does not fire while active"
+   "test": "G toggles hud_gun; in a live screenshot the Remnant gun grip follows the hunter's matched right hand during idle, aim, reload and a Remnant skill; no guessed joint placement; MHW attack does not fire while active"
   },
   {
    "id": "fire",
@@ -215,7 +216,7 @@
   },
   {
    "id": "skill",
-   "summary": "T activates the archetype skill: monster damage mult / heal over time / damage reduction / infinite ammo",
+   "summary": "the skill key activates the archetype skill and retargets its Remnant animation onto the existing MHW hunter arm and hand joints; no separate Remnant player body is drawn",
    "trigger": "hotkey G",
    "reads": [
     "player_health_mgr",
@@ -229,7 +230,7 @@
     "skills",
     "archetypes"
    ],
-   "test": "each effect measurable in HP log"
+   "test": "each effect measurable in HP log; a live screenshot shows the existing hunter's arms and hands perform the Remnant pose without detached or duplicate limbs or a held Remnant item leaving the hands"
   },
   {
    "id": "damage_watch",
@@ -267,8 +268,8 @@
   },
   {
    "id": "relic_refill",
-   "summary": "charges refill on entering a base or camp zone",
-   "trigger": "zone change",
+   "summary": "charges refill on returning to base/camp or opening the Item Box menu at a base/camp location away from known NPC service points",
+   "trigger": "base/camp zone change or rising edge of the MHW menu-open signal away from known NPC service points",
    "reads": [
     "player_zone"
    ],
@@ -278,7 +279,7 @@
    "driven_by": [
     "relics"
    ],
-   "test": "charges full after returning to Astera"
+   "test": "charges full after returning to Astera or opening the Item Box; no repeat refill while menu stays open, and no refill from known NPC service menus"
   },
   {
    "id": "scrap",

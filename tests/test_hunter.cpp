@@ -44,6 +44,20 @@ static void game_matrix(const float R[9], const float p[3], float* g) {
     }
     g[12] = p[0], g[13] = p[1], g[14] = p[2], g[15] = 1;
 }
+static void axis_angle(const float axis[3], float degrees, float R[9]) {
+    float a[3] = {axis[0], axis[1], axis[2]};
+    float n = sqrtf(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+    for (float& v : a) v /= n;
+    float c = cosf(degrees * 3.14159265f / 360.0f), s = sinf(degrees * 3.14159265f / 360.0f);
+    float t = 2 * s * s, co = 2 * c * c - 1;
+    float sn = 2 * s * c;
+    R[0] = t * a[0] * a[0] + co; R[1] = t * a[0] * a[1] - sn * a[2]; R[2] = t * a[0] * a[2] + sn * a[1];
+    R[3] = t * a[0] * a[1] + sn * a[2]; R[4] = t * a[1] * a[1] + co; R[5] = t * a[1] * a[2] - sn * a[0];
+    R[6] = t * a[0] * a[2] - sn * a[1]; R[7] = t * a[1] * a[2] + sn * a[0]; R[8] = t * a[2] * a[2] + co;
+}
+static void game_rot(const float g[16], float R[9]) {
+    for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) R[i * 3 + j] = g[j * 4 + i];
+}
 
 // ---- 1. the matcher on a shuffled synthetic block
 static void test_match(bool posed) {
@@ -136,6 +150,7 @@ static void test_match(bool posed) {
            B.size(), right, map.aliases.size());
     CHECK(valid, "map not valid");
     CHECK(right >= 80, "only %d bones recovered", right);
+
 }
 
 // ---- 2. the retarget: Remnant's skeleton in the hunter's T-pose gives the hunter's bind pose
@@ -232,6 +247,58 @@ static void test_retarget(const char* r2path) {
     printf("retarget: T-pose -> hunter bind pose, worst error %.3f cm (bone %d), %d bones written\n", worst,
            worstH >= 0 ? B[worstH].id : -1, written);
     CHECK(worst < 1.0f, "T-pose retarget off by %.2f cm at bone id %d", worst, worstH >= 0 ? B[worstH].id : -1);
+    // A sheet-identified mid-forearm helper receives only the forearm-to-hand axial twist, not wrist swing.
+    int helper = -1, child = -1;
+    float fraction = 0;
+    for (size_t h = 0; h < B.size(); h++) {
+        if (!B[h].r2.empty() || B[h].parent < 0) continue;
+        int p = B[h].parent;
+        float hl2 = B[h].local[0] * B[h].local[0] + B[h].local[1] * B[h].local[1] + B[h].local[2] * B[h].local[2];
+        for (size_t c = 0; c < B.size(); c++) {
+            if (B[c].parent != p || B[c].r2.empty()) continue;
+            float cl2 = B[c].local[0] * B[c].local[0] + B[c].local[1] * B[c].local[1] + B[c].local[2] * B[c].local[2];
+            float dot = B[h].local[0] * B[c].local[0] + B[h].local[1] * B[c].local[1] + B[h].local[2] * B[c].local[2];
+            float t = cl2 > 0 ? dot / cl2 : 0;
+            float residual2 = hl2 - dot * dot / std::max(cl2, 1e-6f);
+            if (t > 0.1f && t < 0.9f && residual2 < std::max(1.0f, cl2 * 0.0036f)) {
+                helper = (int)h; child = (int)c; fraction = t; break;
+            }
+        }
+        if (helper >= 0) break;
+    }
+    CHECK(helper >= 0, "hunter bone sheet has no intermediate limb helper for twist correction");
+    if (helper >= 0) {
+        float axis[3] = {B[child].local[0], B[child].local[1], B[child].local[2]};
+        float invLen = 1.0f / sqrtf(axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2]);
+        for (float& v : axis) v *= invLen;
+        float Q[9], AC[9], Cq[9], desired[9], inputR[9];
+        axis_angle(axis, 40.0f, Q);
+        m3_mul(rig.A[child], rig.CR[child], AC);
+        m3_mul(kC, Q, Cq);
+        m3_mul(Cq, AC, inputR);
+        float* hand = &T[(size_t)rig.r2[child] * 12];
+        for (int r = 0; r < 3; r++) for (int c = 0; c < 3; c++) hand[r * 4 + c] = inputR[r * 3 + c];
+        hunter_retarget(rig, T.data(), G.data(), rootM, pelM, out, set);
+        float expected[9], got[9];
+        axis_angle(axis, 40.0f * fraction, expected);
+        game_rot(out[helper], got);
+        float err = 0;
+        for (int i = 0; i < 9; i++) err += fabsf(expected[i] - got[i]);
+        CHECK(set[helper] && err < 0.02f, "limb helper did not receive partial axial twist (fraction %.3f, matrix error %.4f)", fraction, err);
+        game_rot(out[child], got);
+        err = 0;
+        for (int i = 0; i < 9; i++) err += fabsf(Q[i] - got[i]);
+        CHECK(err < 0.02f, "twist correction changed the mapped child rotation (matrix error %.4f)", err);
+        // Restore the bind-pose fixture before the optional Remnant reference-pose checks below.
+        T = G;
+        for (size_t h = 0; h < B.size(); h++) {
+            if (rig.r2[h] < 0) continue;
+            m3_mul(rig.A[h], rig.CR[h], AC);
+            m3_mul(kC, AC, desired);
+            float* o = &T[(size_t)rig.r2[h] * 12];
+            for (int r = 0; r < 3; r++) for (int c = 0; c < 3; c++) o[r * 4 + c] = desired[r * 3 + c];
+        }
+    }
     if (real) {
         // Remnant's own reference pose (arms down): the hunter's arms come down too, and stay on their side.
         hunter_retarget(rig, G.data(), G.data(), rootM, pelM, out, set);
@@ -244,7 +311,16 @@ static void test_retarget(const char* r2path) {
     }
 }
 
+static void test_sparse_joint_block() {
+    // MHW's live hand matrix is at entry 396; leading empty slots must not look like the end of the block.
+    std::vector<uint8_t> rigid(512, 0);
+    rigid[396] = 1;
+    rigid[421] = 1;
+    CHECK(hunter_block_extent(rigid) == 422, "sparse joint block stopped before its last live entry");
+}
+
 int main(int argc, char** argv) {
+    test_sparse_joint_block();
     test_match(false);
     test_match(true);
     test_retarget(argc > 1 ? argv[1] : "build/r2_player_bones.json");

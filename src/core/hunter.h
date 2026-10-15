@@ -30,6 +30,7 @@ struct HBone {
 };
 const std::vector<HBone>& hunter_bones();  // from the generated sheet
 int hunter_bone_by_id(int id);             // index of a function id, -1 = none
+int hunter_block_extent(const std::vector<uint8_t>& rigidEntries); // last rigid entry + 1; the block may be sparse
 
 // Which joint block entry is each hunter bone. aliases: entries with the same matrix as a matched bone (the
 // armour pieces' .mod3 each carry a copy of the skeleton), as {entry, bone}.
@@ -81,6 +82,9 @@ bool hunter_mesh_palette(const HunterRig& rig, const Model& mesh, const float hw
 void hunter_tick(const SaveData& s, const Live& l, double t);
 // A Remnant animation on the hunter (relic, skill, consumable use); "none"/empty = nothing. Any thread.
 void hunter_play(const char* anim);
+// The live MHW right-hand joint matrix from the matcher, after this tick's Remnant pose write.
+// Game thread only; false until a plausible hunter joint block and right hand have been matched.
+bool hunter_right_hand(float out[16]);
 // The relic key was pressed (starts [hunter] pose_test). Any thread.
 void hunter_relic_key();
 // Render thread: the equipped Remnant armour as items of the 3D pass.

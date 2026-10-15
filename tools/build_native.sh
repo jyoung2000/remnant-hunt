@@ -15,15 +15,18 @@ CXX="$TCB/x86_64-w64-mingw32-clang++"
 case "${1:-all}" in
   test)
     mkdir -p build
+    python tools/gen.py  # preflight and regenerate from sheets before host tests
     F="-O1 -std=c++17 -Wall -Wno-unused-function -Wno-missing-braces -Isrc/core"
     $CXX $F tests/test_turf_stamina.cpp src/core/turf.cpp src/core/stamina.cpp src/core/effects.cpp src/core/mem.cpp -static -o build/test_logic.exe
     $CXX $F tests/test_progress.cpp src/core/progress.cpp src/core/effects.cpp src/core/mem.cpp -static -o build/test_progress.exe
     $CXX -std=c++17 -Isrc/core tests/test_effects.cpp src/core/effects.cpp -static -o build/test_effects.exe
     $CXX $F tests/test_craft.cpp src/core/inventory.cpp src/core/mem.cpp -static -o build/test_craft.exe
     $CXX $F tests/test_hunter.cpp src/core/hunter_rig.cpp -static -o build/test_hunter.exe
+    $CXX $F tests/test_key_edges.cpp -static -o build/test_key_edges.exe
     $CXX $F -DRH_TERRAIN_ONLY tests/test_terrain.cpp src/core/bosses.cpp -static -o build/test_terrain.exe
     ./build/test_logic.exe | tail -1 && ./build/test_progress.exe | tail -1 && ./build/test_effects.exe | tail -1 && ./build/test_craft.exe | tail -2
     ./build/test_hunter.exe | tail -6
+    ./build/test_key_edges.exe
     ./build/test_terrain.exe | tail -1
     # nativePC writers against the extracted originals (tools/mhwchunk_notes.md); skipped where build/mhw/ is missing.
     if [ -f build/mhw/itemData.itm ] && [ -f build/mhw/item_eng.gmd ]; then

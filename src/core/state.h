@@ -113,6 +113,8 @@ struct Live {
     bool hitMarkerWeak = false;
     char toast[160] = {0};
     double toastUntil = 0;
+    const char* lootIcon = nullptr;  // catalog asset path; set with boss loot, displayed beside its pickup toast
+    double lootIconUntil = 0;
     int shots = 0, hits = 0;
     double totalDamage = 0;
     bool dirty = false;
@@ -208,6 +210,7 @@ bool reactions_drink(int* set, int* id);  // the item-drinking action learned fr
 int mhw_pouch_count(int itemId);        // the item pouch only (MHW's item bar)
 int mhw_pouch_sum(int loId, int hiId);  // total pouch count over an id range (one walk)
 bool mhw_pouch_set(int itemId, int count);  // game thread: the pouch's entry for the item (a free slot if none); 0 clears
+int mhw_pouch_add(int itemId, int count);  // game thread: returns how many fit in the pouch
 extern volatile long g_remnantScreenOpen;  // a Remnant screen is open (set by the HUD, read by the game thread)
 const char* mhw_item_name(int itemId);  // MHW's own name for the item, or nullptr
 bool mhw_inventory_ready();

@@ -75,25 +75,19 @@ uint8_t* block_base(uint8_t* pl, int l1, int l2) {
     return *(uint8_t**)(a + l2);
 }
 
-// Reads entries 0.. until the block ends (8 bad entries in a row, or unreadable), at most kMaxEntries.
+// Reads the whole bounded block: MHW leaves unused slots before its live hunter bones, including before the known
+// gun hand at entry 396. Invalid matrices are holes, not evidence that the block ended.
 int read_block(uint8_t* base, int stride, std::vector<float>* block, std::vector<uint8_t>* ok) {
     block->assign((size_t)kMaxEntries * 16, 0);
     ok->assign(kMaxEntries, 0);
-    int n = 0, bad = 0;
     for (int i = 0; i < kMaxEntries; i++) {
         uint8_t* m = base + (size_t)i * stride;
         if (!mem_readable(m, 64)) break;
         float* f = &(*block)[(size_t)i * 16];
         memcpy(f, m, 64);
-        if (rigid(f)) {
-            (*ok)[i] = 1;
-            n = i + 1;
-            bad = 0;
-        } else if (++bad >= 8) {
-            break;
-        }
+        if (rigid(f)) (*ok)[i] = 1;
     }
-    return n;
+    return hunter_block_extent(*ok);
 }
 
 struct State {
@@ -160,38 +154,71 @@ void unmatch(const char* why) {
     g.anim = nullptr;
 }
 
-void rematch(uint8_t* base, const Vec3& pos, double t) {
+struct JointCandidate {
+    uint8_t* base = nullptr;
+    int stride = 0x40;
+    const char* label = "";
+};
+
+struct JointMatch {
+    JointCandidate candidate;
     std::vector<float> block;
     std::vector<uint8_t> ok;
-    int n = read_block(base, g.stride, &block, &ok);
+    HunterMap map;
+    int entries = 0;
+    int ms = 0;
+    bool valid = false;
+};
+
+void rematch(const JointCandidate* candidates, int count, const Vec3& pos, double t) {
     float p[3] = {pos.x, pos.y, pos.z};
-    HunterMap m;
-    double t0 = now_s();
-    bool valid = n > 0 && hunter_match(block.data(), ok.data(), n, p, &m);
-    int ms = (int)((now_s() - t0) * 1000);
-    g.map = m;
+    JointMatch best;
+    bool haveBest = false;
+    int primaryEntries = 0, primaryMatched = 0, alternateEntries = 0, alternateMatched = 0;
+    for (int i = 0; i < count; i++) {
+        if (!candidates[i].base || (i && candidates[i].base == candidates[0].base && candidates[i].stride == candidates[0].stride)) continue;
+        JointMatch attempt;
+        attempt.candidate = candidates[i];
+        double t0 = now_s();
+        attempt.entries = read_block(attempt.candidate.base, attempt.candidate.stride, &attempt.block, &attempt.ok);
+        attempt.valid = attempt.entries > 0 && hunter_match(attempt.block.data(), attempt.ok.data(), attempt.entries, p, &attempt.map);
+        attempt.ms = (int)((now_s() - t0) * 1000);
+        if (i == 0) primaryEntries = attempt.entries, primaryMatched = attempt.map.matched;
+        else alternateEntries = attempt.entries, alternateMatched = attempt.map.matched;
+        if (!haveBest || attempt.map.matched > best.map.matched) best = std::move(attempt), haveBest = true;
+    }
     for (auto& e : g.entries) e.clear();
-    if (!valid) {
+    if (!haveBest || !best.valid) {
+        g.map = HunterMap();
+        if (count > 0) {
+            const JointCandidate& retry = candidates[0].base ? candidates[0] : candidates[count - 1];
+            g.base = retry.base;
+            g.stride = retry.stride;
+        }
         g.nextTry = t + g.retry;
-        g.retry = std::min(60.0, g.retry * 2);
+        g.retry = std::min(5.0, g.retry * 2);
         if (!g.loggedFail) {
             g.loggedFail = true;
-            log("hunter: bones not matched in the joint block (%d entries read, best %d of %d, %d ms; retrying later)", n,
-                m.matched, kHunterBones, ms);
+            log("hunter: bones not matched in known joint blocks (primary %d entries/%d bones, alternate %d entries/%d bones; retrying later)",
+                primaryEntries, primaryMatched, alternateEntries, alternateMatched);
         }
         return;
     }
+    g.base = best.candidate.base;
+    g.stride = best.candidate.stride;
+    g.map = best.map;
     g.loggedFail = false;
     g.retry = 5;
     for (int h = 0; h < kHunterBones; h++)
-        if (m.entry[h] >= 0) g.entries[h].push_back(m.entry[h]);
-    for (auto& a : m.aliases) g.entries[a.second].push_back(a.first);
+        if (best.map.entry[h] >= 0) g.entries[h].push_back(best.map.entry[h]);
+    for (auto& a : best.map.aliases) g.entries[a.second].push_back(a.first);
     int hl = hunter_bone_by_id(8), hr = hunter_bone_by_id(12), known = gun_cfg().handEntry;
     auto has = [&](int h, int e) { return h >= 0 && std::find(g.entries[h].begin(), g.entries[h].end(), e) != g.entries[h].end(); };
     const char* agree = has(hl, known) ? "the left hand" : has(hr, known) ? "the right hand" : "not a matched hand";
-    log("hunter: %d of %d bones matched in the joint block (root entry %d, hand L entry %d, hand R entry %d; %zu copies; "
-        "%d entries read, %d ms); the known hand entry %d is %s", m.matched, kHunterBones, m.root,
-        hl >= 0 ? m.entry[hl] : -1, hr >= 0 ? m.entry[hr] : -1, m.aliases.size(), n, ms, known, agree);
+    log("hunter: %d of %d bones matched in the %s joint block (root entry %d, hand L entry %d, hand R entry %d; %zu copies; "
+        "%d entries read, %d ms); the known hand entry %d is %s", best.map.matched, kHunterBones,
+        best.candidate.label, best.map.root, hl >= 0 ? best.map.entry[hl] : -1, hr >= 0 ? best.map.entry[hr] : -1,
+        best.map.aliases.size(), best.entries, best.ms, known, agree);
 }
 
 bool read_entry(int e, float out[16]) {
@@ -243,6 +270,12 @@ void hunter_play(const char* anim) {
     g_req = anim;
 }
 
+bool hunter_right_hand(float out[16]) {
+    if (!out || !g.map.valid || !g.base) return false;
+    const int h = hunter_bone_by_id(12);  // the hunter's right hand in hunter_bones.json
+    return h >= 0 && g.map.entry[h] >= 0 && read_entry(g.map.entry[h], out);
+}
+
 void hunter_relic_key() { g_relicKey = true; }
 
 void hunter_tick(const SaveData& s, const Live& l, double t) {
@@ -267,22 +300,35 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
     // ---- the joint block and the map
     const GunCfg& gc = gun_cfg();
     g.stride = gc.handStride >= 64 && gc.handStride <= 0x1000 ? gc.handStride : 0x40;
-    uint8_t* base = block_base(snap.player, gc.handL1, gc.handL2);
-    if (!base || !mem_readable(base, 64)) base = block_base(snap.player, 0xA8, 0x310), g.stride = 0x40;
-    if (!base || !mem_readable(base, 64)) {
+    JointCandidate candidates[2] = {
+        {block_base(snap.player, gc.handL1, gc.handL2), g.stride, "primary"},
+        {block_base(snap.player, 0xA8, 0x310), 0x40, "alternate"},
+    };
+    for (auto& candidate : candidates)
+        if (!candidate.base || !mem_readable(candidate.base, 64)) candidate.base = nullptr;
+    int candidateCount = (candidates[0].base || candidates[1].base) ? 2 : 0;
+    if (!candidateCount) {
         if (g.map.valid) unmatch("joint block unreadable");
         g.base = nullptr;
         publish();
         return;
     }
-    if (base != g.base || snap.zone != g.zone) {
-        if (g.map.valid) unmatch(base != g.base ? "the joint block moved" : "zone change");
-        g.base = base;
+    bool selectedStillPresent = false;
+    for (const auto& candidate : candidates)
+        selectedStillPresent |= candidate.base == g.base && candidate.stride == g.stride;
+    if (!selectedStillPresent) {
+        if (g.map.valid) unmatch("both known joint blocks moved");
+        g.base = nullptr;
         g.zone = snap.zone;
         g.nextTry = 0;
         g.retry = 5;
+    } else if (snap.zone != g.zone) {
+        // A zone transition alone does not invalidate a player-owned joint block. The live
+        // matrices are checked below each tick; rematching a readable block here can select
+        // an unrelated rigid-body table while MHW is streaming the next area.
+        g.zone = snap.zone;
     }
-    if (!g.map.valid && t >= g.nextTry) rematch(base, snap.pos, t);
+    if (!g.map.valid && t >= g.nextTry) rematch(candidates, candidateCount, snap.pos, t);
     build_rig();
 
     float hw[kHunterBones][16];
@@ -292,15 +338,15 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
             if (g.map.entry[h] >= 0) hv[h] = read_entry(g.map.entry[h], hw[h]);
         // still the hunter's? the root at the hunter, the pelvis readable
         int r0 = hunter_bone_by_id(0);
+        // The block was discovered through this player's object and zone. Its root can drift
+        // away from snap.pos during root-motion and MHW state transitions, so position alone
+        // must not invalidate a still-readable map. Drop it only when its anchor matrices vanish.
         bool sane = r0 >= 0 && hv[r0] && (g.rig.pelvisH < 0 || hv[g.rig.pelvisH]);
-        if (sane) {
-            float dx = hw[r0][12] - snap.pos.x, dy = hw[r0][13] - snap.pos.y, dz = hw[r0][14] - snap.pos.z;
-            sane = dx * dx + dy * dy + dz * dz < 60.0f * 60.0f;
-        }
         g.bad = sane ? 0 : g.bad + 1;
         if (g.bad > 60) {
-            unmatch("the root left the hunter");
-            g.nextTry = t;
+            unmatch("the root or pelvis matrix stopped being readable");
+            g.retry = 1.0;
+            g.nextTry = t + 1.0;
         }
     }
 

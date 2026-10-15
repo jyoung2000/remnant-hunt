@@ -13,7 +13,7 @@
   "zenny": "num",
   "recipe": "recipe",
   "snd_use": "r2snd|none",
-  "anim": "str"
+  "anim": "refasset:player_anims|none"
  },
  "rows": [
   {
@@ -42,7 +42,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/AllSeeingEye/Consumable_AllSeeingEye_Foley_Grab.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "ammo_box",
@@ -70,7 +70,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/AmmoBox/Consumable_AmmoBox_Bullets_Reveived.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "antidote",
@@ -98,7 +98,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "bandage",
@@ -126,7 +126,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Bandage/Consumable_Bandage_Tear.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "binding_orb",
@@ -154,7 +154,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/BindingOrb/Consumable_BindingOrb_BindPool_Tell.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "black_tar",
@@ -182,7 +182,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/BlackTar/Consumable_BlackTar_Explosion.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "blood_root",
@@ -210,7 +210,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "brightstone",
@@ -238,7 +238,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Brightstone/Consumable_Brightstone_Projectile_Bounce.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "confidence_booster",
@@ -266,7 +266,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "drans_dream",
@@ -294,7 +294,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "dried_fruit",
@@ -322,7 +322,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "ethereal_orb",
@@ -350,7 +350,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "faerie_needle",
@@ -378,7 +378,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "gul_serum",
@@ -406,7 +406,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "hunters_dream",
@@ -434,7 +434,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "koara_pellet",
@@ -462,7 +462,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/KoaraPellet/KoaraPellet_Buff.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "light_extract",
@@ -490,7 +490,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "liquid_escape",
@@ -518,7 +518,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "mud_rub",
@@ -546,7 +546,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "mystery_jerky",
@@ -574,7 +574,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "nimues_dream",
@@ -597,7 +597,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "oilskin_balm",
@@ -625,7 +625,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "orb_of_undoing",
@@ -653,7 +653,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "pipe_bomb",
@@ -681,7 +681,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/PipeBomb/Consumable_PipeBomb_Explosion.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "poisoned_spice_capsule",
@@ -709,7 +709,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "processed_koara",
@@ -737,7 +737,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "purified_salve",
@@ -765,7 +765,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "rocket_fuel",
@@ -793,7 +793,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "spice",
@@ -821,7 +821,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "sweet_leaf",
@@ -849,7 +849,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "thaen_fruit_celestial",
@@ -877,7 +877,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "thaen_fruit_elder",
@@ -905,7 +905,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "thaen_fruit_mature",
@@ -933,7 +933,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "timeworn_unguent",
@@ -961,7 +961,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "bark_extract",
@@ -989,7 +989,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "bottled_shaedberry",
@@ -1017,7 +1017,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "chilled_steam",
@@ -1045,7 +1045,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "dark_cider",
@@ -1073,7 +1073,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "dark_fluid",
@@ -1096,7 +1096,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "egg_drink",
@@ -1124,7 +1124,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "meat_shake",
@@ -1152,7 +1152,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "mud_tooths_elixir",
@@ -1180,7 +1180,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "mudtooths_snake_oil",
@@ -1208,7 +1208,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "mud_tooths_stew",
@@ -1236,7 +1236,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Eat/Consumable_Foley_Food_Eat_Meat.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Eat.uasset"
+   "anim": "eat"
   },
   {
    "id": "mud_tooths_tonic",
@@ -1264,7 +1264,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "numbing_agent",
@@ -1292,7 +1292,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "root_water",
@@ -1320,7 +1320,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "sacred_lakewater",
@@ -1348,7 +1348,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "sanguine_vapor",
@@ -1376,7 +1376,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "strong_drink",
@@ -1404,7 +1404,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "tranquility_font",
@@ -1432,7 +1432,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "verdant_tea",
@@ -1460,7 +1460,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   },
   {
    "id": "xenoplasm",
@@ -1488,7 +1488,7 @@
     "none"
    ],
    "snd_use": "Remnant2/Content/WwiseAudio/Events/Consumables/Consumables_Shared/Foley/Drink/Consumable_Foley_Drink.uasset",
-   "anim": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Action_Drink.uasset"
+   "anim": "drink"
   }
  ]
 }

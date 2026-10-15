@@ -11,6 +11,7 @@ struct DrawItem {
     float world[16];                       // model (Remnant II units, cm) -> MHW world, row-vector convention
     std::vector<float> palette;            // bones x 12 (see pose())
     std::vector<const char*> diffuse;      // per material slot: Remnant II texture asset, or nullptr
+    int textureMaxSide = 1024;             // high-detail Remnant bosses opt in to 4K; other models stay lightweight
     float tint[4] = {1, 1, 1, 0};
 };
 

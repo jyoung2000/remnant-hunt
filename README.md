@@ -1,5 +1,7 @@
 # Remnant Hunt: Remnant II x Monster Hunter: World
 
+Original Remnant Hunt by SSJ2. This checkout is the Remnant Hunt remix draft.
+
 Your Remnant II hero comes through a worldstone into the New World. You hunt Monster Hunter: World's monsters with
 Remnant's guns, archetypes, weapon mods and the Dragon Heart, and you can still use MHW's own weapons, armor and
 items. Remnant screens look like Remnant; the rest of the game stays Monster Hunter.

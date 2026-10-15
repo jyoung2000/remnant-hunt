@@ -84,7 +84,8 @@ float4 ps_main(PSIn i) : SV_Target {
     float3 H = normalize(L + V);
     float spec = pow(saturate(dot(n, H)), 48.0) * 0.22 * ndl;
     // hemisphere ambient: sky from above, ground bounce from below, tinted by MHW's frame
-    float3 hemi = lerp(float3(0.42, 0.38, 0.34), float3(0.70, 0.80, 1.0), n.y * 0.5 + 0.5) * scene.y * ambTint.rgb;
+    // Fill the deep shadow side enough to retain Remnant surface detail in MHW's high-contrast scenes.
+    float3 hemi = lerp(float3(0.64, 0.58, 0.52), float3(0.82, 0.90, 1.0), n.y * 0.5 + 0.5) * scene.y * ambTint.rgb;
     float3 albedo = c.rgb * tint.rgb;
     float3 col = (albedo * (sunCol * ndl * 0.85 + hemi) + sunCol * spec) * scene.z;
     // MHW's frame is already tone-mapped: map the lit colour the same way (ACES, Narkowicz fit)
@@ -189,7 +190,7 @@ static float aces(float x) { return std::min(1.0f, std::max(0.0f, (x * (2.51f * 
 static float g_groundAlbedo = 0.25f, g_expoLock = 0.0f;
 static void read_visual_ini() {
     char ini[MAX_PATH];
-    snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+    snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
     auto fv = [&](const char* name, float def) {
         char v[32] = {0};
         GetPrivateProfileStringA("visuals", name, "", v, sizeof(v), ini);
@@ -741,7 +742,8 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
             ID3D11ShaderResourceView* srv = g_white;
             if (s.material >= 0 && (size_t)s.material < it.diffuse.size() && it.diffuse[s.material]) {
                 int tw = 0, th = 0;
-                if (void* t = texture_for(it.diffuse[s.material], 1024, &tw, &th, true)) srv = (ID3D11ShaderResourceView*)t;
+                const int maxSide = std::max(1024, std::min(4096, it.textureMaxSide));
+                if (void* t = texture_for(it.diffuse[s.material], maxSide, &tw, &th, true)) srv = (ID3D11ShaderResourceView*)t;
             }
             ID3D11ShaderResourceView* srvs[2] = {srv, g_gameDepth};
             ctx->PSSetShaderResources(0, 2, srvs);

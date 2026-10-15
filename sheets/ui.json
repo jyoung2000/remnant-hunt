@@ -9,7 +9,7 @@
   "art": "r2tex|none",
   "title": "str",
   "shows": "list",
-  "closes": "enum:choice|esc_or_leave|never|timer"
+  "closes": "enum:choice|esc_or_leave|never|timer|toggle"
  },
  "rows": [
   {
@@ -101,6 +101,20 @@
     "weapons.recipe"
    ],
    "closes": "esc_or_leave"
+  },
+  {
+   "id": "equipment_dock",
+   "theme": "mhw",
+   "opens": "hotkey_in_base",
+   "hotkey": "9",
+   "art": "none",
+   "title": "design:Remnant equipment",
+   "shows": [
+    "equipped Remnant weapons and armor",
+    "relic, amulet, rings and archetypes",
+    "traits"
+   ],
+   "closes": "toggle"
   },
   {
    "id": "hud_gun",

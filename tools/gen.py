@@ -51,12 +51,14 @@ def main():
             if typ == "id" or typ.startswith("str") or typ == "list" or typ.startswith("list:") \
                     or typ.startswith("effects") or typ == "recipe":
                 ctype = "const char*"
-            elif typ == "num":
+            elif "num" in typ.split("|"):
                 ctype = "float"
             elif typ.startswith("enum:"):
                 ctype = "int"
             elif typ.startswith("ref:"):
                 ctype = "int"  # row index, -1 = none
+            elif typ.startswith("refasset:"):
+                ctype = "const char*"  # source row resolves to its asset path
             elif typ.startswith("r2text"):
                 ctype = "R2Text"
             elif typ.startswith("r2name"):
@@ -77,12 +79,20 @@ def main():
             for col, typ, ctype in fields:
                 v = row[col]
                 if ctype == "float":
-                    vals.append(f"{float(v)}f")
+                    vals.append("0.0f" if v == "none" else f"{float(v)}f")  # 0 = no verified frame count
                 elif typ.startswith("enum:"):
                     vals.append(f"{ident(name)}_{ident(col)}_{ident(v)}")
                 elif typ.startswith("ref:"):
                     target = typ[4:].split("|")[0]
                     vals.append(str(index[target][v]) if v in index[target] else "-1")
+                elif typ.startswith("refasset:"):
+                    target = typ[len("refasset:"):].split("|")[0]
+                    if v == "none":
+                        vals.append(cstr("none"))
+                    elif v in index.get(target, {}):
+                        vals.append(cstr(sheets[target]["rows"][index[target][v]]["asset"]))
+                    else:
+                        raise SystemExit(f"{name}.{col}: unresolved animation asset reference {v!r}")
                 elif ctype == "R2Text":
                     if not isinstance(v, dict):
                         vals.append("{nullptr, nullptr}")

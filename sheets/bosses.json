@@ -1,7 +1,7 @@
 {
  "sheet": "bosses",
  "phase": "v0.2",
- "about": "Remnant II's bosses roaming MHW's field zones as creatures of their own, written by tools/author_bosses.py from the player's install (asset paths and text keys only). tier: boss = Remnant II's large bar at the top of the screen; elite / creature = a bar over it. forward: the axis the model faces (py = +y, nx = -x ...). threat 1-5: strength, and min_rank, the lowest MHW rank whose zones it roams (lr / hr / mr). hp_mult: times the rank's boss HP (tuning). flinch_frac / stagger_frac: share of max HP that makes it flinch / stagger (stagger grows each time). melee_hits: MHW melee hits to kill it at an average weapon. zones: MHW stage ids. fx_color: its projectiles. Animation names are relative to anim_dir; none = it has no such animation.",
+ "about": "Remnant II's bosses roaming MHW's field zones as creatures of their own, written by tools/author_bosses.py from the player's install (asset paths and text keys only). Boss and held-prop textures request the highest available mip up to 4096 pixels and idle textures are released from cache. tier: boss = Remnant II's large bar at the top of the screen; elite / creature = a bar over it. forward: the axis the model faces (py = +y, nx = -x ...). threat 1-5: strength, and min_rank, the lowest MHW rank whose zones it roams (lr / hr / mr). hp_mult: times the rank's boss HP (tuning). flinch_frac / stagger_frac: share of max HP that makes it flinch / stagger (stagger grows each time). melee_hits: MHW melee hits to kill it at an average weapon. zones: MHW stage ids. fx_color: its projectiles. Animation names are relative to anim_dir; none = it has no such animation.",
  "columns": {
   "id": "id",
   "name": "r2text|none",

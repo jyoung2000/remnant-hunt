@@ -15,6 +15,8 @@ void log(const char*, ...) {}
 bool game_api_ready() { return false; }
 void* get_resource(const char*, const char*) { return nullptr; }
 const char* gmd_message(void*, int) { return nullptr; }
+bool r2_ready() { return false; }
+const std::string& r2_text(const sheets::R2Text&) { static const std::string empty; return empty; }
 }  // namespace rh
 using namespace rh;
 
@@ -48,6 +50,13 @@ int main(int argc, char** argv) {
         const uint8_t* r = t.data() + 10 + (2775 + i) * 32;
         CHECK(r[0] + r[1] * 256 == 2775 + i);
         CHECK(memcmp(r + 2, itm.data() + 10 + 5 * 32 + 2, 30) == 0);  // everything else is the Antidote's
+    }
+    CHECK(np_itm_add(&t, 205, 3));  // boss loot is inert material, never a drinkable action item
+    CHECK(t[6] + t[7] * 256 == 2775 + 9 + 3);
+    for (int i = 0; i < 3; i++) {
+        const uint8_t* r = t.data() + 10 + (2775 + 9 + i) * 32;
+        CHECK(r[0] + r[1] * 256 == 2775 + 9 + i);
+        CHECK(memcmp(r + 2, itm.data() + 10 + 205 * 32 + 2, 30) == 0);
     }
 
     NpGmd g2 = g;

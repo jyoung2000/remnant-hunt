@@ -93,12 +93,17 @@ def main():
                             if mat not in ids.get("materials", set()) or not n.isdigit():
                                 broken.append(f"{where}: {x!r} is not <materials id>*<count>")
                     continue
-                if typ == "num":
+                if "num" in kinds:
                     if not isinstance(v, (int, float)):
                         invalid.append(f"{where}: not a number ({v!r})")
                 elif typ.startswith("enum:"):
                     if v not in typ[5:].split("|"):
                         invalid.append(f"{where}: {v!r} not in {typ[5:]}")
+                elif typ.startswith("refasset:"):
+                    target = kinds[0][len("refasset:"):]
+                    allowed = kinds[1:]
+                    if v not in allowed and v not in ids.get(target, set()):
+                        broken.append(f"{where}: {v!r} is not a row of {target}")
                 elif typ.startswith("ref:"):
                     target = kinds[0][4:]
                     allowed = kinds[1:]

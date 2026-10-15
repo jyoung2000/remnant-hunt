@@ -1652,9 +1652,17 @@ static void hud(const SaveData& s, const Live& l) {
         float fs = 18 * sc;
         ImVec2 ts = g_body->CalcTextSizeA(fs, FLT_MAX, 0, l.toast);
         ImVec2 p(vp->Pos.x + (vp->Size.x - ts.x) / 2, vp->Pos.y + vp->Size.y * 0.16f);
-        ImVec2 a(p.x - 22 * sc, p.y - 10 * sc), b(p.x + ts.x + 22 * sc, p.y + ts.y + 10 * sc);
+        bool lootArt = l.lootIcon && t < l.lootIconUntil;
+        float iconSize = lootArt ? 30 * sc : 0;
+        ImVec2 a(p.x - 22 * sc - iconSize, p.y - 10 * sc), b(p.x + ts.x + 22 * sc, p.y + ts.y + 10 * sc);
         fg->AddRectFilled(a, b, col::mhwFrame);
         fg->AddRect(a, b, col::mhwGold, 0, 0, 1.0f);
+        if (lootArt) {
+            int w = 0, h = 0;
+            if (void* tex = texture_for(l.lootIcon, 128, &w, &h))
+                fg->AddImage((ImTextureID)(uintptr_t)tex, ImVec2(a.x + 6 * sc, p.y - 6 * sc),
+                             ImVec2(a.x + 6 * sc + iconSize, p.y - 6 * sc + iconSize));
+        }
         fg->AddText(g_body, fs, p, col::mhwText, l.toast);
     }
     // At an MHW NPC with a Remnant menu: a Remnant-styled prompt.
@@ -2022,22 +2030,12 @@ void mod_frame() {
         baseSince = 0;
     }
     bool settled = baseSince > 0 && now_s() - baseSince > 4.0 && viewValid && (moved || now_s() - baseSince > 90.0);
-    // MHW's Item Box / Change Equipment menu: the ini's flag byte when set, else the input-rate heuristic.
-    bool heur = menu_open_signal(inGame && inBase && viewValid && baseSince > 0 && now_s() - baseSince > 4.0, now_s());
-    int flagByte = menu_flag_read();
-    // The input-rate heuristic flashes the dock in play (any pause in MHW's input polling trips it), so it only ever
-    // shows the dock when the ini opts in ([menu] heuristic=1); otherwise the dock follows the flag byte, or the 9 key
-    // toggles it by hand.
-    static int heurOn = -1;
-    if (heurOn < 0) {
-        char ini[MAX_PATH];
-        snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
-        heurOn = GetPrivateProfileIntA("menu", "heuristic", 0, ini) != 0;
-    }
+    // Keep collecting the menu signal for diagnostics, but never use it to show the dock: transient input pauses
+    // and uncertain host flags must not make the equipment panel appear unexpectedly.
+    menu_open_signal(inGame && inBase && viewValid && baseSince > 0 && now_s() - baseSince > 4.0, now_s());
     if (inGame && g_screen == SCR_NONE && key_pressed('9') && !g_dockShown) g_dockManual = true;
     if (!inGame || !inBase || g_screen != SCR_NONE) g_dockManual = false;
-    bool menuOpen = flagByte >= 0 ? flagByte != 0 : (heurOn && heur);
-    bool dockOn = dock_enabled() && inGame && inBase && s.archetype >= 0 && (menuOpen || g_dockManual) && g_screen == SCR_NONE;
+    bool dockOn = dock_enabled() && inGame && inBase && s.archetype >= 0 && g_dockManual && g_screen == SCR_NONE;
     if (g_screen == SCR_NONE && settled && !s.introDone && r2_ready()) open(SCR_INTRO);
     if (g_screen != SCR_NONE) {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape) && g_fromDock && g_screen != SCR_INTRO) {
@@ -2050,10 +2048,8 @@ void mod_frame() {
         if (!inGame) open(SCR_NONE);
     } else if (inGame) {
         if (g_dockShown && dockOn && key_pressed('9')) {
-            if (g_dockManual && flagByte < 0 && !(heurOn && heur)) g_dockManual = false;  // a hand-opened dock: 9 closes it
-            else dock_go(SCR_TERMINAL, slot_index("LONG GUN"));
-        }
-        else if (key_pressed(k.terminal) && inBase && s.archetype >= 0) {
+            g_dockManual = false;  // the dock is manual-only; a second clean press closes it
+        } else if (key_pressed(k.terminal) && inBase && s.archetype >= 0) {
             if (nearMenu >= 0) open_menu(nearMenu, kMenus[nearMenu].role);
             else open(SCR_TERMINAL);
         }

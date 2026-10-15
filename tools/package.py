@@ -41,10 +41,39 @@ def files():
         if os.path.exists(p):
             yield p, "remnant_hunt/licenses/" + name
     yield os.path.join(ROOT, "README.md"), "remnant_hunt/README.txt"
-    # GPL-3.0: the complete source of this release travels with it.
+    # GPL-3.0: the complete working-tree source of this release travels with it.
     src = os.path.join(ROOT, "out", "source.zip")
-    subprocess.run(["git", "-C", ROOT, "archive", "--format=zip", "-o", src, "HEAD"], check=True)
+    source_archive(src)
     yield src, "remnant_hunt/source/remnant-hunt-source.zip"
+
+
+def source_archive(path):
+    listed = subprocess.run(
+        ["git", "-C", ROOT, "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        check=True, capture_output=True,
+    ).stdout.decode("utf-8", "replace").split("\0")
+    excluded_dirs = {".git", ".token-optimizer", "attachments", "build", "out", "shots"}
+    excluded_names = {".env", ".env.local", ".env.production", "credentials.json", "secrets.json"}
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
+        for rel in sorted(set(listed)):
+            if not rel:
+                continue
+            rel = rel.replace("\\", "/")
+            parts = rel.split("/")
+            name = parts[-1].lower()
+            if excluded_dirs.intersection(parts) or name in excluded_names:
+                continue
+            if os.path.splitext(name)[1] in {".pem", ".p12", ".pfx", ".key"}:
+                continue
+            src = os.path.join(ROOT, *parts)
+            if not os.path.isfile(src) or os.path.islink(src):
+                continue
+            if os.path.splitext(name)[1].lower() in BANNED_EXT:
+                continue
+            zi = zipfile.ZipInfo(rel, date_time=(2026, 10, 13, 0, 0, 0))
+            zi.compress_type = zipfile.ZIP_DEFLATED
+            zi.external_attr = 0o644 << 16
+            z.writestr(zi, open(src, "rb").read())
 
 
 def main():

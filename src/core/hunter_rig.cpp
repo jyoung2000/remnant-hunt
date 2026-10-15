@@ -15,6 +15,7 @@ namespace rh {
 
 namespace {
 
+
 // 3x3 row-major rotations, column-vector convention.
 void m3_mul(const float a[9], const float b[9], float o[9]) {
     float r[9];
@@ -111,6 +112,67 @@ float rot_sim(const float a[9], const float b[9]) {  // 1 = the same rotation
     float s = 0;
     for (int i = 0; i < 9; i++) s += a[i] * b[i];
     return s / 3.0f;
+}
+
+// The MHW hunter has unnamed limb helper bones partway down a few segments. Apply only the axial part of the
+// parent-to-child rotation to these bones: copying the full child rotation would also copy wrist/elbow swing.
+void m3_quat(const float R[9], float q[4]) {
+    float tr = R[0] + R[4] + R[8];
+    if (tr > 0) {
+        float s = sqrtf(tr + 1.0f) * 2.0f;
+        q[3] = 0.25f * s;
+        q[0] = (R[7] - R[5]) / s;
+        q[1] = (R[2] - R[6]) / s;
+        q[2] = (R[3] - R[1]) / s;
+    } else if (R[0] > R[4] && R[0] > R[8]) {
+        float s = sqrtf(1.0f + R[0] - R[4] - R[8]) * 2.0f;
+        q[3] = (R[7] - R[5]) / s;
+        q[0] = 0.25f * s;
+        q[1] = (R[1] + R[3]) / s;
+        q[2] = (R[2] + R[6]) / s;
+    } else if (R[4] > R[8]) {
+        float s = sqrtf(1.0f + R[4] - R[0] - R[8]) * 2.0f;
+        q[3] = (R[2] - R[6]) / s;
+        q[0] = (R[1] + R[3]) / s;
+        q[1] = 0.25f * s;
+        q[2] = (R[5] + R[7]) / s;
+    } else {
+        float s = sqrtf(1.0f + R[8] - R[0] - R[4]) * 2.0f;
+        q[3] = (R[3] - R[1]) / s;
+        q[0] = (R[2] + R[6]) / s;
+        q[1] = (R[5] + R[7]) / s;
+        q[2] = 0.25f * s;
+    }
+}
+void quat_m3(const float q[4], float R[9]) {
+    float x = q[0], y = q[1], z = q[2], w = q[3];
+    float xx = x * x, yy = y * y, zz = z * z;
+    R[0] = 1 - 2 * (yy + zz); R[1] = 2 * (x * y - z * w); R[2] = 2 * (x * z + y * w);
+    R[3] = 2 * (x * y + z * w); R[4] = 1 - 2 * (xx + zz); R[5] = 2 * (y * z - x * w);
+    R[6] = 2 * (x * z - y * w); R[7] = 2 * (y * z + x * w); R[8] = 1 - 2 * (xx + yy);
+}
+
+bool limb_helper(const std::vector<HBone>& B, int h, int* parent, int* child, float* fraction) {
+    if (!B[h].r2.empty() || B[h].parent < 0) return false;
+    int p = B[h].parent;
+    if (B[p].r2.empty()) return false;
+    float hl2 = B[h].local[0] * B[h].local[0] + B[h].local[1] * B[h].local[1] + B[h].local[2] * B[h].local[2];
+    if (hl2 < 1.0f) return false;
+    for (size_t c = 0; c < B.size(); c++) {
+        if (B[c].parent != p || B[c].r2.empty()) continue;
+        float cl2 = B[c].local[0] * B[c].local[0] + B[c].local[1] * B[c].local[1] + B[c].local[2] * B[c].local[2];
+        if (cl2 < 1.0f) continue;
+        float dot = B[h].local[0] * B[c].local[0] + B[h].local[1] * B[c].local[1] + B[h].local[2] * B[c].local[2];
+        float t = dot / cl2;
+        if (t <= 0.1f || t >= 0.9f) continue;
+        float residual2 = std::max(0.0f, hl2 - dot * dot / cl2);
+        if (residual2 > std::max(1.0f, cl2 * 0.0036f)) continue;  // within 6% of the mapped limb axis
+        *parent = p;
+        *child = (int)c;
+        *fraction = t;
+        return true;
+    }
+    return false;
 }
 
 std::vector<int> topo_order(const std::vector<HBone>& B) {
@@ -301,6 +363,12 @@ struct Matcher {
 
 }  // namespace
 
+int hunter_block_extent(const std::vector<uint8_t>& rigidEntries) {
+    for (size_t i = rigidEntries.size(); i > 0; i--)
+        if (rigidEntries[i - 1]) return (int)i;
+    return 0;
+}
+
 bool hunter_match(const float* block, const uint8_t* ok, int n, const float playerPos[3], HunterMap* out, int minMatched) {
     *out = HunterMap();
     const auto& B = hunter_bones();
@@ -442,6 +510,31 @@ void hunter_retarget(const HunterRig& rig, const float* r2G, const float* r2Bind
             set[h] = true;
         }
         to_game(W[h], P[h], out[h]);
+    }
+    // Some hunter limb helpers are unnamed and have no one-to-one Remnant bone. The sheet's bind geometry identifies
+    // helpers that sit along a mapped limb segment; distribute the parent/child axial twist to them by their position.
+    // This leaves swing at the joint (for example, wrist flex) on the mapped hand instead of smearing it down the arm.
+    for (int h = 0; h < nb; h++) {
+        int p = -1, c = -1;
+        float fraction = 0;
+        if (!limb_helper(B, h, &p, &c, &fraction) || !set[p] || !set[c]) continue;
+        float invP[9], relative[9], q[4];
+        m3_t(W[p], invP);
+        m3_mul(invP, W[c], relative);
+        m3_quat(relative, q);
+        if (q[3] < 0) for (float& v : q) v = -v;
+        float axis[3] = {B[c].local[0], B[c].local[1], B[c].local[2]};
+        if (!unit(axis)) continue;
+        float projection = q[0] * axis[0] + q[1] * axis[1] + q[2] * axis[2];
+        float twistNorm = sqrtf(projection * projection + q[3] * q[3]);
+        if (twistNorm < 1e-6f) continue;
+        float halfAngle = atan2f(projection / twistNorm, q[3] / twistNorm) * fraction;
+        float partial[4] = {axis[0] * sinf(halfAngle), axis[1] * sinf(halfAngle), axis[2] * sinf(halfAngle), cosf(halfAngle)};
+        float twist[9];
+        quat_m3(partial, twist);
+        m3_mul(W[p], twist, W[h]);
+        to_game(W[h], P[h], out[h]);
+        set[h] = true;
     }
 }
 

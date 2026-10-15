@@ -635,6 +635,12 @@ static void report() {
         outf("-- resource %s common\\item\\itemData = %p", *d, r);
         if (r) hexdump((uintptr_t)r, 0x100);
     }
+    // Read-only atlas lookup for the native Remnant item icon spike. Its in-memory layout is not assumed.
+    for (const char* dti : {"rTexture", "rTexture2d"}) {
+        void* r = get_resource(dti, "ui\\common\\tex\\cmn_item00_ID");
+        outf("-- resource %s ui\\common\\tex\\cmn_item00_ID = %p", dti, r);
+        if (r && mem_readable(r, 0x100)) hexdump((uintptr_t)r, 0x100);
+    }
     time_scale_candidates();
     light_dir_candidates();
     outf("== end ==");
@@ -850,7 +856,7 @@ int menu_flag_read() {
     int st = state.load();
     if (st == 0) {
         char ini[MAX_PATH], v[128] = {0};
-        snprintf(ini, sizeof(ini), "%s\remnant_hunt.ini", mod_dir());
+        snprintf(ini, sizeof(ini), "%s\\remnant_hunt.ini", mod_dir());
         GetPrivateProfileStringA("menu", "flag", "", v, sizeof(v), ini);
         char* plus = strchr(v, '+');
         st = 1;

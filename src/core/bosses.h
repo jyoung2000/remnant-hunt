@@ -5,11 +5,22 @@
 // To the rest of the mod they look like monsters (pseudo entries in the snapshot), so the Remnant guns, skills, mods
 // and effects work on them unchanged.
 #pragma once
+#include <cstddef>
+#include <cstdint>
 #include <vector>
 
 #include "state.h"
 
 namespace rh {
+
+// Bosses use mod-owned identity tokens; these are not MHW uEnemy objects. Match only an exact token address so an
+// unrelated game pointer can never be classified by an out-of-bounds relational pointer comparison.
+inline int boss_token_index(const uint8_t* em, const uint8_t* tokens, size_t count) {
+    if (!em || !tokens) return -1;
+    for (size_t i = 0; i < count; ++i)
+        if (em == tokens + i) return (int)i;
+    return -1;
+}
 
 enum BossEvent : int { BOSS_EV_EVADE = 1, BOSS_EV_HURT = 2, BOSS_EV_KILL = 4 };
 

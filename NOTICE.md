@@ -1,6 +1,7 @@
 # Credits and third-party notices
 
-**Remnant Hunt** (Remnant II x Monster Hunter: World mashup) by Jalon, built with Claude (Anthropic).
+**Remnant Hunt** (Remnant II x Monster Hunter: World mashup) codebase by Jalon, built with Claude (Anthropic).
+Original Melty release by SSJ2. The **Remnant Hunt remix** draft keeps that creator credit.
 Licensed under the GNU General Public License v3.0 or later (LICENSE). Remixes are welcome under the same license.
 
 Monster Hunter: World is (c) CAPCOM. Remnant II is (c) Gunfire Games / Gearbox Publishing. This mod is not

@@ -149,11 +149,26 @@ static void test_median_steps() {
     CHECK(step_verdict(0, false, 0, 100, true) == STEP_WALL);           // an object standing there
 }
 
+static void test_boss_bottom_on_ground() {
+    Vec3 floor{100, 420, -50};
+    Vec3 up{0, 1, 0};
+    Vec3 origin = boss_model_origin(floor, up, 150, 0);
+    CHECK(fabsf(origin.y + 150 - floor.y) < 0.01f);
+
+    up = {0, 0.8f, 0.6f};
+    origin = boss_model_origin(floor, up, 100, 25);
+    Vec3 lowest{origin.x + up.x * 100, origin.y + up.y * 100, origin.z + up.z * 100};
+    Vec3 expected{floor.x - up.x * 25, floor.y - up.y * 25, floor.z - up.z * 25};
+    float dx = lowest.x - expected.x, dy = lowest.y - expected.y, dz = lowest.z - expected.z;
+    CHECK(sqrtf(dx * dx + dy * dy + dz * dz) < 0.01f);
+}
+
 int main() {
     test_matrices();
     test_probe(true);
     test_probe(false);
     test_median_steps();
+    test_boss_bottom_on_ground();
     printf("terrain: %d checks, %d failed\n", g_checks, g_fail);
     return g_fail ? 1 : 0;
 }

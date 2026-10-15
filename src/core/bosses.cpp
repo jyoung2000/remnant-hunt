@@ -102,7 +102,7 @@ struct Boss {
     Vec3 up{0, 1, 0};
     Vec3 prevPos{};
     double outAt = 0;
-    int probes = 0, probesOk = 0;
+    int probes = 0, probesOk = 0, surfaceRays = 0, surfaceRaysOk = 0;
     bool groundLogged = false;
 };
 
@@ -390,7 +390,8 @@ float state_len(const Boss& b, float fallback) {
 
 bool ground(Vec3 p, float* y) {
     Vec3 hit;
-    if (world_ray({p.x, p.y + 400, p.z}, {p.x, p.y - 1600, p.z}, &hit)) { *y = hit.y; return true; }
+    // Start above the boss/root, then cast far enough down to find the next level even on a large height change.
+    if (world_ray({p.x, p.y + 1200, p.z}, {p.x, p.y - 20000, p.z}, &hit)) { *y = hit.y; return true; }
     return false;
 }
 
@@ -440,8 +441,8 @@ void foot_points(const Boss& b, Vec3 out[4]) {
     out[3] = add(b.pos, mul(r, lc));
 }
 
-// The boss's height and tilt from the ground under it: the median of five probes (body and feet), eased; when none
-// is on screen, MHW's own ray, else the last ground (kept within 6 m of the hunter's height).
+// MHW's collision ray anchors the boss center to a real surface every tick. Camera depth supplies the four-foot
+// slope estimate when visible; the ray still works when the boss is behind the camera or terrain.
 void settle(Boss& b, const GameSnapshot& g, float dt, bool snap) {
     float speed = dt > 0 ? hlen(sub(b.pos, b.prevPos)) / dt : 0;
     if (snap) speed = 0;
@@ -464,12 +465,17 @@ void settle(Boss& b, const GameSnapshot& g, float dt, bool snap) {
         if (ok[k]) ys[n++] = h.y;
     }
     float target, y;
-    if (n > 0) {
+    b.surfaceRays++;
+    bool rayOk = ground(b.pos, &y);
+    if (rayOk) b.surfaceRaysOk++;
+    if (rayOk) {
+        // Use MHW's collision surface for the boss center every tick. Depth is a camera-dependent fallback and
+        // is retained for the four-point slope estimate below.
+        target = b.groundY = y;
+        b.groundKnown = true;
+    } else if (n > 0) {
         target = median_of(ys, n);
         b.groundY = target;
-        b.groundKnown = true;
-    } else if (ground(b.pos, &y) && (!b.groundKnown || fabsf(y - b.groundY) < 400)) {
-        target = b.groundY = y;
         b.groundKnown = true;
     } else {
         target = b.groundKnown ? b.groundY : b.pos.y;
@@ -512,6 +518,12 @@ StepVerdict step_check(const Boss& b, Vec3 dir) {
     float cur = b.groundKnown ? b.groundY : b.pos.y;
     Vec3 h = dest;
     ProbeResult pr = probe(dest.x, dest.z, cur + 50, &h);
+    // The projected depth only describes the current camera view. When the destination is outside it, ask MHW's
+    // collision world directly so a boss can keep moving and settling on terrain behind or beside the camera.
+    if (pr == PROBE_OFFSCREEN || pr == PROBE_SKY || pr == PROBE_FAR) {
+        float y;
+        if (ground(dest, &y)) { h.y = y; pr = PROBE_OK; }
+    }
     // an object between the camera and the destination, standing at the destination and taller than a step
     bool blocker = pr == PROBE_OCCLUDED && hlen(sub(h, dest)) < look + 200 && h.y > cur + 120;
     return step_verdict(cur, pr == PROBE_OK, h.y, look, blocker);
@@ -640,7 +652,7 @@ void spawn(Live& l, int row, Vec3 at, float yaw, double t) {
     for (const char* s : {r.snd_roar, r.snd_pain, r.snd_death, r.snd_step})
         if (has(s)) audio_prefetch(s);
     r2_text(r.name);  // resolved now, so the bar never waits for it
-    log("bosses: %s spawning at (%.0f, %.0f, %.0f), %s, %s, %.0f hp, damage x%.2f", r.id, at.x, at.y, at.z,
+    log("bosses: %s spawning at (%.0f, %.0f, %.0f), %s, %s, %.0f hp, damage x%.2f; entity=mod-token (no MHW uEnemy/health manager/latch, mount, or part-break binding)", r.id, at.x, at.y, at.z,
         kRankName[b.rank], d.label, b.maxHp, b.dmgMult);
 }
 
@@ -720,6 +732,13 @@ std::string loot_grant(SaveData& s, Live& l, const std::vector<std::pair<Cat, in
     l.loadoutChanged = true;
     ItemView v = item(pick.first, pick.second);
     const std::string& got = v.name ? r2_text(*v.name) : std::string();
+    l.lootIcon = v.icon;
+    l.lootIconUntil = now_s() + 4.0;
+    int nativeId = nativepc_loot_id((int)pick.first, pick.second);
+    if (nativeId > 0) {
+        int added = mhw_pouch_add(nativeId, 1);
+        log("bosses: native Remnant loot %s id %d: pouch added %d", v.id, nativeId, added);
+    }
     if (id) *id = v.id;
     return got.empty() ? std::string(v.id) : got;
 }
@@ -1290,7 +1309,7 @@ float gap_to(const Boss& b, Vec3 p, Vec3* closest) {
     return sqrtf((along - ca) * (along - ca) + (across - cx) * (across - cx));
 }
 
-int boss_index(const uint8_t* em) { return (int)(em - g_token); }
+int boss_index(const uint8_t* em) { return boss_token_index(em, g_token, kMax); }
 void hit_boss(int i, float dmg, const Vec3& at, bool crit, bool weak, float stagger, bool hunter = true);
 
 // MHW's weapon damage per hit, relative to an average hit (motion values, roughly), and how much it staggers.
@@ -1420,10 +1439,11 @@ void world_matrix(const Boss& b, float w[16]) {
     const Frame& fr = b.fr;
     // model x and y go to forward / right by the boss's facing; model z is up
     Vec3 ix = add(mul(f, fr.f[0]), mul(r, fr.r[0])), iy = add(mul(f, fr.f[1]), mul(r, fr.r[1]));
+    Vec3 origin = boss_model_origin(b.pos, u, fr.zMin, b.sink);
     float rows[4][4] = {{ix.x * s, ix.y * s, ix.z * s, 0},
                         {iy.x * s, iy.y * s, iy.z * s, 0},
                         {u.x * s, u.y * s, u.z * s, 0},
-                        {b.pos.x, b.pos.y - b.sink, b.pos.z, 1}};
+                        {origin.x, origin.y, origin.z, 1}};
     memcpy(w, rows, 64);
 }
 
@@ -1653,7 +1673,7 @@ bool ground_probe(float x, float z, float yGuess, float* yOut) {
     return true;
 }
 
-bool is_boss(const uint8_t* em) { return em >= g_token && em < g_token + kMax; }
+bool is_boss(const uint8_t* em) { return boss_index(em) >= 0; }
 
 bool boss_hit_ex(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak, float stagger) {
     if (!is_boss(em)) return false;
@@ -1836,7 +1856,9 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
         else if (ground(b.pos, &y) && fabsf(y - b.pos.y) < 400) b.pos.y += (y - b.pos.y) * std::min(1.0f, dt * 12);
         if (!b.groundLogged && b.outAt > 0 && t - b.outAt >= 2 && terrain_enabled()) {
             b.groundLogged = true;
-            log("bosses: %s grounded (probe ok %d%%)", r.id, b.probes ? b.probesOk * 100 / b.probes : 0);
+            log("bosses: %s grounded (depth probe ok %d%%, MHW surface ray ok %d%%, ground y %.0f, model bottom %.0f cm)",
+                r.id, b.probes ? b.probesOk * 100 / b.probes : 0,
+                b.surfaceRays ? b.surfaceRaysOk * 100 / b.surfaceRays : 0, b.groundY, b.fr.zMin);
             if (!g_depthEver && !g_noDepthLogged) {
                 g_noDepthLogged = true;
                 log("bosses: ground probe unavailable (no depth)");
@@ -1929,6 +1951,7 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
 // Textures per material slot: "slot=asset" entries matched by slot name; "*=asset" for every other slot.
 static void assign_textures(const Model& m, const char* list, DrawItem* it) {
     static std::set<std::string> keep;  // stable storage for the texture asset strings
+    it->textureMaxSide = 4096;          // use Remnant II's highest available boss/prop texture mip
     size_t slots = m.materials.size();
     for (const ModelSection& s : m.sections) slots = std::max(slots, (size_t)std::max<int16_t>(0, s.material) + 1);
     it->diffuse.assign(slots, nullptr);

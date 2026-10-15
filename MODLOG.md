@@ -64,3 +64,18 @@
 4. Sounds: Wwise media from the install (event -> media ids), decoded and played through our own audio.
 5. Package v0.2, Melty (blocked by network policy: see MELTY_HANDOFF.md).
 
+## Current hand and boss investigation (2026-10-14)
+- Creator correction: player animations do run. The current failure is integration: extra-looking arms/hands, and the Remnant gun is not aligned with the MHW hunter's actual hands.
+- Live log identifies the mapped right-hand bone at joint entry 271, while the configured/validated gun candidate is entry 396 and is explicitly not a matched hand. `gunmodel.cpp` consumed the latter snapshot before `hunter_tick` wrote the Remnant pose.
+- Local source now exposes the matched right-hand matrix, reads it after the hunter pose update, and evaluates the gun after that update. The `systems.json` acceptance checks now require the real gun grip and visible native-hand pose. These changes are unbuilt and untested in game.
+- The Remnant player body mesh is not drawn by this path; equipped armor overlays and the separate weapon mesh are. The live mod save reports no Remnant armor equipped, so the exact source of the extra-looking limbs still needs an in-game isolation check; do not claim this solved it.
+- A live screenshot showed the Ravager absent while its boss bar and close-distance marker remained. This is one frame of evidence; capture a short sequence after a verified build before calling its flicker fixed.
+- `python tools/preflight.py --strict` still fails on 15 unverified gameplay systems (solo gate, gun mode, fire, reload, swap, mod charge, skill, damage watch, relic, refill, scrap, vendor, save, intro, Melty test). No build, release upload, Melty test, or publish was done. Keep the running MHW process open.
+- Next: isolate the duplicated limb source and verify the mapped-hand attachment with the sheet criteria; clear the required in-game evidence rows, then rerun strict preflight before any build. Keep SSJ2 credited and the draft private.
+
+## Boss asset resolution (2026-10-14)
+- The renderer was requesting boss diffuse textures at a 1024-pixel maximum. A direct read from the installed Remnant II content confirmed four Corrupted Ravager BC7 textures have 4096x4096 source mips; the prior live log only showed 1024x1024 uploads.
+- Boss and held-prop draw items now request up to 4096 pixels; other Remnant models keep the 1024 default. The texture cache now releases entries unused for 90 seconds, sweeping every 15 seconds, to bound retained GPU resources when changing bosses.
+- Updated the boss asset system sheet to make its new high-mip/no-failure live-log test explicit and cleared its prior verification record. Standard sheet preflight and a build remain unrun after these edits; the strict preflight still has its existing gameplay evidence blockers, plus boss assets now correctly require verification.
+- No DLL was built or installed and the running MHW session was left untouched. Check a live boss render logs 4096x4096 uploads and no failed mesh/material texture loads before claiming success.
+

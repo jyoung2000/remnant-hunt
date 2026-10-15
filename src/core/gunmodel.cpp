@@ -13,6 +13,7 @@
 #include <string>
 
 #include "bosses.h"
+#include "hunter.h"
 #include "imgui.h"
 #include "model.h"
 #include "render3d.h"
@@ -85,6 +86,8 @@ void gunmodel_tick(const SaveData& s, const Live& l) {
     if (enabled() && gun >= 0 && g.inGame && g.view.valid && strcmp(kWeapons[gun].mesh, "none") != 0) {
         const Model* m = model_get(kWeapons[gun].mesh);
         if (m) {
+            float hunterHand[16] = {};
+            const bool matchedHand = hunter_right_hand(hunterHand);
             bool rh = g.view.proj[11] < 0;
             Vec3 look = unit(sub(g.view.camTarget, g.view.camPos));
             Vec3 flat = unit({look.x, 0, look.z});
@@ -98,11 +101,14 @@ void gunmodel_tick(const SaveData& s, const Live& l) {
             if (!l.aiming) fwd = unit(add(mul(fwd, 0.6f), mul(upW, -0.35f)));  // held low when not aiming
             Vec3 r = unit(sub(right, mul(fwd, dot(right, fwd))));
             Vec3 up = unit(sub(upW, add(mul(fwd, dot(upW, fwd)), mul(r, dot(upW, r)))));
-            if (g.handValid) {
-                // the hunter's hand joint: origin at its translation (+ the ini offset in its frame), barrel along hand_axis
+            if (matchedHand) {
+                // Use the right hand found from this hunter's live skeleton. The separately configured hand_entry
+                // can be readable while belonging to another part of the player block, so it is not an attachment.
                 const GunCfg& c = gun_cfg();
-                Vec3 ax[3] = {{g.hand[0], g.hand[1], g.hand[2]}, {g.hand[4], g.hand[5], g.hand[6]}, {g.hand[8], g.hand[9], g.hand[10]}};
-                hand = add(add(add(Vec3{g.hand[12], g.hand[13], g.hand[14]}, mul(ax[0], c.off[0])), mul(ax[1], c.off[1])), mul(ax[2], c.off[2]));
+                Vec3 ax[3] = {{hunterHand[0], hunterHand[1], hunterHand[2]}, {hunterHand[4], hunterHand[5], hunterHand[6]},
+                              {hunterHand[8], hunterHand[9], hunterHand[10]}};
+                hand = add(add(add(Vec3{hunterHand[12], hunterHand[13], hunterHand[14]}, mul(ax[0], c.off[0])),
+                                 mul(ax[1], c.off[1])), mul(ax[2], c.off[2]));
                 fwd = ax[c.axis];
                 r = ax[(c.axis + 1) % 3];
                 up = ax[(c.axis + 2) % 3];

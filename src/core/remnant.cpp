@@ -153,6 +153,10 @@ static void rest(SaveData& s, Live& l, double t) {
     l.bonusHealth = l.bonusMax;
 }
 
+static int relic_charge_max(const Live& l, double t) {
+    return std::max(0, (int)(tune(TUNING_RELIC_BASE_CHARGES) + stat(l, ST_RELIC_CHARGES, t)));
+}
+
 void choose_archetype(int row, int slot) {
     Shared& sh = S();
     AcquireSRWLockExclusive(&sh.lock);
@@ -751,6 +755,24 @@ static int bar_item_id(int b) {
     return real > 0 ? real : (int)kBar_items[b].mhw_item_id;
 }
 
+// A native item table becomes active after a restart. Mirror already earned boss gear one item at a time so an
+// existing Remnant save gains MHW inventory entries too. A full pouch leaves the Remnant unlock intact for retry.
+static void sync_native_loot(const SaveData& s, double t) {
+    static double next = 0;
+    if (t < next || !mhw_inventory_ready()) return;
+    next = t + 2.0;
+    for (int cat = 0; cat < CAT_COUNT; cat++) {
+        if (cat == CAT_CONSUMABLE) continue;  // stock has its own quantity and use rules
+        for (int row = 0; row < cat_count((Cat)cat); row++) {
+            int id = nativepc_loot_id(cat, row);
+            if (id <= 0 || !s.has((Cat)cat, row) || mhw_item_count(id) > 0) continue;
+            int added = mhw_pouch_add(id, 1);
+            log("nativepc: mirroring %s row %d to MHW item %d: added %d", cat_label((Cat)cat), row, id, added);
+            return;
+        }
+    }
+}
+
 static void bar_tick(SaveData& s, Live& l, double t, LONG* cmds) {
     if (const char* msg = nativepc_take_toast()) toast(l, "%s", msg);
     struct Item { int expected = -1, row = -1, total = 0; bool confirmed = false; double nextWrite = 0; };
@@ -852,14 +874,15 @@ void mod_game_tick() {
     SaveData& s = sh.save;
     Live& l = sh.live;
     snapshot(&l.snap);
+    if (l.snap.inGame) sync_native_loot(s, t);
     int bossEv = bosses_tick(s, l, t, dt);  // Remnant II bosses join the monsters here
     turf_tick(l, t, dt);                    // turf wars between monsters (and the MHW side of the bosses')
     set_first_person(l.gunMode && l.aiming && l.snap.inGame);  // aiming down sights is first person
     stamina_tick(l, t);                     // Remnant's stamina bonuses on MHW's stamina bar
     research_tick(l, t);
     reactions_tick(l, t);
-    gunmodel_tick(s, l);
     hunter_tick(s, l, t);  // the Remnant armour on the hunter's joints; Remnant animations written to them
+    gunmodel_tick(s, l);   // attach after the matched hand has received this tick's pose
     const GameSnapshot& g = l.snap;
     const Archetypes* a = archetype();
     if (l.loadoutChanged) {
@@ -907,6 +930,22 @@ void mod_game_tick() {
             float dx = g.pos.x - m.x, dy = g.pos.y - m.y, dz = g.pos.z - m.z;
             if (dx * dx + dy * dy + dz * dz < m.radius * m.radius) l.nearMenu = i;
         }
+
+    // MHW does not expose an Item Box callback in this integration. Its menu-open signal is edge-triggered here
+    // while the hunter is in a base/camp and not at one of our known NPC service locations. This covers opening
+    // the item chest without refilling every tick that the menu remains open.
+    static bool chestMenuWasOpen = false;
+    const bool chestMenuOpen = g.inGame && g.inBase && l.nearMenu < 0 && menu_heuristic_open();
+    if (chestMenuOpen && !chestMenuWasOpen && s.relic >= 0) {
+        const int cap = relic_charge_max(l, t);
+        if (s.relicCharges < cap) {
+            s.relicCharges = cap;
+            l.dirty = true;
+            toast(l, "Dragon Heart charges restored at the Item Box");
+            log("relic: charges restored at base item menu (%d/%d)", s.relicCharges, cap);
+        }
+    }
+    chestMenuWasOpen = chestMenuOpen;
 
     for (const Request& r : l.requests) handle(s, l, r, t);
     if (!l.requests.empty()) {

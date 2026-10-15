@@ -24,6 +24,7 @@
 #include "MinHook.h"
 #include "bosses.h"
 #include "core.h"
+#include "key_edges.h"
 #include "render3d.h"
 #include "state.h"
 #include "imgui.h"
@@ -71,8 +72,7 @@ HWND game_window() { return g_hwnd; }
 
 static SRWLOCK g_inputLock = SRWLOCK_INIT;
 static InputBlock g_block;
-static bool g_prevDown[256];
-static bool g_pressed[256];
+static KeyEdgeState g_keyEdges;
 typedef SHORT(WINAPI* GetAsyncKeyState_t)(int);
 static GetAsyncKeyState_t pGetAsyncKeyState = GetAsyncKeyState;
 
@@ -92,14 +92,15 @@ void set_input_block(const InputBlock& b) {
 static bool focused() { return g_hwnd && GetForegroundWindow() == g_hwnd; }
 
 bool key_down(int vk) { return focused() && (pGetAsyncKeyState(vk) & 0x8000) != 0; }
-bool key_pressed(int vk) { return vk > 0 && vk < 256 && g_pressed[vk]; }
+bool key_pressed(int vk) { return g_keyEdges.wasPressed(vk); }
 
 static void poll_keys() {
+    std::array<bool, 256> down{};
+    const bool hasFocus = focused();
     for (int vk = 1; vk < 256; vk++) {
-        bool d = key_down(vk);
-        g_pressed[vk] = d && !g_prevDown[vk];
-        g_prevDown[vk] = d;
+        down[(size_t)vk] = hasFocus && (pGetAsyncKeyState(vk) & 0x8000) != 0;
     }
+    g_keyEdges.sample(hasFocus, down);
 }
 
 // Mouse button index (DirectInput order: 0 left, 1 right, 2 middle, 3 X1, 4 X2) of a VK, or -1.
@@ -400,14 +401,31 @@ static LRESULT CALLBACK wndproc(HWND h, UINT msg, WPARAM wp, LPARAM lp) {
 
 // ---------------------------------------------------------------- textures from Remnant II images
 
-struct Tex { ID3D11ShaderResourceView* srv = nullptr; int w = 0, h = 0; bool failed = false; };
+struct Tex { ID3D11ShaderResourceView* srv = nullptr; int w = 0, h = 0; bool failed = false; ULONGLONG lastUsed = 0; };
 static std::map<std::string, Tex> g_tex;
+static ULONGLONG g_texSweepAt = 0;
+
+static void evict_stale_textures(ULONGLONG now) {
+    if (now < g_texSweepAt + 15000) return;
+    g_texSweepAt = now;
+    for (auto it = g_tex.begin(); it != g_tex.end();) {
+        if (now >= it->second.lastUsed && now - it->second.lastUsed > 90000) {
+            if (it->second.srv) it->second.srv->Release();
+            it = g_tex.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
 
 void* texture_for(const char* asset, int maxSide, int* w, int* h, bool srgb) {
     if (!asset || !g_dev) return nullptr;
+    const ULONGLONG now = GetTickCount64();
+    evict_stale_textures(now);
     std::string k = std::string(asset) + "|" + std::to_string(maxSide) + (srgb ? "|s" : "");
     auto it = g_tex.find(k);
     if (it != g_tex.end()) {
+        it->second.lastUsed = now;
         if (w) *w = it->second.w;
         if (h) *h = it->second.h;
         return it->second.srv;
@@ -421,6 +439,7 @@ void* texture_for(const char* asset, int maxSide, int* w, int* h, bool srgb) {
     } else {
         t.failed = true;
     }
+    t.lastUsed = now;
     if (!strstr(asset, "/UI2/"))  // model textures: say once what became of each (icons are too many to list)
         log("overlay: texture %s -> %s %s %dx%d (%zu bytes)", asset, t.failed ? "FAILED" : "ok", img->format.c_str(), img->w, img->h, img->pixels.size());
     g_tex[k] = t;
@@ -631,14 +650,15 @@ static void measure_depth() {
         return;
     }
     if (holding) {
-        // a miss does not drop the matched candidate: 5 misses in a row spanning 10 s do
+        // The probe is asynchronous with the game snapshot and can miss while the hunter is
+        // moving or the camera is transitioning. A transient mismatch must not revoke a
+        // candidate that has already matched: pick_depth() would fall back to the most-cleared
+        // depth texture (which may be another pass), making the boss pop as its pixels are
+        // discarded against unrelated depth. Keep the validated resource/polarity until the
+        // resource list itself changes or the swap chain is released.
         if (g_measFails++ == 0) g_measFailSince = now;
-        if (g_measFails >= 5 && now - g_measFailSince >= 10000) {
-            log("overlay: scene depth candidate stopped matching the hunter (%d checks); measuring again", g_measFails);
-            g_measState = 0;
-            g_measRes = nullptr;
-            g_measFails = 0;
-        }
+        if (g_measFails == 5 && now - g_measFailSince >= 10000)
+            log("overlay: scene depth hunter probe is temporarily inconsistent; retaining the previously validated resource");
         return;
     }
     if (g_depthCount && g_measState != 1) {
