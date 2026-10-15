@@ -109,6 +109,8 @@ struct State {
     bool heldAimPose = false;
     double animT0 = 0, lastWriteLog = 0;
     int ticksWritten = 0;
+    float lastHand[16] = {};
+    double lastHandAt = 0;
     double testUntil = 0;
     bool testLogged = false;
 };
@@ -155,6 +157,7 @@ void unmatch(const char* why) {
     for (auto& e : g.entries) e.clear();
     g.anim = nullptr;
     g.heldAimPose = false;
+    g.lastHandAt = 0;
 }
 
 static const char* aim_pose_id(const GameSnapshot& snap, const float root[16]) {
@@ -301,8 +304,11 @@ void hunter_play(const char* anim) {
 
 bool hunter_right_hand(float out[16]) {
     if (!out || !g.map.valid || !g.base) return false;
-    const int h = hunter_bone_by_id(12);  // the hunter's right hand in hunter_bones.json
-    return h >= 0 && g.map.entry[h] >= 0 && read_entry(g.map.entry[h], out);
+    // The joint table can briefly clear a limb while World changes actions. Keep the last pose from
+    // this hunter for that gap; never attach a gun to the unrelated readable entry 396 or a guessed point.
+    if (g.lastHandAt <= 0 || now_s() - g.lastHandAt > 0.5) return false;
+    memcpy(out, g.lastHand, 64);
+    return true;
 }
 
 void hunter_relic_key() { g_relicKey = true; }
@@ -420,10 +426,12 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
         g.animName.clear();
         g.heldAimPose = false;
     }
-    int rootBone = hunter_bone_by_id(0);
-    if (l.gunMode && c.poseWrite && g.map.valid && g.rig.ok && g.skel && rootBone >= 0 && hv[rootBone] &&
+    int pelvisBone = g.rig.pelvisH;
+    if (l.gunMode && c.poseWrite && g.map.valid && g.rig.ok && g.skel && pelvisBone >= 0 && hv[pelvisBone] &&
         (!g.anim || g.heldAimPose) && pending.empty()) {
-        const char* id = aim_pose_id(snap, hw[rootBone]);
+        // The matched root can be a permanent identity matrix at the map origin. The live pelvis
+        // turns with the visible hunter and is the correct basis for choosing an aim direction.
+        const char* id = aim_pose_id(snap, hw[pelvisBone]);
         int row = sheets::player_anims_index(id);
         if (row >= 0 && (!g.heldAimPose || g.animName != id)) {
             bool failed = false;
@@ -445,17 +453,19 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
     }
     if (g.anim) {
         float at = g.heldAimPose ? g.anim->length() : (float)(t - g.animT0);
-        int r0 = hunter_bone_by_id(0), pel = g.rig.pelvisH;
+        int pel = g.rig.pelvisH;
         if (at > g.anim->length() && !g.heldAimPose) {
             log("hunter: %s finished after %d ticks of writes; the game has the joints again", g.animName.c_str(),
                 g.ticksWritten);
             g.anim = nullptr;
-        } else if (r0 >= 0 && pel >= 0 && hv[r0] && hv[pel]) {
+        } else if (pel >= 0 && hv[pel]) {
             std::vector<float> G;
             pose_global(*g.skel, g.anim, at, false, &G);
             float out[kHunterBones][16];
             bool set[kHunterBones];
-            hunter_retarget(g.rig, G.data(), g.bindG.data(), hw[r0], hw[pel], out, set);
+            // Use the body that World actually renders as the world-space basis. A static root
+            // rotates Remnant arms about the map origin and makes them leave the hunter's mesh.
+            hunter_retarget(g.rig, G.data(), g.bindG.data(), hw[pel], hw[pel], out, set);
             int n = 0;
             for (int h = 0; h < kHunterBones; h++) {
                 if (!set[h] || g.map.entry[h] < 0) continue;
@@ -498,6 +508,17 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
                     "the game rebuilds the joint block after the mod's tick and before drawing, and pose writes need a "
                     "later point in the frame", n);
             }
+        }
+    }
+
+    const int rightHand = hunter_bone_by_id(12);
+    if (g.map.valid && rightHand >= 0 && hv[rightHand]) {
+        float dx = hw[rightHand][12] - snap.pos.x;
+        float dy = hw[rightHand][13] - snap.pos.y;
+        float dz = hw[rightHand][14] - snap.pos.z;
+        if (dx * dx + dy * dy + dz * dz < 300.0f * 300.0f) {
+            memcpy(g.lastHand, hw[rightHand], 64);
+            g.lastHandAt = t;
         }
     }
 

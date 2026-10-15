@@ -88,6 +88,13 @@ void gunmodel_tick(const SaveData& s, const Live& l) {
         if (m) {
             float hunterHand[16] = {};
             const bool matchedHand = hunter_right_hand(hunterHand);
+            if (!matchedHand) {
+                // A guessed shoulder point detaches the gun from the hunter, especially during
+                // action changes. Wait for the visible hand's joint to become readable again.
+                std::lock_guard<std::mutex> lk(g_lock);
+                g_gun = GunDraw();
+                return;
+            }
             bool rh = g.view.proj[11] < 0;
             Vec3 look = unit(sub(g.view.camTarget, g.view.camPos));
             Vec3 flat = unit({look.x, 0, look.z});

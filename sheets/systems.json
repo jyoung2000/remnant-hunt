@@ -119,7 +119,7 @@
   },
   {
    "id": "gun_mode",
-   "summary": "toggle Remnant gun mode; keep the hunter visible in third person, retarget Remnant's nine-way aim poses onto the same hunter arm/hand skeleton, attach the gun to its posed right hand and align the barrel to camera aim; block MHW attack inputs while active",
+   "summary": "toggle Remnant gun mode; keep the hunter visible in third person, retarget Remnant's nine-way aim poses using the live pelvis as the body direction, attach the gun only to a verified right hand joint, and align the barrel to camera aim; block MHW attack inputs while active",
    "trigger": "hotkey B (gun mode)",
    "reads": [
     "game_window"
@@ -216,7 +216,7 @@
   },
   {
    "id": "skill",
-   "summary": "the skill key activates the archetype skill and retargets its Remnant animation onto the existing MHW hunter arm and hand joints; no separate Remnant player body is drawn",
+   "summary": "the skill key activates the archetype skill and retargets its Remnant animation onto the existing MHW hunter arm and hand joints using the live pelvis as the body direction; the hunter's current World weapon remains attached and no separate Remnant player body is drawn",
    "trigger": "hotkey G",
    "reads": [
     "player_health_mgr",
@@ -231,6 +231,23 @@
     "archetypes"
    ],
    "test": "each effect measurable in HP log; a live screenshot shows the existing hunter's arms and hands perform the Remnant pose without detached or duplicate limbs or a held Remnant item leaving the hands"
+  },
+  {
+   "id": "boss_carve",
+   "summary": "a dead Remnant boss stays nearby for three carves; a standing World-style [F] gather prompt remains visible independently of loot messages and captures World's interact key while in range so another world object cannot take the press; E remains the game's item-use key; a verified native carve action plays when available, then the carve grants native pouch materials and Remnant loot",
+   "trigger": "F near dead Remnant boss",
+   "reads": [
+    "player_pos"
+   ],
+   "writes": [
+    "none"
+   ],
+   "driven_by": [
+    "bosses",
+    "materials",
+    "ui"
+   ],
+   "test": "in a live hunt the [F] carve prompt appears at a corpse, F starts the carve and grants loot, and E does not carve or consume an item as part of carving"
   },
   {
    "id": "boss_hunter_damage",
@@ -267,7 +284,7 @@
   },
   {
    "id": "relic",
-   "summary": "V uses a Dragon Heart charge: heals heal_pct of max HP over heal_over_s",
+   "summary": "T uses a Dragon Heart charge, heals heal_pct of max HP over heal_over_s, and plays the Remnant animation on the visible hunter without losing its arms or current World weapon",
    "trigger": "hotkey T",
    "reads": [
     "player_health_mgr"
@@ -279,7 +296,7 @@
     "relics",
     "archetypes"
    ],
-   "test": "HP rises, charge count drops"
+   "test": "HP rises, charge count drops, and a live check shows the hunter's own arms and equipped World weapon remain visible through the Dragon Heart pose"
   },
   {
    "id": "relic_refill",

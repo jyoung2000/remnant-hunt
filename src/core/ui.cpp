@@ -1665,6 +1665,15 @@ static void hud(const SaveData& s, const Live& l) {
         }
         fg->AddText(g_body, fs, p, col::mhwText, l.toast);
     }
+    if (l.carvePrompt[0] && g_screen == SCR_NONE) {
+        float fs = 20 * sc;
+        ImVec2 ts = g_bold->CalcTextSizeA(fs, FLT_MAX, 0, l.carvePrompt);
+        ImVec2 p(vp->Pos.x + (vp->Size.x - ts.x) * 0.5f, vp->Pos.y + vp->Size.y * 0.72f);
+        ImVec2 a(p.x - 20 * sc, p.y - 9 * sc), b(p.x + ts.x + 20 * sc, p.y + ts.y + 9 * sc);
+        fg->AddRectFilled(a, b, col::bg);
+        fg->AddRect(a, b, col::mhwGold);
+        fg->AddText(g_bold, fs, p, col::mhwText, l.carvePrompt);
+    }
     // At an MHW NPC with a Remnant menu: a Remnant-styled prompt.
     if (l.nearMenu >= 0 && g_screen == SCR_NONE) {
         const Menus& m = kMenus[l.nearMenu];
@@ -2086,6 +2095,12 @@ void mod_frame() {
             else b.mouseButtons = true;
             b.keys[k.reload] = b.keys[k.swap] = 1;
         }
+    }
+    if (inGame && g_screen == SCR_NONE) {
+        AcquireSRWLockShared(&sh.lock);
+        bool atCorpse = sh.live.carvePrompt[0] != 0;
+        ReleaseSRWLockShared(&sh.lock);
+        if (atCorpse) b.keys['F'] = 1;  // the Remnant corpse owns gather while its prompt is visible
     }
     set_input_block(b);
     ImGui::GetIO().MouseDrawCursor = g_screen != SCR_NONE || (dockOn && g_dockHover);

@@ -132,7 +132,6 @@ double g_rollAt = 0;
 int g_rolls = 0;
 int g_nextDebugRow = 0;
 bool g_keyWas = false, g_lmbWas = false, g_rmbWas = false, g_carveKeyWas = false;
-bool g_carvePrompt = false;  // the toast on screen is the carve prompt (so a carve's own toast is not overwritten)
 double g_swingAt = 0, g_dodgeAt = -10;
 double g_faintPendingAt = -1;  // a native faint action must complete; never leave a live hunter at 0 HP
 int g_faintPendingZone = -1;
@@ -825,7 +824,7 @@ int carve_material(const Boss& b) {
 }
 
 // One dead boss: the prompt when the hunter stands at it, and the carve that lands after its delay.
-// keyEdge is E pressed this tick (taken by the first corpse the hunter stands at).
+// keyEdge is World's gather key pressed this tick (taken by the first nearby corpse).
 void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
     const GameSnapshot& g = l.snap;
     bool screen = g_remnantScreenOpen != 0;
@@ -838,9 +837,7 @@ void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
     if (!atCorpse) return;
     if (b.carveAt > 0) {
         if (t < b.carveAt) {
-            toast(l, "Carving %s...", name.c_str());
-            l.toastUntil = t + 0.3;
-            g_carvePrompt = true;
+            snprintf(l.carvePrompt, sizeof(l.carvePrompt), "Carving %s...", name.c_str());
             return;
         }
         b.carveAt = 0;
@@ -851,7 +848,6 @@ void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
         int gave = id > 0 ? mhw_pouch_add(id, n) : 0;
         if (id > 0 && gave == 0) {  // no room in the pouch: nothing is carved yet
             toast(l, "Your item pouch is full");
-            g_carvePrompt = false;
             log("bosses: %s carve: pouch full (item %d)", B(b).id, id);
             return;
         }
@@ -864,15 +860,14 @@ void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
         std::string gear = loot_grant(s, l, loot_pool(s, b), &rid);
         if (!gear.empty()) what += (what.empty() ? "" : ", ") + gear;
         toast(l, "Carved: %s", what.empty() ? "nothing" : what.c_str());
-        g_carvePrompt = false;
         log("bosses: %s carved (%d left): item %d x %d%s%s", B(b).id, b.carvesLeft, id, gave, rid ? ", Remnant " : "", rid ? rid : "");
         return;
     }
     if (*keyEdge) {
         *keyEdge = false;
         int c_set, c_id;
-        if (carve_action(&c_set, &c_id)) {
-            reactions_play(c_set, c_id);  // MHW's own carving animation; the material lands as it ends
+        if (carve_action(&c_set, &c_id) && reactions_play(c_set, c_id)) {
+            // MHW accepted its own carving animation; the material lands as it ends.
             b.carveAt = t + kCarveAnimDelay;
         } else {
             static bool warned = false;
@@ -884,12 +879,8 @@ void carve_tick(SaveData& s, Live& l, Boss& b, bool* keyEdge, double t) {
         }
         return;
     }
-    // the prompt, unless another toast is showing
-    if (g_carvePrompt || t >= l.toastUntil) {
-        toast(l, "[E] Carve %s (%d left)", name.c_str(), b.carvesLeft);
-        l.toastUntil = t + 0.3;
-        g_carvePrompt = true;
-    }
+    // A standing interaction prompt is independent of the loot toast, so it cannot be overwritten.
+    snprintf(l.carvePrompt, sizeof(l.carvePrompt), "[F] Carve %s (%d left)", name.c_str(), b.carvesLeft);
 }
 
 // The hunter is inside an attack's reach and arc.
@@ -1816,11 +1807,11 @@ int bosses_tick(SaveData& s, Live& l, double t, float dt) {
 
     mhw_weapons(l, t);
     ev |= projectiles(l, t, dt);
-    // E carves a corpse the hunter stands at (read here as an edge; carve_tick checks the corpse and that no screen is open).
-    bool eDown = key_down('E');
-    bool carveKey = eDown && !g_carveKeyWas;
-    g_carveKeyWas = eDown;
-    if (g_carvePrompt && t >= l.toastUntil) g_carvePrompt = false;
+    // F is World's gather/interact key. E is item use and consumed a potion while carving.
+    bool gatherDown = key_down('F');
+    bool carveKey = gatherDown && !g_carveKeyWas;
+    g_carveKeyWas = gatherDown;
+    l.carvePrompt[0] = 0;
 
     for (int i = 0; i < kMax; i++) {
         Boss& b = g_boss[i];

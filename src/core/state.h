@@ -113,6 +113,7 @@ struct Live {
     bool hitMarkerWeak = false;
     char toast[160] = {0};
     double toastUntil = 0;
+    char carvePrompt[160] = {0};  // standing World-style prompt, separate from loot/toast messages
     const char* lootIcon = nullptr;  // catalog asset path; set with boss loot, displayed beside its pickup toast
     double lootIconUntil = 0;
     int shots = 0, hits = 0;
