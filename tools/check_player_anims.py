@@ -30,6 +30,8 @@ def main():
             anim = row.get("anim", "none")
             if anim not in (None, "", "none"):
                 used.add(anim)
+    # Aim-pose rows are activated continuously by hunter_tick rather than a relic/skill sheet reference.
+    used.update(r["id"] for r in animations["rows"] if r.get("use") == "aim")
     missing = sorted(used - set(paths))
     if missing:
         raise SystemExit("unresolved player animation references: " + ", ".join(missing))

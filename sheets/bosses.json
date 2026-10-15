@@ -1,7 +1,7 @@
 {
  "sheet": "bosses",
  "phase": "v0.2",
- "about": "Remnant II's bosses roaming MHW's field zones as creatures of their own, written by tools/author_bosses.py from the player's install (asset paths and text keys only). Boss and held-prop textures request the highest available mip up to 4096 pixels and idle textures are released from cache. tier: boss = Remnant II's large bar at the top of the screen; elite / creature = a bar over it. forward: the axis the model faces (py = +y, nx = -x ...). threat 1-5: strength, and min_rank, the lowest MHW rank whose zones it roams (lr / hr / mr). hp_mult: times the rank's boss HP (tuning). flinch_frac / stagger_frac: share of max HP that makes it flinch / stagger (stagger grows each time). melee_hits: MHW melee hits to kill it at an average weapon. zones: MHW stage ids. fx_color: its projectiles. Animation names are relative to anim_dir; none = it has no such animation.",
+ "about": "Remnant II's bosses roaming MHW's field zones as creatures of their own, written by tools/author_bosses.py from the player's install (asset paths and text keys only). Boss and held-prop base-colour and normal textures request the highest available mip up to 4096 pixels; normal maps are exact same-name pairs and are omitted when no pair exists. Idle textures are released from cache. tier: boss = Remnant II's large bar at the top of the screen; elite / creature = a bar over it. forward: the axis the model faces (py = +y, nx = -x ...). threat 1-5: strength, and min_rank, the lowest MHW rank whose zones it roams (lr / hr / mr). hp_mult: times the rank's boss HP (tuning). flinch_frac / stagger_frac: share of max HP that makes it flinch / stagger (stagger grows each time). melee_hits: MHW melee hits to kill it at an average weapon. zones: MHW stage ids. fx_color: its projectiles. Animation names are relative to anim_dir; none = it has no such animation.",
  "columns": {
   "id": "id",
   "name": "r2text|none",
@@ -11,6 +11,7 @@
   "skeleton": "str",
   "forward": "enum:py|ny|px|nx",
   "textures": "list",
+  "normals": "list",
   "anim_dir": "str",
   "anim_idle": "str",
   "anim_walk": "str",
@@ -110,6 +111,12 @@
    "combo": 0.3,
    "props": [
     "none"
+   ],
+   "normals": [
+    "fur=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/ravager_fur_Norm.uasset",
+    "A01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/T_corrupted_ravager_A01_Norm.uasset",
+    "B01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/T_corrupted_ravager_B01_Norm.uasset",
+    "C01=Remnant2/Content/World_Jungle/Characters/Corrupted_Ravager/Textures/T_corrupted_ravager_C01_Norm.uasset"
    ]
   },
   {
@@ -174,6 +181,9 @@
    "combo": 0.15,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_Fae/Characters/Nightweaver/Textures/T_Nightweaver_Arms_Norm.uasset"
    ]
   },
   {
@@ -239,6 +249,10 @@
    "combo": 0.5,
    "props": [
     "Bone_FN_Weapon_Sword=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Sword_Blade.uasset"
+   ],
+   "normals": [
+    "M_Sword_low=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Sword_Norm.uasset",
+    "*=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Steel_Norm.uasset"
    ]
   },
   {
@@ -304,6 +318,10 @@
    "combo": 0.5,
    "props": [
     "Bone_FN_Weapon_Sword=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Mesh/Faelin_Faerin_Sword_Blade.uasset"
+   ],
+   "normals": [
+    "M_Sword_low=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Sword_Norm.uasset",
+    "*=Remnant2/Content/World_Fae/Characters/Faelin_Faerin/Textures/T_FaelinFaerin_Golden_Norm.uasset"
    ]
   },
   {
@@ -365,6 +383,11 @@
    "combo": 0.35,
    "props": [
     "none"
+   ],
+   "normals": [
+    "Nerud_Guardian_Metal=Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Textures/T_Nerud_Guardian_Norm.uasset",
+    "Nerud_Guardian=Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Textures/T_Nerud_Guardian_Norm.uasset",
+    "Nerud_Guardian_eyes=Remnant2/Content/World_Nerud/Characters/Nerud_Guardian/Textures/T_Nerud_Guardian_Norm.uasset"
    ]
   },
   {
@@ -434,6 +457,14 @@
    "combo": 0.2,
    "props": [
     "none"
+   ],
+   "normals": [
+    "M_Tongue=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Tongue_Norm.uasset",
+    "M_Tubes=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Tubes_Norm.uasset",
+    "M_FaceMask=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_FaceMask_Norm.uasset",
+    "M_Plugs=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Plugs_Norm.uasset",
+    "M_Eye=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Eye_Norm.uasset",
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_TalRatha/Textures/T_Nerud_TalRatha_Body_Norm.uasset"
    ]
   },
   {
@@ -498,6 +529,9 @@
    "combo": 0.5,
    "props": [
     "Bone_TK_Weapon_TrueKing=Remnant2/Content/World_DLC1/Characters/True_Fae_King/Mesh/Fae_True_King_DLC_Weapon.uasset"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Quests/Quest_Boss_OneTrueKing/Textures/T_Quest_Boss_OneTrueKing_BodyPile_A_Norm.uasset"
    ]
   },
   {
@@ -561,6 +595,9 @@
    "combo": 0.3,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Characters/LS_Lydusa/Textures/Lydusa_Boss/T_Lydusa_Boss_Norm.uasset"
    ]
   },
   {
@@ -620,6 +657,9 @@
    "combo": 0.35,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC3/Characters/Nerud_Alepsis_Taura/Textures/T_Alepsis_Taura_Norm.uasset"
    ]
   },
   {
@@ -686,6 +726,15 @@
    "combo": 0.3,
    "props": [
     "none"
+   ],
+   "normals": [
+    "M_root_worldboss_dreamer_bottom=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Norm.uasset",
+    "Root_WorldBoss01=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_WorldBoss_Norm.uasset",
+    "M_root_worldboss_dreamer_rarm=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Norm.uasset",
+    "M_root_worldboss_dreamer_larm=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Norm.uasset",
+    "Root_Wings=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_WorldBoss_Norm.uasset",
+    "M_root_worldboss_dreamer_body=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_Worldboss_Dreamer_Norm.uasset",
+    "*=Remnant2/Content/World_Root/Characters/Root_WorldBoss/Textures/T_Root_WorldBoss_Norm.uasset"
    ]
   },
   {
@@ -752,6 +801,11 @@
    "combo": 0.3,
    "props": [
     "none"
+   ],
+   "normals": [
+    "M_Abomination_04=Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Textures/T_Nerud_Abomination_01_Norm.uasset",
+    "M_Abomination_01=Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Textures/T_Nerud_Abomination_01_Norm.uasset",
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_Abomination/Textures/T_Nerud_Abomination_01_Norm.uasset"
    ]
   },
   {
@@ -816,6 +870,9 @@
    "combo": 0.2,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC3/Characters/Nerud_Amalgam/Textures/Minibosses/T_Amalgam_MiniBossB_mech_Norm.uasset"
    ]
   },
   {
@@ -880,6 +937,9 @@
    "combo": 0.15,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_Fae/Characters/Fae_Bloat/Textures/T_Bloat_Boss_Main_Norm.uasset"
    ]
   },
   {
@@ -947,6 +1007,12 @@
    "combo": 0.25,
    "props": [
     "none"
+   ],
+   "normals": [
+    "M_Nerud_CustodianEye_Miniboss_metal=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Norm.uasset",
+    "M_Nerud_CustodianEye_Miniboss_skin=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Norm.uasset",
+    "M_Nerud_CustodianEye_Miniboss=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Norm.uasset",
+    "M_Nerud_CustodianEye_Miniboss_Glow=Remnant2/Content/World_Nerud/Characters/Nerud_CustodianEye/Textures/T_Nerud_CustodianEye_Miniboss_Norm.uasset"
    ]
   },
   {
@@ -1011,6 +1077,9 @@
    "combo": 0.5,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_Fae/Characters/Fae_Archon/Textures/archon_body_Norm.uasset"
    ]
   },
   {
@@ -1077,6 +1146,11 @@
    "combo": 0.2,
    "props": [
     "none"
+   ],
+   "normals": [
+    "M_Nerud_Harvester_Lungs=Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Textures/T_Nerud_Harvester_Lungs_Norm.uasset",
+    "M_NerudHarvester_Dyn=Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Textures/T_Nerud_Harvester_Norm.uasset",
+    "M_NerudHarvester=Remnant2/Content/World_DLC3/Characters/Nerud_Harvester/Textures/T_Nerud_Harvester_Norm.uasset"
    ]
   },
   {
@@ -1136,6 +1210,9 @@
    "combo": 0.15,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_Barnacle_Hatchery/Textures/T_Barnacle_Hatchery_Norm.uasset"
    ]
   },
   {
@@ -1200,6 +1277,9 @@
    "combo": 0.5,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Characters/Fae_Impaler/Textures/Impaler_Miniboss/T_Fae_Impaler_Miniboss_Norm.uasset"
    ]
   },
   {
@@ -1263,6 +1343,9 @@
    "combo": 0.3,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_Kiln/Textures/T_Living_Stone_Kiln_Norm.uasset"
    ]
   },
   {
@@ -1327,6 +1410,9 @@
    "combo": 0.25,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_Nerud/Characters/Nerud_Phantom/Textures/T_Nerud_Phantom_Norm.uasset"
    ]
   },
   {
@@ -1386,6 +1472,9 @@
    "combo": 0.2,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_Jungle/Characters/Root_Horror/Textures/Miniboss/T_Root_Horror_Miniboss_body_Norm.uasset"
    ]
   },
   {
@@ -1452,6 +1541,11 @@
    "props": [
     "Bone_SS_Weapon_Axe=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Mesh/Pan_LivingStone_SS_MiniBoss_Pickaxe.uasset",
     "Bone_SS_Hand_L=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Mesh/Pan_LivingStone_SS_MiniBoss_Shield.uasset"
+   ],
+   "normals": [
+    "M_ShiftingSoldier=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Textures/T_ShiftingSoldier_Norm.uasset",
+    "T_ShiftingSoldier_Miniboss=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Textures/T_ShiftingSoldier_Miniboss_Norm.uasset",
+    "*=Remnant2/Content/World_DLC2/Characters/Pan_Living_Stone_ShiftingSoldier/Textures/T_ShiftingSoldier_Miniboss_Norm.uasset"
    ]
   },
   {
@@ -1513,6 +1607,12 @@
    "combo": 0.3,
    "props": [
     "Bone_WR_Weapon_Bow=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Mesh/Root_Wraith_MiniBoss_Bow.uasset"
+   ],
+   "normals": [
+    "M_Root_Wraith_Mini_Boss_Weapon=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Weapon_Norm.uasset",
+    "M_Root_Wraith_Mini_Boss_Cape=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Cape_Norm.uasset",
+    "M_Root_Wraith_Mini_Boss_Root=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Cape_Norm.uasset",
+    "M_Root_Wraith_Mini_Boss_Robe=Remnant2/Content/World_Jungle/Characters/Root_Wraith/Textures/Mini_Boss/Root_Wraith_Mini_Boss_Robe_Norm.uasset"
    ]
   },
   {
@@ -1572,6 +1672,9 @@
    "combo": 0.15,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_DLC1/Characters/Dran_Sunken_Witch/Textures/T_Dran_Sunken_Witch_Miniboss_Norm.uasset"
    ]
   },
   {
@@ -1635,6 +1738,9 @@
    "combo": 0.25,
    "props": [
     "none"
+   ],
+   "normals": [
+    "*=Remnant2/Content/World_Jungle/Characters/Root_Flyer/Textures/T_root_flyer_A_Norm.uasset"
    ]
   },
   {
@@ -1697,6 +1803,9 @@
    "prefer_m": 12,
    "combo": 0.15,
    "props": [
+    "none"
+   ],
+   "normals": [
     "none"
    ]
   },
@@ -1763,6 +1872,10 @@
    "combo": 0.5,
    "props": [
     "none"
+   ],
+   "normals": [
+    "M_Dran_Firebomb=Remnant2/Content/World_Fae/Characters/Dran_Rat/Textures/T_Dran_Rat_Norm.uasset",
+    "*=Remnant2/Content/World_Fae/Characters/Dran_Female_Gernadier/Textures/T_Dran_NPC_Female_Grenadier_Cloth_Norm.uasset"
    ]
   },
   {
@@ -1834,6 +1947,16 @@
    "combo": 0.3,
    "props": [
     "none"
+   ],
+   "normals": [
+    "arms=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Arms_Norm.uasset",
+    "Head=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Head_Norm.uasset",
+    "back_top=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Back_Norm.uasset",
+    "Sides=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_sides_Norm.uasset",
+    "Vines=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Vines_Norm.uasset",
+    "M_Root_Miniboss_Variant=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Variant_Norm.uasset",
+    "M_Root_Miniboss_Variant_Wings=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Variant_Norm.uasset",
+    "*=Remnant2/Content/World_Root/Characters/Root_MiniBoss/Textures/T_Root_Miniboss_Variant_Norm.uasset"
    ]
   },
   {
@@ -1903,6 +2026,14 @@
    "combo": 0.3,
    "props": [
     "Bone_RK_Weapon_Spear=Remnant2/Content/World_Root/Characters/Root_Knight/Mesh/Root_Knight_Miniboss_Weapon.uasset"
+   ],
+   "normals": [
+    "m_Root_Knight_MiniBoss_Weapon_Dyn=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_MiniBoss_Weapon_Norm.uasset",
+    "M_Root_Knight_MiniBoss_Weapon=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_MiniBoss_Weapon_Norm.uasset",
+    "m_Miniboss_Cape=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Cape_Norm.uasset",
+    "m_Miniboss_Cape_Dyn=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Cape_Norm.uasset",
+    "M_Root_Knight_Miniboss_Armor=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_MiniBoss_Armor_Norm.uasset",
+    "m_Root_Knight_Miniboss_Body=Remnant2/Content/World_Root/Characters/Root_Knight/Textures/T_Root_Knight_Norm.uasset"
    ]
   }
  ]

@@ -877,7 +877,7 @@ void mod_game_tick() {
     if (l.snap.inGame) sync_native_loot(s, t);
     int bossEv = bosses_tick(s, l, t, dt);  // Remnant II bosses join the monsters here
     turf_tick(l, t, dt);                    // turf wars between monsters (and the MHW side of the bosses')
-    set_first_person(l.gunMode && l.aiming && l.snap.inGame);  // aiming down sights is first person
+    set_first_person(false);  // keep the MHW hunter visible; the Remnant aim pose and hand-mounted rifle are third person
     stamina_tick(l, t);                     // Remnant's stamina bonuses on MHW's stamina bar
     research_tick(l, t);
     reactions_tick(l, t);

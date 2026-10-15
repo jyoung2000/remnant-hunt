@@ -1,7 +1,7 @@
 {
  "sheet": "player_anims",
  "phase": "v0.2",
- "about": "Remnant II player animations the mod plays on the hunter (idle, relic, consumable, drink, eat), looked up by id. Paths and frame counts only; derived from the player's install.",
+ "about": "Remnant II player animations the mod plays on the hunter (idle, relic, consumable, drink, eat, and the 9-way gun aim pose), looked up by id. Paths and frame counts only; derived from the player's install.",
  "columns": {
   "id": "id",
   "use": "str",
@@ -230,6 +230,60 @@
    "use": "skill",
    "asset": "Remnant2/Content/World_DLC3/Characters/PlayerDLC3/Animations/Player_M_Warden_Drone_Send.uasset",
    "frames": 49
+  },
+  {
+   "id": "r2_aim_cc",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_CC.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_cd",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_CD.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_cu",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_CU.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_lc",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_LC.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_ld",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_LD.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_lu",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_LU.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_rc",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_RC.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_rd",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_RD.uasset",
+   "frames": 11
+  },
+  {
+   "id": "r2_aim_ru",
+   "use": "aim",
+   "asset": "Remnant2/Content/Characters/Player/Male/Animations/UN/Player_M_UN_Aimpose_RU.uasset",
+   "frames": 11
   }
  ]
 }

@@ -34,7 +34,7 @@
   },
   {
    "id": "overlay",
-   "summary": "ImGui on the game's D3D11 swapchain; Remnant theme for Remnant screens, MHW theme for HUD",
+   "summary": "ImGui on the game's D3D11 swapchain; Remnant theme for Remnant screens, MHW theme for HUD; boss occlusion and depth terrain use only scene depth tightly matched against the hunter and distinct from its clear value, otherwise the boss remains visible and uses MHW's surface ray for grounding",
    "trigger": "dxgi Present",
    "reads": [
     "dxgi_present",
@@ -46,7 +46,7 @@
    "driven_by": [
     "ui"
    ],
-   "test": "screenshot shows the intro over MHW title/hub"
+   "test": "screenshot shows the intro over MHW title/hub; depth diagnostics compare scene samples at Present and immediately before the next clear; a near-clear sample does not validate; in a live hunt the boss remains stable and World terrain hides the covered pixels while it follows MHW's surface ray"
   },
   {
    "id": "game_tick",
@@ -66,7 +66,7 @@
   },
   {
    "id": "r2_content",
-   "summary": "r2read resolves Remnant II content from the player's install; boss meshes use their listed materials and request texture mips up to 4096px, cached with idle eviction",
+   "summary": "r2read resolves Remnant II content from the player's install; bosses use per-material base-colour and tangent-space normal maps up to 4096px, with MHW scene lighting and ambient shadow fill",
    "trigger": "UI needs catalog data or a Remnant boss is rendered",
    "reads": [
     "none"
@@ -84,7 +84,7 @@
     "ui",
     "bosses"
    ],
-   "test": "all referenced boss meshes, skeletons and textures resolve; active boss texture logs use the highest available mip up to 4096px and show no FAILED assets"
+   "test": "all referenced boss meshes, skeletons, base-colour textures and normal maps resolve; active boss texture logs show the highest available mip up to 4096px and no FAILED assets; a live MHW scene shows visible texture detail and no crushed-black body shading"
   },
   {
    "id": "zone_watch",
@@ -119,7 +119,7 @@
   },
   {
    "id": "gun_mode",
-   "summary": "toggle Remnant gun mode; draw the Remnant firearm from the hunter's live matched right-hand joint rather than a guessed joint candidate; block MHW attack inputs while active",
+   "summary": "toggle Remnant gun mode; keep the hunter visible in third person, retarget Remnant's nine-way aim poses onto the same hunter arm/hand skeleton, attach the gun to its posed right hand and align the barrel to camera aim; block MHW attack inputs while active",
    "trigger": "hotkey B (gun mode)",
    "reads": [
     "game_window"
@@ -131,7 +131,7 @@
     "weapons",
     "ui"
    ],
-   "test": "G toggles hud_gun; in a live screenshot the Remnant gun grip follows the hunter's matched right hand during idle, aim, reload and a Remnant skill; no guessed joint placement; MHW attack does not fire while active"
+   "test": "B toggles the gun; a live screenshot shows the existing hunter aiming the Remnant gun with both hands in third person and the barrel on the camera aim line during idle, aim, reload and a Remnant skill; no guessed joint placement, floating gun or detached hands; MHW attack does not fire while active"
   },
   {
    "id": "fire",
@@ -231,6 +231,21 @@
     "archetypes"
    ],
    "test": "each effect measurable in HP log; a live screenshot shows the existing hunter's arms and hands perform the Remnant pose without detached or duplicate limbs or a held Remnant item leaving the hands"
+  },
+  {
+   "id": "boss_hunter_damage",
+   "summary": "Remnant boss hits use the hunter's World health manager; a lethal hit must enter World's real faint and camp return path. Until that path is verified, the hunter must never be left alive at zero health. An action animation alone does not count as a faint.",
+   "trigger": "Remnant boss hit",
+   "reads": [
+    "player_health_mgr"
+   ],
+   "writes": [
+    "add_hp"
+   ],
+   "driven_by": [
+    "bosses"
+   ],
+   "test": "in a live hunt, a lethal Remnant boss hit plays World's faint, returns the hunter to camp, and applies the quest's faint count; if the native handoff is unavailable the hunter stays at one health rather than alive at zero"
   },
   {
    "id": "damage_watch",

@@ -134,6 +134,8 @@ int g_nextDebugRow = 0;
 bool g_keyWas = false, g_lmbWas = false, g_rmbWas = false, g_carveKeyWas = false;
 bool g_carvePrompt = false;  // the toast on screen is the carve prompt (so a carve's own toast is not overwritten)
 double g_swingAt = 0, g_dodgeAt = -10;
+double g_faintPendingAt = -1;  // a native faint action must complete; never leave a live hunter at 0 HP
+int g_faintPendingZone = -1;
 int g_swingWeapon = -1;
 const GameSnapshot* g_snap = nullptr;
 std::map<const uint8_t*, double> g_foeCd;  // MHW monster -> no new turf war with a boss before
@@ -914,6 +916,9 @@ bool window(const char* hits, int i, float* s, float* e) {
 float status_dur(int st) { return st == SS_BURNING ? 6.0f : 10.0f; }
 int hurt_hunter(Live& l, float dmg, int status, float statusTotal, double t) {
     const GameSnapshot& g = l.snap;
+    if (g_faintPendingAt >= 0 || (g.playerHealth && mem_readable(g.playerHealth + 0x64, 4) &&
+                                 *(float*)(g.playerHealth + 0x64) <= 0.0f))
+        return 0;  // never interrupt a native faint with another Remnant hit reaction
     if (t - g_dodgeAt < 0.45) return BOSS_EV_EVADE;
     if (status > 0) inflict_player(l, (Status)status, statusTotal, status_dur(status), t);
     reactions_note_own_damage(t);
@@ -930,10 +935,6 @@ int hurt_hunter(Live& l, float dmg, int status, float statusTotal, double t) {
         }
         bool lethal = rd && before > 0 && before - dmg <= 0;
         if (lethal) {
-            if (after > 0) {
-                *(float*)(g.playerHealth + 0x64) = 0.0f;  // approved HP write: the clamp left the hunter standing
-                log("hunter: lethal Remnant hit, hp forced to 0");
-            }
             static int s_set = -2, s_id = 0;
             if (s_set == -2) {
                 char ini[MAX_PATH], v[64] = {0};
@@ -943,15 +944,29 @@ int hurt_hunter(Live& l, float dmg, int status, float statusTotal, double t) {
             }
             int f_set = s_set, f_id = s_id;
             if (f_set < 0) reactions_faint(&f_set, &f_id);  // learned from MHW's own faint
+            bool started = false;
             if (f_set >= 0) {
-                if (reactions_play(f_set, f_id)) log("hunter: faint action %d:%d played", f_set, f_id);
-            } else {
+                // AddHP alone may clamp the hunter at 1. Try the recorded World
+                // action only when one is known, then watch for a real transition.
+                if (after > 0) *(float*)(g.playerHealth + 0x64) = 0.0f;
+                started = reactions_play(f_set, f_id);
+                if (started) {
+                    g_faintPendingAt = t;
+                    g_faintPendingZone = g.zone;
+                    log("hunter: faint action %d:%d started; awaiting World faint/camp transition", f_set, f_id);
+                } else {
+                    log("hunter: faint action %d:%d rejected; preserving 1 HP", f_set, f_id);
+                }
+            }
+            if (!started) {
+                if (*(float*)(g.playerHealth + 0x64) < 1.0f)
+                    *(float*)(g.playerHealth + 0x64) = 1.0f;
                 static bool warned = false;
                 if (!warned) {
                     warned = true;
-                    log("hunter: no faint_action set in the ini and none learned yet; HP is 0 but MHW only faints through its own hit path (record one normal faint in the diagnostic action log and set [bosses] faint_action=set:id)");
+                    log("hunter: native faint handoff unavailable; lethal Remnant hits preserve 1 HP until World faint path is verified");
                 }
-                toast(l, "Faint not learned yet: get knocked out once by MHW (a barrel bomb at low HP works) to teach it");
+                toast(l, "Faint handoff unavailable: 1 HP remains");
             }
         }
         if (!lethal) {
@@ -1692,6 +1707,20 @@ bool boss_hit(uint8_t* em, float dmg, const Vec3& at, bool crit, bool weak) {
 int bosses_tick(SaveData& s, Live& l, double t, float dt) {
     const GameSnapshot& g = l.snap;
     g_snap = &g;
+    if (g_faintPendingAt >= 0) {
+        if (!g.inGame || g.zone != g_faintPendingZone || !g.playerHealth ||
+            !mem_readable(g.playerHealth + 0x64, 4)) {
+            g_faintPendingAt = -1;  // World moved the hunter or unloaded the old unit
+        } else {
+            float hp = *(float*)(g.playerHealth + 0x64);
+            if (hp > 1.0f) g_faintPendingAt = -1;
+            else if (t - g_faintPendingAt > 20.0) {
+                if (hp < 1.0f) *(float*)(g.playerHealth + 0x64) = 1.0f;
+                log("hunter: faint action did not finish in 20 s; restored 1 HP to avoid a live zero-health hunter");
+                g_faintPendingAt = -1;
+            }
+        }
+    }
     terrain_frame_tick();
     g_difficulty = s.difficulty;
     if (g.view.valid) g_rh = g.view.proj[11] < 0;
@@ -1976,6 +2005,34 @@ static void assign_textures(const Model& m, const char* list, DrawItem* it) {
         if (!tx) tx = fallback;
 }
 
+static void assign_normal_textures(const Model& m, const char* list, DrawItem* it) {
+    static std::set<std::string> keep;
+    size_t slots = m.materials.size();
+    for (const ModelSection& s : m.sections) slots = std::max(slots, (size_t)std::max<int16_t>(0, s.material) + 1);
+    it->normals.assign(slots, nullptr);
+    const char* fallback = nullptr;
+    std::string all = list ? list : "";
+    size_t i = 0;
+    while (i < all.size()) {
+        size_t j = all.find(',', i);
+        if (j == std::string::npos) j = all.size();
+        std::string e = all.substr(i, j - i);
+        size_t eq = e.find('=');
+        if (eq != std::string::npos) {
+            std::string slot = e.substr(0, eq), asset = e.substr(eq + 1);
+            if (asset != "none") {
+                const char* kept = keep.insert(asset).first->c_str();
+                if (slot == "*") fallback = kept;
+                for (size_t k = 0; k < m.materials.size() && slot != "*"; k++)
+                    if (!it->normals[k] && m.materials[k].find(slot) != std::string::npos) it->normals[k] = kept;
+            }
+        }
+        i = j + 1;
+    }
+    for (auto& tx : it->normals)
+        if (!tx) tx = fallback;
+}
+
 // A bone's posed matrix in model space as {R | t} (3x4, row-major): the skin palette (bone * inverse bind) undone.
 static bool bone_model_matrix(const Model& m, const std::vector<float>& pal, int bone, float out[12]) {
     if (bone < 0 || (size_t)(bone + 1) * 12 > pal.size() || (size_t)(bone + 1) * 12 > m.invBind.size()) return false;
@@ -2031,6 +2088,7 @@ static void append_props(const Bosses& r, const Model& body, const std::vector<f
             }
         pose(*pm, nullptr, 0, true, nullptr, 0, 0, &pit.palette);
         assign_textures(*pm, r.textures, &pit);  // the prop's materials by slot name, the body's textures as the fallback
+        assign_normal_textures(*pm, r.normals, &pit);
         items->push_back(std::move(pit));
     }
 }
@@ -2056,6 +2114,7 @@ void bosses_render(void* dev, void* ctx, void* rtv, int w, int h) {
         // A one-shot animation's time is held at its end by the game thread; looping ones wrap here.
         pose(*d.m, a, d.at, true, b, d.bt, b ? d.blend : 0.0f, &it.palette);
         assign_textures(*d.m, r.textures, &it);
+        assign_normal_textures(*d.m, r.normals, &it);
         std::vector<float> bodyPal = it.palette;
         items.push_back(std::move(it));
         append_props(r, *d.m, bodyPal, d.world, &items);

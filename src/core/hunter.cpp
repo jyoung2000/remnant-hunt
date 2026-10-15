@@ -23,6 +23,7 @@
 #include "model.h"
 #include "render3d.h"
 #include "state.h"
+#include "gen/sheets.gen.h"
 
 namespace rh {
 
@@ -105,6 +106,7 @@ struct State {
     // playing
     const Anim* anim = nullptr;
     std::string animName;
+    bool heldAimPose = false;
     double animT0 = 0, lastWriteLog = 0;
     int ticksWritten = 0;
     double testUntil = 0;
@@ -152,6 +154,33 @@ void unmatch(const char* why) {
     g.map = HunterMap();
     for (auto& e : g.entries) e.clear();
     g.anim = nullptr;
+    g.heldAimPose = false;
+}
+
+static const char* aim_pose_id(const GameSnapshot& snap, const float root[16]) {
+    char horizontal = 'c', vertical = 'c';
+    if (snap.view.valid) {
+        float dx = snap.view.camTarget.x - snap.view.camPos.x;
+        float dy = snap.view.camTarget.y - snap.view.camPos.y;
+        float dz = snap.view.camTarget.z - snap.view.camPos.z;
+        float n = sqrtf(dx * dx + dy * dy + dz * dz);
+        if (n > 1e-5f) {
+            dx /= n; dy /= n; dz /= n;
+            if (dy > 0.20f) vertical = 'u';
+            else if (dy < -0.20f) vertical = 'd';
+            float fx = root[8], fz = root[10], fl = sqrtf(fx * fx + fz * fz);
+            float rx = root[0], rz = root[2], rl = sqrtf(rx * rx + rz * rz);
+            if (fl > 1e-5f && rl > 1e-5f) {
+                float forward = (dx * fx + dz * fz) / fl;
+                float side = (dx * rx + dz * rz) / rl;
+                if (side > 0.35f && forward > -0.75f) horizontal = 'r';
+                else if (side < -0.35f && forward > -0.75f) horizontal = 'l';
+            }
+        }
+    }
+    static char id[10];
+    snprintf(id, sizeof(id), "r2_aim_%c%c", horizontal, vertical);
+    return id;
 }
 
 struct JointCandidate {
@@ -373,6 +402,7 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
         if (a) {
             g.anim = a;
             g.animName = pending;
+            g.heldAimPose = false;
             g.animT0 = t;
             g.ticksWritten = 0;
             log("hunter: playing %s on the hunter (%.2f s)", pending.c_str(), a->length());
@@ -385,11 +415,38 @@ void hunter_tick(const SaveData& s, const Live& l, double t) {
         log("hunter: %s skipped: the Remnant skeleton is not ready", pending.c_str());
         pending.clear();
     }
-    if (g.anim && (!g.map.valid || !c.poseWrite)) g.anim = nullptr;
+    if (g.heldAimPose && !l.gunMode) {
+        g.anim = nullptr;
+        g.animName.clear();
+        g.heldAimPose = false;
+    }
+    int rootBone = hunter_bone_by_id(0);
+    if (l.gunMode && c.poseWrite && g.map.valid && g.rig.ok && g.skel && rootBone >= 0 && hv[rootBone] &&
+        (!g.anim || g.heldAimPose) && pending.empty()) {
+        const char* id = aim_pose_id(snap, hw[rootBone]);
+        int row = sheets::player_anims_index(id);
+        if (row >= 0 && (!g.heldAimPose || g.animName != id)) {
+            bool failed = false;
+            const Anim* a = anim_get(sheets::kPlayer_anims[row].asset, skeleton_asset(), g.skel, &failed);
+            if (a) {
+                g.anim = a;
+                g.animName = id;
+                g.animT0 = t;
+                g.heldAimPose = true;
+                log("hunter: Remnant %s gun-hold pose active on the hunter", id);
+            } else if (failed) {
+                log("hunter: Remnant %s gun-hold pose failed to load", id);
+            }
+        }
+    }
+    if (g.anim && (!g.map.valid || !c.poseWrite)) {
+        g.anim = nullptr;
+        g.heldAimPose = false;
+    }
     if (g.anim) {
-        float at = (float)(t - g.animT0);
+        float at = g.heldAimPose ? g.anim->length() : (float)(t - g.animT0);
         int r0 = hunter_bone_by_id(0), pel = g.rig.pelvisH;
-        if (at > g.anim->length()) {
+        if (at > g.anim->length() && !g.heldAimPose) {
             log("hunter: %s finished after %d ticks of writes; the game has the joints again", g.animName.c_str(),
                 g.ticksWritten);
             g.anim = nullptr;

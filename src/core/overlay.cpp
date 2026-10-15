@@ -459,13 +459,30 @@ typedef void(STDMETHODCALLTYPE* ClearDSV_t)(ID3D11DeviceContext*, ID3D11DepthSte
 static ClearDSV_t oClearDSV = nullptr;
 static thread_local bool t_ownDraw = false;
 static UINT g_bbW = 0, g_bbH = 0;
-struct DepthSeen { ID3D11Resource* res; UINT w, h; DXGI_FORMAT fmt; float clear; int clears, lastFrame; };
+struct DepthSeen { ID3D11Resource* res; UINT w, h; DXGI_FORMAT fmt; float clear; int clears, lastFrame; ULONGLONG lastPreProbe; };
 static SRWLOCK g_depthLock = SRWLOCK_INIT;
 static DepthSeen g_depthSeen[8];
 static int g_depthCount = 0, g_frame = 0, g_depthMode = 1;
 static ID3D11Resource* g_depthRes = nullptr;
 static ID3D11ShaderResourceView* g_depthSrv = nullptr;
 static bool g_depthLogged = false;
+static ULONGLONG g_gridPresentAt = 0;
+static float sample_depth(ID3D11DeviceContext* ctx, const DepthSeen& d, float nx, float ny);
+
+// Diagnostic only: identify whether a candidate still contains scene geometry at Present or
+// only immediately before MHW clears it for the next pass. Never use these samples to enable occlusion.
+static void log_depth_grid(ID3D11DeviceContext* ctx, const char* phase, int index, const DepthSeen& d) {
+    if (!g_dev || !ctx) return;
+    static const float uv[5][2] = {{.25f, .25f}, {.75f, .25f}, {.5f, .5f}, {.25f, .75f}, {.75f, .75f}};
+    float s[5];
+    int drawn = 0;
+    for (int k = 0; k < 5; k++) {
+        s[k] = sample_depth(ctx, d, uv[k][0], uv[k][1]);
+        if (s[k] >= 0 && fabsf(s[k] - d.clear) > .003f) drawn++;
+    }
+    log("overlay: depth grid %s candidate %d: %.4f %.4f %.4f %.4f %.4f (%d/5 non-clear, clear %.3f)",
+        phase, index, s[0], s[1], s[2], s[3], s[4], drawn, d.clear);
+}
 
 static DXGI_FORMAT depth_srv_format(DXGI_FORMAT f) {
     switch (f) {
@@ -496,14 +513,20 @@ static void STDMETHODCALLTYPE hkClearDSV(ID3D11DeviceContext* c, ID3D11DepthSten
                     if ((td.BindFlags & D3D11_BIND_SHADER_RESOURCE) && td.SampleDesc.Count == 1 && td.ArraySize == 1 &&
                         depth_srv_format(td.Format) != DXGI_FORMAT_UNKNOWN) {
                         r->AddRef();
-                        g_depthSeen[g_depthCount++] = {r, td.Width, td.Height, td.Format, depth, 0, -1};
+                        g_depthSeen[g_depthCount++] = {r, td.Width, td.Height, td.Format, depth, 0, -1, 0};
                     }
                 }
             }
             if (i < g_depthCount) {
-                g_depthSeen[i].clear = depth;
-                g_depthSeen[i].clears++;
-                g_depthSeen[i].lastFrame = g_frame;
+                DepthSeen& seen = g_depthSeen[i];
+                ULONGLONG now = GetTickCount64();
+                if (g_frame > 600 && now - seen.lastPreProbe >= 20000) {
+                    seen.lastPreProbe = now;
+                    log_depth_grid(c, "before clear", i, seen);
+                }
+                seen.clear = depth;
+                seen.clears++;
+                seen.lastFrame = g_frame;
             }
             ReleaseSRWLockExclusive(&g_depthLock);
             r->Release();
@@ -575,7 +598,7 @@ static bool hunter_clip(float* ndcZ, float* nx, float* ny, bool* projRev) {
 }
 
 // The depth value under (nx, ny) of a depth texture, or -1.
-static float sample_depth(const DepthSeen& d, float nx, float ny) {
+static float sample_depth(ID3D11DeviceContext* ctx, const DepthSeen& d, float nx, float ny) {
     D3D11_TEXTURE2D_DESC td = {};
     td.Width = td.Height = 1;
     td.MipLevels = td.ArraySize = 1;
@@ -587,10 +610,10 @@ static float sample_depth(const DepthSeen& d, float nx, float ny) {
     if (FAILED(g_dev->CreateTexture2D(&td, nullptr, &st)) || !st) return -1;
     UINT x = std::min((UINT)(nx * d.w), d.w - 1), y = std::min((UINT)(ny * d.h), d.h - 1);
     D3D11_BOX box = {x, y, 0, x + 1, y + 1, 1};
-    g_ctx->CopySubresourceRegion(st, 0, 0, 0, 0, d.res, 0, &box);
+    ctx->CopySubresourceRegion(st, 0, 0, 0, 0, d.res, 0, &box);
     float out = -1;
     D3D11_MAPPED_SUBRESOURCE ms;
-    if (SUCCEEDED(g_ctx->Map(st, 0, D3D11_MAP_READ, 0, &ms))) {
+    if (SUCCEEDED(ctx->Map(st, 0, D3D11_MAP_READ, 0, &ms))) {
         switch (d.fmt) {
             case DXGI_FORMAT_R24G8_TYPELESS: out = (float)(*(const uint32_t*)ms.pData & 0xFFFFFF) / 16777215.0f; break;
             case DXGI_FORMAT_R32_TYPELESS:
@@ -598,7 +621,7 @@ static float sample_depth(const DepthSeen& d, float nx, float ny) {
             case DXGI_FORMAT_R16_TYPELESS: out = (float)*(const uint16_t*)ms.pData / 65535.0f; break;
             default: break;
         }
-        g_ctx->Unmap(st, 0);
+        ctx->Unmap(st, 0);
     }
     st->Release();
     return out;
@@ -630,13 +653,18 @@ static void measure_depth() {
         const DepthSeen& d = g_depthSeen[i];
         if (holding && d.res != g_measRes) continue;
         if (g_frame - d.lastFrame > 2 || !d.h || d.w * 2 < g_bbW || fabsf((float)d.w / (float)d.h - aspect) > 0.03f) continue;
-        float sv = sample_depth(d, nx, ny);
+        float sv = sample_depth(g_ctx, d, nx, ny);
         if (sv < 0) continue;
         if (now - g_measDiagAt >= 60000) {
             g_measDiagAt = now;
             log("overlay: depth check candidate %d: sampled %.4f, expected %.4f (plain) or %.4f (1-z)", i, sv, ez, 1.0f - ez);
         }
-        bool asIs = fabsf(sv - ez) < 0.02f, flipped = fabsf(sv - (1.0f - ez)) < 0.02f;
+        // A near-clear sample in the hub once matched 0.0228 at 0.0078 under the old 0.02
+        // tolerance. That was not proof of scene depth and could re-enable boss flicker.
+        if (fabsf(sv - d.clear) <= .003f) continue;
+        float flippedZ = 1.0f - ez;
+        bool asIs = fabsf(sv - ez) < std::min(.008f, std::max(.002f, ez * .08f));
+        bool flipped = fabsf(sv - flippedZ) < std::min(.008f, std::max(.002f, flippedZ * .08f));
         if (!asIs && !flipped) continue;
         bool same = g_measState == 1 && g_measRes == d.res && g_measFlip == !asIs;
         g_measState = 1;
@@ -665,7 +693,7 @@ static void measure_depth() {
         g_measState = 2;
         if (!g_measNoneLogged) {
             g_measNoneLogged = true;
-            log("overlay: no scene depth candidate matches the hunter (expected %.4f); keeping the one cleared most", ez);
+            log("overlay: no scene depth candidate matches the hunter (expected %.4f); boss occlusion stays off", ez);
         }
     }
 }
@@ -905,7 +933,8 @@ static void terrain_capture(ID3D11ShaderResourceView* srv, bool gameRev, float c
     g_tdNext = (g_tdNext + 1) % 3;
 }
 
-// Render thread, at Present: the scene depth is the one measure_depth() confirmed, else the full-frame one MHW clears most.
+// Render thread, at Present: only a depth resource confirmed by measure_depth() may hide a boss or supply terrain.
+// An unrelated pass can be full-frame and cleared often, yet make the boss pop out when used as scene depth.
 static void pick_depth() {
     if (!g_depthMode || !oClearDSV || !g_bbW || !g_bbH) return;
     AcquireSRWLockExclusive(&g_depthLock);
@@ -918,11 +947,19 @@ static void pick_depth() {
         if (best < 0 || d.clears > g_depthSeen[best].clears) best = i;
     }
     measure_depth();
+    ULONGLONG now = GetTickCount64();
+    if (g_frame > 600 && now - g_gridPresentAt >= 20000) {
+        g_gridPresentAt = now;
+        for (int i = 0; i < g_depthCount; i++)
+            if (g_frame - g_depthSeen[i].lastFrame <= 2)
+                log_depth_grid(g_ctx, "at Present", i, g_depthSeen[i]);
+    }
     bool measured = false;
     if (g_measState == 1 && g_measRes) {
         for (int i = 0; i < g_depthCount; i++)
             if (g_depthSeen[i].res == g_measRes && g_frame - g_depthSeen[i].lastFrame <= 60) { best = i; measured = true; }
     }
+    if (!measured) best = -1;
     ID3D11Resource* res = best >= 0 ? g_depthSeen[best].res : nullptr;
     if (res != g_depthRes) {
         if (g_depthSrv) { g_depthSrv->Release(); g_depthSrv = nullptr; }

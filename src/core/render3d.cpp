@@ -32,8 +32,10 @@ cbuffer Frame : register(b0) {
     float4 ambTint;    // rgb = colour of MHW's frame under the boss, normalised
 };
 cbuffer Bones : register(b1) { float4 bones[3 * 1024]; };
+cbuffer Material : register(b2) { float4 material; };
 Texture2D diffuseTex : register(t0);
 Texture2D gameDepth : register(t1);
+Texture2D normalTex : register(t2);
 SamplerState samp : register(s0);
 struct VSIn {
     float3 pos : POSITION; float4 nrm : NORMAL; float2 uv : TEXCOORD0;
@@ -77,6 +79,17 @@ float4 ps_main(PSIn i) : SV_Target {
     n = normalize(n);
     float3 V = normalize(camPos.xyz - i.wpos);
     if (dot(n, V) < 0) n = -n;  // two-sided: back faces are lit from their visible side
+    if (material.x > 0.5) {
+        float3 dp1 = ddx(i.wpos), dp2 = ddy(i.wpos);
+        float2 duv1 = ddx(i.uv), duv2 = ddy(i.uv);
+        float3 T = dp1 * duv2.y - dp2 * duv1.y;
+        float3 B = dp2 * duv1.x - dp1 * duv2.x;
+        T = normalize(T - n * dot(n, T));
+        B = normalize(B - n * dot(n, B) - T * dot(T, B));
+        float2 xy = normalTex.Sample(samp, i.uv).rg * 2.0 - 1.0;
+        float3 mapN = normalize(float3(xy, sqrt(saturate(1.0 - dot(xy, xy)))));
+        n = normalize(T * mapN.x + B * mapN.y + n * mapN.z);
+    }
     float3 L = normalize(lightDir.xyz);
     float ndl = saturate(dot(n, L));
     // sun: Lambert diffuse + a small Blinn-Phong highlight
@@ -85,7 +98,8 @@ float4 ps_main(PSIn i) : SV_Target {
     float spec = pow(saturate(dot(n, H)), 48.0) * 0.22 * ndl;
     // hemisphere ambient: sky from above, ground bounce from below, tinted by MHW's frame
     // Fill the deep shadow side enough to retain Remnant surface detail in MHW's high-contrast scenes.
-    float3 hemi = lerp(float3(0.64, 0.58, 0.52), float3(0.82, 0.90, 1.0), n.y * 0.5 + 0.5) * scene.y * ambTint.rgb;
+    float ambientFill = max(scene.y, 0.66);
+    float3 hemi = lerp(float3(0.64, 0.58, 0.52), float3(0.82, 0.90, 1.0), n.y * 0.5 + 0.5) * ambientFill * max(ambTint.rgb, 0.78);
     float3 albedo = c.rgb * tint.rgb;
     float3 col = (albedo * (sunCol * ndl * 0.85 + hemi) + sunCol * spec) * scene.z;
     // MHW's frame is already tone-mapped: map the lit colour the same way (ACES, Narkowicz fit)
@@ -107,6 +121,7 @@ static ID3D11PixelShader* g_ps = nullptr;
 static ID3D11InputLayout* g_layout = nullptr;
 static ID3D11Buffer* g_cbFrame = nullptr;
 static ID3D11Buffer* g_cbBones = nullptr;
+static ID3D11Buffer* g_cbMaterial = nullptr;
 static ID3D11SamplerState* g_samp = nullptr;
 static ID3D11RasterizerState* g_rs = nullptr;
 static ID3D11DepthStencilState* g_dssLess = nullptr;
@@ -455,6 +470,8 @@ static bool init(ID3D11Device* dev) {
     dev->CreateBuffer(&bd, nullptr, &g_cbFrame);
     bd.ByteWidth = 3 * 1024 * 16;
     dev->CreateBuffer(&bd, nullptr, &g_cbBones);
+    bd.ByteWidth = 16;
+    dev->CreateBuffer(&bd, nullptr, &g_cbMaterial);
     D3D11_SAMPLER_DESC sd = {};
     sd.Filter = D3D11_FILTER_ANISOTROPIC;
     sd.MaxAnisotropy = 8;
@@ -491,11 +508,11 @@ static bool init(ID3D11Device* dev) {
         dev->CreateShaderResourceView(t, nullptr, &g_white);
         t->Release();
     }
-    if (!(g_vs && g_ps && g_layout && g_cbFrame && g_cbBones && g_samp && g_rs && g_dssLess && g_dssGreater && g_blend)) {
+    if (!(g_vs && g_ps && g_layout && g_cbFrame && g_cbBones && g_cbMaterial && g_samp && g_rs && g_dssLess && g_dssGreater && g_blend)) {
         // Give up for good and free what was made, or every frame would leak a dozen objects.
         log("render3d: creating the pipeline objects failed, bosses will not be drawn");
 #define RH_REL(p) if (p) { p->Release(); p = nullptr; }
-        RH_REL(g_vs) RH_REL(g_ps) RH_REL(g_layout) RH_REL(g_cbFrame) RH_REL(g_cbBones) RH_REL(g_samp) RH_REL(g_rs)
+        RH_REL(g_vs) RH_REL(g_ps) RH_REL(g_layout) RH_REL(g_cbFrame) RH_REL(g_cbBones) RH_REL(g_cbMaterial) RH_REL(g_samp) RH_REL(g_rs)
         RH_REL(g_dssLess) RH_REL(g_dssGreater) RH_REL(g_blend) RH_REL(g_white)
 #undef RH_REL
         g_failed = true;
@@ -693,6 +710,7 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
     ID3D11Buffer* cbs[2] = {g_cbFrame, g_cbBones};
     ctx->VSSetConstantBuffers(0, 2, cbs);
     ctx->PSSetConstantBuffers(0, 2, cbs);
+    ctx->PSSetConstantBuffers(2, 1, &g_cbMaterial);
     ctx->PSSetSamplers(0, 1, &g_samp);
     // world-fixed sun (MHW's own vector, the ground fit, or the ini) and the camera position (the view matrix is
     // rigid: camera = -t * R^T)
@@ -740,18 +758,35 @@ void render3d_frame(void* devp, void* ctxp, void* rtvp, int w, int h, const floa
         ctx->IASetIndexBuffer(g->ib, DXGI_FORMAT_R32_UINT, 0);
         for (const ModelSection& s : it.model->sections) {
             ID3D11ShaderResourceView* srv = g_white;
+            ID3D11ShaderResourceView* normalSrv = g_white;
+            bool hasNormal = false;
             if (s.material >= 0 && (size_t)s.material < it.diffuse.size() && it.diffuse[s.material]) {
                 int tw = 0, th = 0;
                 const int maxSide = std::max(1024, std::min(4096, it.textureMaxSide));
                 if (void* t = texture_for(it.diffuse[s.material], maxSide, &tw, &th, true)) srv = (ID3D11ShaderResourceView*)t;
             }
-            ID3D11ShaderResourceView* srvs[2] = {srv, g_gameDepth};
-            ctx->PSSetShaderResources(0, 2, srvs);
+            if (s.material >= 0 && (size_t)s.material < it.normals.size() && it.normals[s.material]) {
+                int tw = 0, th = 0;
+                const int maxSide = std::max(1024, std::min(4096, it.textureMaxSide));
+                if (void* t = texture_for(it.normals[s.material], maxSide, &tw, &th, false)) {
+                    normalSrv = (ID3D11ShaderResourceView*)t;
+                    hasNormal = true;
+                }
+            }
+            D3D11_MAPPED_SUBRESOURCE mm;
+            if (SUCCEEDED(ctx->Map(g_cbMaterial, 0, D3D11_MAP_WRITE_DISCARD, 0, &mm))) {
+                float* values = (float*)mm.pData;
+                values[0] = hasNormal ? 1.0f : 0.0f;
+                values[1] = values[2] = values[3] = 0.0f;
+                ctx->Unmap(g_cbMaterial, 0);
+            }
+            ID3D11ShaderResourceView* srvs[3] = {srv, g_gameDepth, normalSrv};
+            ctx->PSSetShaderResources(0, 3, srvs);
             ctx->DrawIndexed(s.numTriangles * 3, s.baseIndex, 0);
         }
     }
-    ID3D11ShaderResourceView* none[2] = {nullptr, nullptr};
-    ctx->PSSetShaderResources(0, 2, none);
+    ID3D11ShaderResourceView* none[3] = {nullptr, nullptr, nullptr};
+    ctx->PSSetShaderResources(0, 3, none);
     bk.restore(ctx);
 }
 

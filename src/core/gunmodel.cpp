@@ -116,6 +116,13 @@ void gunmodel_tick(const SaveData& s, const Live& l) {
                     fwd = mul(fwd, -1.0f);
                     r = mul(r, -1.0f);
                 }
+                if (l.aiming) {
+                    // Keep the gun anchored at the hunter's posed hand, but line its barrel up with the same camera
+                    // ray used by the Remnant aim-pose selection and hitscan shot.
+                    fwd = look;
+                    r = unit(sub(right, mul(fwd, dot(right, fwd))));
+                    up = unit(sub(upW, add(mul(fwd, dot(upW, fwd)), mul(r, dot(upW, r)))));
+                }
             }
             float fp = first_person_amount();
             if (fp > 0.5f) {

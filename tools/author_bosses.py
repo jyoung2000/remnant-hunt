@@ -540,6 +540,16 @@ def author(row):
             tex.append(f"{slot}={sc}")
     if main and (len(tex) < m["slots"]):
         tex.append(f"*={main}")  # every other section: the body's main texture
+    normals = []
+    for entry in tex:
+        slot, image = entry.split("=", 1)
+        stem = image[:-7]
+        renamed = re.sub(r"(?i)(?:_diffuse|_diff|_basecolor|_albedo|_color|_col|_d)$", "_Norm", stem)
+        if renamed == stem:
+            renamed = stem + "_Norm"
+        candidate = renamed + ".uasset"
+        if candidate in FILES:
+            normals.append(f"{slot}={candidate}")
     # sounds
     evs = sorted(k for k in FILES if k.startswith(f"{C}WwiseAudio/Events/Creature/{row.get('snd', '-')}/") and
                  k.endswith(".uasset"))
@@ -562,6 +572,7 @@ def author(row):
     rel = lambda n: names[n][len(C + adir):-7] if n else ""  # noqa: E731
     boss = {"id": bid, "name": {"r2text": name} if name else "none", "title": text or bid.replace("_", " ").title(),
             "tier": "boss", "mesh": m["asset"], "skeleton": skel_asset, "forward": fwd, "textures": tex or ["none"],
+            "normals": normals or ["none"],
             "anim_dir": C + adir, "anim_idle": rel(roles["idle"]), "anim_walk": rel(roles["walk"]),
             "anim_run": rel(roles["run"]), "anim_turn_l": rel(roles["turn_l"]), "anim_turn_r": rel(roles["turn_r"]),
             "anim_roar": rel(roles["roar"]), "anim_flinch": rel(roles["flinch"]), "anim_stun": rel(roles["stun"]),
